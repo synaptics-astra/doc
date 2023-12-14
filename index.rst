@@ -5,7 +5,8 @@ Synaptics ASTRA SDK
    :hidden:
 
    release_notes.rst
-   user_guide.rst
+   linux.rst
+   yocto.rst
 
 
 Welcome to the Synaptics ASTRA SDK documentation. 
@@ -13,4 +14,5 @@ Welcome to the Synaptics ASTRA SDK documentation.
 The following documents are available:
 
 - :doc:`release_notes`: information about the current release
-- :doc:`user_guide`: guide on how to use the SDK
+- :doc:`linux`: guide for the components included in the Astra SDK
+- :doc:`yocto`: guide for the Astra SDK
