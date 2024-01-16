@@ -4,14 +4,22 @@ Synaptics ASTRA SDK
 .. toctree::
    :hidden:
 
+   quickstart.rst
    linux.rst
    yocto.rst
    release_notes.rst
 
 
-Welcome to the Synaptics ASTRA SDK documentation. 
+Welcome to the Synaptics ASTRA SDK documentation.
 
-The following documents are available:
+Documentation
+*************
+
+For more in-depth information, the following documents are available:
+
+:doc:`quickstart`
+
+  This guide explains in a few words how to get started with the Synaptics Astra SDK
 
 :doc:`linux`
 

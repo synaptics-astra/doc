@@ -384,6 +384,8 @@ modify the ampsvc init script found at ``/etc/init.d/ampsvc`` by adding the foll
     HDCP keys for the board have been correctly installed on the board (see next section).
 
 
+.. _demos:
+
 Demos
 =====
 
