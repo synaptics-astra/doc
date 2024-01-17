@@ -7,8 +7,13 @@ To get started with the Synaptics Astra SDK, you can do the following things:
 
 .. _quickstart_install:
 
+
 Install and use a pre-built image
 =================================
+
+Prerequisites:
+
+ - See prerequisites for flashing :ref:`here <flashing_prerequisites>`
 
 To install a pre-built image on a Synaptics Astra evaluation kit:
 
@@ -24,7 +29,7 @@ To install a pre-built image on a Synaptics Astra evaluation kit:
 Play a video with hardware acceleration
 ========================================
 
-.. note::
+.. warning::
 
     This doesn't work yet becaues v4l support is not merged yet on branch firebird
 
@@ -99,16 +104,16 @@ To learn about other ai demos refer to :ref:`ai_demos`.
 Convert and test an AI model
 ============================
 
-.. note::
+Prerequisites:
 
-    This example requires a host system with docker installed. See TODO for more details about the suggested
-    configuration.
+ - In addition to the :ref:`prerequisites for flashing <flashing_prerequisites>` you also need a host with
+   docker installed, an ethernet cable and a local network with DHCP
 
 To convert your own AI model and run it on an evaluation kit use the following steps:
 
 1. Install a pre-built image and connect to the board as described :ref:`here <quickstart_install>`
 
-2. Connect the board to a local network with DHCP using the ethernet cable
+2. Connect the board to a local network using the ethernet cable
 
 3. Download ``1.tflite`` from `Kaggle <https://www.kaggle.com/models/tensorflow/mobilenet-v2/frameworks/tfLite/variations/1-0-224-quantized>`_
 
@@ -160,3 +165,8 @@ To convert your own AI model and run it on an evaluation kit use the following s
 
 To learn more about model conversion options, more model testing tools and how to use the model in your own
 application refer to :ref:`synap`.
+
+Build a new image
+=================
+
+To build a new image see the quick start instruction in the :ref:`Yocto guide <yocto_quick_start>`

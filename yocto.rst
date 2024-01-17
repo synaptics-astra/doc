@@ -73,6 +73,8 @@ Other versions of Linux and Docker may also work but may need special configurat
 The build can also be executed directly on the host provided that the Yocto build
 dependencies are installed but this configuration is not supported by Synaptics.
 
+.. _yocto_quick_start:
+
 Quick start
 ===========
 
@@ -246,6 +248,8 @@ Operations
 
 Flashing images
 ---------------
+
+.. _flashing_prerequisites:
 
 Prerequisites
 ^^^^^^^^^^^^^
