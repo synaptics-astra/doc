@@ -29,18 +29,7 @@ for the following machines, distributions and images:
     | sl1680  | poky         | syna-media        |
     +---------+--------------+-------------------+
 
-Obtaining the sources
-=====================
-
-The sources of the Synaptics Yocto release can be downloaded by cloning a `top
-level git repo <https://github.com/syna-astra/sdk>`_. The repository contains
-all the required layers as submodules::
-
-    $ git clone --recursive https://github.com/syna-astra/sdk.git
-
-The recipes contained in the ``meta-synaptics`` layer point to the relevant git
-repository and will be downloaded using the standard bitbake fetching mechanism
-of Yocto.
+.. _yocto_prerequisites:
 
 Build host requirements
 =======================
@@ -73,10 +62,23 @@ Other versions of Linux and Docker may also work but may need special configurat
 The build can also be executed directly on the host provided that the Yocto build
 dependencies are installed but this configuration is not supported by Synaptics.
 
-.. _yocto_quick_start:
+.. _yocto_build_image:
 
-Quick start
-===========
+How to build an image
+=====================
+
+Obtain the sources
+------------------
+
+The sources of the Synaptics Yocto release can be downloaded by cloning a `top
+level git repo <https://github.com/syna-astra/sdk>`_. The repository contains
+all the required layers as submodules::
+
+    $ git clone --recursive https://github.com/syna-astra/sdk.git
+
+The recipes contained in the ``meta-synaptics`` layer point to the relevant git
+repository and will be downloaded using the standard bitbake fetching mechanism
+of Yocto.
 
 Create the build environment
 ----------------------------
