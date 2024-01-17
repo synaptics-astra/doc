@@ -22,11 +22,11 @@ for the following machines, distributions and images:
     +---------+--------------+-------------------+
     | Machine | Distribution | Images            |
     +=========+==============+===================+
-    | xl1620  | poky         | syna-media        |
+    | sl1620  | poky         | syna-media        |
     +---------+--------------+-------------------+
-    | xl1640  | poky         | syna-media        |
+    | sl1640  | poky         | syna-media        |
     +---------+--------------+-------------------+
-    | xl1680  | poky         | syna-media        |
+    | sl1680  | poky         | syna-media        |
     +---------+--------------+-------------------+
 
 Obtaining the sources
@@ -141,7 +141,7 @@ Images
 --------------
 
 The ``syna-media`` image, based on the ``poky`` distribution, provides a basic graphical
-system with ``weston`` and it is suitable to test ``xl1640`` and ``xl1680`` features.
+system with ``weston`` and it is suitable to test ``sl1640`` and ``sl1680`` features.
 
 The image requires some specific configurations in ``conf/local.conf`` to work correctly. The
 ``meta-synaptics/setup/setup-environment`` script can be used to correctly setup a ``syna-media`` build automatically.
@@ -188,14 +188,14 @@ Some partitions are used by the early boot components stored in eMMC boot partit
 partitions cannot be removed but can be moved. The early boot components locate these partitions
 using the GPT found in the UDA. Loading from other hardware partitions is not supported.
 
-The default partition table of ``xl1640`` for the ``poky`` distro are
-is described in :ref:`xl1640_partitions`.
+The default partition table of ``sl1640`` for the ``poky`` distro are
+is described in :ref:`sl1640_partitions`.
 
 .. tabularcolumns:: |p{0.78125in}|p{2.66493055555556in}|p{0.677083333333333in}|p{1.77083333333333in}|
 
-.. _xl1640_partitions:
+.. _sl1640_partitions:
 
-.. table:: XL1640 Poky partition table
+.. table:: sl1640 Poky partition table
     :class: longtable
 
     +-------------------+----------------------------------------------------------------------+------------------+-------------------------------+
@@ -250,13 +250,13 @@ Flashing images
 Prerequisites
 ^^^^^^^^^^^^^
 
-In order to flash an image to the XL1680 and XL1640 evaluation kit board you need
+In order to flash an image to the sl1680 and sl1640 evaluation kit board you need
 the following hardware:
 
-  * XL1620, XL1640 or XL1680 evaluation kit board (EVK)
+  * sl1620, sl1640 or sl1680 evaluation kit board (EVK)
   * Power supply for the EVK
   * Debug board
-  * SPI dongle with firmware for the XL chip in use
+  * SPI dongle with firmware for the sl chip in use
   * 4-pin UART cable to connect the debug board to the EVK
   * USB cable to connect debug board to the host, the debug board
     connector has a USB Mini format.
