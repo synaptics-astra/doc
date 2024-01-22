@@ -3,7 +3,7 @@ copyright = '2023, Synaptics'
 author = 'Synaptics'
 release = '0.0.1'
 
-exclude_patterns = ["README.rst"]
+exclude_patterns = ["README.rst", "org-docs/**"]
 
 html_logo = "images/logo_full_white.png"
 
