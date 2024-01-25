@@ -31,7 +31,7 @@ To build a image run the following commands:
 
 4. Build the image::
 
-    pokyuser@xxxx:yyyy$ bitbake syna-media
+    pokyuser@xxxx:yyyy$ bitbake astra-media
 
 The image will be available in ``build-${MACHINE}/tmp/deploy/images/${MACHINE}/SYNAIMG/`` and can be flashed with
 the procedure described in :ref:`flashing`.

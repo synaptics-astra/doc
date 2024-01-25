@@ -22,11 +22,11 @@ for the following machines, distributions and images:
     +---------+--------------+-------------------+
     | Machine | Distribution | Images            |
     +=========+==============+===================+
-    | sl1620  | poky         | syna-media        |
+    | sl1620  | poky         | astra-media       |
     +---------+--------------+-------------------+
-    | sl1640  | poky         | syna-media        |
+    | sl1640  | poky         | astra-media       |
     +---------+--------------+-------------------+
-    | sl1680  | poky         | syna-media        |
+    | sl1680  | poky         | astra-media       |
     +---------+--------------+-------------------+
 
 .. _yocto_prerequisites:
@@ -40,7 +40,7 @@ The recommended hardware is a ``x86_64`` host with at least:
   * 32 GB of RAM
   * 150 GB of disk
 
-As an example, building from scratch the ``syna-media`` image for ``vs640`` on a
+As an example, building from scratch the ``astra-media`` image for ``vs640`` on a
 ``c5a.4xlarge`` AWS instance, which matches the requirements above, takes
 approximately 2 hours.
 
@@ -114,7 +114,7 @@ To build an image execute the following commands::
 
   pokyuser@xxxx:yyyy$ source meta-synaptics/setup/setup-environment
 
-  pokyuser@xxxx:yyyy$ bitbake syna-media
+  pokyuser@xxxx:yyyy$ bitbake astra-media
 
 The resulting image can be found in ``build-${MACHINE}/tmp/deploy/images/${MACHINE}/SYNAIMG/``.
 
@@ -141,14 +141,14 @@ This BSP is compatible with these layers:
 Images
 ======
 
-``syna-media``
+``astra-media``
 --------------
 
-The ``syna-media`` image, based on the ``poky`` distribution, provides a basic graphical
+The ``astra-media`` image, based on the ``poky`` distribution, provides a basic graphical
 system with ``weston`` and it is suitable to test ``sl1640`` and ``sl1680`` features.
 
 The image requires some specific configurations in ``conf/local.conf`` to work correctly. The
-``meta-synaptics/setup/setup-environment`` script can be used to correctly setup a ``syna-media`` build automatically.
+``meta-synaptics/setup/setup-environment`` script can be used to correctly setup a ``astra-media`` build automatically.
 
 For more details about these configurations please refer to the comments in the
 sample ``local.conf`` found in ``meta-synaptics/setup/conf/local.conf.sample``.
