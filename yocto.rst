@@ -142,7 +142,7 @@ Images
 ======
 
 ``astra-media``
---------------
+---------------
 
 The ``astra-media`` image, based on the ``poky`` distribution, provides a basic graphical
 system with ``weston`` and it is suitable to test ``sl1640`` and ``sl1680`` features.

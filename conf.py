@@ -5,6 +5,9 @@ release = '0.0.1'
 
 exclude_patterns = ["README.rst", "org-docs/**"]
 
+if not tags.tags.get('private', False):
+    exclude_patterns.append("private/**")
+
 html_logo = "images/logo_full_white.png"
 
 # -- General configuration ---------------------------------------------------
@@ -31,3 +34,5 @@ html_context = {
   'github_version': 'master',
   'conf_py_path': '/'
 }
+
+html_copy_source = False

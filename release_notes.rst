@@ -30,10 +30,9 @@ In order to be able to access the docker containers you will also need to create
 2. Ensure the token as the permission ``read:package`` when creating the token
 
 3. When you obtain the token run the following command::
-
-  $ docker login ghcr.io
-  Username: <enter your github username>
-  Password: <enter the token>
+    $ docker login ghcr.io
+    Username: <enter your github username>
+    Password: <enter the token>
 
 When cloning the ``sdk`` repository git will need to clone it using using a git URL to use this key to authenticate to GitHub to download the Yocto recipes:
 
@@ -58,31 +57,12 @@ This will ensure that the build environment will have access to the ssh keys whe
 inside the container can leverage the ssh known_hosts of your user.
 
 
-Using syna-astra-test release
------------------------------
-
-Currently ``syna-astra-test`` requires Single Sign-On (SSO). This means that when accepting the invitation above you need to 
-log-in with SSO.
-
-Adding the new SSH key above you need also to enable SSO as explained in the `GitHub documentation <https://docs.github.com/en/enterprise-cloud@latest/authentication/authenticating-with-saml-single-sign-on/authorizing-an-ssh-key-for-use-with-saml-single-sign-on>`_.
-
-Adding the personal access token PAT also requires to enable access to SSO as explaineed in the `GitHub documentation <https://docs.github.com/en/enterprise-cloud@latest/authentication/authenticating-with-saml-single-sign-on/authorizing-a-personal-access-token-for-use-with-saml-single-sign-on>`_.
-
-The clone command above needs to be modified as::
-
-    $ git clone --recursive git@github.com:syna-astra/sdk -b v0.0.1
-
-After running the ``setup-environment`` command above, run the following command to switch the environment from which the release is fetched::
-
-    $ echo 'SYNA_RELEASE_GIT_HOST = "git@github.com/syna-astra-test"' >> conf/local.conf
-
-
 Known issues
 ------------
 
-Durin the build the following messages are displayed::
+During the build the following messages are displayed::
 
-WARNING: synasdk-tools-native-0.0.1+gitAUTOINC+5b2d1a4ff6-r1 do_unpack: Failed to find a git repository in WORKDIR: /home/astra-test/sdk/build-sl1680/tmp/work/x86_64-linux/synasdk-tools-native/0.0.1+gitAUTOINC+5b2d1a4ff6-r1
-WARNING: synasdk-security-0.0.1+gitAUTOINC+5b2d1a4ff6-r2 do_unpack: Failed to find a git repository in WORKDIR: /home/astra-test/sdk/build-sl1680/tmp/work/sl1680-poky-linux/synasdk-security/0.0.1+gitAUTOINC+5b2d1a4ff6-r2
- linux-firmware-syna-5.15.140-r0 do_package_qa: QA Issue: Recipe LICENSE includes obsolete licenses GPLv2 [obsolete-license]
+    WARNING: synasdk-tools-native-0.0.1+gitAUTOINC+5b2d1a4ff6-r1 do_unpack: Failed to find a git repository in WORKDIR: /home/astra-test/sdk/build-sl1680/tmp/work/x86_64-linux/synasdk-tools-native/0.0.1+gitAUTOINC+5b2d1a4ff6-r1
+    WARNING: synasdk-security-0.0.1+gitAUTOINC+5b2d1a4ff6-r2 do_unpack: Failed to find a git repository in WORKDIR: /home/astra-test/sdk/build-sl1680/tmp/work/sl1680-poky-linux/synasdk-security/0.0.1+gitAUTOINC+5b2d1a4ff6-r2
+     linux-firmware-syna-5.15.140-r0 do_package_qa: QA Issue: Recipe LICENSE includes obsolete licenses GPLv2 [obsolete-license]
 
