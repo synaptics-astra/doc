@@ -29,11 +29,6 @@ References
 
 -  SyNAP User Guide
 
--  SL1620 RDK User Guide
-
--  SL1640 RDK User Guide
-
--  SL1680 RDK User Guide
 
 Introduction
 ============
