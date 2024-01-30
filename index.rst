@@ -6,7 +6,7 @@ Synaptics ASTRA SDK
    :glob:
 
    quickstart.rst
-   linux.rst
+   linux/index.rst
    yocto.rst
    release_notes.rst
    private/index*
@@ -23,7 +23,7 @@ For more in-depth information, the following documents are available:
 
   This guide explains in a few words how to get started with the Synaptics Astra SDK
 
-:doc:`linux`
+:doc:`linux/index`
 
   This guide serves as an introductory manual for users, providing a high-level overview of software usage, system
   components, multimedia, audio, graphics, security, connectivity, and SyNAP, along with example commands and references

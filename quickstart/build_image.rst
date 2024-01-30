@@ -34,6 +34,6 @@ To build a image run the following commands:
     pokyuser@xxxx:yyyy$ bitbake astra-media
 
 The image will be available in ``build-${MACHINE}/tmp/deploy/images/${MACHINE}/SYNAIMG/`` and can be flashed with
-the procedure described in :ref:`flashing`.
+the procedure described in :ref:`prepare_to_boot`.
 
 For more details, troubleshooting and information check the :ref:`Synaptics Astra Yocto Guide <yocto_build_image>`.

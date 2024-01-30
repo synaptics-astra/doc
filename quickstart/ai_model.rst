@@ -5,7 +5,7 @@ Convert and test an AI model
 
 .. note::
 
-   In addition to the :ref:`prerequisites for flashing <flashing_prerequisites>` you also need a host with
+   In addition to the :ref:`prerequisites for flashing <prepare_to_boot>` you also need a host with
    docker installed, an ethernet cable and a local network with DHCP
 
 To convert your own AI model and run it on an evaluation kit use the following steps:

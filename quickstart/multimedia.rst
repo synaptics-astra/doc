@@ -21,5 +21,5 @@ To play a video on a Synaptics Astra evaluation kit:
       $ export WAYLAND_DISPLAY=wayland-1
       $ gst-launch-1.0 filesrc location=sintel_trailer-720p.mp4 ! demux ! queue ! parser ! decoder ! videosink
 
-To learn about other multimedia demos refer to :ref:`multimedia_demos`.
+To learn about other multimedia demos refer to :ref:`multimedia`.
 

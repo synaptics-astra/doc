@@ -41,5 +41,5 @@ To run a image classification neural network on a random image using an evaluati
       122      7.7136  American lobster, Northern lobster, Maine lobster, Homarus americanus
 
 
-To learn about other ai demos refer to :ref:`ai_demos`.
+To learn about other ai demos refer to :ref:`synap`.
 
