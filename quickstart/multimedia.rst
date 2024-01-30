@@ -3,10 +3,6 @@ Play a video with hardware acceleration
 
 .. highlight:: console
 
-.. warning::
-
-    This doesn't work yet because v4l support is not merged yet on branch firebird
-
 To play a video on a Synaptics Astra evaluation kit:
 
 1. Install a pre-built image and connect to the board as described :doc:`here <flash_image>`
@@ -21,12 +17,9 @@ To play a video on a Synaptics Astra evaluation kit:
 
 5. Play the video::
 
-      $ XDG_RUNTIME_DIR=/run/user/0 WAYLAND_DISPLAY=wayland-1 \
-            gst-launch-1.0 filesrc location=sintel_trailer-720p.mp4 do-timestamp=true ! \
-            qtdemux name=demux demux.video_0 !  queue ! h264parse ! v4l2h264dec ! \
-            waylandsink fullscreen=true demux.audio_0 ! \
-            queue ! aacparse ! faad ! audioconvert ! alsasink device=hw:0,9
-
+      $ export XDG_RUNTIME_DIR=/run/user/0
+      $ export WAYLAND_DISPLAY=wayland-1
+      $ gst-launch-1.0 filesrc location=sintel_trailer-720p.mp4 ! demux ! queue ! parser ! decoder ! videosink
 
 To learn about other multimedia demos refer to :ref:`multimedia_demos`.
 

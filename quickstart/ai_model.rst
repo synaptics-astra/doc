@@ -24,10 +24,12 @@ To convert your own AI model and run it on an evaluation kit use the following s
 
     $ cd DIRECTORY_WITH_1.tflite
 
-    $ synap_convert --model 1.tflite --target VS680 --out-format ebg --out-dir converted-model
+    $ synap_convert --model 1.tflite --target ${CHIP_NAME} --out-dir converted-model
 
-   This command converts ``1.tflite`` to ``converted-model/1.nb`` and ``converted-model/1.json``, the model converted
-   for execution on the evaluation kit.
+   where ``CHIP_NAME`` is either ``SL1620``, ``SL1640`` or ``SL1680`` depending on the target device.
+
+   This command converts ``1.tflite`` to ``converted-model/model.synap``, the model converted
+   for execution on the evaluation kit. Change the target to 
 
 6. Find the ip address of the board with the following command on the target::
 
@@ -45,7 +47,7 @@ To convert your own AI model and run it on an evaluation kit use the following s
 
 7. Upload the converted model to the board by running the following command on the host::
 
-    $  scp converted-model/model.json converted-model/model.nb root@192.168.1.110:/tmp
+    $  scp converted-model/model.synap root@192.168.1.110:/tmp
 
 8. Then connect to the board and issue the following command::
 
