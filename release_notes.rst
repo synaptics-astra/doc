@@ -25,15 +25,6 @@ to the `syna-astra Organization <https://github.com/syna-astra>`_ and that you a
 You can check you are able to access the organization by browsing to the `sdk git <https://github.com/syna-astra/sdk>`__.
 You can review your organizations by checking your `profile settings <https://github.com/settings/organizations>`__.
 
-Setup authenticated SSH access
-------------------------------
-
-Before cloning the sdk you need to setup authentication with the following steps:
-
-1. Create a public/private key pair as described in the `GitHub documentation <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=linux#generating-a-new-ssh-key>`__.
-
-2. Add the generated public key to your GitHub profile as described in the `GitHub documentation <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account?platform=linux&tool=webui>`__.
-
 Setup authenticated Docker registry access
 ------------------------------------------
 
@@ -47,33 +38,50 @@ In order to be able to access the docker containers you will also need to create
     Username: <enter your GitHub username>
     Password: <enter the token>
 
-Use SSH to clone the SDK
-------------------------
 
-When cloning the ``sdk`` repository git will need to clone it using using a git URL to use this key to authenticate to GitHub to download the Yocto recipes:
+Initial setup of workspace
+--------------------------
 
-1. Ensure you have loaded your ssh-key into the ssh-agent running on your host. For more information check the `GitHub documentation <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=linux#adding-your-ssh-key-to-the-ssh-agent>`__.
+When first starting a build you need to perform following steps:
 
-2. Use the following command line to clone::
+1. Create a local directory where your build will be located::
 
-    $ git clone -b v0.0.1 --recursive git@github.com:syna-astra/sdk
+     $ mkdir workspace && cd workspace
 
-Setup build environment to use SSH authentication
--------------------------------------------------
+2. Create a directory to store the ssh configuration::
 
-When starting a build you need to perform these additional steps:
-
-1. Ensure you have loaded your ssh-key into the ssh-agent running on your host (see `GitHub documentation <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=linux#adding-your-ssh-key-to-the-ssh-agent>`__
+     $ mkdir ssh && chmod 700 ssh
 
 2. Use the following command line when starting the CROPS container::
 
-    $ docker run --rm -it -v $(pwd):$(pwd) \
-      -e SSH_AUTH_SOCK -v $SSH_AUTH_SOCK:$SSH_AUTH_SOCK \
-      -v $(pwd)/.ssh/known_hosts:/home/pokyuser/.ssh/known_hosts \
-      ghcr.io/syna-astra/crops --workdir=$(pwd)
+    $ docker run --rm -it -v $(pwd):$(pwd) -v $(pwd)/ssh:/home/pokyuser/.ssh ghcr.io/syna-astra/crops --workdir=$(pwd)
 
-This will ensure that the build environment will have access to the ssh keys when donwloading the sources of the different Astra recipes and that git
-inside the container can leverage the ssh known_hosts of your user.
+3. Create a ssh public/private keypair::
+
+     pokyuser $ ssh-keygen -t ed25519 -C "your_email@example.com"
+
+   To simplify your setup you can leave the passphrase empty, if your IT mandates a passphrase you may do so but you
+   will need to `setup an ssh-agent <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=linux#adding-your-ssh-key-to-the-ssh-agent>`__.
+
+4. Add the generated public key to your GitHub profile as described in the `GitHub documentation <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account?platform=linux&tool=webui>`__.
+
+5. Clone the sdk repository using ssh instead of https::
+
+     $ git clone -b v0.0.1 --recursive git@github.com:syna-astra/sdk
+
+   This step will also ask you to accept the github host key. You can validate the key using the information found
+   in the `GitHub Documentation <https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints>`_.
+   This step is important to ensure ``bitbake`` will also be able to successfully connect to GitHub.
+
+Restarting build environment from an existing workspace
+-------------------------------------------------------
+
+When starting an existing build environment you must change your directory to the ``workspace`` directory and
+start the build environment as follow::
+
+    $ docker run --rm -it -v $(pwd):$(pwd) -v $(pwd)/ssh:/home/pokyuser/.ssh ghcr.io/syna-astra/crops --workdir=$(pwd)
+
+The build environment will find the existing ssh key and known host keys from the initial setup.
 
 Known issues
 ------------

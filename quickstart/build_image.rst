@@ -5,8 +5,9 @@ Build a new image
 
 .. warning::
 
-    During the initial preview, access to Synaptics Astra software is protected with authentication. Before
-    performing these steps ensure you have successfully logged in as described in the :ref:`release notes <v0.0.1>`.
+    During the initial preview, access to Synaptics Astra software is protected with authentication. Please
+    follow the instructions in the :ref:`release notes <v0.0.1>` to setup an environment that works with
+    authentication.
 
 .. note::
 
@@ -14,13 +15,13 @@ Build a new image
 
 To build a image run the following commands:
 
-1. Clone the sources from `GitHub <https://github.com/syna-astra/sdk>`_ ::
-
-    $ git clone -b v0.0.1 --recursive https://github.com/syna-astra/sdk
-
-2. Start a build environment container::
+1. Start a build environment container::
 
     $ docker run --rm -it -v $(pwd):$(pwd) ghcr.io/syna-astra/crops --workdir=$(pwd)
+
+2. Clone the sources from `GitHub <https://github.com/syna-astra/sdk>`_ ::
+
+    pokyuser@xxxx:yyyy$ git clone -b v0.0.1 --recursive https://github.com/syna-astra/sdk && cd sdk
 
 3. Setup the build tree::
 

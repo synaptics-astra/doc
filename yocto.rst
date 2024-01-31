@@ -67,21 +67,14 @@ dependencies are installed but this configuration is not supported by Synaptics.
 How to build an image
 =====================
 
-Obtain the sources
-------------------
-
-The sources of the Synaptics Yocto release can be downloaded by cloning a `top
-level git repo <https://github.com/syna-astra/sdk>`_. The repository contains
-all the required layers as submodules::
-
-    $ git clone -b v0.0.1 --recursive https://github.com/syna-astra/sdk.git
-
-The recipes contained in the ``meta-synaptics`` layer point to the relevant git
-repository and will be downloaded using the standard bitbake fetching mechanism
-of Yocto.
-
 Create the build environment
 ----------------------------
+
+.. warning::
+
+    During the initial preview, access to Synaptics Astra software is protected with authentication. Please
+    follow the instructions in the :ref:`release notes <v0.0.1>` to setup an environment that works with
+    authentication.
 
 In order to ensure a correctly configured and clean environment, the build
 must be performed within a Docker container. To do so you need to start
@@ -103,9 +96,33 @@ the container.
 
 .. note::
   Synaptics provides a pre-built container at ``ghcr.io/syna-astra/crops``  that is automatically downloaded
-  but you can also compile your own version as follows::
+  when you run the command above but you can also compile from the sources available `here <https://github.com/syna-astra/crops>`_.
 
-    $ docker build --pull crops -t ghcr.io/syna-astra/crops
+Obtain the sources
+------------------
+
+.. warning::
+
+    During the initial preview, access to Synaptics Astra software is protected with authentication. Please
+    follow the instructions in the :ref:`release notes <v0.0.1>` to setup an environment that works with
+    authentication.
+
+The sources of the Synaptics Yocto release can be downloaded by cloning a `top
+level git repo <https://github.com/syna-astra/sdk>`_. The repository contains
+all the required layers as submodules.
+
+To clone the repository within the build environment use the following command:
+
+    pokyuser@xxxx:yyyy$ git clone -b v0.0.1 --recursive https://github.com/syna-astra/sdk.git && cd sdk
+
+The recipes contained in the ``meta-synaptics`` layer point to the relevant git
+repository and will be downloaded using the standard bitbake fetching mechanism
+of Yocto.
+
+.. note::
+
+    If you clone the repository above with a copy of git installed outside the build environment make sure you
+    installed also installed ``git-lfs``
 
 Build an image
 --------------
