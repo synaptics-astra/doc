@@ -12,6 +12,11 @@ Version 0.0.1
 This early access release of the Astra SDK is available only to registered users and for this reason cloning
 requires to setup authentication to GitHub.
 
+.. note::
+
+    It is recommended to use a Ubuntu 22.04 host to run the following instructions. See :ref:`yocto_prerequisites` for
+    more details.
+
 Organization invitation
 -----------------------
 
@@ -25,9 +30,9 @@ Setup authenticated SSH access
 
 Before cloning the sdk you need to setup authentication with the following steps:
 
-1. Create a public/private key pair as described in the `GitHub documentation <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key>`__.
+1. Create a public/private key pair as described in the `GitHub documentation <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=linux#generating-a-new-ssh-key>`__.
 
-2. Add the generated public key to your GitHub profile as described in the `GitHub documentation <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account>`__.
+2. Add the generated public key to your GitHub profile as described in the `GitHub documentation <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account?platform=linux&tool=webui>`__.
 
 Setup authenticated Docker registry access
 ------------------------------------------
@@ -39,6 +44,7 @@ In order to be able to access the docker containers you will also need to create
 2. Ensure the token as the permission ``read:package`` when creating the token
 
 3. When you obtain the token run the following command::
+
     $ docker login ghcr.io
     Username: <enter your github username>
     Password: <enter the token>
@@ -48,7 +54,7 @@ Use SSH to clone the SDK
 
 When cloning the ``sdk`` repository git will need to clone it using using a git URL to use this key to authenticate to GitHub to download the Yocto recipes:
 
-1. Ensure you have loaded your ssh-key into the ssh-agent running on your host. For more information check the `GitHub documentation <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent>`__.
+1. Ensure you have loaded your ssh-key into the ssh-agent running on your host. For more information check the `GitHub documentation <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=linux#adding-your-ssh-key-to-the-ssh-agent>`__.
 
 2. Use the following command line to clone::
 
@@ -59,7 +65,7 @@ Setup build environment to use SSH authentication
 
 When starting a build you need to perform these additional steps:
 
-1. Ensure you have loaded your ssh-key into the ssh-agent running on your host (see `GitHub documentation <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent>`__
+1. Ensure you have loaded your ssh-key into the ssh-agent running on your host (see `GitHub documentation <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=linux#adding-your-ssh-key-to-the-ssh-agent>`__
 
 2. Use the following command line when starting the CROPS container::
 
