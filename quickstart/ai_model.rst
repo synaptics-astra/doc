@@ -21,13 +21,17 @@ To convert your own AI model and run it on an evaluation kit use the following s
 
 3. Download ``1.tflite`` from `Kaggle <https://www.kaggle.com/models/tensorflow/mobilenet-v2/frameworks/tfLite/variations/1-0-224-quantized>`_
 
-4. Install an alias in the shell of the host to run the SyNAP Toolkit container::
+4. Download the docker image of the SyNAP toolkit::
 
-     $ alias synap_convert='docker run --rm -u $(id -u):$(id -g) -v $(pwd):$(pwd) --workdir $(pwd) ghcr.io/syna-astra/synap'
+     $ docker pull ghcr.io/syna-astra/synap
+
+5. Install an alias in the shell of the host to run the SyNAP Toolkit container:
+
+     $ alias synap_convert='docker run --rm -u $(id -u):$(id -g) -v $(pwd):$(pwd) --workdir $(pwd) ghcr.io/syna-astra/synap:v0.0.1'
 
    this command can be executed in any directory and will be valid for the current session.
 
-5. Convert the model with the default configuration by running the following command on the host::
+6. Convert the model with the default configuration by running the following command on the host::
 
     $ cd DIRECTORY_WITH_1.tflite
 
@@ -38,7 +42,7 @@ To convert your own AI model and run it on an evaluation kit use the following s
    This command converts ``1.tflite`` to ``converted-model/model.synap``, the model converted
    for execution on the evaluation kit. Change the target to 
 
-6. Find the ip address of the board with the following command on the target::
+7. Find the ip address of the board with the following command on the target::
 
     # ifconfig eth0
     eth0      Link encap:Ethernet  HWaddr 22:0F:36:10:03:E7
@@ -52,11 +56,11 @@ To convert your own AI model and run it on an evaluation kit use the following s
               RX bytes:5226689 (4.9 MiB)  TX bytes:108559 (106.0 KiB)
               Interrupt:45 Base address:0xa000
 
-7. Upload the converted model to the board by running the following command on the host::
+8. Upload the converted model to the board by running the following command on the host::
 
     $  scp converted-model/model.synap root@192.168.1.110:/tmp
 
-8. Then connect to the board and issue the following command::
+9. Then connect to the board and issue the following command::
 
     # cd /tmp
     # synap_cli random

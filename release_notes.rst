@@ -39,11 +39,9 @@ Setup authenticated Docker registry access
 
 In order to be able to access the docker containers you will also need to create a personal access token:
 
-1. Create a *classic* personal access token (PAT) as described in the `GitHub documentation <https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic>`__
+1. Create a *classic* personal access token (PAT) with ``read:package`` permissions as described in the `GitHub documentation <https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic>`__.
 
-2. Ensure the token as the permission ``read:package`` when creating the token
-
-3. When you obtain the token run the following command::
+2. After obtaining the token run the following command::
 
     $ docker login ghcr.io
     Username: <enter your github username>
@@ -58,7 +56,7 @@ When cloning the ``sdk`` repository git will need to clone it using using a git 
 
 2. Use the following command line to clone::
 
-    $ git clone --recursive git@github.com:syna-astra/sdk
+    $ git clone -b v0.0.1 --recursive git@github.com:syna-astra/sdk
 
 Setup build environment to use SSH authentication
 -------------------------------------------------

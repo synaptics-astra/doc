@@ -74,7 +74,7 @@ The sources of the Synaptics Yocto release can be downloaded by cloning a `top
 level git repo <https://github.com/syna-astra/sdk>`_. The repository contains
 all the required layers as submodules::
 
-    $ git clone --recursive https://github.com/syna-astra/sdk.git
+    $ git clone -b v0.0.1 --recursive https://github.com/syna-astra/sdk.git
 
 The recipes contained in the ``meta-synaptics`` layer point to the relevant git
 repository and will be downloaded using the standard bitbake fetching mechanism

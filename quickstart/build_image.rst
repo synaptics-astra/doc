@@ -16,7 +16,7 @@ To build a image run the following commands:
 
 1. Clone the sources from `github <https://github.com/syna-astra/sdk>`_ ::
 
-    $ git clone --recursive https://github.com/syna-astra/sdk
+    $ git clone -b v0.0.1 --recursive https://github.com/syna-astra/sdk
 
 2. Start a build environment container::
 
