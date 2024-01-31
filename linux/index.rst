@@ -383,12 +383,12 @@ over the network. Once the board is connected to the network, boot to
 the U-Boot prompt. All three U-Boot types support flashing from a TFTP
 server.
 
-The command 
-
 Initialize networking and request an IP address from a DHCP server on the local network::
+
     => net_init; dhcp; setenv serverip 10.10.10.10;
     
-Write the image to eMMC from the TFTP server using the command::    
+Write the image to eMMC from the TFTP server using the command::
+
     => tftp2emmc eMMCimg
 
 Write the SPI image to the SPI flash from the TFTP server using the
@@ -516,7 +516,7 @@ Audio Codecs
 ========= ================= ================== ==================
 Codec     Parser Plugin     Decoder Plugin     Encoder Plugin
 ========= ================= ================== ==================
-AAC       aacparse          faad               fdkaac
+AAC       aacparse          fdkaacdec          fdkaacenc
 Vorbis    N/A               vorbisdec          vorbisenc
 ========= ================= ================== ==================
 
@@ -625,7 +625,7 @@ audio stream::
 
     gst-launch-1.0 filesrc location=test_file.mp4  ! qtdemux name=demux \
         demux.video_0 ! queue ! h265parse ! v4l2h265dec ! queue ! waylandsink fullscreen=true \
-        demux.audio_0 ! queue ! aacparse ! faad ! audioconvert ! alsasink device=hw:0,9
+        demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,9
 
 Recording
 ^^^^^^^^^
