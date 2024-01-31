@@ -3,6 +3,11 @@ Convert and test an AI model
 
 .. highlight:: console
 
+.. warning::
+
+    During the initial preview, access to Synaptics Astra software is protected with authentication. Before
+    performing these steps ensure you have successfully logged in as described in the :ref:`release notes <v0.0.1>`.
+
 .. note::
 
    In addition to the :ref:`prerequisites for flashing <prepare_to_boot>` you also need a host with
@@ -18,7 +23,9 @@ To convert your own AI model and run it on an evaluation kit use the following s
 
 4. Install an alias in the shell of the host to run the SyNAP Toolkit container::
 
-    $ alias synap_convert='docker run --rm -u $(id -u):$(id -g) -v $(pwd):$(pwd) --workdir $(pwd) ghcr.io/syna-astra/synap'
+     $ alias synap_convert='docker run --rm -u $(id -u):$(id -g) -v $(pwd):$(pwd) --workdir $(pwd) ghcr.io/syna-astra/synap'
+
+   this command can be executed in any directory and will be valid for the current session.
 
 5. Convert the model with the default configuration by running the following command on the host::
 

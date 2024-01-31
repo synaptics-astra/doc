@@ -14,6 +14,11 @@ Synaptics ASTRA SDK
 
 Welcome to the Synaptics ASTRA SDK documentation.
 
+.. warning::
+
+    During the initial preview, access to Synaptics Astra software is protected with authentication. Before
+    performing these steps ensure you have successfully logged in as described in the :ref:`release notes <v0.0.1>`.
+
 Documentation
 *************
 
