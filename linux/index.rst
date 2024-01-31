@@ -12,7 +12,7 @@ which make up the BSP and how to interface with them.
 Supported Hardware
 ------------------
 
-The following Evaluation Kits and platforms are covered by this guide:
+The following Reference Kits and platforms are covered by this guide:
 
 -  SL1620 RDK Board
 
@@ -23,10 +23,6 @@ The following Evaluation Kits and platforms are covered by this guide:
 References
 ----------
 
--  U-Boot User Guide
-
--  Gstreamer User Guide
-
 -  SyNAP User Guide
 
 
@@ -36,7 +32,7 @@ Introduction
 The Synaptics Linux Board Support Package (BSP) contains the software
 and firmware required to operate the Astra SL16xx SoCs. It contains the
 components needed to boot OSes and interface with the hardware. This
-guide provides a description of this software components and information
+guide provides a description of these software components and information
 on how to interface with them. This document is useful for users who
 want to evaluate the Astra SL16xx class of SoCs and build products used
 these processors.
@@ -44,31 +40,31 @@ these processors.
 This document covers the components which are used by the Linux OS. For
 specific information on how to setup the build environment and build a
 Yocto based image which run the on the SL16xx EVK boards please see the
-Astra Yocto User Guide.
+`Astra Yocto User Guide <https://syna-astra.github.io/doc/yocto.html>`__.
 
-Specific information about the EVK hardware can be found in the SL16xx
-EVK User Guides.
+Specific information about the RDK hardware can be found in the SL16xx
+RDK User Guides.
 
 Setting up the Terminal
 =======================
 
-The SL16xx EVK boards provide a serial console which displays bootloader
+The SL16xx RDK boards provide a serial console which displays bootloader
 and OS messages to a console running on the host PC. These messages are
 useful to determining the status of the board early in the boot process
 or when a display is not connected. It also provides useful information
 during operation.
 
-Please see the SL16xx EVK User Guide for instructions on connecting the
-USB cable to the EVK / debug board. Windows and Mac host PCs will
-require an additional driver to interface with the USB to UART chip on
-the EVK / debug board. Please download the appropriate driver for your
+Please see the SL16xx RDK User Guide for instructions on connecting the
+USB cable to the RDK / debug board. Windows and Mac host PCs will
+require an additional driver to interface for the USB to UART chip on
+the RDK / debug board. Please download the appropriate driver for your
 host from `Silicon Labs CP210x USB to UART Bridge VCP
 Drivers <https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads>`__
 page. Linux hosts generally have support for this chip enabled by
 default.
 
 Once the driver is installed the serial console can be
-accessed using serial communications program like Putty, HyperTerminal,
+accessed using a serial communications program like Putty, HyperTerminal,
 Tera Term, Screen, or minicom.
 
 .. figure:: media/putty.png
@@ -81,7 +77,7 @@ Booting Linux
 Before the Linux Kernel begins executing on the Synaptics Astra
 Processor, low level firmware and software initializes the hardware and
 prepares the system for boot. This chapter provides an overview of the
-software components prepare the system for booting the Linux Kernel. It
+software components which prepare the system for booting the Linux Kernel. It
 will also describe how to prepare a boot device from which the software
 will be loaded.
 
@@ -94,11 +90,11 @@ section gives a brief description of each component.
 Preboot Firmware
 ^^^^^^^^^^^^^^^^
 
-The Preboot Firmware is a collection of low level firmware which
+The Preboot firmware is a collection of low level firmware which
 initializes specific hardware components and loads the software which
-runs in the Arm TrustZone environment. Once the Preboot Firmware
+runs in the Arm TrustZone environment. Once the Preboot firmware
 completes, execution will be transferred to the bootloader. The Preboot
-Firmware is provided as binary images which are written to the boot
+firmware is provided as binary images which are written to the boot
 device.
 
 Bootloader
@@ -106,7 +102,7 @@ Bootloader
 
 The Synaptics Astra Processors use the Synaptics U-Boot (SUBoot)
 bootloader to do additional hardware initialization and to boot the
-Linux Kernel. SUBoot is based on the open source U-Boot project.
+Linux Kernel. SUBoot is based on the open source U-Boot project. (`U-Boot Documentation <https://docs.u-boot.org/en/latest/>`__)
 
 Linux Kernel and Device Tree
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -120,7 +116,7 @@ process described in the Astra Yocto User Guide.
 The Linux kernel uses Device Tree data structures to describe the
 hardware components and their configurations on the system. The device
 tree source files are in the Linux Kernel source tree under that path
-``overlay/arch/arm64/boot/dts/synaptics/``.
+``arch/arm64/boot/dts/synaptics/``. These files are maintained in the `Astra Linux Kenel Overlay repository <https://github.com/syna-astra/linux_5_15-overlay>`__
 
 Root File System
 ^^^^^^^^^^^^^^^^
@@ -135,7 +131,7 @@ U-Boot
 ------
 
 As mentioned in Section 4.1.2 the Synaptics Astra Processor uses U-Boot
-as it's bootloader. There are three types of U-Boot which are used with
+as its bootloader. There are three types of U-Boot which are used with
 the processor. In addition to SUBoot there are SPI U-Boot and USB U-Boot
 variants which are used to flash or recover a board.
 
@@ -153,19 +149,20 @@ the contents of the eMMC.
 
 USB U-Boot allows the board to receive a copy of the USB version of
 U-Boot over the USB interface. The host PC runs the usbboot tool
-transfers the USB U-Boot image to the board and runs it. Once USB U-Boot
+to transfer the USB U-Boot image to the board and execute it. Once USB U-Boot
 is running on the board it can be used to write an image to the eMMC.
 
 SPI U-Boot is similar to USB U-Boot except that U-Boot runs from
-external SPI flash. Once SPI U-Boot is running on the board it can be
-used to write an image to the eMMC.
+SPI flash. The SPI flash may be located on the main board of the RDK or
+it may be a located on a SPI duagher card which is pluged into the board.
+Once SPI U-Boot is running on the board it can be used to write an image to the eMMC.
 
 .. _prepare_to_boot:
 
 Preparing the Boot Device
 -------------------------
 
-On power on the Synaptics Astra Processor will read firmware, the
+On power on the Synaptics Astra Processor will read the firmware, the
 bootloader, and the Linux Kernel from a boot device. The most common
 boot device is an eMMC device on the board. This section will discuss
 how to write a boot image to the eMMC.
@@ -173,18 +170,19 @@ how to write a boot image to the eMMC.
 Setting up the USB Boot Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Booting from USB required the usbboot software tool to the installed on
+Booting from USB requires the usbboot software tool to the installed on
 a host PC along with the Synaptics WinUSB Driver on Windows. It also
-requires setting up the serial console as described in Section 3. This
-section covers how to configure the PC and prepare for USB booting.
+requires setting up the serial console as described in the 
+``Setting up a Terminal`` section above. This section covers how to configure
+the PC and prepare for USB booting.
 
 Hardware Setup
 """"""""""""""
 
 To run usbboot you will need to connect the USB cable for the serial
-port as described in Section 3. This will allow you to see console
-messages during the flashing process. You will also need to connect a
-USB cable from the host PC to the micro USB 2.0 port of the board.
+port as described in the ``Setting up a Terminal`` section above.
+This will allow you to see console messages during the flashing process.
+You will also need to connect a USB cable from the host PC to the micro USB 2.0 port of the board.
 
 .. figure:: media/usb_boot_setup.png
 
@@ -193,13 +191,13 @@ USB cable from the host PC to the micro USB 2.0 port of the board.
 Installing the WinUSB Driver on Windows
 """""""""""""""""""""""""""""""""""""""
 
-Windows requires a special USB Kernel driver to communicate with the
+Windows requires a special USB kernel driver to communicate with the
 Astra board over USB. Please download the driver from
-`GitHub <https://github.com/aduggan-syna/Synaptics_USB_Boot>`__. Linux and Mac hosts
+`GitHub <https://github.com/syna-astra/usb-tool>`__. Linux and Mac hosts
 can access the Astra board from userspace and do not need any additional
 kernel drivers.
 
-After downloading in decompressing the USB Boot software package, right
+After downloading and decompressing the USB Boot software package, right
 click on the ``SYNA_WinUSB.inf`` file in the ``Synaptics_WinUSB_Driver``
 directory. Select "Install" from the drop down menu.
 
@@ -218,14 +216,14 @@ Driver for Synaptics Processors" when operating in USB Boot mode.
 Running the USBBoot Tool
 """"""""""""""""""""""""
 
-Also included in the Synaptics USB Boot package is the usbboot userspace
+Also included in the Synaptics usb-tool package is the usbboot userspace
 tool. This is the tool which communicates with the Astra board over USB.
-Each Astra RDK board will have its own usbboot directory. Include each
+Each Astra RDK board will have its own usbboot directory. Included in each
 directory will be the ``usbboot.exe`` binary, the ``run.bat`` script, support
 DLLs, and an images directory which contains all of the images needed to
 boot the board. This include images which contain the USB U-Boot
-bootloader. To run the tool simply double click on the run.bat file to
-execute the binary using the specific options required for
+bootloader. To run the tool simply double click on the run.bat file. This
+script will execute the binary using the specific options required for
 your RDK board.
 
 .. figure:: media/usb_user_tool_win.png
@@ -247,11 +245,11 @@ Booting using USBBoot
 
 Once the usbboot environment has been setup and the usbboot tool is
 running on the host PC, the Astra board will need to be placed into USB
-Boot mode. To do that press and hold the "USB-Boot" button the on the
+Boot mode. To do that press and hold the "USB-Boot" button on the
 RDK board. Then press and release the "Reset" button. Be sure to hold
 the "USB-Boot" button long enough so that the board can reset and detect
 that the button is pressed. After booting into USB Boot mode the U-Boot
-prompt "=>" will be displayed in the serial console.
+prompt "=>" will be displayed in the serial console or telnet session.
 
 
 .. figure:: media/usb_boot_output_win.png
@@ -263,16 +261,20 @@ Setting up the SPI Boot Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Booting from SPI does not require any additional software on the host
-besides the software for using the serial console as described in
-Section 3.
+besides the software for using the serial console as described in the
+``Setting up a Terminal`` section above.
 
 Hardware Setup
 """"""""""""""
-For SPI boot you will need to connect the USB cable for the
-serial port as described in Section 3. This will allow you to see
-console messages during the flashing process. You will also need a USB
-Disk or Ethernet cable depending on where the eMMC image files are
-located.
+For SPI boot, you will need to connect the USB cable for the
+serial port as described in the ``Setting up a Terminal`` section above.
+This will allow you to see console messages during the flashing process.
+You will also need a USB Disk or Ethernet cable depending on where the eMMC
+image files are located.
+
+If your board does not have SPI flash integrated onto the main board, then connect 
+the external SPI daughter card before powering on the board. The SPI daughter card
+is labeled ``SPI DC`` in the figure below.
 
 .. figure:: media/spi_boot_setup.png
 
@@ -282,7 +284,7 @@ located.
 Booting using SPI Boot
 """"""""""""""""""""""
 
-Need details on how to do this using the RDK board.
+If the SPI flash contains a valid SPI U-Boot image then the board will boot from SPI.
 
 Booting using SUBoot
 """"""""""""""""""""
@@ -294,6 +296,10 @@ To access the U-Boot prompt type any character into the serial console
 before then message "Hit any key to stop autoboot: 0". This will
 interrupt the normal boot process and allow inputting of U-Boot
 commands.
+
+.. figure:: media/suboot_setup.png
+
+    Hardware setup for updating images with SUBoot
 
 Flashing Images from USB Host
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -314,7 +320,7 @@ Write the image to the eMMC using the command::
 
     => l2emmc eMMCimg
 
-The parameter eMMCimg is the name of the image directory in the usbboot
+The parameter eMMCimg is the name of the image directory under the usbboot
 tool's images directory.
 
 Flashing Image to SPI Flash
@@ -326,12 +332,15 @@ Flashing Image to SPI Flash
 
 USBBoot can also be used to program the SPI flash. To program the SPI
 flash, copy the SPI image file to the "images" directory in the usbboot
-tool directory for your Astra RDK board.
+tool's directory for your Astra RDK board.
 
 Write the image to the SPI flash using the commands::
 
     => usbload spi_uboot_en.bin 0x10000000
     => spinit; erase f0000000 f02fffff; cp.b 0x10000000 0xf0000000 0x300000;
+
+.. note::
+    Connect the external SPI daughter card after the U-Boot prompt is displayed (if applicable).
 
 Flashing Images from External Storage
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -345,10 +354,10 @@ Flashing Images from a USB Drive
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To flash an Astra image from an external USB drive simply copy the image
-directory to the USB drive. The USB drive will need a Fat32 formatted
-file system with enough capacity to fit the Astra image. Insert the USB
-drive into either the USB 3.0 or USB 2.0 ports on the board and boot to
-the U-Boot prompt. All three U-Boot types support flashing from an
+directory to the USB drive. The USB drive will need a partition witha a 
+Fat32 formatted file system with enough capacity to fit the Astra image.
+Insert the USB drive into either the USB 3.0 or USB 2.0 ports on the board
+and boot to the U-Boot prompt. All three U-Boot types support flashing from an
 external USB drive.
 
 Write the image to eMMC using the command::
@@ -361,19 +370,25 @@ Write the SPI image to the SPI flash using the command::
     => spinit; erase f0000000 f02fffff; cp.b 0x10000000 0xf0000000 0x300000;
 
 
+.. note::
+    Connect the external SPI daughter card after the U-Boot prompt is displayed (if applicable).
+
 Flashing Images from a TFTP Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To flash an Astra image from a TFTP server you will first need to
-connect the Astra board to a network using the ethernet port. Copy the
+connect the Astra board to a local network using the ethernet port. Copy the
 Astra image to the TFTP server so that it can be accessed by the board
 over the network. Once the board is connected to the network, boot to
 the U-Boot prompt. All three U-Boot types support flashing from a TFTP
 server.
 
-Write the image to eMMC from the TFTP server using the command::
+The command 
 
+Initialize networking and request an IP address from a DHCP server on the local network::
     => net_init; dhcp; setenv serverip 10.10.10.10;
+    
+Write the image to eMMC from the TFTP server using the command::    
     => tftp2emmc eMMCimg
 
 Write the SPI image to the SPI flash from the TFTP server using the
@@ -387,6 +402,14 @@ command::
     In the examples above the TFTP server's address is
     10.10.10.10. Please replace this IP with the IP address of the server
     hosting TFTP.
+
+.. figure:: media/usb_boot_tftp_setup.png
+
+    Hardware setup for USB boot and a TFTP server
+
+.. figure:: media/spi_boot_tftp_setup.png
+
+    Hardware setup for SPI boot and a TFTP server
 
 The Astra Image
 ---------------
@@ -426,15 +449,12 @@ misc               Boot control settings, required                              
 home               Mounted in /home, can be customized                                No                 Linux Userspace
 ================== ================================================================== ================== ===========================
 
-Table copied from Yocto User Guide. Better to put it here? Eventually
-when everything is rst it can link from one to the other.
-
 Booting Linux
 -------------
 
 By default, the Astra board will boot into linux if a valid image has
 been written to the eMMC when the board is powered on. After writing an
-image to the eMMC issue the reset command in U-Boot, press the "Reset"
+image to the eMMC, issue the reset command in U-Boot. Press the "Reset"
 button on the board, or power cycle the board to boot into Linux.
 
 U-Boot reset command::
@@ -459,21 +479,52 @@ is empty.
 Multimedia
 ==========
 
-The Astra SL16xx SoCs hardware and software components which accelerate
+The Synaptics Astra SoCs contain hardware and software components which accelerate
 the processing of multimedia workloads. The Linux BSP provides Gstreamer
 plugins which allow users to develop programs which utilize these
 multimedia components to improve multimedia performance. This chapter
 provides an overview on how to use the Gstreamer command line interface
 to build pipelines using these plugins. More in depth information on how
-to use Gstreamer on Astra SL16xx SoCs can be found in the Astra
+to use Gstreamer on Astra processors can be found in the Astra
 Gstreamer User Guide. Information on the Gstreamer framework can be
 found at https://gstreamer.freedesktop.org/.
+
+Gstreamer Plugins
+-----------------
+
+Gstreamer uses plugin modules which are used to extend Gstreamer functionality.
+The Astra platform uses plugins to allow its hardware components to be used
+in a Gstreamer pipeline. The tables below list plugins which are used by
+the codecs support by the Astra platform.
+
+Video Codes
+^^^^^^^^^^^
+
+========= ================= ================== ==================
+Codec     Parser Plugin     Decoder Plugin     Encoder Plugin
+========= ================= ================== ==================
+H.264     h264parse         v4l2h264dec        v4l2h264enc
+H.265     h265parse         v4l2h265dec        None
+VP8       N/A               v4l2vp8dec         v4l2vp8enc
+VP9       vp9parse          v4l2vp9dec         None
+AV1       av1parse          v4l2av1dec         None
+========= ================= ================== ==================
+
+Audio Codecs
+^^^^^^^^^^^^
+
+========= ================= ================== ==================
+Codec     Parser Plugin     Decoder Plugin     Encoder Plugin
+========= ================= ================== ==================
+AAC       aacparse          faad               fdkaac
+Vorbis    N/A               vorbisdec          vorbisenc
+========= ================= ================== ==================
 
 Gstreamer Examples
 ------------------
 
 To run the following Gstreamer examples please make sure to set the
-following variables in your environment. These variables will need to be
+following variables in your environment. These variables may need to be
 set when running commands from the serial console or a remote shell::
 
     export XDG_RUNTIME_DIR=/var/run/user/0
@@ -498,7 +549,7 @@ Media Playback
 Audio Sinks
 """""""""""
 
-The following examples use the ALSA audio sink to output using the ALSA
+The following examples use the ALSA audio sink to output audio using the ALSA
 audio API (for more details refer to the `Gstreamer documentation <https://gstreamer.freedesktop.org/documentation/alsa/alsasink.html?gi-language=c#alsasink>`__ for more details).
 The examples use the device hw:0,9 which corresponds to
 the HDMI output device. Hardware devices can be found in the file
@@ -506,11 +557,26 @@ the HDMI output device. Hardware devices can be found in the file
 board. Device 0-9 corresponds to the HDMI device and will be used in the
 examples below.
 
+Example /proc/asound/pcm output from SL1680::
+
+    root@sl1680:~# cat /proc/asound/pcm
+    00-00: soc-i2so1 snd-soc-dummy-dai-0 :  : playback 1
+    00-01: soc-spdifo snd-soc-dummy-dai-1 :  : playback 1
+    00-02: soc-dmic snd-soc-dummy-dai-2 :  : capture 1
+    00-03: soc-i2si2 snd-soc-dummy-dai-3 :  : capture 1
+    00-04: soc-i2si3 snd-soc-dummy-dai-4 :  : capture 1
+    00-05: soc-i2s-pri-lpbk snd-soc-dummy-dai-5 :  : capture 1
+    00-06: soc-i2s-hdmi-lpbk snd-soc-dummy-dai-6 :  : capture 1
+    00-07: soc-spdifi snd-soc-dummy-dai-7 :  : capture 1
+    00-08: soc-i2s-earc snd-soc-dummy-dai-8 :  : capture 1
+    00-09: soc-hdmio snd-soc-dummy-dai-9 :  : playback 1
+    01-00: USB Audio : USB Audio : capture 1
+
 Video Sinks
 """""""""""
 
-The following examples use the wayland video sink to create a window and
-render decoded frames (see `GStreamer documentation <https://gstreamer.freedesktop.org/documentation/waylandsink/index.html?gi-language=c#waylandsink>`__ for more details)
+The following examples use the Wayland video sink to create a window and
+render the decoded frames (see `GStreamer documentation <https://gstreamer.freedesktop.org/documentation/waylandsink/index.html?gi-language=c#waylandsink>`__ for more details)
 
 Audio playback
 ^^^^^^^^^^^^^^
@@ -531,8 +597,8 @@ Video playback
 ^^^^^^^^^^^^^^
 
 Playing a video file involves reading the file, demuxing a video stream,
-parsing the encoded data, and decoding the data using the video decoder,
-and outputting the video to a video sink::
+parsing the encoded data, and decoding the data using the video decoder.
+Finally the decodef frames our output to the video sink::
 
     gst-launch-1.0 filesrc location=video_file ! demux ! queue ! parser ! decoder ! videosink
 
@@ -561,18 +627,6 @@ audio stream::
         demux.video_0 ! queue ! h265parse ! v4l2h265dec ! queue ! waylandsink fullscreen=true \
         demux.audio_0 ! queue ! aacparse ! faad ! audioconvert ! alsasink device=hw:0,9
 
-Encoding
-^^^^^^^^
-
-Audio encoding
-""""""""""""""
-
-Video encoding
-""""""""""""""
-
-Transcoding
-"""""""""""
-
 Recording
 ^^^^^^^^^
 
@@ -592,17 +646,6 @@ container file and written to the file /tmp/alsasrc.ogg::
 
     gst-launch-1.0 -v alsasrc device=hw:0,2 ! queue ! audioconvert ! vorbisenc ! oggmux ! filesink location=/tmp/alsasrc.ogg
 
-Video recording
-"""""""""""""""
-
-Audio / Video recording
-"""""""""""""""""""""""
-
-Streaming / RTSP
-^^^^^^^^^^^^^^^^
-
-https://synaptics.atlassian.net/wiki/spaces/^5fe03bad208dbf01070aaee6/pages/38104629901/GStreamer+RTP+UDP+playback
-
 Camera
 ^^^^^^
 
@@ -615,13 +658,14 @@ To display video captured from a camera to output it to the video sink::
     gst-launch-1.0 v4l2src device=/dev/videoX ! "video data,framerate,format,width,height" ! video sink
 
 The following example reads captured data from the V4L2 device
-/dev/video2 and applied the capabilities filter before sending the
+/dev/video2 and applies the capabilities filter before sending the
 output to the wayland sink::
 
     gst-launch-1.0 v4l2src device=/dev/video2 ! "video/x-raw,framerate=30/1,format=YUY2,width=640,height=480" ! waylandsink fullscreen=true
 
 AI Piplelines
 ^^^^^^^^^^^^^
+*Coming Soon*
 
 Gstreamer Playbin Plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -630,7 +674,7 @@ Astra platforms contain the Gstreamer playbin plugin. This plugin can
 automatically determine what type of pipeline to construct based on
 automatic file type recognition (see `Gstreamer documentation <https://gstreamer.freedesktop.org/documentation/playback/playbin.html?gi-language=c>`__). This simplifies pipeline creation.
 
-Playbin will autodetect the media file located at uri and create a
+Playbin will autodetect the media file located at the specified uri and create a
 pipeline for it. It will then display the video on the video sink and
 render the audio on the audio sink. The video-sink and audio-sink
 parameters are optional. I they are not included the default video and
@@ -642,59 +686,10 @@ Using playbin the example in :ref:`audio_sinks` can be reduced to::
 
     gst-launch-1.0 playbin uri=file:///mnt/1_hevc.mp4 video-sink="waylandsink fullscreen=true" audio-sink="alsasink device=hw:0,9"
 
-Gstreamer Plugins
------------------
-
-Gstreamer uses plugin modules which are used to extend Gstreamer. The
-Astra platform uses plugins to allow its hardware components to be used
-in a Gstreamer pipeline. The tables below list plugins which are used by
-the codecs support by the Astra platform.
-
-Video Codes
-^^^^^^^^^^^
-
-========= ================= ================== ==================
-Codec     Parser Plugin     Decoder Plugin     Encoder Plugin
-========= ================= ================== ==================
-H.264     h264parse         v4l2h264dec        v4l2h264enc
-H.265     h265parse         v4l2h265dec        None
-VP8       N/A               v4l2vp8dec         v4l2vp8enc
-VP9       vp9parse          v4l2vp9dec         None
-AV1       av1parse          v4l2av1dec         None
-========= ================= ================== ==================
-
-Audio Codecs
-^^^^^^^^^^^^
-
-========= ================= ================== ==================
-Codec     Parser Plugin     Decoder Plugin     Encoder Plugin
-========= ================= ================== ==================
-AAC       aacparse          faad               fdkaac
-Vorbis    N/A               vorbisdec          vorbisenc
-========= ================= ================== ==================
-
-Display
-=======
-
-How to use test_disp to set resolution and other information on working
-with HDMI displays.
-
-Security
-========
-
-There're couple of security acceleration subsystem defined in SL16x0
-platform. Do we need to be exposed to customers?
-
-Security flow and subsystem
----------------------------
-
-Security service provided by SL16x0 system
-------------------------------------------
-
 Connectivity
 ============
 
-Bluetooth and Wi-Fi are supported on SL16x0 through on-board chip
+Bluetooth and Wi-Fi are supported on Astra platforms through on-board chip
 solutions and external hardware. The following table lists the various
 on-board chips and external solutions:
 
@@ -717,189 +712,177 @@ SL1680       SYNA 43752      M.2 PCIe
 SL1680       SYNA 43756E     M.2 PCIe             
 ============ =============== ===================== ========================================================
 
-The wireless driver supports wpa_supplicant, which is a
-WEP/WPA/WPA2/WPA3 encryption authentication tool ( `wpa_supplicant <https://wiki.archlinux.org/title/wpa_supplicant>`__).
+The Synaptics Astra Linux BSP contains all of the drivers and firmware required to use the 43xxx modules with both PCIe and SDIO interfaces.
+Wireless network management is handled by the WPA Supplicant daemon which key negotiation with a WPA Authenticator. It supports WEP, WPA, WPA2, and WPA3
+authentication standards. ( See `wpa_supplicant <https://wiki.archlinux.org/title/wpa_supplicant>`__ for more details)
 
-Wi-Fi driver: supports SYNA 43xxx modules with PCIe and SDIO interfaces.
-(as above table)
+Setting up Wifi with WPA Supplicant
+------------------------------------
+The following setcion describes how to setup Wifi on the Astra platform using WPA Supplicant.
 
-Firmware: The Synaptics release package (SDK) already includes all SL
-processor, WIFI-BT firmware. It requires the acceptance of Synaptics
-License.
+Generate the WPA Prehared key
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Generating a preshared key from a passphrase avoids having to store the passphrase in the WPA Supplicant config file.
 
-Step of using wpa_supplicant to setup WIFI
-------------------------------------------
+From the shell, use the wpa_passphrase command line tool to generate a WPA preshared key from a passphrase::
 
-wpa_passphase::
-
-    root@vs680:^# wpa_passphrase synaptics 12345678
-
+    root@sl1680:^# wpa_passphrase network_name 12345678
     network={
-
-    ssid="synaptics"
-
-    #psk="12345678"
-
-    psk=5ba83b0673ea069dafe5d5f1af8216771c13be6ad6f11dac9dc0e90b0c604981
-
+        ssid="network_name"
+        psk=5ba83b0673ea069dafe5d5f1af8216771c13be6ad6f11dac9dc0e90b0c604981
     }
 
-Link up wlan0::
+Bringing up the wlan interface
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Use ifconfig to instruct the kernel to bring up the wlan interface::
 
     ifconfig wlan0 up
 
-Create directory /etc/wpa_supplicant and create file /etc/wpa_supplicant/wpa_supplicant-wlan0.conf and
-input below items::
+Creating the WPA Supplicant Configuration File
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+WPA Supplicant uses a config file to configure the Wifi connection. This configuration file is located in /etc/wpa_supplicant.
+
+Create the /etc/wpa_supplicant directory::
+
+    mkdir -p /etc/wpa_supplicant
+
+Create the file /etc/wpa_supplicant/wpa_supplicant-wlan0.conf with options for your Wifi Network.
+
+Contents of an example wpa_supplicant-wlan0.conf::
 
     ctrl_interface=/var/run/wpa_supplicant
-
     ctrl_interface_group=0
-
     update_config=1
 
     network={
-
-    ssid="synaptics"
-
-    psk=5ba83b0673ea069dafe5d5f1af8216771c13be6ad6f11dac9dc0e90b0c604981
-
-    key_mgmt=WPA-PSK
-
-    proto=WPA2
-
-    pairwise=CCMP TKIP
-
-    group=CCMP TKIP
-
-    scan_ssid=1
-
+        ssid="network_name"
+        psk=5ba83b0673ea069dafe5d5f1af8216771c13be6ad6f11dac9dc0e90b0c604981
+        key_mgmt=WPA-PSK
+        scan_ssid=1
     }
 
-create /etc/systemd/network/25-wlan.network and put below lines in it::
+Configure systemd-networkd
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+The wlan interface needs to be enabled in the systemd-networkd system daemon configuration.
+
+Create the new file /etc/systemd/network/25-wlan.network with the following contents::
+ 
     [Match]
-
     Name=wlan0
 
     [Network]
-
     DHCP=ipv4
 
-Enable and restart wpa_supplicant service::
+Enable Wifi Services
+^^^^^^^^^^^^^^^^^^^^
+The network daemons need to be restarted to load the new configuration.
+
+Restart network daemons::
+
+    systemctl restart systemd-networkd.service
+    systemctl restart wpa_supplicant@wlan0.service
+
+Enable wpa_supplicant on boot up::
 
     systemctl enable wpa_supplicant@wlan0.service
 
-    systemctl restart systemd-networkd.service
-
-    systemctl restart wpa_supplicant@wlan0.service
-
-
 Setup the Access Point (AP mode) with hostapd
 ---------------------------------------------
+The Wifi interface can also be configured to act as an access point using `hostapd <https://w1.fi/hostapd/>`__.
+Additional packages may need to be installed to support hostapd and iptables. Please see the Astra Yocto User Guide
+for instructions on how to add the hostapd and iptables packages to your image.
 
-1. Add hostapd and iptables in image
+Configure Networking to use hostapd
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   Add below line in ``conf/local.conf``::
+To configure the wlan device to use hostapd add the following entries to the /etc/network/interfaces file::
 
-     IMAGE_INSTALL:append = " hostapd iptables"
+    auto wlan0
+    iface wlan0 inet static
+        address 192.168.10.1
+        netmask 255.255.255.0
+        post-up systemctl start hostapd
+        pre-down systemctl stop hostapd
 
-2. Update or add network and hostapd config files
+Configure systemd-networkd
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    1. Add /etc/network/interfaces::
+The wlan interface needs to be enabled in the systemd-networkd system daemon configuration.
 
-            auto wlan0
+Create the new file /etc/systemd/network/10-wlan0.network with the following contents::
 
-            iface wlan0 inet static
+    [Match]
+    Name=wlan0
 
-            address 192.168.10.1
+    [Network]
+    Address=192.168.10.1/24
+    DHCPServer=yes
 
-            netmask 255.255.255.0
+    [DHCPServer]
+    EmitDNS=yes
 
-            post-up systemctl start hostapd
+Configure hostapd
+^^^^^^^^^^^^^^^^^
 
-            pre-down systemctl stop hostapd
+Create the file /etc/hostapd.conf with the ip, ssid, and passphrase of the Wifi network you are creating. 
 
-    2. Add /etc/systemd/network/10-wlan0.network::
+Example::
 
-            [Match]
-
-            Name=wlan0
-
-            [Network]
-
-            Address=192.168.10.1/24
-
-            DHCPServer=yes
-
-            [DHCPServer]
-
-            EmitDNS=yes
-
-    3. Update below items in /etc/hostapd.conf::
-
-            own_ip_addr=192.168.10.1
-
-            ssid=yocto640
-
-            wpa=2
-
-            wpa_passphrase=1234567890
+    own_ip_addr=192.168.10.1
+    ssid=yocto640
+    wpa=2
+    wpa_passphrase=1234567890
 
 
-3. Update and save iptables
+Configuring IP Forwarding Firewall Rules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   Run below commands on device::
+IP Forwarding and NAT need to be configured to forward traffic coming from be new wireless network.
 
-        iptables –F
+The following is an example of using iptables to configure NAT and save the new rules to /etc/iptables/iptables.rules
+so that they can be loaded at boot::
 
-        iptables -F INPUT
+    iptables –F
+    iptables -F INPUT
+    iptables -F OUTPUT
+    iptables -F FORWARD
+    iptables -t nat -F
+    iptables -t mangle -F
+    iptables -A INPUT -j ACCEPT
+    iptables -A OUTPUT -j ACCEPT
+    iptables -A FORWARD -j ACCEPT
+    iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+    iptables-save > /etc/iptables/iptables.rules
 
-        iptables -F OUTPUT
-
-        iptables -F FORWARD
-
-        iptables -t nat -F
-
-        iptables -t mangle -F
-
-        iptables -A INPUT -j ACCEPT
-
-        iptables -A OUTPUT -j ACCEPT
-
-        iptables -A FORWARD -j ACCEPT
-
-        iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-
-        iptables-save > /etc/iptables/iptables.rules
-
-4. Add /etc/sysctl.d/ip_forward.conf to enable ip_forward::
-
-    #Enable ipv4 ip_forward
+IP Forwarding is enabled by setting the following entries in /etc/sysctl.d/ip_forward.conf::
 
     net.ipv4.ip_forward = 1
 
-    #Enable ipv6 ip_forward
+Run the following command to enable ip forwarding::
 
-    net.ipv6.conf.all.forwarding = 1
+    sysctl -p /etc/sysctl.d/ip_forward.conf
 
+Enabling Services
+^^^^^^^^^^^^^^^^^
 
-   Run command "sysctl -p /etc/sysctl.d/ip_forward.conf " to enable
-   ip_forward immediately
+Start hostapd and iptables::
 
-   (ipv6 has not been verified)
+    systemctl start hostapd
+    systemctl start iptables
 
-5. Enable services::
+Enable hostapd and iptables on boot::
 
-        systemctl start hostapd
-
-        systemctl start iptables
-
-        systemctl enable hostapd
-
-        systemctl enable iptables
+    systemctl enable hostapd
+    systemctl enable iptables
 
 .. _synap:
 
 Machine Learning with SyNAP
 ===========================
 
+The Synaptics Astra platform provides the SyNAP framwork, which supports the execution of neural networks on the 
+platforms hardware accelerators. This framework allows users to run programs which take advantage of the Neural Prococessing Unit (NPU)
+and Graphics Processing Unit (GPU) to accelerate the excecution of neural networks. (see the `SyNAP documentation <https://github.com/syna-astra/synap-release/blob/v0.0.1/doc/SyNAP.pdf>`__ for more details.)
