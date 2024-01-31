@@ -40,7 +40,7 @@ To convert your own AI model and run it on an evaluation kit use the following s
    where ``CHIP_NAME`` is either ``SL1620``, ``SL1640`` or ``SL1680`` depending on the target device.
 
    This command converts ``1.tflite`` to ``converted-model/model.synap``, the model converted
-   for execution on the evaluation kit. Change the target to 
+   for execution on the evaluation kit.
 
 7. Find the ip address of the board with the following command on the target::
 

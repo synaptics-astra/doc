@@ -14,7 +14,7 @@ Build a new image
 
 To build a image run the following commands:
 
-1. Clone the sources from `github <https://github.com/syna-astra/sdk>`_ ::
+1. Clone the sources from `GitHub <https://github.com/syna-astra/sdk>`_ ::
 
     $ git clone -b v0.0.1 --recursive https://github.com/syna-astra/sdk
 

@@ -44,7 +44,7 @@ In order to be able to access the docker containers you will also need to create
 2. After obtaining the token run the following command::
 
     $ docker login ghcr.io
-    Username: <enter your github username>
+    Username: <enter your GitHub username>
     Password: <enter the token>
 
 Use SSH to clone the SDK
