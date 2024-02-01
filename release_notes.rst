@@ -54,7 +54,7 @@ When first starting a build you need to perform following steps:
 
 2. Use the following command line when starting the CROPS container::
 
-    $ docker run --rm -it -v $(pwd):$(pwd) -v $(pwd)/ssh:/home/pokyuser/.ssh ghcr.io/syna-astra/crops --workdir=$(pwd)
+    $ docker run --rm -it -v $(pwd):$(pwd) -v $(pwd)/ssh:/home/pokyuser/.ssh ghcr.io/syna-astra/crops:v0.0.1 --workdir=$(pwd)
 
 3. Create a ssh public/private keypair::
 
@@ -67,7 +67,7 @@ When first starting a build you need to perform following steps:
 
 5. Clone the sdk repository using ssh instead of https::
 
-     $ git clone -b v0.0.1 --recursive git@github.com:syna-astra/sdk
+     $ git clone -b v0.0.1 --recurse-submodules git@github.com:syna-astra/sdk
 
    This step will also ask you to accept the github host key. You can validate the key using the information found
    in the `GitHub Documentation <https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints>`_.
@@ -79,7 +79,7 @@ Restarting build environment from an existing workspace
 When starting an existing build environment you must change your directory to the ``workspace`` directory and
 start the build environment as follow::
 
-    $ docker run --rm -it -v $(pwd):$(pwd) -v $(pwd)/ssh:/home/pokyuser/.ssh ghcr.io/syna-astra/crops --workdir=$(pwd)
+    $ docker run --rm -it -v $(pwd):$(pwd) -v $(pwd)/ssh:/home/pokyuser/.ssh ghcr.io/syna-astra/crops:v0.0.1 --workdir=$(pwd)
 
 The build environment will find the existing ssh key and known host keys from the initial setup.
 

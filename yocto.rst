@@ -82,7 +82,7 @@ a new temporary container that will host the build. The container can be
 terminated when the build is finished and a new container can be started
 later to rebuild. To start the container use the following command line::
 
-  $ docker run --rm -it -v $(pwd):$(pwd) ghcr.io/syna-astra/crops --workdir=$(pwd)
+  $ docker run --rm -it -v $(pwd):$(pwd) ghcr.io/syna-astra/crops:v0.0.1 --workdir=$(pwd)
 
 This will spawn a shell inside the container. The current directory of the host
 is mounted inside the container so that the Yocto sources are available within
@@ -113,7 +113,7 @@ all the required layers as submodules.
 
 To clone the repository within the build environment use the following command:
 
-    pokyuser@xxxx:yyyy$ git clone -b v0.0.1 --recursive https://github.com/syna-astra/sdk.git && cd sdk
+    pokyuser@xxxx:yyyy$ git clone -b v0.0.1 --recurse-submodules https://github.com/syna-astra/sdk.git && cd sdk
 
 The recipes contained in the ``meta-synaptics`` layer point to the relevant git
 repository and will be downloaded using the standard bitbake fetching mechanism

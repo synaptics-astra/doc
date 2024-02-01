@@ -23,11 +23,11 @@ To convert your own AI model and run it on an evaluation kit use the following s
 
 4. Download the docker image of the SyNAP toolkit::
 
-     $ docker pull ghcr.io/syna-astra/synap
+     $ docker pull ghcr.io/syna-astra/synap:v0.0.1
 
-5. Install an alias in the shell of the host to run the SyNAP Toolkit container:
+5. Install an alias in the shell of the host to run the SyNAP Toolkit container::
 
-     $ alias synap_convert='docker run --rm -u $(id -u):$(id -g) -v $(pwd):$(pwd) --workdir $(pwd) ghcr.io/syna-astra/synap:v0.0.1'
+      $ alias synap_convert='docker run --rm -u $(id -u):$(id -g) -v $(pwd):$(pwd) --workdir $(pwd) ghcr.io/syna-astra/synap:v0.0.1'
 
    this command can be executed in any directory and will be valid for the current session.
 
