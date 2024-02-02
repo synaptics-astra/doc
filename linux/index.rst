@@ -663,10 +663,6 @@ output to the wayland sink::
 
     gst-launch-1.0 v4l2src device=/dev/video2 ! "video/x-raw,framerate=30/1,format=YUY2,width=640,height=480" ! waylandsink fullscreen=true
 
-AI Piplelines
-^^^^^^^^^^^^^
-*Coming Soon*
-
 Gstreamer Playbin Plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -684,7 +680,26 @@ audio sinks will be used instead::
 
 Using playbin the example in :ref:`audio_sinks` can be reduced to::
 
-    gst-launch-1.0 playbin uri=file:///mnt/1_hevc.mp4 video-sink="waylandsink fullscreen=true" audio-sink="alsasink device=hw:0,9"
+    gst-launch-1.0 playbin uri=file:///path/to/file video-sink="waylandsink fullscreen=true" audio-sink="alsasink device=hw:0,9"
+
+GStreamer SyNAP Plugin
+^^^^^^^^^^^^^^^^^^^^^^
+
+The Astra platform provides a Gstreamer plugin which allows adding ML processing to Gstreamer pipelines.
+This plugin uses the SyNAP framework to interface with the hardware accelerators to improve the performance
+of ML processing. For information on SyNAP see :ref:`synap` below.
+
+The SyNAP plugin works as a Gstreamer appsrc and appsink. It takes samples from the pipeline and uses the SyNAP
+framework to perform classification or detection on the frame using a neural network. It then outputs the results in
+as JSON formatted data.
+
+We provide a `sample application <https://github.com/syna-astra/application-gstreamer-plugins-syna/tree/v0.0.1/examples/gst-ai>`__
+which plays a video while simultaneously performing image classification on the video frames and then overlaying labels of the
+classification results onto the video output. A prebuilt version of the application is included in the Astra image.
+
+Run the example application using the following command::
+
+    gst-ai --appmode=IC --input=test_file.mp4 --output=screen --paramfile=/usr/share/gst-ai/ic.json
 
 Connectivity
 ============
