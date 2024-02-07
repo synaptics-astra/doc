@@ -173,7 +173,7 @@ sample ``local.conf`` found in ``meta-synaptics/setup/conf/local.conf.sample``.
 In order to be able to run qt application on wayland the following package must also
 be added. This must be enable manually even when using ``setup/setup-environment``::
 
-  DISTRO_EXTRA_RDEPENDS_append = " qtwayland"
+  DISTRO_EXTRA_RDEPENDS:append = " qtwayland"
 
 Configuration
 =============
