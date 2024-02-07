@@ -2,6 +2,8 @@
 Astra Yocto User Guide
 **********************
 
+.. highlight:: console
+
 Overview
 =========
 
@@ -111,7 +113,7 @@ The sources of the Synaptics Yocto release can be downloaded by cloning a `top
 level git repo <https://github.com/syna-astra/sdk>`_. The repository contains
 all the required layers as submodules.
 
-To clone the repository within the build environment use the following command:
+To clone the repository within the build environment use the following command::
 
     pokyuser@xxxx:yyyy$ git clone -b v0.0.1 --recurse-submodules https://github.com/syna-astra/sdk.git && cd sdk
 
