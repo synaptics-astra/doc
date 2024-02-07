@@ -72,11 +72,11 @@ How to build an image
 Create the build environment
 ----------------------------
 
-.. warning::
+.. danger::
 
     During the initial preview, access to Synaptics Astra software is protected with authentication. Please
     follow the instructions in the :ref:`release notes <v0.0.1>` to setup an environment that works with
-    authentication.
+    authentication as the ``docker`` command below is not applicable for this release.
 
 In order to ensure a correctly configured and clean environment, the build
 must be performed within a Docker container. To do so you need to start
@@ -103,11 +103,11 @@ the container.
 Obtain the sources
 ------------------
 
-.. warning::
+.. danger::
 
     During the initial preview, access to Synaptics Astra software is protected with authentication. Please
     follow the instructions in the :ref:`release notes <v0.0.1>` to setup an environment that works with
-    authentication.
+    authentication as the ``git clone`` command below is not applicable for this release.
 
 The sources of the Synaptics Yocto release can be downloaded by cloning a `top
 level git repo <https://github.com/syna-astra/sdk>`_. The repository contains

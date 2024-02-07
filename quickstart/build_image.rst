@@ -3,11 +3,11 @@ Build a new image
 
 .. highlight:: console
 
-.. warning::
+.. danger::
 
     During the initial preview, access to Synaptics Astra software is protected with authentication. Please
     follow the instructions in the :ref:`release notes <v0.0.1>` to setup an environment that works with
-    authentication.
+    authentication as the ``docker`` and ``git clone`` commands below are not applicable for this release.
 
 .. note::
 
