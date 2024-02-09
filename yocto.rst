@@ -57,7 +57,7 @@ The Yocto build system can very efficiently exploit more cores if these are avai
 The recommended software configuration is the following:
 
   * Ubuntu 22.04 LTS
-  * Docker 20.10.25 as provided by the standard Ubuntu package ``docker.io``
+  * Docker 20.10 or later provided by the standard Ubuntu package ``docker.io``
 
 Other versions of Linux and Docker may also work but may need special configuration.
 
