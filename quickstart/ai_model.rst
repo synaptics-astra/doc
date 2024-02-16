@@ -3,15 +3,10 @@ Convert and test an AI model
 
 .. highlight:: console
 
-.. warning::
-
-    During the initial preview, access to Synaptics Astra software is protected with authentication. Before
-    performing these steps ensure you have successfully logged in as described in the :ref:`release notes <v0.0.1>`.
-
 .. note::
 
    In addition to the :ref:`prerequisites for flashing <prepare_to_boot>` you also need a host with
-   docker installed, an ethernet cable and a local network with DHCP
+   docker installed, an ethernet cable and a local network with DHCP.
 
 To convert your own AI model and run it on an evaluation kit use the following steps:
 
@@ -21,13 +16,15 @@ To convert your own AI model and run it on an evaluation kit use the following s
 
 3. Download ``1.tflite`` from `Kaggle <https://www.kaggle.com/models/tensorflow/mobilenet-v2/frameworks/tfLite/variations/1-0-224-quantized>`_
 
-4. Download the docker image of the SyNAP toolkit::
+4. Follow the instructions in :ref:`setup_docker_auth` and then download the docker image of the SyNAP toolkit::
 
      $ docker pull ghcr.io/syna-astra/synap:v0.0.1
 
 5. Install an alias in the shell of the host to run the SyNAP Toolkit container::
 
-      $ alias synap_convert='docker run --rm -u $(id -u):$(id -g) -v $(pwd):$(pwd) --workdir $(pwd) ghcr.io/syna-astra/synap:v0.0.1'
+      $ alias synap_convert='docker run --rm -u $(id -u):$(id -g) \
+                                        -v $(pwd):$(pwd) --workdir $(pwd) \
+                                        ghcr.io/syna-astra/synap:v0.0.1'
 
    this command can be executed in any directory and will be valid for the current session.
 
@@ -44,17 +41,8 @@ To convert your own AI model and run it on an evaluation kit use the following s
 
 7. Find the ip address of the board with the following command on the target::
 
-    # ifconfig eth0
-    eth0      Link encap:Ethernet  HWaddr 22:0F:36:10:03:E7
+    # ifconfig eth0 | grep "/inet addr/"
               inet addr:192.168.1.110  Bcast:192.168.1.255  Mask:255.255.255.0
-              inet6 addr: fe80::200f:36ff:fe10:3e7/64 Scope:Link
-              inet6 addr: 2a02:1210:7c76:3a00:200f:36ff:fe10:3e7/64 Scope:Global
-              UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-              RX packets:15720 errors:0 dropped:316 overruns:0 frame:0
-              TX packets:1334 errors:0 dropped:0 overruns:0 carrier:0
-              collisions:0 txqueuelen:1000
-              RX bytes:5226689 (4.9 MiB)  TX bytes:108559 (106.0 KiB)
-              Interrupt:45 Base address:0xa000
 
 8. Upload the converted model to the board by running the following command on the host::
 

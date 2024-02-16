@@ -3,11 +3,6 @@
 Install and use a pre-built image
 =================================
 
-.. warning::
-
-    During the initial preview, access to Synaptics Astra software is protected with authentication. Before
-    performing these steps ensure you have successfully logged in as described in the :ref:`release notes <v0.0.1>`.
-
 To install a pre-built image on a Synaptics Astra evaluation kit:
 
 1. Download a prebuilt image suitable for your development kit from `GitHub <https://github.com/syna-astra/sdk/releases/>`_

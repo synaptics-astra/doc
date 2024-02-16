@@ -3,29 +3,32 @@ Build a new image
 
 .. highlight:: console
 
-.. danger::
-
-    During the initial preview, access to Synaptics Astra software is protected with authentication. Please
-    follow the instructions in the :ref:`release notes <v0.0.1>` to setup an environment that works with
-    authentication as the ``docker`` and ``git clone`` commands below are not applicable for this release.
-
 .. note::
 
     To build a new image you need a host device as described :ref:`here <yocto_prerequisites>`
 
 To build a image run the following commands:
 
-1. Start a build environment container::
+1. Setup a workspace as described in :ref:`workspace_setup`
 
-    $ docker run --rm -it -v $(pwd):$(pwd) ghcr.io/syna-astra/crops:v0.0.1 --workdir=$(pwd)
+2. Start a build environment container::
 
-2. Clone the sources from `GitHub <https://github.com/syna-astra/sdk>`_ ::
+    $ cd workspace
 
-    pokyuser@xxxx:yyyy$ git clone -b v0.0.1 --recurse-submodules https://github.com/syna-astra/sdk && cd sdk
+    $ docker run --rm -it -v $(pwd):$(pwd) \
+                 -v $(pwd)/ssh:/home/pokyuser/.ssh \
+                 ghcr.io/syna-astra/crops:v0.0.1 --workdir=$(pwd)
 
-3. Setup the build tree::
+3. Clone the sources from `GitHub <https://github.com/syna-astra/sdk>`_ ::
 
-    pokyuser@xxxx:yyyy$ source meta-synaptics/setup/setup-environment
+    pokyuser@xyz:/path/to/workspace $ git clone -b v0.0.1 --recurse-submodules \
+                                                git@github.com:syna-astra/sdk
+
+4. Setup the build tree::
+
+    pokyuser@xyz:/path/to/workspace $ cd sdk
+
+    pokyuser@xyz:/path/to/workspace/sdk $ source meta-synaptics/setup/setup-environment
 
     Select the MACHINE you want to build:
 
@@ -35,9 +38,9 @@ To build a image run the following commands:
 
     You selection: 1
 
-4. Build the image::
+5. Build the image::
 
-    pokyuser@xxxx:yyyy$ bitbake astra-media
+    pokyuser@xyz:/path/to/workspace/sdk/build-slXYZ $ bitbake astra-media
 
 The image will be available in ``build-${MACHINE}/tmp/deploy/images/${MACHINE}/SYNAIMG/`` and can be flashed with
 the procedure described in :ref:`prepare_to_boot`.
