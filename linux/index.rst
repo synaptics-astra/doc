@@ -39,7 +39,7 @@ these processors.
 
 This document covers the components which are used by the Linux OS. For
 specific information on how to setup the build environment and build a
-Yocto based image which run the on the SL16xx EVK boards please see the
+Yocto based image which run the on the SL16xx RDK boards please see the
 `Astra Yocto User Guide <https://syna-astra.github.io/doc/yocto.html>`__.
 
 Specific information about the RDK hardware can be found in the SL16xx
@@ -803,95 +803,6 @@ Restart network daemons::
 Enable wpa_supplicant on boot up::
 
     systemctl enable wpa_supplicant@wlan0.service
-
-Setup the Access Point (AP mode) with hostapd
----------------------------------------------
-The Wifi interface can also be configured to act as an access point using `hostapd <https://w1.fi/hostapd/>`__.
-Additional packages may need to be installed to support hostapd and iptables. Please see the Astra Yocto User Guide
-for instructions on how to add the hostapd and iptables packages to your image.
-
-Configure Networking to use hostapd
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To configure the wlan device to use hostapd add the following entries to the /etc/network/interfaces file::
-
-    auto wlan0
-    iface wlan0 inet static
-        address 192.168.10.1
-        netmask 255.255.255.0
-        post-up systemctl start hostapd
-        pre-down systemctl stop hostapd
-
-Configure systemd-networkd
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The wlan interface needs to be enabled in the systemd-networkd system daemon configuration.
-
-Create the new file /etc/systemd/network/10-wlan0.network with the following contents::
-
-    [Match]
-    Name=wlan0
-
-    [Network]
-    Address=192.168.10.1/24
-    DHCPServer=yes
-
-    [DHCPServer]
-    EmitDNS=yes
-
-Configure hostapd
-^^^^^^^^^^^^^^^^^
-
-Create the file /etc/hostapd.conf with the ip, ssid, and passphrase of the Wifi network you are creating. 
-
-Example::
-
-    own_ip_addr=192.168.10.1
-    ssid=yocto640
-    wpa=2
-    wpa_passphrase=1234567890
-
-
-Configuring IP Forwarding Firewall Rules
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-IP Forwarding and NAT need to be configured to forward traffic coming from be new wireless network.
-
-The following is an example of using iptables to configure NAT and save the new rules to /etc/iptables/iptables.rules
-so that they can be loaded at boot::
-
-    iptables –F
-    iptables -F INPUT
-    iptables -F OUTPUT
-    iptables -F FORWARD
-    iptables -t nat -F
-    iptables -t mangle -F
-    iptables -A INPUT -j ACCEPT
-    iptables -A OUTPUT -j ACCEPT
-    iptables -A FORWARD -j ACCEPT
-    iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-    iptables-save > /etc/iptables/iptables.rules
-
-IP Forwarding is enabled by setting the following entries in /etc/sysctl.d/ip_forward.conf::
-
-    net.ipv4.ip_forward = 1
-
-Run the following command to enable ip forwarding::
-
-    sysctl -p /etc/sysctl.d/ip_forward.conf
-
-Enabling Services
-^^^^^^^^^^^^^^^^^
-
-Start hostapd and iptables::
-
-    systemctl start hostapd
-    systemctl start iptables
-
-Enable hostapd and iptables on boot::
-
-    systemctl enable hostapd
-    systemctl enable iptables
 
 .. _synap:
 
