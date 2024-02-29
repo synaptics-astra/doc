@@ -693,7 +693,7 @@ The SyNAP plugin works as a Gstreamer appsrc and appsink. It takes samples from 
 framework to perform classification or detection on the frame using a neural network. It then outputs the results in
 as JSON formatted data.
 
-We provide a `sample application <https://github.com/syna-astra/application-gstreamer-plugins-syna/tree/v0.0.1/examples/gst-ai>`__
+We provide a `sample application <https://github.com/syna-astra/application-gstreamer-plugins-syna/tree/v#release#/examples/gst-ai>`__
 which plays a video while simultaneously performing image classification on the video frames and then overlaying labels of the
 classification results onto the video output. A prebuilt version of the application is included in the Astra image.
 
@@ -811,4 +811,4 @@ Machine Learning with SyNAP
 
 The Synaptics Astra platform provides the SyNAP framwork, which supports the execution of neural networks on the 
 platforms hardware accelerators. This framework allows users to run programs which take advantage of the Neural Prococessing Unit (NPU)
-and Graphics Processing Unit (GPU) to accelerate the excecution of neural networks. (see the `SyNAP documentation <https://github.com/syna-astra/synap-release/blob/v0.0.1/doc/SyNAP.pdf>`__ for more details.)
+and Graphics Processing Unit (GPU) to accelerate the excecution of neural networks. (see the `SyNAP documentation <https://github.com/syna-astra/synap-release/blob/v0.0.2/doc/SyNAP.pdf>`__ for more details.)

@@ -4,6 +4,26 @@ Release Notes
 
 .. highlight:: console
 
+.. _v0.0.2:
+
+Version 0.0.2
+=============
+
+Improvements
+------------
+
+Encoder and Decoder
+
+    This release contains a fix for a bug impacting the encoder and decoder functionality. A memory region was assigned the incorret type in the boot firmware which was interfering with this functionality.
+
+
+Known issues
+------------
+
+
+The same known issues of version 0.0.1 are still present.
+
+
 .. _v0.0.1:
 
 Version 0.0.1

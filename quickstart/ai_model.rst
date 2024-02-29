@@ -23,8 +23,8 @@ To convert your own AI model and run it on an evaluation kit use the following s
 
 5. Install an alias in the shell of the host to run the SyNAP Toolkit container::
 
-    $ alias synap='docker run -i --rm -u $(id -u):$(id -g) -v ${MOUNTPATH}:${MOUNTPATH}  \
-                   -w $(pwd) ghcr.io/syna-synap/toolkit:3.0.0''
+    $ alias synap='docker run -i --rm -u $(id -u):$(id -g) -v ${MOUNTPATH}:${MOUNTPATH} \
+                   -w $(pwd) ghcr.io/syna-synap/toolkit:3.0.0'
 
    where ``${MOUNTPATH}`` is the absolute path of the directory of the host to mount inside the container.
    This command can be executed in any directory and will be valid for the current session.

@@ -1,7 +1,7 @@
 project = 'Synaptics Astra SDK User Guide'
 copyright = '2023, Synaptics'
 author = 'Synaptics'
-release = '0.0.1'
+release = '0.0.2'
 
 exclude_patterns = ["README.rst", "org-docs/**"]
 
@@ -36,3 +36,18 @@ html_context = {
 }
 
 html_copy_source = False
+
+# this code is used to substitute #xx# variables anywhere in the source, even
+# inside literal blocks and code blocks
+
+def preprocess_variables(app, docname, source):
+    for varname, value in app.config.preprocessor_variables.items():
+        source[0] = source[0].replace(varname, value)
+
+preprocessor_variables = {
+    "#release#" : release
+}
+
+def setup(app):
+   app.add_config_value('preprocessor_variables', {}, True)
+   app.connect('source-read', preprocess_variables)

@@ -174,7 +174,7 @@ the following steps:
    executing the command)::
 
     $ docker run --rm -it -v $(pwd):$(pwd) \
-      -v $(pwd)/.ssh:/home/pokyuser/.ssh ghcr.io/syna-astra/crops:v0.0.1 --workdir=$(pwd)
+      -v $(pwd)/.ssh:/home/pokyuser/.ssh ghcr.io/syna-astra/crops:#release# --workdir=$(pwd)
 
 3. Create a ssh public/private keypair::
 
@@ -220,7 +220,7 @@ To start the container use the following command line::
 
     $ docker run --rm -it -v $(pwd):$(pwd) \
                  -v $(pwd)/ssh:/home/pokyuser/.ssh \
-                 ghcr.io/syna-astra/crops:v0.0.1 --workdir=$(pwd)
+                 ghcr.io/syna-astra/crops:#release# --workdir=$(pwd)
 
 This will spawn a shell inside the container. The current directory of the host
 is mounted inside the container so that the workspace is available within
@@ -247,7 +247,7 @@ all the required layers as submodules.
 To clone the repository within the build environment started with the instructions in :ref:`start_build_env`
 use the following command::
 
-     pokyuser@xyz:/path/to/workspace $ git clone -b v0.0.1 --recurse-submodules \
+     pokyuser@xyz:/path/to/workspace $ git clone -b v#release# --recurse-submodules \
                                                  git@github.com:syna-astra/sdk
 
 The recipes contained in the ``meta-synaptics`` layer point to the relevant git repository and will be downloaded

@@ -17,11 +17,11 @@ To build a image run the following commands:
 
     $ docker run --rm -it -v $(pwd):$(pwd) \
                  -v $(pwd)/ssh:/home/pokyuser/.ssh \
-                 ghcr.io/syna-astra/crops:v0.0.1 --workdir=$(pwd)
+                 ghcr.io/syna-astra/crops:#release# --workdir=$(pwd)
 
 3. Clone the sources from `GitHub <https://github.com/syna-astra/sdk>`_ ::
 
-    pokyuser@xyz:/path/to/workspace $ git clone -b v0.0.1 --recurse-submodules \
+    pokyuser@xyz:/path/to/workspace $ git clone -b v#release# --recurse-submodules \
                                                 git@github.com:syna-astra/sdk
 
 4. Setup the build tree::
