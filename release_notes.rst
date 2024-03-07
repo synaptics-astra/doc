@@ -16,6 +16,9 @@ Encoder and Decoder
 
     This release contains a fix for a bug impacting the encoder and decoder functionality. A memory region was assigned the incorret type in the boot firmware which was interfering with this functionality.
 
+SyNAP
+
+    Fix intermittent problem when running models on some memory layout configurations.
 
 Known issues
 ------------
