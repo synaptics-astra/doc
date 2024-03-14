@@ -219,7 +219,7 @@ To start the container use the following command line::
     $ cd workspace
 
     $ docker run --rm -it -v $(pwd):$(pwd) \
-                 -v $(pwd)/ssh:/home/pokyuser/.ssh \
+                 -v $(pwd)/.ssh:/home/pokyuser/.ssh \
                  ghcr.io/syna-astra/crops:#release# --workdir=$(pwd)
 
 This will spawn a shell inside the container. The current directory of the host
