@@ -811,4 +811,4 @@ Machine Learning with SyNAP
 
 The Synaptics Astra platform provides the SyNAP framwork, which supports the execution of neural networks on the 
 platforms hardware accelerators. This framework allows users to run programs which take advantage of the Neural Prococessing Unit (NPU)
-and Graphics Processing Unit (GPU) to accelerate the excecution of neural networks. (see the `SyNAP documentation <https://github.com/syna-astra/synap-release/blob/v0.0.2/doc/SyNAP.pdf>`__ for more details.)
+and Graphics Processing Unit (GPU) to accelerate the excecution of neural networks. (see the `SyNAP documentation <https://syna-synap.github.io/doc/v/3.0.0/>`__ for more details.)
