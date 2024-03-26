@@ -1,3 +1,5 @@
+import os
+
 project = 'Synaptics Astra SDK User Guide'
 copyright = '2023, Synaptics'
 author = 'Synaptics'
@@ -5,6 +7,7 @@ release = '0.0.2'
 
 exclude_patterns = ["README.rst", "org-docs/**"]
 
+# render private pages only when the private tag is set
 if not tags.tags.get('private', False):
     exclude_patterns.append("private/**")
 
@@ -28,14 +31,17 @@ html_theme_options = {
   'logo_only': True
 }
 
-html_context = {
-  'display_github': True,
-  'github_repo': 'syna-astra-dev/doc',
-  'github_version': 'master',
-  'conf_py_path': '/'
-}
+# enable edit links only on the internal builds
+if tags.tags.get('private', False):
+    html_context = {
+      'display_github': True,
+      'github_repo': 'syna-astra-dev/doc',
+      'github_version': 'master',
+      'conf_py_path': '/'
+    }
 
 html_copy_source = False
+
 
 # this code is used to substitute #xx# variables anywhere in the source, even
 # inside literal blocks and code blocks
@@ -44,10 +50,12 @@ def preprocess_variables(app, docname, source):
     for varname, value in app.config.preprocessor_variables.items():
         source[0] = source[0].replace(varname, value)
 
+
 preprocessor_variables = {
-    "#release#" : release
+    "#release#": release
 }
 
+
 def setup(app):
-   app.add_config_value('preprocessor_variables', {}, True)
-   app.connect('source-read', preprocess_variables)
+    app.add_config_value('preprocessor_variables', {}, True)
+    app.connect('source-read', preprocess_variables)
