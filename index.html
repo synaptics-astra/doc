@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Synaptics Astra SDK Documentation &mdash; Synaptics Astra SDK User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=16ad857a"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="#">
+            
+              <img src="_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Synaptics Astra SDK Documentation</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Synaptics Astra SDK Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="synaptics-astra-sdk-documentation">
+<h1>Synaptics Astra SDK Documentation<a class="headerlink" href="#synaptics-astra-sdk-documentation" title="Permalink to this heading"></a></h1>
+<p>Available versions:</p>
+<ul id="version-list">
+</ul>
+<script type="text/javascript">
+window.onload = function() {
+
+    // Create a new <ul> element
+    const ul = document.getElementById('version-list');
+
+    fetch('versions.txt')
+        .then(response => {
+            if (response.status == 200) {
+                response.text().then(data => {
+
+                    if ( data.trim().length == 0) {
+                        const p = document.createElement('p');
+                        p.textContent = 'No versions available';
+                        ul.parentElement.appendChild(p);
+                        ul.remove()
+                        return;
+                    }
+
+                    // Split the file into lines
+                    const lines = data.trim().split('\n');
+
+                    // For each line, create a new <li> element with an <a> tag
+                    lines.forEach(line => {
+                        const li = document.createElement('li');
+                        const a = document.createElement('a');
+                        a.href = 'v/' + line;
+                        a.textContent = line;
+                        li.appendChild(a);
+                        ul.appendChild(li);
+                    });
+                })
+            } else {
+                const p = document.createElement('p');
+                p.textContent = 'No versions available';
+                ul.parentElement.appendChild(p);
+                ul.remove()
+            }
+        })
+        .catch(error => {
+                // we were not able to fetch the list of versions, propose to browse to the directory
+                // this can happen because the file is loaded from file://
+                const a = document.createElement('a');
+                a.textContent = 'Click here to find the available version of the documentation';
+                a.href = 'v/';
+                ul.parentElement.appendChild(a);
+                ul.remove()
+        });
+};
+</script></section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
