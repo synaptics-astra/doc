@@ -51,4 +51,4 @@ Download Documentation
 ======================
 
 You can download the entire documentation as a zip file for offline use
-from `GitHub <https://github.com/syna-astra/doc/archive/refs/heads/gh-pages.zip>`__.
+from `GitHub <https://github.com/synaptics-astra/doc/archive/refs/heads/gh-pages.zip>`__.

@@ -40,7 +40,7 @@ these processors.
 This document covers the components which are used by the Linux OS. For
 specific information on how to setup the build environment and build a
 Yocto based image which run the on the SL16xx RDK boards please see the
-`Astra Yocto User Guide <https://syna-astra.github.io/doc/yocto.html>`__.
+`Astra Yocto User Guide <https://synaptics-astra.github.io/doc/yocto.html>`__.
 
 Specific information about the RDK hardware can be found in the SL16xx
 RDK User Guides.
@@ -116,7 +116,7 @@ process described in the Astra Yocto User Guide.
 The Linux kernel uses Device Tree data structures to describe the
 hardware components and their configurations on the system. The device
 tree source files are in the Linux Kernel source tree under that path
-``arch/arm64/boot/dts/synaptics/``. These files are maintained in the `Astra Linux Kenel Overlay repository <https://github.com/syna-astra/linux_5_15-overlay>`__
+``arch/arm64/boot/dts/synaptics/``. These files are maintained in the `Astra Linux Kenel Overlay repository <https://github.com/synaptics-astra/linux_5_15-overlay>`__
 
 Root File System
 ^^^^^^^^^^^^^^^^
@@ -193,7 +193,7 @@ Installing the WinUSB Driver on Windows
 
 Windows requires a special USB kernel driver to communicate with the
 Astra board over USB. Please download the driver from
-`GitHub <https://github.com/syna-astra/usb-tool>`__. Linux and Mac hosts
+`GitHub <https://github.com/synaptics-astra/usb-tool>`__. Linux and Mac hosts
 can access the Astra board from userspace and do not need any additional
 kernel drivers.
 
@@ -693,7 +693,7 @@ The SyNAP plugin works as a Gstreamer appsrc and appsink. It takes samples from 
 framework to perform classification or detection on the frame using a neural network. It then outputs the results in
 as JSON formatted data.
 
-We provide a `sample application <https://github.com/syna-astra/application-gstreamer-plugins-syna/tree/v#release#/examples/gst-ai>`__
+We provide a `sample application <https://github.com/synaptics-astra/application-gstreamer-plugins-syna/tree/v#release#/examples/gst-ai>`__
 which plays a video while simultaneously performing image classification on the video frames and then overlaying labels of the
 classification results onto the video output. A prebuilt version of the application is included in the Astra image.
 
@@ -811,4 +811,4 @@ Machine Learning with SyNAP
 
 The Synaptics Astra platform provides the SyNAP framwork, which supports the execution of neural networks on the 
 platforms hardware accelerators. This framework allows users to run programs which take advantage of the Neural Prococessing Unit (NPU)
-and Graphics Processing Unit (GPU) to accelerate the excecution of neural networks. (see the `SyNAP documentation <https://syna-synap.github.io/doc/v/3.0.0/>`__ for more details.)
+and Graphics Processing Unit (GPU) to accelerate the excecution of neural networks. (see the `SyNAP documentation <https://synaptics-synap.github.io/doc/v/3.0.0/>`__ for more details.)

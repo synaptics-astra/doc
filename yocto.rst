@@ -84,8 +84,8 @@ Workspace setup
 
 The early access release of the Astra SDK is available only to registered users and for this reason it is required
 to setup authentication to GitHub. In order to be able to access the release you need to make sure your GitHub account
-has been invited to the `syna-astra Organization <https://github.com/syna-astra>`_ and that you accepted the invitation.
-You can check you are able to access the organization by browsing to the `sdk git <https://github.com/syna-astra/sdk>`__.
+has been invited to the `synaptics-astra Organization <https://github.com/synaptics-astra>`_ and that you accepted the invitation.
+You can check you are able to access the organization by browsing to the `sdk git <https://github.com/synaptics-astra/sdk>`__.
 You can review your organizations by checking your `profile settings <https://github.com/settings/organizations>`__.
 
 WSL 2 Setup (required only when using Windows)
@@ -174,7 +174,7 @@ the following steps:
    executing the command)::
 
     $ docker run --rm -it -v $(pwd):$(pwd) \
-      -v $(pwd)/.ssh:/home/pokyuser/.ssh ghcr.io/syna-astra/crops:#release# --workdir=$(pwd)
+      -v $(pwd)/.ssh:/home/pokyuser/.ssh ghcr.io/synaptics-astra/crops:#release# --workdir=$(pwd)
 
 3. Create a ssh public/private keypair::
 
@@ -220,7 +220,7 @@ To start the container use the following command line::
 
     $ docker run --rm -it -v $(pwd):$(pwd) \
                  -v $(pwd)/.ssh:/home/pokyuser/.ssh \
-                 ghcr.io/syna-astra/crops:#release# --workdir=$(pwd)
+                 ghcr.io/synaptics-astra/crops:#release# --workdir=$(pwd)
 
 This will spawn a shell inside the container. The current directory of the host
 is mounted inside the container so that the workspace is available within
@@ -233,22 +233,22 @@ the container.
    command line above.
 
 .. note::
-  Synaptics provides a pre-built container at ``ghcr.io/syna-astra/crops``  that is automatically downloaded
+  Synaptics provides a pre-built container at ``ghcr.io/synaptics-astra/crops``  that is automatically downloaded
   when you run the command above but you can also compile from the sources available
-  `here <https://github.com/syna-astra/crops>`_.
+  `here <https://github.com/synaptics-astra/crops>`_.
 
 Obtain the sources
 ------------------
 
 The sources of the Synaptics Yocto release can be downloaded by cloning a `top
-level git repo <https://github.com/syna-astra/sdk>`_. The repository contains
+level git repo <https://github.com/synaptics-astra/sdk>`_. The repository contains
 all the required layers as submodules.
 
 To clone the repository within the build environment started with the instructions in :ref:`start_build_env`
 use the following command::
 
      pokyuser@xyz:/path/to/workspace $ git clone -b v#release# --recurse-submodules \
-                                                 git@github.com:syna-astra/sdk
+                                                 git@github.com:synaptics-astra/sdk
 
 The recipes contained in the ``meta-synaptics`` layer point to the relevant git repository and will be downloaded
 using the standard bitbake fetching mechanism of Yocto.
@@ -332,7 +332,7 @@ System Memory configuration
 
 System memory configuration is performed by changing the variables ``CONFIG_PREBOOT_``
 in the configuration file pointed by ``SYNA_SDK_CONFIG_FILE`` variable. The available
-configurations can be found by inspecting http://github.com/syna-astra/preboot-prebuilts .
+configurations can be found by inspecting http://github.com/synaptics-astra/preboot-prebuilts .
 
 .. _partitions_config:
 
@@ -340,7 +340,7 @@ Partition tables
 ----------------
 
 Partition tables are configured in the file ``emmc.pt`` found in the directory
-``product/${SYNA_SDK_CONFIG_NAME}/emmc.pt`` found at http://github.com/syna-astra/preboot-prebuilts .
+``product/${SYNA_SDK_CONFIG_NAME}/emmc.pt`` found at http://github.com/synaptics-astra/preboot-prebuilts .
 The ``SYNA_SDK_CONFIG_NAME`` depends on the ``MACHINE`` and ``DISTRO_CONFIG`` variables.
 
 To customize this file you can override the recipe ``syna-config-native``.
