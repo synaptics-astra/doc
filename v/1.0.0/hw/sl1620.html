@@ -1,0 +1,3662 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SL1620 User Guide &mdash; Synaptics Astra SDK User Guide 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=d90b8643"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SDK Release Notes" href="../release_notes.html" />
+    <link rel="prev" title="SL1640 User Guide" href="sl1640.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subject/index.html">Subject Specific User Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Astra Machina Eval Platform</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sl1680.html">SL1680 User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sl1640.html">SL1640 User Guide</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SL1620 User Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scope">Scope</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#definition-of-board-components">Definition of Board Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#astra-machina-system-overview">Astra Machina System Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#astra-machina-board-control-status-system-i-o">Astra Machina Board Control/Status &amp; System I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#booting-up">Booting up</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#leds">LEDs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#soc-pinstrap-and-bootup-settings">SoC Pinstrap and Bootup Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hardware-manual-button-settings">Hardware Manual Button Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hardware-jumper-settings">Hardware Jumper Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sl1620-evaluation-system-connectors">SL1620 Evaluation System Connectors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#daughter-cards">Daughter Cards</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#debug-board">Debug Board</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#m-2-card">M.2 Card</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pins-sodimm-definition">260-Pins SODIMM definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pins-header">40-Pins Header</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pin-demuxing-for-standard-interface-configuration">Pin-demuxing for Standard Interface Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pin-demuxing-for-gpio-gpo-configuration">Pin-demuxing for GPIO/GPO Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gpio-expanders-over-i2c">GPIO Expanders Over I2C</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#i2c-bus">I2C Bus</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#bringing-up-the-sl1620-astra-machina-system">Bringing Up the SL1620 Astra Machina System</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#connecting-external-components-and-performing-hardware-testing">Connecting External Components and Performing Hardware Testing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Astra Machina Eval Platform</a></li>
+      <li class="breadcrumb-item active">SL1620 User Guide</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sl1620-user-guide">
+<h1>SL1620 User Guide<a class="headerlink" href="#sl1620-user-guide" title="Permalink to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
+<p>The Astra Machina Foundation Series of evaluation-ready kits
+enable easy and rapid prototyping for the Synaptics SL series of
+multi-modal embedded processors. A modular design incorporates swappable
+core compute modules, a common I/O board, and daughter cards for
+connectivity, debug, and flexible I/O options.</p>
+<p>The Synaptics Astra SL-Series is a family of highly integrated AI-native
+Linux and Android SoCs optimized for multi-modal
+consumer, enterprise, and industrial IoT workloads with hardware
+accelerators for edge inferencing, security, graphics, vision, and
+audio. The SL1620 is designed and optimized for embedded applications
+that require powerful processing, advanced AI capability, and 3D
+graphics. This chip comes with Linux® OS, superior audio algorithms, a
+variety of peripherals, dual displays, companion Synaptics SoC for
+connectivity and audio front end.</p>
+<section id="scope">
+<h3>Scope<a class="headerlink" href="#scope" title="Permalink to this heading"></a></h3>
+<p>This user guide describes the hardware configuration and functional
+details for the Astra Machina SL1620 core module, I/O card, and
+supported daughter cards, in addition to the bring-up sequence for the
+evaluation kit.</p>
+</section>
+<section id="definition-of-board-components">
+<h3>Definition of Board Components<a class="headerlink" href="#definition-of-board-components" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Astra Machina:</strong> Combined system with core module, I/O board, and
+supported daughter cards.</p></li>
+<li><p><strong>Core module:</strong> Processor subsystem module with key components
+including SL1620, eMMC, and DDR4.</p></li>
+<li><p><strong>I/O board:</strong> Common base board that includes various standard
+hardware interfaces, buttons, headers, and power-in.</p></li>
+<li><p><strong>Daughter card:</strong> Add-on boards for supporting various features such
+as connectivity, debug, and other flexible I/O options.</p></li>
+</ul>
+</section>
+<section id="astra-machina-system-overview">
+<h3>Astra Machina System Overview<a class="headerlink" href="#astra-machina-system-overview" title="Permalink to this heading"></a></h3>
+<p>This section covers system features, block diagrams and top views of the
+Astra Machina evaluation kit.</p>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/image5.png"><img alt="../_images/image5.png" src="../_images/image5.png" style="width: 6.01042in; height: 3.64285in;" /></a>
+<figcaption>
+<p><span class="caption-text">SL1620 core module (Dimensions: WxH = 69.6 x 47.38mm)</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id2">
+<a class="reference internal image-reference" href="../_images/image6.png"><img alt="../_images/image6.png" src="../_images/image6.png" style="width: 3.97674in; height: 3.05988in;" /></a>
+<figcaption>
+<p><span class="caption-text">I/O board</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<section id="features">
+<h4>Features<a class="headerlink" href="#features" title="Permalink to this heading"></a></h4>
+<p>The SL1620 evaluation system includes the following components:</p>
+<ul class="simple">
+<li><p>Main components on the core-module:</p></li>
+<li><dl class="simple">
+<dt>Synaptics SL1620 Quad-Core Arm Cortex-A55</dt><dd><p>Embedded IoT Processor, up to 1.9 GHz</p>
+</dd>
+</dl>
+</li>
+<li><p>Storage: eMMC5.1 (16 GByte)</p></li>
+<li><p>DRAM: x32 2GB system memory by 2pcs x16, 8-Gbit, DDR4-2133</p></li>
+<li><p>PMIC: support DVFS in Vcore supply rail</p></li>
+<li><p>SD Card Receptacle</p></li>
+<li><p>Line-out: direct Line Level 2.1-VRMS stereo output</p></li>
+<li><p>DMIC: 2 digital microphones – 1 PDM stereo audio input</p></li>
+<li><p>LCDC(RGB): on 54-pins FPC connector to support RGB 16bpp, 18bpp and
+24bpp output formats; up to 1080p30 screen resolution</p></li>
+<li><p>Main components on I/O board:</p></li>
+<li><p>M.2 E-key 2230 Receptacle: It supports SDIO, UART for WiFi/BT modules</p></li>
+<li><p>USB 3.0 Type-A: 4 ports to supports host mode at SuperSpeed</p></li>
+<li><p>USB 2.0 Type-C: supports OTG host or peripheral mode at Hi-Speed</p></li>
+<li><p>Push buttons: used for USB-BOOT selection and system RESET</p></li>
+<li><p>2pin Header: used for SD-BOOT selection</p></li>
+<li><p>Off-board daughter card interface options:</p></li>
+<li><p>MIPI DSI on 22-pin FPC interface to support 4-lane DPHY plus I2C and
+GPIOs for up to 1080p60 display panel</p></li>
+<li><p>ISP 12-pin daughter card to support offline program SPI NOR flash on
+Core-Module</p></li>
+<li><p>JTAG daughter card for debug</p></li>
+<li><p>40-pin header for additional functions</p></li>
+<li><p>4-pin PoE+ daughter card to support an add-on voltage regulator
+module for PoE+ Type2 (802.3at) power device; available power shall
+be 25.5W (Class 4) at 5Vpins of 40-pin header to I/O board</p></li>
+<li><p>4-pin connector for active Fan with PWM</p></li>
+<li><p>Type-C power supply with 15V &#64; 1.8A</p></li>
+</ul>
+</section>
+<section id="sl1620-system-block-diagram">
+<h4>SL1620 system block diagram<a class="headerlink" href="#sl1620-system-block-diagram" title="Permalink to this heading"></a></h4>
+<figure class="align-default" id="id3">
+<a class="reference internal image-reference" href="../_images/image7.jpg"><img alt="../_images/image7.jpg" src="../_images/image7.jpg" style="width: 6.15625in; height: 4.9934in;" /></a>
+<figcaption>
+<p><span class="caption-text">SL1620 system block diagram</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="top-view-of-sl1620-astra-machina-evaluation-system">
+<h4>Top view of SL1620 Astra Machina Evaluation System<a class="headerlink" href="#top-view-of-sl1620-astra-machina-evaluation-system" title="Permalink to this heading"></a></h4>
+<figure class="align-default" id="id4">
+<a class="reference internal image-reference" href="../_images/image8.png"><img alt="../_images/image8.png" src="../_images/image8.png" style="width: 5in; height: 3.16079in;" /></a>
+<figcaption>
+<p><span class="caption-text">Top view of SL1620 evaluation system</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="system-connectors">
+<h4>System connectors<a class="headerlink" href="#system-connectors" title="Permalink to this heading"></a></h4>
+<figure class="align-default" id="id5">
+<a class="reference internal image-reference" href="../_images/image9.png"><img alt="../_images/image9.png" src="../_images/image9.png" style="width: 5in; height: 2.43483in;" /></a>
+<figcaption>
+<p><span class="caption-text">Front view</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id6">
+<a class="reference internal image-reference" href="../_images/image10.png"><img alt="../_images/image10.png" src="../_images/image10.png" style="width: 5in; height: 2.54647in;" /></a>
+<figcaption>
+<p><span class="caption-text">Rear view</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+</section>
+<section id="astra-machina-board-control-status-system-i-o">
+<h2>Astra Machina Board Control/Status &amp; System I/O<a class="headerlink" href="#astra-machina-board-control-status-system-i-o" title="Permalink to this heading"></a></h2>
+<p>This section covers booting up, LEDs status indicators, buttons,
+connectors, and pin-strap settings.</p>
+<section id="booting-up">
+<h3>Booting up<a class="headerlink" href="#booting-up" title="Permalink to this heading"></a></h3>
+<p>There are three types of booting up, select one bootup before powering
+on the Astra Machina.</p>
+<ul class="simple">
+<li><p><strong>eMMC boot:</strong> Default booting up.</p></li>
+<li><p><strong>SD boot:</strong> Short SD_Boot header by 2.54mm jumper-cap before
+power-up, see SD_Boot header in <a class="reference internal" href="#sl1620-jumpers"><span class="std std-ref">Locations of jumper on I/O board</span></a>. Ensure SD-Card with
+firmware is plugged into SD-slot on Core Module in <a class="reference internal" href="#sl1620-core-bottom"><span class="std std-ref">Locations on core module bottom side</span></a>.</p></li>
+<li><p><strong>USB boot:</strong> Connect USB-C usb2.0 port to the host PC, then follow
+the procedure in section 2.4.</p></li>
+</ul>
+</section>
+<section id="leds">
+<h3>LEDs<a class="headerlink" href="#leds" title="Permalink to this heading"></a></h3>
+<section id="led-locations">
+<h4>LED locations<a class="headerlink" href="#led-locations" title="Permalink to this heading"></a></h4>
+<p><a class="reference internal" href="#sl1620-leds"><span class="std std-ref">LED locations on I/O board</span></a> shows the LED locations on the I/O board.</p>
+<figure class="align-default" id="id7">
+<span id="sl1620-leds"></span><a class="reference internal image-reference" href="../_images/image11.png"><img alt="../_images/image11.png" src="../_images/image11.png" style="width: 5.27083in; height: 4.14801in;" /></a>
+<figcaption>
+<p><span class="caption-text">LED locations on I/O board</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="led-definitions">
+<h4>LED definitions<a class="headerlink" href="#led-definitions" title="Permalink to this heading"></a></h4>
+<span id="sl1620-leds-table"></span><table class="docutils align-default" id="id8">
+<caption><span class="caption-text">LED definitions on I/O board</span><a class="headerlink" href="#id8" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>LED</p></th>
+<th class="head"><p>Color</p></th>
+<th class="head"><p>LEDs Function</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>D10</p></td>
+<td><p>Green</p></td>
+<td><p>LED indicator for USB3.0 Hub is working in normal mode or suspend mode.</p></td>
+</tr>
+<tr class="row-odd"><td><p>D17</p></td>
+<td><p>Green</p></td>
+<td><p>LED indicator1 for M.2 device general purpose.</p></td>
+</tr>
+<tr class="row-even"><td><p>D18</p></td>
+<td><p>Green</p></td>
+<td><p>LED indicator2 for M.2 device general purpose.</p></td>
+</tr>
+<tr class="row-odd"><td><p>D37</p></td>
+<td><p>Green</p></td>
+<td><p>LED indicator for USB-C PD power source status.</p></td>
+</tr>
+<tr class="row-even"><td><p>D40</p></td>
+<td><p>RED</p></td>
+<td><p>LED indicator for Stand-by status.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="soc-pinstrap-and-bootup-settings">
+<h3>SoC Pinstrap and Bootup Settings<a class="headerlink" href="#soc-pinstrap-and-bootup-settings" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-text">SoC pinstrap and bootup settings on core module</span><a class="headerlink" href="#id9" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Pad Name</p></th>
+<th class="head"><p>Strap Name</p></th>
+<th class="head"><p>Setting Value</p>
+<p>Default*</p>
+</th>
+<th class="head"><p>Resistor Stuffing</p>
+<ul class="simple">
+<li><p>stuffed</p></li>
+</ul>
+<ul class="simple">
+<li><p>removed</p></li>
+</ul>
+</th>
+<th class="head"><p>Description</p>
+<p>Rpu = OnChip Pull-up</p>
+<p>Rpd = OnChip Pull-down</p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TEST_EN</p></td>
+<td><p>TEST_EN</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>SM TEST Enable (Rpd)</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>0*</p></td>
+<td><p>-R120</p></td>
+<td><p>0: Enable ARM ICE JTAG connections (CoreSight)</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td><p>1</p></td>
+<td><p>+R120</p></td>
+<td><p>1: Enable SCAN or BSCAN tests</p></td>
+</tr>
+<tr class="row-odd"><td><p>JTAG_SEL</p></td>
+<td><p>JTAG_SEL</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>SM JTAG Port Selection (Rpd)</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td><p>0*</p></td>
+<td><p>-R121</p></td>
+<td><p>0: ARM ICE JTAG connections</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>1</p></td>
+<td><p>+R121</p></td>
+<td><p>1: Reserved for factory use</p></td>
+</tr>
+<tr class="row-even"><td><p>POR_EN</p></td>
+<td><p>POR_EN</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>Power-on reset (POR) bypass (Rpu)</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>0</p></td>
+<td><p>+R4</p></td>
+<td><p>0: Bypass on-chip POR generator</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td><p>1*</p></td>
+<td><p>-R4</p></td>
+<td><p>1: Enable on-chip POR generator</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWM[0]</p></td>
+<td><p>cpuRstByps</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>CPU reset bypass strap (Rpd)</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td><p>0*</p></td>
+<td><p>-R116</p></td>
+<td><p>0: Enable reset logic inside CPU partition</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>1</p></td>
+<td><p>+R116</p></td>
+<td><p>1: Bypass reset logic inside CPU partition</p></td>
+</tr>
+<tr class="row-even"><td><p>SPI2_SCLK</p></td>
+<td><p>pllPwrDown</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>SYS/MEM/CPU PLL Power Down;</p>
+<p>Note: pllPwrDown should be set to 1 only when pllByps is also set to 1. (Rpd)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>0*</p></td>
+<td><p>-R123</p></td>
+<td><p>0: Power up</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td><p>1</p></td>
+<td><p>+R123</p></td>
+<td><p>1: Power down</p></td>
+</tr>
+<tr class="row-odd"><td><p>USB2_DRV_</p></td>
+<td><p>pllByps</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>SYS/MEM/CPU PLL bypass indicator</p></td>
+</tr>
+<tr class="row-even"><td><p>VBUS</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>0*</p></td>
+<td><p>-R124</p></td>
+<td><p>0: No bypass</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td><p>1</p></td>
+<td><p>+R124</p></td>
+<td><p>1: All PLL bypassed</p></td>
+</tr>
+<tr class="row-odd"><td><p>SPI2_SS0n</p></td>
+<td><p>software_strap[1]</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>Straps for software usage (Rpd)</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td><p>0*</p></td>
+<td><p>-R117</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>1</p></td>
+<td><p>+R117</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>SPI1_SDO[0]</p></td>
+<td><p>software_strap[2]</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>Straps for software usage (Rpd)</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>0*</p></td>
+<td><p>-R118</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td><p>1</p></td>
+<td><p>+R118</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>SPI1_SCLK[1]</p></td>
+<td><p>software_strap[3]</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>Straps for software usage (Rpd)</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td><p>0*</p></td>
+<td><p>-R119</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>1</p></td>
+<td><p>+R119</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>I2S1_DO</p></td>
+<td><p>boot_src[0]</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>CPU Boot Source bit [0] (Rpu). See boot_src[1:0].</p>
+<p>2’b00: SPI-Secure Boot</p>
+<p>2’b01: ROM boot from NAND</p>
+<p>2’b10: ROM boot from eMMC</p>
+<p>2’b11: SPI-Clear boot</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>0*</p></td>
+<td><p>R105</p></td>
+<td><p>ROM boot from SPI.</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td><p>1</p></td>
+<td><p>R107</p></td>
+<td><p>ROM boot from NAND.</p></td>
+</tr>
+<tr class="row-odd"><td><p>I2S2_DO</p></td>
+<td><p>boot_src[1]</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>CPU Boot Source bit [1] (Rpd). See boot_src[1:0].</p>
+<p>2’b00: SPI-Secure Boot</p>
+<p>2’b01: ROM boot from NAND</p>
+<p>2’b10: ROM boot from eMMC</p>
+<p>2’b11: SPI-Clear boot</p>
+</td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td><p>0</p></td>
+<td><p>R108</p></td>
+<td><p>ROM boot from SPI.</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>1*</p></td>
+<td><p>R106</p></td>
+<td><p>ROM boot from eMMC.</p></td>
+</tr>
+<tr class="row-even"><td><p>I2S3_DO</p></td>
+<td><p>Legacy_boot</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>Strap to reduce reset wait time (Rpd)</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>0*</p></td>
+<td><p>-R122</p></td>
+<td><p>0: 2 ms</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td><p>1</p></td>
+<td><p>+R122</p></td>
+<td><p>1: 20 ms</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-text">Bootup settings on I/O board</span><a class="headerlink" href="#id10" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Net Name</p></th>
+<th class="head"><p>Strap Name</p></th>
+<th class="head"><p>Setting Value</p>
+<p>Default*</p>
+</th>
+<th class="head"><p>Resistor Stuffing</p>
+<ul class="simple">
+<li><p>stuffed</p></li>
+</ul>
+<ul class="simple">
+<li><p>removed</p></li>
+</ul>
+</th>
+<th class="head"><p>Description</p>
+<p>Rpu = OnChip Pull-up</p>
+<p>Rpd = OnChip Pull-down</p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>USB_BOOTn</p></td>
+<td><p>USB-Boot</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>ROM code uses this strap to determine if booting from USB or not (Rpu)</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>0</p></td>
+<td><p>—</p></td>
+<td><p>0: Boot from USB when USB-BOOT button is pressed while system reset de-assertion.</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td><p>1*</p></td>
+<td><p>—</p></td>
+<td><p>1: Boot from the device select by boot_src[1]</p></td>
+</tr>
+<tr class="row-odd"><td><p>CONN-SPI.VDDIO1P8.BOOT_SRC1</p></td>
+<td><p>SD-Boot</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>ROM code uses this strap to determine if booting from SD_Card or not (Rpu)</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td><p>0</p></td>
+<td><p>—</p></td>
+<td><p>0: Boot from SD_Card when SD_Boot header is on while system reset de-assertion.</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>1*</p></td>
+<td><p>—</p></td>
+<td><p>1: Boot from the device select by boot_src[1] when SD_Boot Header is off.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="hardware-manual-button-settings">
+<h3>Hardware Manual Button Settings<a class="headerlink" href="#hardware-manual-button-settings" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-text">Hardware manual button settings definitions on I/O board</span><a class="headerlink" href="#id11" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Switch Block</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Setting</p></th>
+<th class="head"><p>Function</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SW6 (RESET)</p></td>
+<td><p>Momentary Pushbutton</p></td>
+<td><p>Push</p></td>
+<td><p>SL1620 Reset Key asserted</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>Release</p></td>
+<td><p>Key de-asserted</p></td>
+</tr>
+<tr class="row-even"><td><p>SW7(USB_BOOT)</p></td>
+<td><p>Momentary Pushbutton</p></td>
+<td><p>Push</p></td>
+<td><p>USB boot Key asserted. Needs combo RESET button. Read below steps on how to enter USB-Boot mode.</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td><p>Release</p></td>
+<td><p>Key de-asserted</p></td>
+</tr>
+</tbody>
+</table>
+<p>To enter USB-Boot mode, follow these steps:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to these steps, make sure the USB driver is installed
+successfully on PC host side. For details, please reference <a class="reference internal" href="../linux/index.html"><span class="doc">Astra Yocto Linux User Guide</span></a></p>
+</div>
+<ol class="arabic">
+<li><p>Push RESET button to assert system reset to SL1620.</p></li>
+<li><p>Keep pushing RESET button and push USB_BOOT button at the same time
+for 1-2 seconds.</p></li>
+<li><p>Release RESET button while holding USB_BOOT button, so SL1620 enters
+USB-Boot mode.</p></li>
+<li><p>Check and wait for the console print… messages.</p>
+<p>Once the console print is returned and entered USB boot successfully,
+release USB_BOOT button.</p>
+</li>
+</ol>
+<figure class="align-default" id="id12">
+<a class="reference internal image-reference" href="../_images/image12.png"><img alt="../_images/image12.png" src="../_images/image12.png" style="width: 5.25962in; height: 4.6297in;" /></a>
+<figcaption>
+<p><span class="caption-text">Locations of manual buttons on I/O board</span><a class="headerlink" href="#id12" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="hardware-jumper-settings">
+<h3>Hardware Jumper Settings<a class="headerlink" href="#hardware-jumper-settings" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-text">Hardware jumper settings definitions on I/O board</span><a class="headerlink" href="#id13" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Ref Des</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Pin</p>
+<p>Connection</p>
+</th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>JP1</p></td>
+<td><p>2x1 2.54mm header</p></td>
+<td><p>1-2</p></td>
+<td><p>SD_Boot selection</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td></td>
+<td><ul class="simple">
+<li><p>Open: Boot from the device select by boot_src[1]</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td><ul class="simple">
+<li><p>Short: Boot from SD_Card while power-up or system reset de-assertion</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>To enter SD-Boot mode, follow these steps.</p>
+<ol class="arabic simple" start="2">
+<li><p>Prior to these steps, make sure SD-Card with firmware is plugged into
+SD-slot on core module.</p></li>
+</ol>
+<ol class="arabic simple">
+<li><p>Short SD_Boot header by 2.54mm jumper-cap before power-up.</p></li>
+</ol>
+<ol class="arabic simple" start="5">
+<li><p>Power-up system, then boot-up from SD_Card.</p></li>
+</ol>
+<p><a class="reference internal" href="#sl1620-jumpers"><span class="std std-ref">Locations of jumper on I/O board</span></a> shows the Header locations on the I/O board.</p>
+<figure class="align-default" id="id14">
+<span id="sl1620-jumpers"></span><a class="reference internal image-reference" href="../_images/image13.png"><img alt="../_images/image13.png" src="../_images/image13.png" style="width: 6.09418in; height: 4.86047in;" /></a>
+<figcaption>
+<p><span class="caption-text">Locations of jumper on I/O board</span><a class="headerlink" href="#id14" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="sl1620-evaluation-system-connectors">
+<h3>SL1620 Evaluation System Connectors<a class="headerlink" href="#sl1620-evaluation-system-connectors" title="Permalink to this heading"></a></h3>
+<section id="locations-of-core-module-connectors-on-top-side">
+<h4>Locations of core module connectors on top side<a class="headerlink" href="#locations-of-core-module-connectors-on-top-side" title="Permalink to this heading"></a></h4>
+<figure class="align-default" id="id15">
+<a class="reference internal image-reference" href="../_images/image14.png"><img alt="../_images/image14.png" src="../_images/image14.png" style="width: 5.51129in; height: 3.7987in;" /></a>
+<figcaption>
+<p><span class="caption-text">Locations on core module top side</span><a class="headerlink" href="#id15" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="locations-of-core-module-connectors-on-bottom-side">
+<h4>Locations of core module connectors on bottom side<a class="headerlink" href="#locations-of-core-module-connectors-on-bottom-side" title="Permalink to this heading"></a></h4>
+<figure class="align-default" id="id16">
+<span id="sl1620-core-bottom"></span><a class="reference internal image-reference" href="../_images/image15.png"><img alt="../_images/image15.png" src="../_images/image15.png" style="width: 5.62206in; height: 3.81981in;" /></a>
+<figcaption>
+<p><span class="caption-text">Locations on core module bottom side</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="core-module-connector-definitions">
+<h4>Core module connector definitions<a class="headerlink" href="#core-module-connector-definitions" title="Permalink to this heading"></a></h4>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-text">Core module connector definitions</span><a class="headerlink" href="#id17" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Main</p></th>
+<th class="head"><p>Connecting Boards/Devices
+(Ref Des if any)</p></th>
+<th class="head"><p>Functions</p></th>
+<th class="head"><p>Remarks</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>Ref Des</p></th>
+<th class="head"></th>
+<th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>J31</p></td>
+<td><p>MicroSD Card</p></td>
+<td><p>SDIO card</p></td>
+<td><p>For micro-SD type of memory card extension.</p></td>
+</tr>
+<tr class="row-even"><td><p>J35</p></td>
+<td><p>LCD</p></td>
+<td><p>LCD</p></td>
+<td><p>Connects LCD panel daughter card through 54-pin FPC cable.</p></td>
+</tr>
+<tr class="row-odd"><td><p>J37</p></td>
+<td><p>Line out</p></td>
+<td><p>Analog audio L/R</p></td>
+<td><p>Audio L/R output to 3.5mm Jack.</p></td>
+</tr>
+<tr class="row-even"><td><p>U2, U3</p></td>
+<td><p>DMIC_L/R</p></td>
+<td><p>PDM</p></td>
+<td><p>Digital MIC_L/R input.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="locations-of-i-o-board-connectors-on-top-side">
+<h4>Locations of I/O board connectors on top side<a class="headerlink" href="#locations-of-i-o-board-connectors-on-top-side" title="Permalink to this heading"></a></h4>
+<figure class="align-default" id="id18">
+<a class="reference internal image-reference" href="../_images/image16.png"><img alt="../_images/image16.png" src="../_images/image16.png" style="width: 6.5in; height: 5.15694in;" /></a>
+<figcaption>
+<p><span class="caption-text">Locations on I/O board top side</span><a class="headerlink" href="#id18" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="locations-of-i-o-board-connectors-on-bottom-side">
+<h4>Locations of I/O board connectors on bottom side<a class="headerlink" href="#locations-of-i-o-board-connectors-on-bottom-side" title="Permalink to this heading"></a></h4>
+<figure class="align-default" id="id19">
+<img alt="../_images/image17.svg" src="../_images/image17.svg" /><figcaption>
+<p><span class="caption-text">Locations on I/O board bottom side</span><a class="headerlink" href="#id19" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="i-o-board-connector-definitions">
+<h4>I/O board connector definitions<a class="headerlink" href="#i-o-board-connector-definitions" title="Permalink to this heading"></a></h4>
+<table class="docutils align-default" id="id20">
+<caption><span class="caption-text">I/O board connector definitions</span><a class="headerlink" href="#id20" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Main</p></th>
+<th class="head"><p>Connecting Boards/Devices
+(Ref Des if any)</p></th>
+<th class="head"><p>Functions</p></th>
+<th class="head"><p>Remarks</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>Ref Des</p></th>
+<th class="head"></th>
+<th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>J1</p></td>
+<td><p>ISP D/C</p></td>
+<td><p>SPI</p></td>
+<td><p>12-pin daughter card to support offline program SPI NOR flash on core-module</p></td>
+</tr>
+<tr class="row-even"><td><p>J2</p></td>
+<td><p>RJ45 cable</p></td>
+<td><p>Giga Ethernet</p></td>
+<td><p>For Wired Ethernet connection</p></td>
+</tr>
+<tr class="row-odd"><td><p>J12</p></td>
+<td><p>HDMI Sink</p></td>
+<td><p>HDMI TX</p></td>
+<td><p>Not applicable for SL1620.</p></td>
+</tr>
+<tr class="row-even"><td><p>J13</p></td>
+<td><p>FAN</p></td>
+<td><p>Heat Dissipation w/ FAN</p></td>
+<td><p>Active FAN with PWM</p></td>
+</tr>
+<tr class="row-odd"><td><p>J17</p></td>
+<td><p>M.2 2230 D/C</p></td>
+<td><p>SDIO and PCIe</p></td>
+<td><p>1x1/2x2 WiFi/Bluetooth card via SDIO</p>
+<p>PCIe is not applicable for SL1620.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>J22</p></td>
+<td><p>Debug Board</p></td>
+<td><p>JTAG</p></td>
+<td><p>XDB debugger for debugging</p></td>
+</tr>
+<tr class="row-odd"><td><p>J32</p></td>
+<td><p>40-pins Header</p></td>
+<td><p>UART, I2C, SPI, PDM, I2SI/O, GPIOs, STS1, PWMs, ADC</p></td>
+<td><p>Flexible for support various D/C</p></td>
+</tr>
+<tr class="row-even"><td><p>J34</p></td>
+<td><p>PoE+ D/C</p></td>
+<td><p>PoE+</p></td>
+<td><p>4-pin PoE+ daughter card with supporting an add-on 5V voltage to 40pin Header.</p></td>
+</tr>
+<tr class="row-odd"><td><p>J206</p></td>
+<td><p>MIPI-CSI0 adaptor</p></td>
+<td><p>MIPI-CSI</p></td>
+<td><p>Not Applicable for SL1620</p></td>
+</tr>
+<tr class="row-even"><td><p>J207</p></td>
+<td><p>MIPI-CSI1 adaptor</p></td>
+<td><p>MIPI-CSI</p></td>
+<td><p>Not Applicable for SL1620</p></td>
+</tr>
+<tr class="row-odd"><td><p>J208</p></td>
+<td><p>MIPI-DSI adaptor</p></td>
+<td><p>MIPI-DSI</p></td>
+<td><p>For MIPI-DSI x4 lane extension, like panel</p></td>
+</tr>
+<tr class="row-even"><td><p>J210</p></td>
+<td><p>USB Device</p></td>
+<td><p>USB 3.0 x2</p></td>
+<td><p>For USB3.0 extension in Device mode only</p></td>
+</tr>
+<tr class="row-odd"><td><p>J213</p></td>
+<td><p>TypeC power source</p></td>
+<td><p>Power Supply</p></td>
+<td><p>Power for Astra Machina rated at 15V/1.8A</p></td>
+</tr>
+<tr class="row-even"><td><p>J215</p></td>
+<td><p>USB Device</p></td>
+<td><p>USB2.0 OTG</p></td>
+<td><p>For USB2.0 extension, in either Host or Device mode</p></td>
+</tr>
+<tr class="row-odd"><td><p>J216</p></td>
+<td><p>USB Device</p></td>
+<td><p>USB 3.0 x2</p></td>
+<td><p>For USB3.0 extension in Device mode only</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="daughter-cards">
+<h2>Daughter Cards<a class="headerlink" href="#daughter-cards" title="Permalink to this heading"></a></h2>
+<p>A set of daughter cards supplements the Astra Machina system with a
+variety of I/O peripheral functionalities. Perspective devices offered
+by different manufacturers for each of such I/O may be implemented using
+respective daughter card.</p>
+<section id="debug-board">
+<h3>Debug Board<a class="headerlink" href="#debug-board" title="Permalink to this heading"></a></h3>
+<p>Debug board (Rev5) allows users to communicate with the SL1620 system
+over JTAG through a debugger on a PC host. While connecting the
+evaluation system and debug board with a 20-pin flat cable, align pin-1
+of the 2x10 cable socket at debug board side with pin-1 of 2x6 header
+J22 on the evaluation system.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Users may communicate with SL1620 over UART on a PC host by using a
+low-cost UART to USB cable commonly available. See Astra Machina
+webpage for a qualified list. As an option, the debug board also
+provides such bridging function based on the Silicon Labs CP2102. A
+virtual COM port driver is required, and can be downloaded from the
+<a class="reference external" href="https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers">vendor website</a>
+and installed in the PC host</p>
+</div>
+<p>UART on the evaluation system and the PC host USB are digitally
+isolated, with no direct conductive path, eliminating ground loop and
+back-drive issues when either is powered down.</p>
+<p><a class="reference internal" href="#sl1620-debug"><span class="std std-ref">Debug board connectivity for UART and JTAG</span></a> shows debug board connectivity facilitating UART and JTAG
+communications.</p>
+<figure class="align-default" id="id21">
+<span id="sl1620-debug"></span><a class="reference internal image-reference" href="../_images/image18.png"><img alt="../_images/image18.png" src="../_images/image18.png" style="width: 6.4243in; height: 2.59699in;" /></a>
+<figcaption>
+<p><span class="caption-text">Debug board connectivity for UART and JTAG</span><a class="headerlink" href="#id21" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="m-2-card">
+<h3>M.2 Card<a class="headerlink" href="#m-2-card" title="Permalink to this heading"></a></h3>
+<p>An M.2 E-Key socket J17, is provided for a variety of modules in the M.2
+form factor. Typical applicable modules support WiFi/BT devices with
+SDIO or PCIE signal interfaces.</p>
+<p>Available modules:</p>
+<ul class="simple">
+<li><p>Ampak AP12611_M2 with SYN43711 WiFi6E/BT5.3 1x1 over SDIO on M.2
+adaptor</p></li>
+</ul>
+</section>
+<section id="pins-sodimm-definition">
+<h3>260-Pins SODIMM definition<a class="headerlink" href="#pins-sodimm-definition" title="Permalink to this heading"></a></h3>
+<p>A 260-Pins SODIMM connector (PN: TE_2309413-1) joins the core module and
+the I/O board. <a class="reference internal" href="#sl1640-sodimm"><span class="std std-ref">260-pins SODIMM definition</span></a> shows the assignment for the 260-Pins.</p>
+<span id="sl1640-sodimm"></span><table class="docutils align-default" id="id22">
+<caption><span class="caption-text">260-pins SODIMM definition</span><a class="headerlink" href="#id22" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Assignment</p></th>
+<th class="head"><p>Pin#</p></th>
+<th class="head"><p>260-Pins SODIMM</p></th>
+<th class="head"><p>Pin#</p></th>
+<th class="head"><p>Assignment</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GePHY_RSTn (From IO_Exp)</p></td>
+<td><p>2</p></td>
+<td></td>
+<td><p>1</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>SPI1_SDO &amp;&amp; STRP[SS2]</p></td>
+<td><p>4</p></td>
+<td></td>
+<td><p>3</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>SPI1_SCLK &amp;&amp; STRP[SS3]</p></td>
+<td><p>6</p></td>
+<td></td>
+<td><p>5</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>LCD_RSTn (From IO_EXP)</p></td>
+<td><p>8</p></td>
+<td></td>
+<td><p>7</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>n/a</p></td>
+<td><p>10</p></td>
+<td></td>
+<td><p>9</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>SPI1_SDI</p></td>
+<td><p>12</p></td>
+<td></td>
+<td><p>11</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>SPI1_SS0n</p></td>
+<td><p>14</p></td>
+<td></td>
+<td><p>13</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>External_Boot_SRC0</p></td>
+<td><p>16</p></td>
+<td></td>
+<td><p>15</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>USB-C_Logic_INTn</p></td>
+<td><p>18</p></td>
+<td></td>
+<td><p>17</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>SD-CARD_PPWR_EN</p></td>
+<td><p>20</p></td>
+<td></td>
+<td><p>19</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>SD-CARD_VIO_SEL</p></td>
+<td><p>22</p></td>
+<td></td>
+<td><p>21</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>LCD_TP_IRQ</p></td>
+<td><p>24</p></td>
+<td></td>
+<td><p>23</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>26</p></td>
+<td></td>
+<td><p>25</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>n/a</p></td>
+<td><p>28</p></td>
+<td></td>
+<td><p>27</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>n/a</p></td>
+<td><p>30</p></td>
+<td></td>
+<td><p>29</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>GND</p></td>
+<td><p>32</p></td>
+<td></td>
+<td><p>31</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>n/a</p></td>
+<td><p>34</p></td>
+<td></td>
+<td><p>33</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>n/a</p></td>
+<td><p>36</p></td>
+<td></td>
+<td><p>35</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>38</p></td>
+<td></td>
+<td><p>37</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>n/a</p></td>
+<td><p>40</p></td>
+<td></td>
+<td><p>39</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>n/a</p></td>
+<td><p>42</p></td>
+<td></td>
+<td><p>41</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>GND</p></td>
+<td><p>44</p></td>
+<td></td>
+<td><p>43</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>USB2_Dn</p></td>
+<td><p>46</p></td>
+<td></td>
+<td><p>45</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>USB2_Dp</p></td>
+<td><p>48</p></td>
+<td></td>
+<td><p>47</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>50</p></td>
+<td></td>
+<td><p>49</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>USB3_RXp</p></td>
+<td><p>52</p></td>
+<td></td>
+<td><p>51</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>USB3_RXn</p></td>
+<td><p>54</p></td>
+<td></td>
+<td><p>53</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>GND</p></td>
+<td><p>56</p></td>
+<td></td>
+<td><p>55</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>USB3_TXp</p></td>
+<td><p>58</p></td>
+<td></td>
+<td><p>57</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>USB3_TXn</p></td>
+<td><p>60</p></td>
+<td></td>
+<td><p>59</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>62</p></td>
+<td></td>
+<td><p>61</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>USB3_USB20.Dp</p></td>
+<td><p>64</p></td>
+<td></td>
+<td><p>63</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>USB3_USB20.Dn</p></td>
+<td><p>66</p></td>
+<td></td>
+<td><p>65</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>GND</p></td>
+<td><p>68</p></td>
+<td></td>
+<td><p>67</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>USB2_IDPIN</p></td>
+<td><p>70</p></td>
+<td></td>
+<td><p>69</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWR_OTG_VBUS</p></td>
+<td><p>72</p></td>
+<td></td>
+<td><p>71</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>PWR_USB3_VBUS</p></td>
+<td><p>74</p></td>
+<td></td>
+<td><p>73</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>I2S3_BCLK</p></td>
+<td><p>76</p></td>
+<td></td>
+<td><p>75</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>I2S3_DI</p></td>
+<td><p>78</p></td>
+<td></td>
+<td><p>77</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>I2S3_DO</p></td>
+<td><p>80</p></td>
+<td></td>
+<td><p>79</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>2S3_LRCK</p></td>
+<td><p>82</p></td>
+<td></td>
+<td><p>81</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>I2S1_DI</p></td>
+<td><p>84</p></td>
+<td></td>
+<td><p>83</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[22]</p></td>
+<td><p>86</p></td>
+<td></td>
+<td><p>85</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>PDM_DI[1]</p></td>
+<td><p>88</p></td>
+<td></td>
+<td><p>87</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>PDM_CLKIO</p></td>
+<td><p>90</p></td>
+<td></td>
+<td><p>89</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>TW1_SCL</p></td>
+<td><p>92</p></td>
+<td></td>
+<td><p>91</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>TW1_SDA</p></td>
+<td><p>94</p></td>
+<td></td>
+<td><p>93</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO-EXP_0_2</p></td>
+<td><p>96</p></td>
+<td></td>
+<td><p>95</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>FAN_TACH_Control</p></td>
+<td><p>98</p></td>
+<td></td>
+<td><p>97</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>n/a</p></td>
+<td><p>100</p></td>
+<td></td>
+<td><p>99</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>FAN_PWM</p></td>
+<td><p>102</p></td>
+<td></td>
+<td><p>101</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>I2S1_BCLK</p></td>
+<td><p>104</p></td>
+<td></td>
+<td><p>103</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>EXPANDER_INT-REQn</p></td>
+<td><p>106</p></td>
+<td></td>
+<td><p>105</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>BOOT_SRC1</p></td>
+<td><p>108</p></td>
+<td></td>
+<td><p>107</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>I2S1_DO0</p></td>
+<td><p>110</p></td>
+<td></td>
+<td><p>109</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>I2S1_MCLK</p></td>
+<td><p>112</p></td>
+<td></td>
+<td><p>111</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>I2S1_LRCK</p></td>
+<td><p>114</p></td>
+<td></td>
+<td><p>113</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWM2</p></td>
+<td><p>116</p></td>
+<td></td>
+<td><p>115</p></td>
+<td><p>MIPI_DSI_TD0n</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[2]</p></td>
+<td><p>118</p></td>
+<td></td>
+<td><p>117</p></td>
+<td><p>MIPI_DSI_TD0p</p></td>
+</tr>
+<tr class="row-odd"><td><p>URT0_TXD</p></td>
+<td><p>120</p></td>
+<td></td>
+<td><p>119</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>URT0_RXD</p></td>
+<td><p>122</p></td>
+<td></td>
+<td><p>121</p></td>
+<td><p>MIPI_DSI_TD1n</p></td>
+</tr>
+<tr class="row-odd"><td><p>SPI2_SDI</p></td>
+<td><p>124</p></td>
+<td></td>
+<td><p>123</p></td>
+<td><p>MIPI_DSI_TD1p</p></td>
+</tr>
+<tr class="row-even"><td><p>SPI2_SCLK</p></td>
+<td><p>126</p></td>
+<td></td>
+<td><p>125</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>SPI2_SDO</p></td>
+<td><p>128</p></td>
+<td></td>
+<td><p>127</p></td>
+<td><p>MIPI_DSI_TCKp</p></td>
+</tr>
+<tr class="row-even"><td><p>SPI2_SS3n</p></td>
+<td><p>130</p></td>
+<td></td>
+<td><p>129</p></td>
+<td><p>MIPI_DSI_TCKn</p></td>
+</tr>
+<tr class="row-odd"><td><p>USB2_OCn</p></td>
+<td><p>132</p></td>
+<td></td>
+<td><p>131</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>SPI2_SS1n</p></td>
+<td><p>134</p></td>
+<td></td>
+<td><p>133</p></td>
+<td><p>MIPI_DSI_TD3n</p></td>
+</tr>
+<tr class="row-odd"><td><p>SPI2_SS0n</p></td>
+<td><p>136</p></td>
+<td></td>
+<td><p>135</p></td>
+<td><p>MIPI_DSI_TD3p</p></td>
+</tr>
+<tr class="row-even"><td><p>TW1_SDA</p></td>
+<td><p>138</p></td>
+<td></td>
+<td><p>137</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>TW1_SCL</p></td>
+<td><p>140</p></td>
+<td></td>
+<td><p>139</p></td>
+<td><p>MIPI_DSI_TD2p</p></td>
+</tr>
+<tr class="row-even"><td><p>n/a</p></td>
+<td><p>142</p></td>
+<td></td>
+<td><p>141</p></td>
+<td><p>MIPI_DSI_TD2n</p></td>
+</tr>
+<tr class="row-odd"><td><p>n/a</p></td>
+<td><p>144</p></td>
+<td></td>
+<td><p>143</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>SPI2_SDO_3V3</p></td>
+<td><p>146</p></td>
+<td></td>
+<td><p>145</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>SPI2_SDI_3V3</p></td>
+<td><p>148</p></td>
+<td></td>
+<td><p>147</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>SPI2_CLK_3V3</p></td>
+<td><p>150</p></td>
+<td></td>
+<td><p>149</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>n/a</p></td>
+<td><p>152</p></td>
+<td></td>
+<td><p>151</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>USB-C_Logic_INTn</p></td>
+<td><p>154</p></td>
+<td></td>
+<td><p>153</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>n/a</p></td>
+<td><p>156</p></td>
+<td></td>
+<td><p>155</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>n/a</p></td>
+<td><p>158</p></td>
+<td></td>
+<td><p>157</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>Levershift_EN# for 40P header</p></td>
+<td><p>160</p></td>
+<td></td>
+<td><p>159</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>n/a</p></td>
+<td><p>162</p></td>
+<td></td>
+<td><p>161</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>RSTIn&#64;PU</p></td>
+<td><p>164</p></td>
+<td></td>
+<td><p>163</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>JTAG_TDO</p></td>
+<td><p>166</p></td>
+<td></td>
+<td><p>165</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>JTAG_TDI.SoC_WakeUp#</p></td>
+<td><p>168</p></td>
+<td></td>
+<td><p>167</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>JTAG_TMS</p></td>
+<td><p>170</p></td>
+<td></td>
+<td><p>169</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>n/a</p></td>
+<td><p>172</p></td>
+<td></td>
+<td><p>171</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>n/a</p></td>
+<td><p>174</p></td>
+<td></td>
+<td><p>173</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[48]</p></td>
+<td><p>176</p></td>
+<td></td>
+<td><p>175</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>TW2_SDA</p></td>
+<td><p>178</p></td>
+<td></td>
+<td><p>177</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>TW2_SCL</p></td>
+<td><p>180</p></td>
+<td></td>
+<td><p>179</p></td>
+<td><p>JTAG_TCK</p></td>
+</tr>
+<tr class="row-even"><td><p>TW0_SDA</p></td>
+<td><p>182</p></td>
+<td></td>
+<td><p>181</p></td>
+<td><p>GPIO[47]</p></td>
+</tr>
+<tr class="row-odd"><td><p>TW0_SCL</p></td>
+<td><p>184</p></td>
+<td></td>
+<td><p>183</p></td>
+<td><p>JTAG_TRSTn</p></td>
+</tr>
+<tr class="row-even"><td><p>URT1A_CTSn for M.2</p></td>
+<td><p>186</p></td>
+<td></td>
+<td><p>185</p></td>
+<td><p>GPIO-EXP_0_7</p></td>
+</tr>
+<tr class="row-odd"><td><p>URT1A_RTSn for M.2</p></td>
+<td><p>188</p></td>
+<td></td>
+<td><p>187</p></td>
+<td><p>URT1A_RXD for M.2</p></td>
+</tr>
+<tr class="row-even"><td><p>PWM1</p></td>
+<td><p>190</p></td>
+<td></td>
+<td><p>189</p></td>
+<td><p>GPIO[55]</p></td>
+</tr>
+<tr class="row-odd"><td><p>GND</p></td>
+<td><p>192</p></td>
+<td></td>
+<td><p>191</p></td>
+<td><p>URT1A_TXD for M.2</p></td>
+</tr>
+<tr class="row-even"><td><p>PWR_1V8</p></td>
+<td><p>194</p></td>
+<td></td>
+<td><p>193</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWR_1V8</p></td>
+<td><p>196</p></td>
+<td></td>
+<td><p>195</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>PWR_1V8_CTL</p></td>
+<td><p>198</p></td>
+<td></td>
+<td><p>197</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWR_1V8_CTL</p></td>
+<td><p>200</p></td>
+<td></td>
+<td><p>199</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>PWR_3V3_CTL</p></td>
+<td><p>202</p></td>
+<td></td>
+<td><p>201</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWR_3V3_CTL</p></td>
+<td><p>204</p></td>
+<td></td>
+<td><p>203</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>206</p></td>
+<td></td>
+<td><p>205</p></td>
+<td><p>USB_BOOTn</p></td>
+</tr>
+<tr class="row-odd"><td><p>M.2_WIFI_SDIO_CLK</p></td>
+<td><p>208</p></td>
+<td></td>
+<td><p>207</p></td>
+<td><p>SDIO_MUX_SEL (From IO_EXP)</p></td>
+</tr>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>210</p></td>
+<td></td>
+<td><p>209</p></td>
+<td><p>ETHERNET_LINK_LED</p></td>
+</tr>
+<tr class="row-odd"><td><p>M.2_WIFI_SDIO_CMD</p></td>
+<td><p>212</p></td>
+<td></td>
+<td><p>211</p></td>
+<td><p>ETHERNET_DUPLX_LED</p></td>
+</tr>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>214</p></td>
+<td></td>
+<td><p>213</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>M.2_WIFI_SDIO_D0</p></td>
+<td><p>216</p></td>
+<td></td>
+<td><p>215</p></td>
+<td><p>RJ45_MDIP0</p></td>
+</tr>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>218</p></td>
+<td></td>
+<td><p>217</p></td>
+<td><p>RJ45_MDIN0</p></td>
+</tr>
+<tr class="row-odd"><td><p>M.2_WIFI_SDIO_D1</p></td>
+<td><p>220</p></td>
+<td></td>
+<td><p>219</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>222</p></td>
+<td></td>
+<td><p>221</p></td>
+<td><p>RJ45_MDIP1</p></td>
+</tr>
+<tr class="row-odd"><td><p>M.2_WIFI_SDIO_D2</p></td>
+<td><p>224</p></td>
+<td></td>
+<td><p>223</p></td>
+<td><p>RJ45_MDIN1</p></td>
+</tr>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>226</p></td>
+<td></td>
+<td><p>225</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>M.2_WIFI_SDIO_D3</p></td>
+<td><p>228</p></td>
+<td></td>
+<td><p>227</p></td>
+<td><p>RJ45_MDIP2</p></td>
+</tr>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>230</p></td>
+<td></td>
+<td><p>229</p></td>
+<td><p>RJ45_MDIN2</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWR_3V3</p></td>
+<td><p>232</p></td>
+<td></td>
+<td><p>231</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>PWR_3V3</p></td>
+<td><p>234</p></td>
+<td></td>
+<td><p>233</p></td>
+<td><p>RJ45_MDIP3</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWR_3V3</p></td>
+<td><p>236</p></td>
+<td></td>
+<td><p>235</p></td>
+<td><p>RJ45_MDIN3</p></td>
+</tr>
+<tr class="row-even"><td><p>PWR_3V3</p></td>
+<td><p>238</p></td>
+<td></td>
+<td><p>237</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWR_3V3</p></td>
+<td><p>240</p></td>
+<td></td>
+<td><p>239</p></td>
+<td><p>PWR_BL for LCD backlight</p></td>
+</tr>
+<tr class="row-even"><td><p>PWR_3V3</p></td>
+<td><p>242</p></td>
+<td></td>
+<td><p>241</p></td>
+<td><p>PWR_BL for LCD backlight</p></td>
+</tr>
+<tr class="row-odd"><td><p>GND</p></td>
+<td><p>244</p></td>
+<td></td>
+<td><p>243</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>246</p></td>
+<td></td>
+<td><p>245</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>GND</p></td>
+<td><p>248</p></td>
+<td></td>
+<td><p>247</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>250</p></td>
+<td></td>
+<td><p>249</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWR_5V</p></td>
+<td><p>252</p></td>
+<td></td>
+<td><p>251</p></td>
+<td><p>PWR_5V</p></td>
+</tr>
+<tr class="row-even"><td><p>PWR_5V</p></td>
+<td><p>254</p></td>
+<td></td>
+<td><p>253</p></td>
+<td><p>PWR_5V</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWR_5V</p></td>
+<td><p>256</p></td>
+<td></td>
+<td><p>255</p></td>
+<td><p>PWR_5V</p></td>
+</tr>
+<tr class="row-even"><td><p>PWR_5V</p></td>
+<td><p>258</p></td>
+<td></td>
+<td><p>257</p></td>
+<td><p>PWR_5V</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWR_5V</p></td>
+<td><p>260</p></td>
+<td></td>
+<td><p>259</p></td>
+<td><p>PWR_5V</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pins-header">
+<h3>40-Pins Header<a class="headerlink" href="#pins-header" title="Permalink to this heading"></a></h3>
+<p>A 40-pin GPIO header with 0.1-inch (2.54mm) pin pitch is on the top edge
+of the I/O board. Any of the general-purpose 3.3V pins can be configured
+in software with a variety of alternative functions. For more
+information, please refer to the <em>SL1620 Datasheet</em>.</p>
+<figure class="align-default" id="id23">
+<a class="reference internal image-reference" href="../_images/image19.png"><img alt="../_images/image19.png" src="../_images/image19.png" style="width: 5.74038in; height: 6.41378in;" /></a>
+<figcaption>
+<p><span class="caption-text">40-pin header definition</span><a class="headerlink" href="#id23" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="pin-demuxing-for-standard-interface-configuration">
+<h3>Pin-demuxing for Standard Interface Configuration<a class="headerlink" href="#pin-demuxing-for-standard-interface-configuration" title="Permalink to this heading"></a></h3>
+<p>This section covers pin-demuxing configuration for the SL1620 evaluation
+system. For System on Chip (SoC), see <a class="reference internal" href="#sl1620-socdemux"><span class="std std-ref">SoC pin-demuxing usage</span></a>.</p>
+<span id="sl1620-socdemux"></span><table class="docutils align-default" id="id24">
+<caption><span class="caption-text">SoC pin-demuxing usage</span><a class="headerlink" href="#id24" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>SL1620 System-on-chip (SoC) Domain</p></th>
+<th class="head"></th>
+<th class="head"></th>
+<th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Pad/Pin Name</p></td>
+<td><p>Default Usage</p></td>
+<td><p>Direction</p></td>
+<td><p>Mode Setting</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>SDIO</p></td>
+<td><p>SDIO_CDn</p></td>
+<td><p>I:SDIOA_CDn</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>SDIO_WP</p></td>
+<td><p>IO:GPIO[55]</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_0</p></td>
+</tr>
+<tr class="row-odd"><td><p>SPI1</p></td>
+<td><p>SPI1_SS0n</p></td>
+<td><p>O:SPI1_SS0n</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_0</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>SPI1_SS1n</p></td>
+<td><p>IO:GPIO[4]</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_2</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>SPI1_SS2n</p></td>
+<td><p>I:URT0A_RXD</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_0</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>SPI1_SS3n</p></td>
+<td><p>O:URT0A_TXD</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_0</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>SPI1_SDO</p></td>
+<td><p>O:SPI1_SDO</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_0</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>SPI1_SDI</p></td>
+<td><p>I:SPI1_SDI</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_0</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>SPI1_SCLK</p></td>
+<td><p>O:SPI1_SCLK</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_0</p></td>
+</tr>
+<tr class="row-even"><td><p>SPI2</p></td>
+<td><p>SPI2_SS0n</p></td>
+<td><p>O:SPI2_SS0n</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>SPI2_SS1n</p></td>
+<td><p>O:SPI2_SS1n</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>SPI2_SS2n</p></td>
+<td><p>O:SPI2_SS2n</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_2</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>SPI2_SS3n</p></td>
+<td><p>O:SPI2_SS3n</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_2</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>SPI2_SDO</p></td>
+<td><p>O:SPI2_SDO</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>SPI2_SDI</p></td>
+<td><p>I:SPI2_SDI</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>SPI2_SCLK</p></td>
+<td><p>O:SPI2_SCLK</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART</p></td>
+<td><p>URT1_RXD</p></td>
+<td><p>I:URT1A_RXD</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_2</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>URT1_TXD</p></td>
+<td><p>O:URT1A_TXD</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_2</p></td>
+</tr>
+<tr class="row-odd"><td><p>TWSI</p></td>
+<td><p>TW0_SCL</p></td>
+<td><p>IO:TW0A_SCL</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_0</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>TW0_SDA</p></td>
+<td><p>IO:TW0A_SDA</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_0</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>TW1_SCL</p></td>
+<td><p>IO:TW1_SCL</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_0</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>TW1_SDA</p></td>
+<td><p>IO:TW1_SDA</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_0</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>TW2_SCL</p></td>
+<td><p>IO:TW2_SCL</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>TW2_SDA</p></td>
+<td><p>IO:TW2_SDA</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>TW3_SCL</p></td>
+<td><p>O:URT1A_RTSn</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_2</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>TW3_SDA</p></td>
+<td><p>I:URT1A_CTSn</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_2</p></td>
+</tr>
+<tr class="row-odd"><td><p>USB2</p></td>
+<td><p>USB2_DRV_VBUS</p></td>
+<td><p>O:GPIO[51]</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p>PWM</p></td>
+<td><p>PWM[0]</p></td>
+<td><p>O:PWM[0]</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>PWM[1]</p></td>
+<td><p>O:PWM[1]</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>PWM[2]</p></td>
+<td><p>O:PWM[2]</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>PWM[3]</p></td>
+<td><p>O:PWM[3]</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p>RGMII</p></td>
+<td><p>RGMII_TXC</p></td>
+<td><p>O:RGMII_TXC</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>RGMII_TXD[0]</p></td>
+<td><p>O:RGMII_TXD[0]</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>RGMII_TXD[1]</p></td>
+<td><p>O:RGMII_TXD[1]</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>RGMII_TXD[2]</p></td>
+<td><p>O:RGMII_TXD[2]</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>RGMII_TXD[3]</p></td>
+<td><p>O:RGMII_TXD[3]</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>RGMII_TXCTL</p></td>
+<td><p>O:RGMII_TXCTL</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>RGMII_RXC</p></td>
+<td><p>I:RGMII_RXC</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>RGMII_RXD[0]</p></td>
+<td><p>I:RGMII_RXD[0]</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>RGMII_RXD[1]</p></td>
+<td><p>I:RGMII_RXD[1]</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>RGMII_RXD[2]</p></td>
+<td><p>I:RGMII_RXD[2]</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>RGMII_RXD[3]</p></td>
+<td><p>I:RGMII_RXD[3]</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>RGMII_RXCTL</p></td>
+<td><p>I:RGMII_RXCTL</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p>I2S1</p></td>
+<td><p>I2S1_DO</p></td>
+<td><p>O:I2S1_DO</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>I2S1_DI</p></td>
+<td><p>I:I2S1_DI</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>I2S1_LRCK</p></td>
+<td><p>IO:I2S1_LRCK</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>I2S1_BCLK</p></td>
+<td><p>IO:I2S1_BCLK</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>I2S1_MCLK</p></td>
+<td><p>IO:I2S1_MCLK</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p>I2S2</p></td>
+<td><p>I2S2_DO</p></td>
+<td><p>O:I2S2_DO</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>I2S2_DI</p></td>
+<td><p>IO:GPIO[22]</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_0</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>I2S2_LRCK</p></td>
+<td><p>IO:I2S2_LRCK</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>I2S2_BCLK</p></td>
+<td><p>IO:I2S2_BCLK</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p>I2S3</p></td>
+<td><p>I2S3_DO</p></td>
+<td><p>O:I2S3_DO</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>I2S3_DI</p></td>
+<td><p>I:I2S3_DI</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>I2S3_LRCK</p></td>
+<td><p>IO:I2S3_LRCK</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>I2S3_BCLK</p></td>
+<td><p>IO:I2S3_BCLK</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p>PDM</p></td>
+<td><p>PDM_CLKIO</p></td>
+<td><p>IO:PDM_CLKIO</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>PDM_DI[0]</p></td>
+<td><p>I:PDM_DI[0]</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>PDM_DI[1]</p></td>
+<td><p>I:PDM_DI[1]</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p>JTAG</p></td>
+<td><p>TMS</p></td>
+<td><p>IO:GPIO[0]</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>TDI</p></td>
+<td><p>IO:GPIO[1]</p></td>
+<td><p>IN</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>TDO</p></td>
+<td><p>IO:GPIO[2]</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_A</p></td>
+<td><p>GPIO_A[0]</p></td>
+<td><p>IO:RGMIIA_MDIO</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>GPIO_A[1]</p></td>
+<td><p>O:RGMIIA_MDC</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>GPIO_A[2]</p></td>
+<td><p>IO:GPIO[48]</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_0</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>GPIO_A[3]</p></td>
+<td><p>IO:GPIO[47]</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_0</p></td>
+</tr>
+<tr class="row-odd"><td><p>NAND</p></td>
+<td><p>NFALE</p></td>
+<td><p>O:NFALE</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>NFLCS</p></td>
+<td><p>O:NFLCS</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p>LCDC</p></td>
+<td><p>LCDD0</p></td>
+<td><p>IO:LCDD0</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>LCDD1</p></td>
+<td><p>IO:LCDD1</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>LCDD2</p></td>
+<td><p>IO:LCDD2</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>LCDD3</p></td>
+<td><p>IO:LCDD3</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>LCDD4</p></td>
+<td><p>IO:LCDD4</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>LCDD5</p></td>
+<td><p>IO:LCDD5</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>LCDD6</p></td>
+<td><p>IO:LCDD6</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>LCDD7</p></td>
+<td><p>IO:LCDD7</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>LCDD8</p></td>
+<td><p>IO:LCDD8</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>LCDD9</p></td>
+<td><p>IO:LCDD9</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>LCDD10</p></td>
+<td><p>IO:LCDD10</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>LCDD11</p></td>
+<td><p>IO:LCDD11</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>LCDD12</p></td>
+<td><p>IO:LCDD12</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>LCDD13</p></td>
+<td><p>IO:LCDD13</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>LCDD14</p></td>
+<td><p>IO:LCDD14</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>LCDD15</p></td>
+<td><p>IO:LCDD15</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>LCDD16</p></td>
+<td><p>IO:LCDD16</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>LCDD17</p></td>
+<td><p>IO:LCDD17</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>LCDD18</p></td>
+<td><p>IO:LCDD18</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>LCDD19</p></td>
+<td><p>IO:LCDD19</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>LCDD20</p></td>
+<td><p>IO:LCDD20</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>LCDD21</p></td>
+<td><p>IO:LCDD21</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>LCDD22</p></td>
+<td><p>IO:LCDD22</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>LCDD23</p></td>
+<td><p>IO:LCDD23</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>LPCLK</p></td>
+<td><p>O:LPCLK</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>LCDGPIO0</p></td>
+<td><p>O:LCDGPIO0</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>LCDGPIO1</p></td>
+<td><p>O:LCDGPIO1</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>LCDGPIO2</p></td>
+<td><p>O:LCDGPIO2</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>LCDGPIO3</p></td>
+<td><p>O:LCDGPIO3</p></td>
+<td><p>OUT</p></td>
+<td><p>MODE_1</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pin-demuxing-for-gpio-gpo-configuration">
+<h3>Pin-demuxing for GPIO/GPO Configuration<a class="headerlink" href="#pin-demuxing-for-gpio-gpo-configuration" title="Permalink to this heading"></a></h3>
+<p>This section covers pin-demuxed GPIO/GPO usage of SoC domains.</p>
+<table class="docutils align-default" id="id25">
+<caption><span class="caption-text">SoC GPIO/GPO usage</span><a class="headerlink" href="#id25" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>SL1620 SoC</p></th>
+<th class="head"><p>Availability</p></th>
+<th class="head"><p>Direction</p></th>
+<th class="head"><p>Default Function</p></th>
+<th class="head"><p>GPIO Signaling</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GPIO/GPO</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[0]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>IN</p></td>
+<td><p>GPIO_EXP_INTn (CM)</p></td>
+<td><p>0: GPIO Expander triggers interrupt (Core Module)</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: No interrupt</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[0]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD8</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[1]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>IN</p></td>
+<td><p>WiFi_WAKE_UP#</p></td>
+<td><p>0: Wake up triggered by WiFi</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: No wake up trigger</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO_X[1]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD9</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[2]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD16</p></td>
+<td><p>To 40-Pin header</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO_X[2]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>O:SM_FE_LED[0]</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[3]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:SPI1_SS0n</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[4]</p></td>
+<td><p>MODE_2</p></td>
+<td><p>IN</p></td>
+<td><p>GPIO_EXP_INTn</p>
+<p>(I/O Board)</p>
+</td>
+<td><p>0: GPIO Expander triggers interrupt (I/O Board)</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: No interrupt</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[5]</p></td>
+<td><p>MODE_0</p></td>
+<td><p>IN</p></td>
+<td><p>I:URT0A_RXD</p></td>
+<td><p>To 40-Pin header</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[6]</p></td>
+<td><p>MODE_0</p></td>
+<td><p>OUT</p></td>
+<td><p>O:URT0A_TXD</p></td>
+<td><p>To 40-Pin header</p></td>
+</tr>
+<tr class="row-even"><td><p>GPO[7]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:SPI1_SDO</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPO[8]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:SPI1_SCLK</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[9]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN</p></td>
+<td><p>I:SPI1_SDI</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[10]</p></td>
+<td><p>MODE_0</p></td>
+<td><p>OUT</p></td>
+<td><p>IO:TW0A_SCL</p></td>
+<td><p>To 40-Pin Header/ Display IF/ GPIO_EXP_CM</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO_X[10]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>O:LCDGPIO3</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[11]</p></td>
+<td><p>MODE 0</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:TW0A_SDA</p></td>
+<td><p>To 40-Pin Header/ Display IF/ GPIO_EXP_CM</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO_X[11]</p></td>
+<td><p>MODE 0</p></td>
+<td><p>IN</p></td>
+<td><p>GePHY_INTB</p></td>
+<td><p>0: Interrupt is triggered by GePHY</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: No interrupt</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[12]</p></td>
+<td><p>MODE_0</p></td>
+<td><p>OUT</p></td>
+<td><p>IO:TW1_SCL</p></td>
+<td><p>To 40-Pin Header/ M.2/ GPIO_EXP_IO</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[12]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD0</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[13]</p></td>
+<td><p>MODE_0</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:TW1_SDA</p></td>
+<td><p>To 40-Pin Header/ M.2/ GPIO_EXP_IO</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[13]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD1</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[14]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>OUT</p></td>
+<td><p>IO:I2S1_LRCK</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[14]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD23</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[15]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>OUT</p></td>
+<td><p>IO:I2S1_BCLK</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[15]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:LPCLK</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPO[16]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>OUT</p></td>
+<td><p>O:I2S1_DO</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[16]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:LCDGPIO0</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[17]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>OUT</p></td>
+<td><p>IO:I2S1_MCLK</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[17]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:LCDGPIO1</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[18]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>IN</p></td>
+<td><p>I:I2S1_DI</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[18]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:LCDGPIO2</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[19]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>IO:I2S2_LRCK</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[19]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:RGMII_TXD[0]</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[20]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>IO:I2S2_BCLK</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[20]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:RGMII_TXD[1]</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPO[21]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:I2S2_DO</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[21]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:RGMII_TXD[2]</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[22]</p></td>
+<td><p>MODE_0</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:GPIO[22]</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[22]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:RGMII_TXD[3]</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[23]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>IN</p></td>
+<td><p>I:PDM_DI[1]</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[24]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN</p></td>
+<td><p>I:PDM_DI[0]</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[25]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>OUT</p></td>
+<td><p>IO:PDM_CLKIO</p></td>
+<td><p>To 40-Pin Header/ DMIC on Board</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[26]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>IO:I2S3_LRCK</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[27]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>IO:I2S3_BCLK</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPO[28]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:I2S3_DO</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[29]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN</p></td>
+<td><p>I:I2S3_DI</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPO[30]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>OUT</p></td>
+<td><p>O:SPI2_SS0n</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[31]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>OUT</p></td>
+<td><p>O:SPI2_SS1n</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[31]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN</p></td>
+<td><p>I:RGMII_RXD[0]</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[32]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:SPI2_SS2n</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[32]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN</p></td>
+<td><p>I:RGMII_RXD[1]</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[33]</p></td>
+<td><p>MODE_2</p></td>
+<td><p>OUT</p></td>
+<td><p>O:SPI2_SS3n</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO_X[33]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN</p></td>
+<td><p>I:RGMII_RXD[2]</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPO[34]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>OUT</p></td>
+<td><p>O:SPI2_SDO</p></td>
+<td><p>To 40-Pin Header/ LCDC</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPO[35]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>OUT</p></td>
+<td><p>O:SPI2_SCLK</p></td>
+<td><p>To 40-Pin Header/ LCDC</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[36]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>IN</p></td>
+<td><p>I:SPI2_SDI</p></td>
+<td><p>To 40-Pin Header/ LCDC</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[37]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>IO:TW2_SCL</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[38]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:TW2_SDA</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[39]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN</p></td>
+<td><p>I:URT1A_RXD</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO_X[39]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD17</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[40]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:URT1A_TXD</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO_X[40]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD22</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[41]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:URT1A_RTSn</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO_X[41]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN</p></td>
+<td><p>I:RGMII_RXD[3]</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[42]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN</p></td>
+<td><p>I:URT1A_CTSn</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO_X[42]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN</p></td>
+<td><p>I:RGMII_RXC</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[43]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:PWM[3]</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO_X[43]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:RGMII_TXC</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[44]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>OUT</p></td>
+<td><p>O:PWM[2]</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[45]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>OUT</p></td>
+<td><p>O:PWM[1]</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPO[46]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:PWM[0]</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[47]</p></td>
+<td><p>MODE_0</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:GPIO[47]</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[48]</p></td>
+<td><p>MODE_0</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:GPIO[48]</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[49]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:RGMIIA_MDC</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[50]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:RGMIIA_MDIO</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[51]</p></td>
+<td><p>MODE_1</p></td>
+<td><p>OUT</p></td>
+<td><p>Audio_Mute</p></td>
+<td><p>0: Mute</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: un-Mute</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO_X[51]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:RGMII_TXCTL</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[52]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:NFALE</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO_X[52]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN</p></td>
+<td><p>I:RGMII_RXCTL</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[53]</p></td>
+<td><p>Not Available</p></td>
+<td><p>OUT</p></td>
+<td><p>O:NFLCS</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO_X[53]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN</p></td>
+<td><p>O:RGMII_CLK_OUT</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPO[54]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN</p></td>
+<td><p>I:SDIOA_CDn</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[55]</p></td>
+<td><p>MODE_0</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:GPIO[55]</p></td>
+<td><p>To 40-Pin Header</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[56]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD2</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[57]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD3</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[58]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD4</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[59]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD5</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[60]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD6</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[61]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD7</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[62]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD10</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[63]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD11</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[64]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD12</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[65]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD13</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[66]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD14</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[67]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD15</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[68]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD18</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[69]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD19</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO[70]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD20</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>GPIO[71]</p></td>
+<td><p>Not Available</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>IO:LCDD21</p></td>
+<td><p>—</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="gpio-expanders-over-i2c">
+<h3>GPIO Expanders Over I2C<a class="headerlink" href="#gpio-expanders-over-i2c" title="Permalink to this heading"></a></h3>
+<p>Due to the considerable number of functionalities covered by the SL1620
+evaluation system, most of the SL1620 digital pins that have GPIO/GPO
+pin-demux options are used for other functions. As such, GPIO expanders
+are used extensively to supplement system control purposes.</p>
+<table class="docutils align-default" id="id26">
+<caption><span class="caption-text">GPIO expanders usage</span><a class="headerlink" href="#id26" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Expander</p></th>
+<th class="head"><p>I2C#</p></th>
+<th class="head"><p>Domain</p></th>
+<th class="head"><p>Voltage</p></th>
+<th class="head"><p>Direction</p></th>
+<th class="head"><p>Function</p></th>
+<th class="head"><p>GPIO Signaling</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>GPIO/GPO</p></th>
+<th class="head"></th>
+<th class="head"></th>
+<th class="head"></th>
+<th class="head"></th>
+<th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>GPIO0_0</p></td>
+<td><p>TW1 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>OUT</p></td>
+<td><p>SDIO-MUX_SEL</p></td>
+<td><p>0: Switch SDIO to M.2 WiFi</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: Switch SDIO to SD Card Slot</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_1</p></td>
+<td><p>TW1 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>OUT</p></td>
+<td><p>PWR_ON_DSI</p></td>
+<td><p>0: Power OFF DSI panel</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: Power ON DSI panel</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_2</p></td>
+<td><p>TW1 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>OUT</p></td>
+<td><p>LCD_RST#</p></td>
+<td><p>0: Reset LCD</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: De-assert Reset</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_3</p></td>
+<td><p>TW1 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>OUT</p></td>
+<td><p>GePHY_RST#</p></td>
+<td><p>0: Reset</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: De-assert Reset</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_4</p></td>
+<td><p>TW1 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>OUT</p></td>
+<td><p>STAND-BY_EN</p></td>
+<td><p>0: Normal playback</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: Entry to Stand-By status with peripherals Powered down</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_5</p></td>
+<td><p>TW1 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>IN</p></td>
+<td><p>USB2.0_PWR_EN</p></td>
+<td><p>0: Power OFF</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: Power ON</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_6</p></td>
+<td><p>TW1 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>IN</p></td>
+<td><p>Not used</p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_7</p></td>
+<td><p>TW1 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>GPIO_DSI</p></td>
+<td><p>In reserved</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>In reserved</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO1_0</p></td>
+<td><p>TW1 (0x44)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>IN</p></td>
+<td><p>USB-C_Logic_INT#</p></td>
+<td><p>0: Status changed</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: Status not changed</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO1_1</p></td>
+<td><p>TW1 (0x44)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>OUT</p></td>
+<td><p>Not used</p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO1_2</p></td>
+<td><p>TW1 (0x44)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>OUT</p></td>
+<td><p>M2-W_DISABLE1#</p></td>
+<td><p>0: Disable M.2 module by DISABLE1#</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: De-assertion</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO1_3</p></td>
+<td><p>TW1 (0x44)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>OUT</p></td>
+<td><p>M2-W_HOST-WAKE#</p></td>
+<td><p>0: Assertion Wake-up event from Host to M.2 module</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: De-assertion</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO1_4</p></td>
+<td><p>TW1 (0x44)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>OUT</p></td>
+<td><p>SD-CARD_PWR_EN</p></td>
+<td><p>0: Power OFF SD card slot</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: Power ON SD card slot</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO1_5</p></td>
+<td><p>TW1 (0x44)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>OUT</p></td>
+<td><p>M2-W_DISABLE2#</p></td>
+<td><p>0: Disable M.2 module by DISABLE2#</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: De-assertion</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO1_6</p></td>
+<td><p>TW1 (0x44)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>OUT</p></td>
+<td><p>SD-CARD_VIO_SEL</p></td>
+<td><p>0: 1.8V</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: 3.3V</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO1_7</p></td>
+<td><p>TW1 (0x44)</p></td>
+<td><p>SoC</p></td>
+<td><p>3.3V</p></td>
+<td><p>OUT</p></td>
+<td><p>LCD_TP_IRQ#</p></td>
+<td><p>0: Interrupt is triggered</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: No interrupt</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_0</p></td>
+<td><p>TW0 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>1.8V</p></td>
+<td><p>IN</p></td>
+<td><p>FAN_TECH_CON</p></td>
+<td><p>0: Fan gets Error</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: No interrupt</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_1</p></td>
+<td><p>TW0 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>1.8V</p></td>
+<td><p>IN</p></td>
+<td><p>AUD_JACK_DET</p></td>
+<td><p>0: Audio Jack exist</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: No Audio Jack</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_2</p></td>
+<td><p>TW0 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>1.8V</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>GPIO_0_2</p>
+<p>(40-Pin Header)</p>
+</td>
+<td><p>0: Depends on user definition</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: Depends on user definition</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_3</p></td>
+<td><p>TW0 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>1.8V</p></td>
+<td><p>OUT</p></td>
+<td><p>NAND_WP#</p></td>
+<td><p>0: Write protection</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: Write accessible</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_4</p></td>
+<td><p>TW0 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>1.8V</p></td>
+<td><p>OUT</p></td>
+<td><p>DMIC_MUTE#</p></td>
+<td><p>0: Mute DMIC</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: De-Mute DMIC</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_5</p></td>
+<td><p>TW0 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>1.8V</p></td>
+<td><p>OUT</p></td>
+<td><p>LevelTranslator_EN#</p></td>
+<td><p>0: Enable Level translator</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: Disable Level translator</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_6</p></td>
+<td><p>TW0 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>1.8V</p></td>
+<td><p>IN</p></td>
+<td><p>USB2_CONN_OC#</p></td>
+<td><p>0: Detect USB2 Over-Current</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: Normal status</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO0_7</p></td>
+<td><p>TW0 (0x43)</p></td>
+<td><p>SoC</p></td>
+<td><p>1.8V</p></td>
+<td><p>IN/OUT</p></td>
+<td><p>GPIO_0_7</p>
+<p>(40-Pin Header)</p>
+</td>
+<td><p>0: Depends on user definition</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>1: Depends on user definition</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="i2c-bus">
+<h3>I2C Bus<a class="headerlink" href="#i2c-bus" title="Permalink to this heading"></a></h3>
+<p>This section describes the Astra Machina’s usage of the I<sup>2</sup>C
+bus, the equivalence of SL1620’s Two Wire Serial Interface (TWSI) bus.</p>
+<table class="docutils align-default" id="id27">
+<caption><span class="caption-text">I2C bus descriptions</span><a class="headerlink" href="#id27" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>I<sup>2</sup>C/TWSI Bus</p></th>
+<th class="head"><p>Device</p></th>
+<th class="head"><p>Part Number</p></th>
+<th class="head"><p>Ref Des</p></th>
+<th class="head"><p>Target Address</p>
+<p>(7-bit)</p>
+</th>
+<th class="head"><p>Location</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TW0</p></td>
+<td><p>External device connects to MIPI_DSI connector</p></td>
+<td><p>Not applicable</p></td>
+<td><p>J208</p></td>
+<td><p>0xXX</p></td>
+<td><p>SL16x0 I/O board</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>External device connects to 40-pin Header</p></td>
+<td><p>Not applicable</p></td>
+<td><p>J32</p></td>
+<td><p>0xXX</p></td>
+<td><p>SL16x0 I/O board</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>External device connects to LCD connector</p></td>
+<td><p>Not applicable</p></td>
+<td><p>J35</p></td>
+<td><p>0xXX</p></td>
+<td><p>SL1620</p>
+<p>core module</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>IC GPIO Expander</p></td>
+<td><p>FXL6408UMX</p></td>
+<td><p>U8</p></td>
+<td><p>0x43</p></td>
+<td><p>SL1620</p>
+<p>core module</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>TW1</p></td>
+<td><p>IC GPIO Expander</p></td>
+<td><p>FXL6408UMX</p></td>
+<td><p>U12</p></td>
+<td><p>0x43</p></td>
+<td><p>SL16x0 I/O board</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>IC GPIO Expander</p></td>
+<td><p>FXL6408UMX</p></td>
+<td><p>U13</p></td>
+<td><p>0x44</p></td>
+<td><p>SL16x0 I/O board</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>External device connects to 40-pin Header</p></td>
+<td><p>Not applicable</p></td>
+<td><p>J32</p></td>
+<td><p>0xXX</p></td>
+<td><p>SL16x0 I/O board</p></td>
+</tr>
+<tr class="row-odd"><td><p>TW2</p></td>
+<td><p>IC REG, default 0.8V Vout /5mV Step, 6A rating, Input 5.5V&#64;Max, Step-Down Convertor with I2C</p></td>
+<td><p>TPS628660AYCG</p></td>
+<td><p>U39</p></td>
+<td><p>0x49</p></td>
+<td><p>SL1620 core module</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="bringing-up-the-sl1620-astra-machina-system">
+<h2>Bringing Up the SL1620 Astra Machina System<a class="headerlink" href="#bringing-up-the-sl1620-astra-machina-system" title="Permalink to this heading"></a></h2>
+<section id="connecting-external-components-and-performing-hardware-testing">
+<h3>Connecting External Components and Performing Hardware Testing<a class="headerlink" href="#connecting-external-components-and-performing-hardware-testing" title="Permalink to this heading"></a></h3>
+<p>Perform the following steps to connect the external components to SL1620
+evaluation system:</p>
+<ol class="arabic simple">
+<li><p>Connect a TypeC power supply to J213 (PWR_IN).</p></li>
+<li><p>Connect MIPI_DSI daughter board with Panel through FPC cable to J208.</p></li>
+</ol>
+<ol class="arabic simple" start="6">
+<li><p>Connect Network to J2 (RJ45) with an Ethernet cable.</p></li>
+<li><p>Insert USB3.0 flash disk to J216 /J210 (USB3.0).</p></li>
+<li><p>Insert USB2.0 flash disk to J215 (USB2.0) over TypeC/TypeA dongle.</p></li>
+</ol>
+<p>If there are no short issues, power up the system and check voltages as
+shown in <a class="reference internal" href="#sl1620-voltages"><span class="std std-ref">Short and voltage check points using any test point for ground</span></a> with the LED status shown in <a class="reference internal" href="#sl1620-leds-table"><span class="std std-ref">LED definitions on I/O board</span></a>.</p>
+<figure class="align-default" id="id28">
+<a class="reference internal image-reference" href="../_images/image24.png"><img alt="../_images/image24.png" src="../_images/image24.png" style="width: 6.90834in; height: 4.75631in;" /></a>
+<figcaption>
+<p><span class="caption-text">Short and voltage check points</span><a class="headerlink" href="#id28" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<span id="sl1620-voltages"></span><table class="docutils align-default" id="id29">
+<caption><span class="caption-text">Short and voltage check points using any test point for ground</span><a class="headerlink" href="#id29" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Ref Des</p></th>
+<th class="head"><p>Form</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Voltage</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>C123</p></td>
+<td><p>Pad 2</p></td>
+<td><p>PWR_LCD_BL</p></td>
+<td><p>15V +/- 2%</p>
+<p>[14.7,15.3]</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>C414</p></td>
+<td><p>Pad 1</p></td>
+<td><p>PWR_5V</p></td>
+<td><p>5.2V +/- 2%</p>
+<p>[5.096,5.304]</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>C6</p></td>
+<td><p>Pad 1</p></td>
+<td><p>PWR_3V3</p></td>
+<td><p>3.3V +/- 1%</p>
+<p>[3.267,3.333]</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Q3</p></td>
+<td><p>Pad 2</p></td>
+<td><p>PWR_1V8</p></td>
+<td><p>1.8V +/- 2%</p>
+<p>[1.764,1.836]</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>C452</p></td>
+<td><p>Pad 1</p></td>
+<td><p>PWR_VDDM_1V2</p></td>
+<td><p>1.2V +/- 2%</p>
+<p>[1.176,1.224]</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>C441</p></td>
+<td><p>Pad 1</p></td>
+<td><p>PWR_VDDM_2V5</p></td>
+<td><p>2.5V +/- 2%</p>
+<p>[2.45,2.55]</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>R554</p></td>
+<td><p>Pad 2</p></td>
+<td><p>PWR_VCORE_FB</p></td>
+<td><p>Vcore_FB +/- 2%</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<p>The following documents are applicable to the SL1620 evaluation system:</p>
+<ul class="simple">
+<li><p><em>SL1620 Datasheet</em> (PN: 505-001428-01)</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sl1640.html" class="btn btn-neutral float-left" title="SL1640 User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../release_notes.html" class="btn btn-neutral float-right" title="SDK Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2024, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
