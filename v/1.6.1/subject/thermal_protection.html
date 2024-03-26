@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CPU Thermal Protection on Astra Machina &mdash; Synaptics Astra SDK User Guide 1.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b79f0e1f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Ubuntu-based Docker Container" href="ubuntu_docker.html" />
+    <link rel="prev" title="Controlling ALSA Volume using GPIOs" href="controlling_volume_with_gpios.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Subject Specific User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="syna_drm_kms_user_guide.html">SYNA DRM / KMS Driver User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waveshare_dsi-configuration.html">Waveshare Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="haier_panel_configuration.html">Haier Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory_layout_customization.html">Memory Layout Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emmc_layout_customization.html">eMMC Partition Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dvfs_user_guide.html">Dynamic Voltage and Frequency Switching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power_measurement.html">Power Measurements with Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weston_default_display.html">Setting the Weston Default Display for Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isp_sensor_integration.html">ISP Sensor Integration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating_isp_sensor_configuration.html">Updating the ISP Sensor Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpios.html">GPIOs on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp_flow_user_guide.html">Astra MP Flow User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastlogo_image_generation.html">FastLogo Sub-Image(fastlogo.subimg.gz) File Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uboot_fastlogo_configuration.html">Uboot Fastlogo Customization User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="swupdate_user_guide.html">SWUpdate User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controlling_volume_with_gpios.html">Controlling ALSA Volume using GPIOs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CPU Thermal Protection on Astra Machina</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#device-tree-configuration">Device Tree Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#userspace-controls">Userspace Controls</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_docker.html">Ubuntu-based Docker Container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enable_sdio_wifi.html">Enabling SDIO WiFi for SL640 and SL680</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Subject Specific User Guides</a></li>
+      <li class="breadcrumb-item active">CPU Thermal Protection on Astra Machina</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cpu-thermal-protection-on-astra-machina">
+<h1>CPU Thermal Protection on Astra Machina<a class="headerlink" href="#cpu-thermal-protection-on-astra-machina" title="Permalink to this heading"></a></h1>
+<p>Astra Machina uses the Linux Kernel’s Thermal Framework to limit CPU speed to prevent the CPU from overheating. Astra Machina
+defines two level protection policy.</p>
+<ul class="simple">
+<li><p>If the CPU reaches temperatures greater than 105°C, the thermal framework will trigger a <code class="docutils literal notranslate"><span class="pre">cpu_alert</span></code> protection. This will cause
+the CPUFreq subsystem to reduce the clock frequency of the CPU to reduce the temperature.</p></li>
+<li><p>If the CPU reaches a temperature greater than 110°C, the thermal framework will trigger a <code class="docutils literal notranslate"><span class="pre">cpu_critical</span></code> protection. This will cause
+the kernel to shutdown the device to prevent overheating.</p></li>
+</ul>
+<section id="device-tree-configuration">
+<h2>Device Tree Configuration<a class="headerlink" href="#device-tree-configuration" title="Permalink to this heading"></a></h2>
+<p>The Thermal Zones and trips are defined in platform dts files located in <code class="docutils literal notranslate"><span class="pre">build-sl1680/workspace/sources/linux-syna/arch/arm64/boot/dts/synaptics</span></code>.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p>SL1620</p></td>
+<td><p>SL1640</p></td>
+<td><p>SL1680</p></td>
+</tr>
+<tr class="row-even"><td><p>DTS</p></td>
+<td><p>myna2.dtsi</p></td>
+<td><p>platypus.dtsi</p></td>
+<td><p>dolphin.dtsi</p></td>
+</tr>
+</tbody>
+</table>
+<p>Documentation on Thermal Zones in Device Tree can be found <a class="reference external" href="https://web.git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/Documentation/devicetree/bindings/thermal/thermal-zones.yaml?h=v5.15.140">here</a>.</p>
+</section>
+<section id="userspace-controls">
+<h2>Userspace Controls<a class="headerlink" href="#userspace-controls" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">cpu_alert</span></code> and <code class="docutils literal notranslate"><span class="pre">cpu_critical</span></code> temperature thresholds can be adjusted using the <code class="docutils literal notranslate"><span class="pre">thermal</span></code> sysfs interface.</p>
+<p>Set the <code class="docutils literal notranslate"><span class="pre">cpu_alert</span></code> threshold by writing a value to <code class="docutils literal notranslate"><span class="pre">/sys/class/thermal/thermal_zone0/trip_point_0_temp</span></code>. To set the
+<code class="docutils literal notranslate"><span class="pre">cpu_critical</span></code> threshold, write a value to <code class="docutils literal notranslate"><span class="pre">/sys/class/thermal/thermal_zone0/trip_point_1_temp</span></code>.</p>
+<p>The temperature value is in  millidegrees Celsius. This example sets the threshold to 30°C.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="mi">30000</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">class</span><span class="o">/</span><span class="n">thermal</span><span class="o">/</span><span class="n">thermal_zone0</span><span class="o">/</span><span class="n">trip_point_0_temp</span>
+</pre></div>
+</div>
+<p>To test that the thermal policy is working you can check the current CPU frequency, set the 30°C threshold, and then check
+the current CPU frequency again. Since, 30°C is a low threshold, the current CPU frequency should be reduced.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">devices</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">cpu</span><span class="o">/</span><span class="n">cpu0</span><span class="o">/</span><span class="n">cpufreq</span><span class="o">/</span><span class="n">scaling_cur_freq</span>
+<span class="n">echo</span> <span class="mi">30000</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">class</span><span class="o">/</span><span class="n">thermal</span><span class="o">/</span><span class="n">thermal_zone0</span><span class="o">/</span><span class="n">trip_point_0_temp</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">devices</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">cpu</span><span class="o">/</span><span class="n">cpu0</span><span class="o">/</span><span class="n">cpufreq</span><span class="o">/</span><span class="n">scaling_cur_freq</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="controlling_volume_with_gpios.html" class="btn btn-neutral float-left" title="Controlling ALSA Volume using GPIOs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ubuntu_docker.html" class="btn btn-neutral float-right" title="Ubuntu-based Docker Container" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2025, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

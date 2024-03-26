@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setting up the hardware &mdash; Synaptics Astra SDK User Guide 1.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ee41c26d"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using the Built-in Applications" href="oobe.html" />
+    <link rel="prev" title="Getting Started" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting Started</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Setting up the hardware</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#included-in-the-box">Included in the box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#booting-the-desktop-environment">Booting the desktop environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-in-headless-mode">Running in headless mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-firmware">Update Firmware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-documentation-and-resources">Additional documentation and resources</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="oobe.html">Using the Built-in Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flash_image.html">Installing a pre-built system image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multimedia.html">Playing a video</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_app.html">Building an application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ai_demo.html">Running a pre-converted neural network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ai_model.html">Converting and running a custom neural network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_image.html">Building and installing a custom system image</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subject/index.html">Subject Specific User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Getting Started</a></li>
+      <li class="breadcrumb-item active">Setting up the hardware</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="setting-up-the-hardware">
+<h1>Setting up the hardware<a class="headerlink" href="#setting-up-the-hardware" title="Permalink to this heading"></a></h1>
+<p>The Astra Machina Foundation Series of evaluation-ready kits
+enable easy and rapid prototyping for the Synaptics SL-Series of
+embedded Linux and Android processors. A modular
+design incorporates swappable core compute modules, a common I/O board,
+and daughter cards for connectivity, debug, and flexible I/O options.
+This page lists the simple steps to power on and boot up the system
+and applies to all SL-Series core modules: SL1680, SL1640, and SL1620.</p>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/connections.png"><img alt="../_images/connections.png" src="../_images/connections.png" style="width: 6.5in; height: 5.84028in;" /></a>
+<figcaption>
+<p><span class="caption-text">Core module connections</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<section id="included-in-the-box">
+<h2>Included in the box<a class="headerlink" href="#included-in-the-box" title="Permalink to this heading"></a></h2>
+<ol class="loweralpha simple">
+<li><p>The Astra Machina Foundation Series system with core module, I/O board,
+and daughter card for Wi-Fi/BT connectivity</p></li>
+<li><p>A 15V &#64; 1.8A AC power adapter (USB Power Delivery)</p></li>
+<li><p>A USB-C cable (USB-C plugs on both ends)</p></li>
+<li><p>An AC plug adapter (IEC Type A receptacle/Type C plug, used only if applicable)</p></li>
+</ol>
+</section>
+<section id="booting-the-desktop-environment">
+<h2>Booting the desktop environment<a class="headerlink" href="#booting-the-desktop-environment" title="Permalink to this heading"></a></h2>
+<p>By connecting a monitor, keyboard, and mouse, you can run the desktop environment:</p>
+<ol class="arabic simple">
+<li><p>Connect a display monitor to the board with an HDMI cable.</p></li>
+<li><p>Connect a USB Keyboard and/or Mouse to the board.</p></li>
+<li><p>Optionally, plug an Ethernet cable into the board’s RJ45 port for Internet connectivity.</p></li>
+<li><p>Connect the AC adapter to the board using USB-C cable (IMPORTANT - ensure you use the USB-C port marked PWR-IN), and plug the AC adapter to the power outlet</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The green LED next to PWR_IN will be lit and solid when the board is powered correctly. A flashing green LED indicates insufficient power - please use the supplied 15V &#64; 1.8A power adapter.</p>
+</div>
+<p>Once powered on, the Astra Machina board will boot the Yocto Linux distribution preloaded on its eMMC storage, and display the Wayland Desktop. You can now explore sample media and AI applications, open a Linux terminal from Wayland Desktop, and use the built-in Chromium browser (with Internet connectivity):</p>
+<figure class="align-default" id="welcome-picture">
+<a class="reference internal image-reference" href="../_images/welcome_screen.jpg"><img alt="../_images/welcome_screen.jpg" src="../_images/welcome_screen.jpg" style="width: 3.71171in; height: 1.63295in;" /></a>
+</figure>
+</section>
+<section id="running-in-headless-mode">
+<h2>Running in headless mode<a class="headerlink" href="#running-in-headless-mode" title="Permalink to this heading"></a></h2>
+<p>To connect to your Astra Machina Board from a development host PC via SSH:</p>
+<ol class="arabic">
+<li><p>Ensure your board is connected to Ethernet and can access the Local Area Network of the host.</p></li>
+<li><p>Open a terminal on the Wayland Desktop and use the following command to obtain the IP address:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ifconfig</span> <span class="n">eth0</span> <span class="o">|</span> <span class="n">grep</span> <span class="s2">&quot;inet addr&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Once you have the IP address of your Astra Machina Board , you can connect via ssh. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">root</span><span class="o">@</span><span class="mf">10.3.10.19</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>You can also connect to your board using ADB Shell. Follow the instructions here: <a class="reference internal" href="../linux/index.html#adb-shell-guide"><span class="std std-ref">The Shell with ADB</span></a></p>
+</section>
+<section id="update-firmware">
+<h2>Update Firmware<a class="headerlink" href="#update-firmware" title="Permalink to this heading"></a></h2>
+<p>It’s recommended that you update your board to the latest firmware using this guide: <a class="reference internal" href="../linux/index.html#firmware-update-usb"><span class="std std-ref">Updating the Firmware using USB</span></a></p>
+</section>
+<section id="additional-documentation-and-resources">
+<h2>Additional documentation and resources<a class="headerlink" href="#additional-documentation-and-resources" title="Permalink to this heading"></a></h2>
+<p>For more information on Astra SDK, Astra Machina board, and SyNAP AI
+Toolkit, scan the QR codes presented on the Start-up screen or the
+packaging box. You can find detailed information on the following:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../linux/index.html"><span class="doc">Astra Yocto Linux User Guide</span></a>  for details on the board support package
+(BSP), image flashing and upgrades, Wireless setup, and so on.</p></li>
+<li><p><a class="reference internal" href="../hw/index.html"><span class="doc">Astra Machina Eval Platform</span></a> for hardware specification, features, and
+interfaces.</p></li>
+<li><p><a class="reference internal" href="../yocto.html"><span class="doc">Astra Yocto Linux Developer Guide</span></a> for building SDK image from source code packages.</p></li>
+<li><p>Support requests and more.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="oobe.html" class="btn btn-neutral float-right" title="Using the Built-in Applications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2024, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

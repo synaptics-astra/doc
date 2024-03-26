@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Updating the ISP Sensor Configuration &mdash; Synaptics Astra SDK User Guide 1.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=80d54a31"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="GPIOs on Astra Machina" href="gpios.html" />
+    <link rel="prev" title="ISP Sensor Integration Guide" href="isp_sensor_integration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Subject Specific User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="syna_drm_kms_user_guide.html">SYNA DRM / KMS Driver User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waveshare_7inch_dsi-configuration.html">Waveshare Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="haier_panel_configuration.html">Haier Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory_layout_customization.html">Memory Layout Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emmc_layout_customization.html">eMMC Partition Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dvfs_user_guide.html">Dynamic Voltage and Frequency Switching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power_measurement.html">Power Measurements with Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weston_default_display.html">Setting the Weston Default Display for Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isp_sensor_integration.html">ISP Sensor Integration Guide</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Updating the ISP Sensor Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#supported-camera-modules">Supported Camera Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changing-the-camera-sensor-module">Changing the Camera Sensor Module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#current-sensor-configuration">Current Sensor Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuring-a-new-module">Configuring a New Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#updating-device-tree-overlay">Updating Device Tree Overlay</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#using-the-ov5647-sensor">Using the OV5647 Sensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enabling-the-imx258-and-imx415-sensors">Enabling the IMX258 and IMX415 Sensors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gpios.html">GPIOs on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp_flow_user_guide.html">Astra MP Flow User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastlogo_image_generation.html">FastLogo Sub-Image(fastlogo.subimg.gz) File Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uboot_fastlogo_configuration.html">Uboot Fastlogo Customization User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="swupdate_user_guide.html">SWUpdate User Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Subject Specific User Guides</a></li>
+      <li class="breadcrumb-item active">Updating the ISP Sensor Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="updating-the-isp-sensor-configuration">
+<h1>Updating the ISP Sensor Configuration<a class="headerlink" href="#updating-the-isp-sensor-configuration" title="Permalink to this heading"></a></h1>
+<p>SL1680 supports multiple camera sensors. By default, SL1680 is configured to use the OV5647 module with port CSI0. But, the software can be configured to use any of the
+supported sensor modules. Some configurations require setting a device tree overlay to function correctly.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with release v1.5, the default sensor is now the OV5647 module.</p>
+</div>
+<section id="supported-camera-modules">
+<h2>Supported Camera Modules<a class="headerlink" href="#supported-camera-modules" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Sensor</p></th>
+<th class="head"><p>Module</p></th>
+<th class="head"><p>Interface</p></th>
+<th class="head"><p>Adapter Board</p></th>
+<th class="head"><p>Device Tree Overlay</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>IMX258</p></td>
+<td><p>Synaptics IMX258 Camera Module</p></td>
+<td><p>MIPI-CSI 0</p></td>
+<td><p>Synaptics SL1680 MIPI CSI Adaptor Board</p></td>
+<td><p>dolphin-csi0-with-expander.dtbo</p></td>
+</tr>
+<tr class="row-odd"><td><p>IMX415</p></td>
+<td><p>Synaptics IMX415 Camera Module</p></td>
+<td><p>MIPI-CSI 0</p></td>
+<td><p>Synaptics SL1680 MIPI CSI Adaptor Board</p></td>
+<td><p>dolphin-csi0-with-expander.dtbo</p></td>
+</tr>
+<tr class="row-even"><td><p>OV5647</p></td>
+<td><p><a class="reference external" href="https://www.arducam.com/product/arducam-ov5647-standard-raspberry-pi-camera-b0033/">Arducam 5MP OV5647 Camera Module</a></p></td>
+<td><p>MIPI-CSI 0</p>
+<p>MIPI-CSI 1</p>
+<p>Dual CSI0/1</p>
+</td>
+<td><p>None</p>
+<p>None</p>
+<p>None</p>
+</td>
+<td><p>N/A</p>
+<p>dolphin-csi1-without-expander.dtbo</p>
+<p>dolphin-bothcsi-without-expander.dtbo</p>
+</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div></div></blockquote>
+</section>
+<section id="changing-the-camera-sensor-module">
+<span id="changing-sensor-module"></span><h2>Changing the Camera Sensor Module<a class="headerlink" href="#changing-the-camera-sensor-module" title="Permalink to this heading"></a></h2>
+<p>The file <code class="docutils literal notranslate"><span class="pre">/proc/vsi/isp_subdev0</span></code> is used to display the sensor configuration properties and to update the sensor configuration.</p>
+<section id="current-sensor-configuration">
+<h3>Current Sensor Configuration<a class="headerlink" href="#current-sensor-configuration" title="Permalink to this heading"></a></h3>
+<p>The current sensor configuration can be viewed by read from the <code class="docutils literal notranslate"><span class="pre">/proc/vsi/isp_subdev0</span></code> file.</p>
+<figure class="align-default" id="id1">
+<img alt="../_images/sl1680-isp-sensor-configuration.png" src="../_images/sl1680-isp-sensor-configuration.png" />
+<figcaption>
+<p><span class="caption-text">Reading the current sensor configuration</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="configuring-a-new-module">
+<h3>Configuring a New Module<a class="headerlink" href="#configuring-a-new-module" title="Permalink to this heading"></a></h3>
+<p>To change the sensor configuration, update the <code class="docutils literal notranslate"><span class="pre">/usr/sbin/isp_media_server.sh</span></code> script. Change the line which writes
+the sensor config to <code class="docutils literal notranslate"><span class="pre">/proc/vsi/isp_subdev0</span></code>. Update the sensor name, xml, and json files for the new sensor.</p>
+<figure class="align-default">
+<img alt="../_images/isp_media_server_script.png" src="../_images/isp_media_server_script.png" />
+</figure>
+<p>Each camera sensor module contains one or more XML configuration files located in <code class="docutils literal notranslate"><span class="pre">/usr/share</span></code>.</p>
+<figure class="align-default" id="id2">
+<img alt="../_images/sl1680-isp-sensor-config-files.png" src="../_images/sl1680-isp-sensor-config-files.png" />
+<figcaption>
+<p><span class="caption-text">List of sensor config files</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Then restart the isp_media_server service to apply the update.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">restart</span> <span class="n">isp_media_server</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To apply these changes to an image, modify the <code class="docutils literal notranslate"><span class="pre">meta-synaptics/recipes-devtools/synasdk/files/isp_media_server.sh</span></code>
+script as described below.</p>
+</div>
+</section>
+<section id="updating-device-tree-overlay">
+<h3>Updating Device Tree Overlay<a class="headerlink" href="#updating-device-tree-overlay" title="Permalink to this heading"></a></h3>
+<p>Different sensors may require different settings in device tree. Astra supports device tree overlays for modifying the
+device tree settings for different sensors. Setting the device tree overlay requires booting into U-Boot and setting
+the <code class="docutils literal notranslate"><span class="pre">dtbo</span></code> variable to the required device tree overlay. See <a class="reference internal" href="../linux/index.html#uboot-prompt"><span class="std std-ref">U-Boot Prompt with SUBoot</span></a> for instructions on getting to the
+U-Boot prompt.</p>
+<p>Once at the U-Boot prompt run the following commands to enable the Device Tree Overlay.</p>
+<p>Set the <code class="docutils literal notranslate"><span class="pre">dtbo</span></code> variables:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">setenv</span> <span class="n">dtbo</span> <span class="n">dolphin</span><span class="o">-</span><span class="n">csi0</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">expander</span><span class="o">.</span><span class="n">dtbo</span>
+</pre></div>
+</div>
+<p>Save the environment to the eMMC so that the new variable will persist across reboots.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">saveenv</span>
+<span class="n">Saving</span> <span class="n">Environment</span> <span class="n">to</span> <span class="n">MMC</span><span class="o">...</span> <span class="n">Writing</span> <span class="n">to</span> <span class="n">redundant</span> <span class="n">MMC</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">...</span> <span class="n">OK</span>
+</pre></div>
+</div>
+<p>Optionally, confirm that the variable was correctly set.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>=&gt; printenv
+altbootcmd=if test ${boot_slot}  = 1; then bootslot set b; bootcount reset;bootcount reset; run bootcmd; else bootslot set a; bootcount reset; bootcount reset; run bootcmd;  fi
+autoload=n
+baudrate=115200
+bootcmd=bootmmc
+bootcount=1
+bootdelay=0
+bootlimit=3
+dtbo=dolphin-csi0-with-expander.dtbo
+fdtcontroladdr=2172e190
+preboot=show_logo;
+upgrade_available=0
+ver=U-Boot 2019.10 (Nov 21 2024 - 14:01:42 +0000)
+Environment size: 407/65531 bytesboo
+</pre></div>
+</div>
+<p>Finally, boot with the new overlay applied.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">boot</span>
+</pre></div>
+</div>
+<p>Supported device tree overlays are included in the <a class="reference external" href="https://github.com/synaptics-astra/linux_5_15-overlay/tree/v1.5.0/arch/arm64/boot/dts/synaptics">Linux Kernel Overlay Repository</a>.
+If you are using a different sensor you may need to add a custom overlay.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Support for device tree overlays were added in release v1.5.</p>
+</div>
+</section>
+</section>
+<section id="using-the-ov5647-sensor">
+<h2>Using the OV5647 Sensor<a class="headerlink" href="#using-the-ov5647-sensor" title="Permalink to this heading"></a></h2>
+<p>Astra Machina SL1680 supports using the OV5647 sensor on either the CSI0 (22-pin), or the CSI1 (15-pin) connector, or both simultaneously.
+Connecting a single OV5647 sensor to CSI0 is the default configuration. Connecting a single OV5647 sensor to CSI1 requires enabling the
+<code class="docutils literal notranslate"><span class="pre">dolphin-csi1-without-expander.dtbo</span></code> overlay. Using two OV5647 sensors simultaneously requires enabling the <code class="docutils literal notranslate"><span class="pre">dolphin-bothcsi-without-expander.dtbo</span></code>
+overlay.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Release v1.4 adds support for using an OV5647 sensor on CSI1. Previous versions only support using OV5647 on CSI0.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Release v1.5 adds support for using CSI0 and CSI1 simultaneously with two OV5647 sensors.</p>
+</div>
+</section>
+<section id="enabling-the-imx258-and-imx415-sensors">
+<h2>Enabling the IMX258 and IMX415 Sensors<a class="headerlink" href="#enabling-the-imx258-and-imx415-sensors" title="Permalink to this heading"></a></h2>
+<p>Astra Machina SL1680 supports the IMX258 and IMX415 sensors connected to CSI0. These sensors use a GPIO expander which requires the <code class="docutils literal notranslate"><span class="pre">dolphin-csi0-with-expander.dtbo</span></code>
+overlay.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Using the IMX258 and IMX415 on CSI1 is not supported on Synaptics Astra Machina boards since CSI1
+is not compatible with the GPIO expander.</p>
+</div>
+<p>In addition to enabling the <code class="docutils literal notranslate"><span class="pre">dolphin-csi0-with-expander.dtbo</span></code>, the sensor configuration needs to be updated to use the new sensor. Apply the following changes
+to <code class="docutils literal notranslate"><span class="pre">isp_media_server.sh</span></code> as describe in the previous section: <a class="reference internal" href="#changing-sensor-module"><span class="std std-ref">Changing the Camera Sensor Module</span></a>.</p>
+<p>Configuration for IMX258:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>diff --git a/recipes-devtools/synasdk/files/isp_media_server.sh b/recipes-devtools/synasdk/files/isp_media_server.sh
+index 4f603fb..c5cd9b1 100644
+--- a/recipes-devtools/synasdk/files/isp_media_server.sh
++++ b/recipes-devtools/synasdk/files/isp_media_server.sh
+@@ -26,7 +26,7 @@ set -e
+
+case $1 in
+    start)
+-        echo &quot;sensor=ov5647 xml=/usr/share/OV5647_480p.xml manu_json=/usr/share/ISP_Manual_IMX258.json \
++        echo &quot;sensor=imx258 xml=/usr/share/IMX258.xml manu_json=/usr/share/ISP_Manual_IMX258.json \
+        auto_json=/usr/share/ISP_Auto.json i2c_bus_id=3 mipi_id=0 mode=0&quot; &gt; /proc/vsi/isp_subdev0
+        echo &quot;1 sensor=ov5647 1 xml=/usr/share/OV5647_480p.xml 1 manu_json=/usr/share/ISP_Manual_IMX258.json \
+        1 auto_json=/usr/share/ISP_Auto.json 1 i2c_bus_id=0 1 mipi_id=1 1 mode=0&quot; &gt; /proc/vsi/isp_subdev0
+</pre></div>
+</div>
+<p>Configuration for IMX415:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>diff --git a/recipes-devtools/synasdk/files/isp_media_server.sh b/recipes-devtools/synasdk/files/isp_media_server.sh
+index 4f603fb..c5cd9b1 100644
+--- a/recipes-devtools/synasdk/files/isp_media_server.sh
++++ b/recipes-devtools/synasdk/files/isp_media_server.sh
+@@ -26,7 +26,7 @@ set -e
+
+case $1 in
+    start)
+-        echo &quot;sensor=ov5647 xml=/usr/share/OV5647_480p.xml manu_json=/usr/share/ISP_Manual_IMX258.json \
++        echo &quot;sensor=imx415 xml=/usr/share/IMX415.xml manu_json=/usr/share/ISP_Manual_IMX415.json \
+        auto_json=/usr/share/ISP_Auto.json i2c_bus_id=3 mipi_id=0 mode=0&quot; &gt; /proc/vsi/isp_subdev0
+        echo &quot;1 sensor=ov5647 1 xml=/usr/share/OV5647_480p.xml 1 manu_json=/usr/share/ISP_Manual_IMX258.json \
+        1 auto_json=/usr/share/ISP_Auto.json 1 i2c_bus_id=0 1 mipi_id=1 1 mode=0&quot; &gt; /proc/vsi/isp_subdev0
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="isp_sensor_integration.html" class="btn btn-neutral float-left" title="ISP Sensor Integration Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gpios.html" class="btn btn-neutral float-right" title="GPIOs on Astra Machina" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2025, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

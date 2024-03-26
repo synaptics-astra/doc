@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Release Notes v1.2.0 &mdash; Synaptics Astra SDK User Guide 1.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=80d54a31"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Release Notes v1.1.0" href="v1.1.0.html" />
+    <link rel="prev" title="Release Notes v1.3.0" href="v1.3.0.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subject/index.html">Subject Specific User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="v1.5.0.html">Release Notes v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v1.4.0.html">Release Notes v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v1.3.0.html">Release Notes v1.3.0</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Release Notes v1.2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#yocto-sdk">Yocto SDK</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reference-board-supported-scope">Reference Board Supported Scope</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#license">License</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#synaptics-proprietary-tas">Synaptics Proprietary TAs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#where-to-get-the-sdk-from-github">Where to get the SDK from GitHub</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#new-features">New Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#common-new-features">Common New Features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sl1620-new-features">SL1620 New Features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sl1640-new-features">SL1640 New Features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sl1680-new-features">SL1680 New Features</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#soc-core-feature-summary">SoC Core Feature Summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#specific-modules-and-features">Specific Modules and Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#general-modules-peripherals-and-interfaces-supported">General Modules, Peripherals, and Interfaces Supported</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#supported-camera-modules">Supported Camera Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#known-issues-and-limitations">Known Issues and Limitations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#known-issues-on-sl1620">Known Issues on SL1620</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#known-issues-on-sl1640">Known Issues on SL1640</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#known-issues-on-sl1680">Known Issues on SL1680</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="v1.1.0.html">Release Notes v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v1.0.0.html">Release Notes v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v0.9.0.html">Release Notes v0.9.0</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../release_notes.html">SDK Release Notes</a></li>
+      <li class="breadcrumb-item active">Release Notes v1.2.0</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="release-notes-v1-2-0">
+<h1>Release Notes v1.2.0<a class="headerlink" href="#release-notes-v1-2-0" title="Permalink to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
+<p>Astra™ is Synaptics’ new compute platform designed for the IoT market. It features a series of high-performance,
+AI-native, multi-modal SoCs optimized for consumer, enterprise, and industrial IoT workloads. These SoCs are
+equipped with hardware accelerators for edge inferencing, security, graphics, vision, and audio, and offer
+out-of-the-box functionality with Synaptics’ connectivity solutions.</p>
+<p>Astra (v1.2.0) GA Release is a unified software development kit supporting the SL-Series of MPUs.</p>
+<p>The high-level components included in this SDK are described below:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Upstream Linux Kernel and device tree.</p></li>
+<li><p>Low-level Linux device drivers (U-BOOT) for peripheral devices.</p></li>
+<li><p>Open source code for Multimedia pipelines.</p></li>
+<li><p>Synaptics proprietary security approach.</p></li>
+<li><p>Related SDK Documents</p></li>
+</ul>
+</div></blockquote>
+<p>All of these items can be found through Synaptics’ and third parties open source Git repositories on GitHub.</p>
+<section id="yocto-sdk">
+<h3>Yocto SDK<a class="headerlink" href="#yocto-sdk" title="Permalink to this heading"></a></h3>
+<p>The Yocto Project is an open-source collaboration project that provides templates, tools and
+methods for custom Linux-based systems for embedded and IoT products. By leveraging the power
+of the open-source development community, Synaptics hopes to provide its customers with a wider
+array of compatible software packages to build their products faster, with more features, while
+at the same time having the stability and support of a large open-source development project.
+Additionally, the SDK enables customers who already use a Yocto-based development environment
+to migrate to Synaptics class-leading silicon solutions for improved performance and additional
+functionality. The Yocto Project offers a vast number of software packages that provide many options.</p>
+</section>
+<section id="reference-board-supported-scope">
+<h3>Reference Board Supported Scope<a class="headerlink" href="#reference-board-supported-scope" title="Permalink to this heading"></a></h3>
+<p>Below table lists the supported ASTRA reference board (Machina) and supported scope.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>SOC / Reference Board</p></th>
+<th class="head"><p>Test Validation and Support Scope</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SL1680 Core board + IO board</p></td>
+<td><p>GA</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640 Core board + IO board</p></td>
+<td><p>GA</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1620 Core board + IO board</p></td>
+<td><p>GA</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="license">
+<h3>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h3>
+<p>Using the Astra Software Developer Kit and BSP requires complying with the <a class="reference internal" href="../EULA.html"><span class="doc">ASTRA EMBEDDED SOFTWARE DEVELOPMENT KIT LICENSE AGREEMENT –</span></a>.</p>
+</section>
+<section id="synaptics-proprietary-tas">
+<h3>Synaptics Proprietary TAs<a class="headerlink" href="#synaptics-proprietary-tas" title="Permalink to this heading"></a></h3>
+<p>The following Trusted Applications (TAs) are Synaptics proprietary TAs which run in the OP-TEE Trusted Execution Environment.
+They are provided in binary format. Synaptics will migrate them into REE and open source the code to the public in a near future releases.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Package</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MIPI-DSI</p></td>
+<td><p>TA</p>
+<p>SL1620</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Fastlogo</p></td>
+<td><p>TA</p>
+<p>SL1680 / SL1640</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>SyNAP</p></td>
+<td><p>TA</p>
+<p>SL1680 / SL1640 / SL1620</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>DHUB</p></td>
+<td><p>TA</p>
+<p>SL1680 / SL1640</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Vmeta</p></td>
+<td><p>TA</p>
+<p>SL1680 / SL1640 / SL1620</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="where-to-get-the-sdk-from-github">
+<h3>Where to get the SDK from GitHub<a class="headerlink" href="#where-to-get-the-sdk-from-github" title="Permalink to this heading"></a></h3>
+<section id="images-and-toolchains">
+<h4>Images and Toolchains<a class="headerlink" href="#images-and-toolchains" title="Permalink to this heading"></a></h4>
+<p><a class="reference external" href="https://github.com/synaptics-astra/sdk/releases/">https://github.com/synaptics-astra/sdk/releases/</a></p>
+</section>
+<section id="sdk">
+<h4>SDK<a class="headerlink" href="#sdk" title="Permalink to this heading"></a></h4>
+<p><a class="reference external" href="https://github.com/synaptics-astra/sdk/tree/v1.2.0">https://github.com/synaptics-astra/sdk/tree/v1.2.0</a></p>
+</section>
+<section id="documentation">
+<h4>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h4>
+<p><a class="reference internal" href="../quickstart/index.html"><span class="doc">Getting Started</span></a></p>
+<p><a class="reference internal" href="../hw/index.html"><span class="doc">Astra Machina Eval Platform</span></a></p>
+<p><a class="reference internal" href="../yocto.html"><span class="doc">Astra Yocto Linux Developer Guide</span></a></p>
+<p><a class="reference internal" href="../linux/index.html"><span class="doc">Astra Yocto Linux User Guide</span></a></p>
+<p>For other collaterals please refer to the <a class="reference external" href="https://cp.synaptics.com/">Synaptics Customer Portal</a>.</p>
+</section>
+</section>
+</section>
+<section id="new-features">
+<h2>New Features<a class="headerlink" href="#new-features" title="Permalink to this heading"></a></h2>
+<section id="common-new-features">
+<h3>Common New Features<a class="headerlink" href="#common-new-features" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Feature</p></td>
+<td><p>SoC</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>OpenCV</p></td>
+<td><p>All</p></td>
+<td><p>Added support for the OpenCV library</p></td>
+</tr>
+<tr class="row-odd"><td><p>Weston Default Display</p></td>
+<td><p>All</p></td>
+<td><p>Supports setting the default display in which weston clients
+appear at launch for dual display configurations</p></td>
+</tr>
+<tr class="row-even"><td><p>Gstreamer AI Overlay
+optimizations</p></td>
+<td><p>All</p></td>
+<td><p>Optimize the drawing in the gstsynap overlay component</p></td>
+</tr>
+<tr class="row-odd"><td><p>Support Multiple Memory
+Layouts</p></td>
+<td><p>All</p></td>
+<td><p>Add multiple memory layouts for different DDR configurations
+SL1620: 1GB,2GB,4GB SL1640/SL1680: 2GB,4GB</p></td>
+</tr>
+<tr class="row-even"><td><p>Increase System Memory</p></td>
+<td><p>All</p></td>
+<td><p>Optimize the memory layouts to provide more system memory</p></td>
+</tr>
+<tr class="row-odd"><td><p>Auto resize of home
+partition on eMMC</p></td>
+<td><p>All</p></td>
+<td><p>The home partition will be resized on first boot to use any
+remaining space on the eMMC</p></td>
+</tr>
+<tr class="row-even"><td><p>Add hostapd</p></td>
+<td><p>All</p></td>
+<td><p>Add hostapd to the astra-media image</p></td>
+</tr>
+<tr class="row-odd"><td><p>Support Waveshare MIPI DSI
+Panel</p></td>
+<td><p>All</p></td>
+<td><p>Add support for the using the Waveshare MIPI DSI Panel for RPi5
+with Astra Machina</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sl1620-new-features">
+<h3>SL1620 New Features<a class="headerlink" href="#sl1620-new-features" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Feature</p></td>
+<td><p>SoC</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>1 GB DDR x16 Support</p></td>
+<td><p>SL1620</p></td>
+<td><p>Added support for 1G DDR4 x 16 support</p></td>
+</tr>
+<tr class="row-odd"><td><p>Suspend to RAM</p></td>
+<td><p>SL1620</p></td>
+<td><p>Support Suspend to RAM (S3) Power State</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sl1640-new-features">
+<h3>SL1640 New Features<a class="headerlink" href="#sl1640-new-features" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Feature</p></td>
+<td><p>SoC</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>Fastlogo with UI</p></td>
+<td><p>SL1640 and SL1680</p></td>
+<td><p>Support displaying a logo on boot</p></td>
+</tr>
+<tr class="row-odd"><td><p>VCORE DVFS Support</p></td>
+<td><p>SL1640</p></td>
+<td><p>Add support for dynamic voltage and frequency scaling on VCORE</p></td>
+</tr>
+<tr class="row-even"><td><p>Framebuffer Console Support</p></td>
+<td><p>SL1640 and SL1680</p></td>
+<td><p>Display console messages to Video output</p></td>
+</tr>
+<tr class="row-odd"><td><p>HDMI Hot Plug Detect and
+Dynamic Resolution Change</p></td>
+<td><p>SL1640 and SL1680</p></td>
+<td><p>Support HDMI Hot Plug Detect and support Dynamic Resolution Change</p></td>
+</tr>
+<tr class="row-even"><td><p>Current Sensor Support</p></td>
+<td><p>SL1640 and SL1680</p></td>
+<td><p>Adds support for the current sensor included with SL1640 RevB and
+SL1680 RevC and newer boards</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sl1680-new-features">
+<h3>SL1680 New Features<a class="headerlink" href="#sl1680-new-features" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Feature</p></td>
+<td><p>SoC</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p>HDMI-RX</p></td>
+<td rowspan="2"><p>SL1680</p></td>
+<td><p>Add support for HDMI-RX</p></td>
+</tr>
+<tr class="row-odd"><td><ul class="simple">
+<li><p>4K Support</p></li>
+<li><p>Add OP-TEE based DHUB TA</p></li>
+<li><p>Support all HDMI-RX formats at 2K resolution</p></li>
+<li><p>Add HDMI-RX driver which supports 2K resolution at 60 fps</p></li>
+<li><p>Add EDID Support for HDMI-RX</p></li>
+<li><p>Add support for VIP Scalar</p></li>
+<li><p>Support YUYV and NV12 formats with VIP output</p></li>
+<li><p>Support RGB,YUV444/422/420 – 12/10/8 bit input</p></li>
+<li><p>Support wayland and kms sinks with Gstreamer</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Gstreamer HDMI-RX Video</p></td>
+<td><p>SL1680</p></td>
+<td><p>Support outputting HDMI-RX video to display sink</p></td>
+</tr>
+<tr class="row-odd"><td><p>Gstreamer HDMI-RX Audio</p></td>
+<td><p>SL1680</p></td>
+<td><p>Support Capturing Audio Through HDMI-RX with Gstreamer</p></td>
+</tr>
+<tr class="row-even"><td><p>ISP performance</p></td>
+<td><p>SL1680</p></td>
+<td><p>Improve ISP performance in low light environments</p></td>
+</tr>
+<tr class="row-odd"><td><p>ISP Format Support</p></td>
+<td><p>SL1680</p></td>
+<td><p>Add support for Bayer and RGB formats</p></td>
+</tr>
+<tr class="row-even"><td><p>Fastlogo with UI</p></td>
+<td><p>SL1640 and SL1680</p></td>
+<td><p>Support displaying a logo on boot</p></td>
+</tr>
+<tr class="row-odd"><td><p>Framebuffer Console Support</p></td>
+<td><p>SL1640 and SL1680</p></td>
+<td><p>Display console messages to Video output</p></td>
+</tr>
+<tr class="row-even"><td><p>HDMI Hot Plug Detect and
+Dynamic Resolution Change</p></td>
+<td><p>SL1640 and SL1680</p></td>
+<td><p>Support HDMI Hot Plug Detect and support Dynamic Resolution Change</p></td>
+</tr>
+<tr class="row-odd"><td><p>Current Sensor Support</p></td>
+<td><p>SL1640 and SL1680</p></td>
+<td><p>Adds support for the current sensor included with SL1640 RevB and
+SL1680 RevC and newer boards</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="soc-core-feature-summary">
+<h2>SoC Core Feature Summary<a class="headerlink" href="#soc-core-feature-summary" title="Permalink to this heading"></a></h2>
+<p>This section summarizes the hardware features of Astra Machina SoCs.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<th class="head"><p>SoC</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>2D and 3D Graphics with GPU</p></td>
+<td><p>SL1620, SL1640, and SL1680</p></td>
+</tr>
+<tr class="row-odd"><td><p>DRM-KMS</p></td>
+<td><p>SL1620, SL1640, and SL1680</p></td>
+</tr>
+<tr class="row-even"><td><p>Multi-standard Video Encoding/Decoding</p></td>
+<td><p>SL1640 and SL1680</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cortex-M core boot</p></td>
+<td><p>SL1620, SL1640, and SL1680</p></td>
+</tr>
+<tr class="row-even"><td><p>HIFI4 DSP</p></td>
+<td><p>SL1640</p></td>
+</tr>
+<tr class="row-odd"><td><p>NPU</p></td>
+<td><p>SL1640 and SL1680</p></td>
+</tr>
+<tr class="row-even"><td><p>Security for CPU, BOOT, and DRM engine</p></td>
+<td><p>SL1620, SL1640, and SL1680</p></td>
+</tr>
+<tr class="row-odd"><td><p>MIPI CSI &amp; ISP</p></td>
+<td><p>SL1680</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="specific-modules-and-features">
+<h2>Specific Modules and Features<a class="headerlink" href="#specific-modules-and-features" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature Modules</p></th>
+<th class="head"><p>Feature Items</p></th>
+<th class="head"><p>SL1620</p></th>
+<th class="head"><p>SL1640</p></th>
+<th class="head"><p>SL1680</p></th>
+<th class="head"><p>Comment</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="7"><p>GST Audio Pipeline</p></td>
+<td><p>GST Audio Pipeline</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>BT A2DP Audio</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PDM MIC Support</p></td>
+<td><p>Y</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>SW Decoding Capability</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li><p>Supported formats: AAC, MP2, MP3, Vobis, AC3, OPUS</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>File Playback</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li><p>Supported formats: TS, MP3, MP4, Webm</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>GST Sample Rate Conversion &amp; Mixing</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li><p>Limitation on SL1620 audio mixing.
+Sample Rate conversion is fine.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>HDMI-RX (Audio)</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td rowspan="11"><p>GST Video Pipeline</p></td>
+<td><p>KMS SINK with IOMMU</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td rowspan="10"><ul class="simple">
+<li><p>MultiView: Camera + Video OR multi Video</p></li>
+<li><p>Dual display means the output simultaneously</p></li>
+<li><p>Dual display for SL1680 means HDMI-TX + MIPI-DSI</p></li>
+<li><p>Dual display for SL1620 means MIPI-DSI + RGB</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>HDMI Rx Video Path to Display Sink</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+</tr>
+<tr class="row-odd"><td><p>RTSP stream with V4L2 playback</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+</tr>
+<tr class="row-even"><td><p>Multiview RTSP Playback</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+</tr>
+<tr class="row-odd"><td><p>Support Wayland Sink Window Dragging with mouse</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+</tr>
+<tr class="row-even"><td><p>Multi View</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+</tr>
+<tr class="row-odd"><td><p>Video Decode with 2K Wayland Sink</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+</tr>
+<tr class="row-even"><td><p>FFMPEG Decode</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+</tr>
+<tr class="row-odd"><td><p>V4L2 Decode</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+</tr>
+<tr class="row-even"><td><p>Dual Display</p></td>
+<td><p>Y</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+</tr>
+<tr class="row-odd"><td><p>Video Decode with QT Applications</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Multi-playback only on SL1680</p></td>
+</tr>
+<tr class="row-even"><td rowspan="8"><p>GST AI</p></td>
+<td><p>OpenCV Support</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Multistream AI with RTSP</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>AI support for ISP Camera</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>GST AI Support for GPU models</p></td>
+<td><p>Y</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Pose Estimation</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Single View AI use case</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Multi View AI user case</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li><p>SL680 supports multi-view AI case</p></li>
+<li><p>SL1640/1620 only supports single view AI case</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>SyNAP</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li><p>supports SyNAP pre-process and sink</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td rowspan="10"><p>HDMI-RX</p></td>
+<td><p>HDMI-RX 4K</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>DHUB TA in OP-TEE</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>HDIM-Rx Video 2K all formats support</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>GST Pipeline Support</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>HDMI-Rx Driver for Video – 2K60</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>YUYV and NV12 formats as VIP output</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>EDID Support</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>VIP Scalar</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>RGB, YUV444/422/420 – 12/10/8 bit input</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Gstreamer v4l2src pipeline to Display</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><p>DRM-KMS</p></td>
+<td><p>Fastlogo with OP-TEE</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Fastlogo for SL1680/SL1640</p></td>
+</tr>
+<tr class="row-odd"><td><p>HDMI Hot Plug Detect and Dynamic Resolution Change</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>EDID parsing</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>MIPI, HDMI on Astra Machina boards</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><ul>
+<li><p>No HDMI for SL1620</p></li>
+<li><p>SL1640 supports either HDMI or MIPI output.</p>
+<p>Default is HDMI, can be changes to MIPI via DTS</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td rowspan="4"><p>V4L2 ISP</p></td>
+<td><p>Single Sensor V4L2 ISP Driver</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+<td rowspan="4"><ul>
+<li><p>ISP feature is only for SL1680</p></li>
+<li><p>Known limitation of Downscaling of inputs: YUV420</p>
+<p>SP 10bit and RGB 888</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Support for 4K input and output</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+</tr>
+<tr class="row-even"><td><p>Support for downscaling of the inputs</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+</tr>
+<tr class="row-odd"><td><p>Supports Bayer and RGB formats</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>Y</p></td>
+</tr>
+<tr class="row-even"><td rowspan="10"><p>U-Boot</p></td>
+<td><p>SL1620 EMMC HS400 support</p></td>
+<td><p>Y</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>SL1620 1G DDR4 x 16 support</p></td>
+<td><p>Y</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>VCPU DVFS Support</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>U-BOOT v1.1.0</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><blockquote>
+<div><dl class="simple">
+<dt>Fastboot:</dt><dd><ul class="simple">
+<li><p>Add “oem run” to support all U-Boot commands</p></li>
+<li><p>Add “flash ram” to download files into memory</p></li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>General:</dt><dd><ul class="simple">
+<li><p>Add OTP program support</p></li>
+<li><p>Support eMMC quick fill while upgrading sparse
+images</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><p>General peripherals support</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li><p>Supports USB2.0 devices</p></li>
+<li><p>Supports USB3.0 host</p></li>
+<li><p>Supports Ethernet</p></li>
+<li><p>Supports SPI Flash</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Boot mode:  from eMMC</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Boot mode:  from SD-CARD</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Image Upgrade</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><ul>
+<li><p>Supports eMMC image upgrade with USB U-Boot,</p>
+<p>SPI U-Boot and SU-Boot</p>
+</li>
+<li><p>Supports SD card image upgrade with SPI U-Boot and</p>
+<p>SU-Boot</p>
+</li>
+<li><p>USB U-Boot: image via TFTP and USB target</p>
+<p>(connected to PC)</p>
+</li>
+<li><p>SPI U-Boot: image via TFTP and USB Host</p>
+<p>(connected to USB Disk)</p>
+</li>
+<li><p>SU-Boot: image via TFTP and USB Host</p>
+<p>(connected to USB Disk)</p>
+</li>
+<li><p>Supports sparse image slices (Yocto will generate</p>
+<p>sparse image automatically).</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>OP-TEE Support</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Suspend to RAM (S3) Power State</p></td>
+<td><p>Y</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>OP-TEE</p></td>
+<td><p>OP-TEE enabled</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>WIFI</p></td>
+<td><p>WIFI 6 &amp; WIFI 6E</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>wpa_supplicant 2.10</p></td>
+</tr>
+<tr class="row-even"><td><p>Host AP mode using hostapd</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Bluetooth</p></td>
+<td><p>Supported</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="general-modules-peripherals-and-interfaces-supported">
+<h2>General Modules, Peripherals, and Interfaces Supported<a class="headerlink" href="#general-modules-peripherals-and-interfaces-supported" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head" colspan="2"><p>General</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Kernel</p></td>
+<td><p>Kernel Version 5.15.140</p></td>
+</tr>
+<tr class="row-odd"><td><p>Yocto</p></td>
+<td><p>Kirkstone: 4.0.17</p></td>
+</tr>
+<tr class="row-even"><td><p>U-Boot</p></td>
+<td><p>SPI U-Boot version: v1.1.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>USB Tool</p></td>
+<td><p>version: 1.1.0</p></td>
+</tr>
+<tr class="row-even"><td><p>OP-TEE</p></td>
+<td><p>OP-TEE version: 4.0.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Gstreamer (GST)</p></td>
+<td><p>GST version: 1.22.8</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head" colspan="2"><p>Memory</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Memory - DDR</p></td>
+<td><p>SL1620: (16bit or 32bit 2133 Mbps) DDR3 / DDR4 → 1G/2G/4GB</p>
+<p>SL1640: (32bit 3200 Mbps) DDR4 → 2G/4G</p>
+<p>SL1680: (64bit or 32bit 3733 Mbps) LPDDR4 → 2G/4G</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Memory - eMMC</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head" colspan="2"><p>General Peripherals</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Interrupt</p></td>
+<td><p>GIC</p></td>
+</tr>
+<tr class="row-odd"><td><p>Clock</p></td>
+<td><p>Controls the system frequency and clock tree distribution</p></td>
+</tr>
+<tr class="row-even"><td><p>Timer</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO</p></td>
+<td><p>GPIO is initialized in earlier phase according to hardware design</p></td>
+</tr>
+<tr class="row-even"><td><p>SDMA</p></td>
+<td><p>Conforms to the DMA engine framework</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>USB 2.0 (OTG)</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>USB 3.0 (Host)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>I2C</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>SPI</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head" colspan="2"><p>Network</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Ethernet</p></td>
+<td><p>SL1620: 10 / 100 / 1000 Mbps</p>
+<p>SL1640: 10 / 100 Mbps</p>
+<p>SL1680: 10 /100 / 1000 Mbps</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Wireless Connectivity</p></td>
+<td><p>Supports  WIFI &amp; BT</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head" colspan="2"><p>GPU and Display</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GPU</p></td>
+<td><ul class="simple">
+<li><p>DDK 1.23.1&#64;6404501</p></li>
+<li><p>OpenGL ES 3.2</p></li>
+<li><p>Mesa 22.3.5</p></li>
+<li><p>libdrm 2.4.110</p></li>
+<li><p>Weston 10.0.2</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Direct Rendering Manager (DRM)</p>
+<p>Display</p>
+</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>RGB Parallel Output</p></td>
+<td><p>Supported on SL1620</p></td>
+</tr>
+<tr class="row-odd"><td><p>HDMI-TX</p></td>
+<td><p>Supported on SL1640/SL1680</p></td>
+</tr>
+<tr class="row-even"><td><p>HDMI-RX</p></td>
+<td><p>Supported on SL1680</p></td>
+</tr>
+<tr class="row-odd"><td><p>MIPI-DSI</p></td>
+<td><p>SL1680/SL1640/SL1620. On SL1640 it needs to be enabled via DTS</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head" colspan="2"><p>Camera</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MIPI-CSI</p></td>
+<td><p>SL1680</p></td>
+</tr>
+<tr class="row-odd"><td><p>ISP</p></td>
+<td><p>SL1680</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head" colspan="2"><p>Audio Interfaces</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>PDM</p></td>
+<td><p>SL1620</p></td>
+</tr>
+<tr class="row-odd"><td><p>SPDIF</p></td>
+<td><p>None</p></td>
+</tr>
+<tr class="row-even"><td><p>I2S</p></td>
+<td><p>SL1620, SL1640, SL1680</p></td>
+</tr>
+</tbody>
+</table>
+<section id="supported-camera-modules">
+<h3>Supported Camera Modules<a class="headerlink" href="#supported-camera-modules" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Sensor</p></th>
+<th class="head"><p>Module</p></th>
+<th class="head"><p>Interface</p></th>
+<th class="head"><p>Adapter Board</p></th>
+<th class="head"><p>Patches Required</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>IMX258</p></td>
+<td><p>Synaptics IMX258 Camera Module</p></td>
+<td><p>MIPI-CSI 0</p></td>
+<td><p>Synaptics SL1680 MIPI CSI Adaptor Board</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>IMX415</p></td>
+<td><p>Synaptics IMX415 Camera Module</p></td>
+<td><p>MIPI-CSI 0</p></td>
+<td><p>Synaptics SL1680 MIPI CSI Adaptor Board</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p>OV5647</p></td>
+<td><p><a class="reference external" href="https://www.arducam.com/product/arducam-ov5647-standard-raspberry-pi-camera-b0033/">Arducam 5MP OV5647 Camera Module</a></p></td>
+<td><p>MIPI-CSI 0</p></td>
+<td><p>None</p></td>
+<td><p>Yes</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="known-issues-and-limitations">
+<h2>Known Issues and Limitations<a class="headerlink" href="#known-issues-and-limitations" title="Permalink to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Versions of U-Boot included in the Astra SDK v0.9.0 release are not compatible with Astra SDK releases v1.0 or later.
+Please ensure that you are using <a class="reference external" href="https://github.com/synaptics-astra/usb-tool/releases/">USB Tool v1.0</a> or later
+when flashing using USB. Or U-Boot <a class="reference external" href="https://github.com/synaptics-astra/spi-u-boot/releases/">v1.0.0</a>
+or later when updating with internal SPI flash. See <a class="reference internal" href="../linux/index.html#flash-internal-spi"><span class="std std-ref">Updating Internal SPI Flash Firmware</span></a> for instructions on updating the
+internal SPI flash.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>U-Boot version v1.1.0 improves emmc flash times significantly. We recommend updating to U-Boot v1.1.0 to benefit from these
+improvements.</p>
+</div>
+<section id="known-issues-on-sl1620">
+<h3>Known Issues on SL1620<a class="headerlink" href="#known-issues-on-sl1620" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>SoC</p></th>
+<th class="head"><p>Module</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SL1620</p></td>
+<td><p>Display</p></td>
+<td><p>29430</p></td>
+<td><p>No fast logo during boot up stage.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1620</p></td>
+<td><p>Gstreamer Pipeline</p></td>
+<td><p>29478</p></td>
+<td><p>Streams requiring deinterlace plugin fail to play.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1620</p></td>
+<td><p>Gstreamer Pipeline</p></td>
+<td><p>30587</p></td>
+<td><p>Sluggish output when displaying some VP9 streams.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1620</p></td>
+<td><p>Video Player Demo</p></td>
+<td><p>30712</p></td>
+<td><p>Video Player Demo app is not properly sized for TFT panel.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1620</p></td>
+<td><p>Kernel</p></td>
+<td><p>30925</p></td>
+<td><p>GPU crashes when waking up from low power standby.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1620</p></td>
+<td><p>Audio</p></td>
+<td><p>29228</p></td>
+<td><p>arecord prints “Sample format is non-available” when recording DMIC input set to 16 and 24</p>
+<p>signed bits.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>SL1620</p></td>
+<td><p>Gstreamer Pipeline</p></td>
+<td><p>30741</p></td>
+<td><p>Display window does not scale when moved from MIPI to TFT panel.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1620</p></td>
+<td><p>Linux Kernel</p></td>
+<td><p>29893</p></td>
+<td><p>Observed Horizontal Stride, whenever there is an object movement</p>
+<p>during USB Camera Test</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="known-issues-on-sl1640">
+<h3>Known Issues on SL1640<a class="headerlink" href="#known-issues-on-sl1640" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>SoC</p></th>
+<th class="head"><p>Module</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SL1640,SL1680</p></td>
+<td><p>V4L2</p></td>
+<td><p>31236</p></td>
+<td><p>V4L2 Encoder does not work.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640,SL1680</p></td>
+<td><p>Display</p></td>
+<td><p>31218</p></td>
+<td><p>Setting resolution with modetest can result abnormal scaling results.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1640,SL1680</p></td>
+<td><p>Display</p></td>
+<td><p>31217</p></td>
+<td><p>Switching resolution using modetest will randomly print errors or crash.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640,SL1680</p></td>
+<td><p>Display</p></td>
+<td><p>31215</p></td>
+<td><p>Display does not properly scale when connected to a 4K sink after bootup.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1640,SL1680</p></td>
+<td><p>HDMI</p></td>
+<td><p>31173</p></td>
+<td><p>Fails to connect to 2K sink after unplug from 4K sink.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640,SL1680</p></td>
+<td><p>Framebuffer Console</p></td>
+<td><p>30984</p></td>
+<td><p>Framebuffer console response is slow.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1640,SL1680</p></td>
+<td><p>Kernel</p></td>
+<td><p>30858</p></td>
+<td><p>Suspend to RAM fails.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640,SL1680</p></td>
+<td><p>Display</p></td>
+<td><p>30691</p></td>
+<td><p>Green flash occurs at the beginning of playback on some streams when using kmssink.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1640,SL1680</p></td>
+<td><p>Display</p></td>
+<td><p>30438</p></td>
+<td><p>Observed video shaking and horizontal lines during playback of some streams when using kmssink.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640,SL1680</p></td>
+<td><p>Gstreamer Pipeline</p></td>
+<td><p>30429</p></td>
+<td><p>Video freeze observed when displaying some streams using kmssink.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1640,SL1680</p></td>
+<td><p>Gstreamer Pipeline</p></td>
+<td><p>30421</p></td>
+<td><p>Video stutters randomly when decoding some H.264 and H.265 streams.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640,SL1680</p></td>
+<td><p>Gstreamer Pipeline</p></td>
+<td><p>30385</p></td>
+<td><p>Last frame is retained after playback stopped when using KMS sink.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1640</p></td>
+<td><p>Gstreamer RTSP</p></td>
+<td><p>31247</p></td>
+<td><p>RTSP video stream pauses for about 5 seconds at the beginning of playback.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640</p></td>
+<td><p>AI Player Demo</p></td>
+<td><p>30700</p></td>
+<td><p>Object detection bounding boxes remain after stream finishes playing.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1640,SL1680</p></td>
+<td><p>U-Boot</p></td>
+<td><p>30036</p></td>
+<td><p>SPI U-Boot fails for flash image to SD card.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="known-issues-on-sl1680">
+<h3>Known Issues on SL1680<a class="headerlink" href="#known-issues-on-sl1680" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>SoC</p></th>
+<th class="head"><p>Module</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Summary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SL1680</p></td>
+<td><p>AI Player Demo</p></td>
+<td><p>31248</p></td>
+<td><p>Playback randomly hangs when displaying 4 1080p30 streams with V4L2 decoding and AI inferencing.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1680</p></td>
+<td><p>Gstreamer HDMI-RX</p></td>
+<td><p>31250</p></td>
+<td><p>Using zero copy buffers with v4l2convert fails to get V4L2 buffers when using HDMI-RX.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1680</p></td>
+<td><p>Gstreamer HDMI-RX</p></td>
+<td><p>31245</p></td>
+<td><p>HDMI-RX video stutters when using Overlay with NV12 and UYVY video formats.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1680</p></td>
+<td><p>Gstreamer HDMI-RX</p></td>
+<td><p>31242</p></td>
+<td><p>HDMI-RX video stutters when using kmssink for some video formats.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1680</p></td>
+<td><p>Gstreamer HDMI-RX</p></td>
+<td><p>31254</p></td>
+<td><p>HDMI-RX video color is incorrect when switching resolution between 4K30 and 1080p30.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1680</p></td>
+<td><p>Gstreamer HDMI-RX</p></td>
+<td><p>31253</p></td>
+<td><p>Audio output will randomly stop after HDMI Hot Plug Detect (HPD) during HDMI-RX A/V playback.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1680</p></td>
+<td><p>Gstreamer RTSP</p></td>
+<td><p>31240</p></td>
+<td><p>Frame drops when playing back 4x1080p H.265 encoded RTSP streams.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1680</p></td>
+<td><p>AI Player Demo</p></td>
+<td><p>31249</p></td>
+<td><p>Bottom right video output stutters during 4x1080p30 playback with AI inferencing.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1640,SL1680</p></td>
+<td><p>V4L2</p></td>
+<td><p>31236</p></td>
+<td><p>V4L2 Encoder does not work.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1680</p></td>
+<td><p>ISP</p></td>
+<td><p>31225</p></td>
+<td><p>Bayer raw dump for IMX sensor could not be verified.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1680</p></td>
+<td><p>Gstreamer HDMI-RX</p></td>
+<td><p>31223</p></td>
+<td><p>Audio has noise when playing back NV12/UYVY videos.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1680</p></td>
+<td><p>Gstreamer HDMI-RX</p></td>
+<td><p>31222</p></td>
+<td><p>HDMI-RX video is not smooth when playing back 4K60 RGB video on a 4K30 UYVY sink</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1680</p></td>
+<td><p>Kernel (HDM-RX)</p></td>
+<td><p>31219</p></td>
+<td><p>Kernel panic observed when displaying some formats of HDMI-RX video.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640,SL1680</p></td>
+<td><p>Display</p></td>
+<td><p>31218</p></td>
+<td><p>Setting resolution with modetest can result abnormal scaling results.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1640,SL1680</p></td>
+<td><p>Display</p></td>
+<td><p>31217</p></td>
+<td><p>Switching resolution using modetest will randomly print errors or crash.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640,SL1680</p></td>
+<td><p>Display</p></td>
+<td><p>31215</p></td>
+<td><p>Display does not properly scale when connected to a 4K sink after bootup.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1680</p></td>
+<td><p>Gstreamer ISP</p></td>
+<td><p>31209</p></td>
+<td><p>RGB24 output fails to be output directly.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640,SL1680</p></td>
+<td><p>HDMI</p></td>
+<td><p>31173</p></td>
+<td><p>Fails to connect to 2K sink after unplug from 4K sink.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1680</p></td>
+<td><p>ISP</p></td>
+<td><p>31068</p></td>
+<td><p>Frame drop occurs when displaying output from IMX415’s main path while simultaneously displaying</p>
+<p>2160p output from a USB camera.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>SL1680</p></td>
+<td><p>ISP</p></td>
+<td><p>30985</p></td>
+<td><p>IMX415 sensor output shows a flicker in environment with direct sunlight.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1640,SL1680</p></td>
+<td><p>Framebuffer Console</p></td>
+<td><p>30984</p></td>
+<td><p>Framebuffer console response is slow.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640,SL1680</p></td>
+<td><p>Kernel</p></td>
+<td><p>30858</p></td>
+<td><p>Suspend to RAM fails.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1640,SL1680</p></td>
+<td><p>Display</p></td>
+<td><p>30691</p></td>
+<td><p>Green flash occurs at the beginning of playback on some streams when using kmssink.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640,SL1680</p></td>
+<td><p>Display</p></td>
+<td><p>30438</p></td>
+<td><p>Observed video shaking and horizontal lines during playback of some streams when using kmssink.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1680</p></td>
+<td><p>Video Player Demo</p></td>
+<td><p>30437</p></td>
+<td><p>Observed video shaking when playing back 4 streams with V4L2 decoding in syna-video-player.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640,SL1680</p></td>
+<td><p>Gstreamer Pipeline</p></td>
+<td><p>30429</p></td>
+<td><p>Video freeze observed when displaying some streams using kmssink.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1640,SL1680</p></td>
+<td><p>Gstreamer Pipeline</p></td>
+<td><p>30421</p></td>
+<td><p>Video stutters randomly when decoding some H.264 and H.265 streams.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640,SL1680</p></td>
+<td><p>Gstreamer Pipeline</p></td>
+<td><p>30385</p></td>
+<td><p>Last frame is retained after playback stopped when using KMS sink.</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1640,SL1680</p></td>
+<td><p>U-Boot</p></td>
+<td><p>30036</p></td>
+<td><p>SPI U-Boot fails for flash image to SD card.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="v1.3.0.html" class="btn btn-neutral float-left" title="Release Notes v1.3.0" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="v1.1.0.html" class="btn btn-neutral float-right" title="Release Notes v1.1.0" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2025, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

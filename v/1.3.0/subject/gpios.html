@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPIOs on Astra Machina &mdash; Synaptics Astra SDK User Guide 1.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ee41c26d"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Application Notes" href="../appnotes/index.html" />
+    <link rel="prev" title="Updating the ISP Sensor Configuration" href="updating_isp_sensor_configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Subject Specific User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="syna_drm_kms_user_guide.html">SYNA DRM / KMS Driver User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waveshare_7inch_dsi-configuration.html">Waveshare Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="haier_panel_configuration.html">Haier Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory_layout_customization.html">Memory Layout Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emmc_layout_customization.html">eMMC Partition Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dvfs_user_guide.html">Dynamic Voltage and Frequency Switching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power_measurement.html">Power Measurements with Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weston_default_display.html">Setting the Weston Default Display for Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isp_sensor_integration.html">ISP Sensor Integration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating_isp_sensor_configuration.html">Updating the ISP Sensor Configuration</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">GPIOs on Astra Machina</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#accessing-gpios-from-userspace">Accessing GPIOs from Userspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changing-the-function-of-gpios">Changing the Function of GPIOs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gpio-mappings">GPIO Mappings</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sl1620">SL1620</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sl1640-sl1680">SL1640 / SL1680</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Subject Specific User Guides</a></li>
+      <li class="breadcrumb-item active">GPIOs on Astra Machina</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="gpios-on-astra-machina">
+<h1>GPIOs on Astra Machina<a class="headerlink" href="#gpios-on-astra-machina" title="Permalink to this heading"></a></h1>
+<p>Astra Machina integrates many GPIOs to support its various functionalities. This guide will cover how to use GPIOs with Astra Machina and
+configure their functionality.</p>
+<p>On Astra Machina:</p>
+<ul class="simple">
+<li><p>All of the GPIOs are multiplexed and can be configured for different functionality.</p></li>
+<li><p>All GPIOs can be assigned interrupts. However, GPO (output only pins) cannot.</p></li>
+</ul>
+<p>Specific details on GPIOs can be found in the <a class="reference internal" href="../hw/index.html"><span class="doc">Astra Machina Eval Platform</span></a>.</p>
+<section id="accessing-gpios-from-userspace">
+<h2>Accessing GPIOs from Userspace<a class="headerlink" href="#accessing-gpios-from-userspace" title="Permalink to this heading"></a></h2>
+<p>GPIOs can be accessed and configured using the GPIO sysfs interface <code class="docutils literal notranslate"><span class="pre">/sys/class/gpio</span></code>. GPIOs can be exported to userspace and their
+direction and value can be viewed or set.</p>
+<p>For example, to export GPIO[36] on SL1680 run the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@sl1680</span><span class="p">:</span><span class="o">~</span><span class="c1"># echo 484 &gt; /sys/class/gpio/export</span>
+</pre></div>
+</div>
+<p>GPIO[36] is located on the 40 pin connectors on SL1640 and SL1680. GPIO[36] maps to GPIO number 484 based on the table below <a class="reference internal" href="#mapping-table"><span class="std std-ref">GPIO Mappings</span></a>.</p>
+<p>Once the GPIO has been exported, the value and direction can be viewed and set:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@sl1680</span><span class="p">:</span><span class="o">~</span><span class="c1"># cd /sys/class/gpio/</span>
+<span class="n">root</span><span class="nd">@sl1680</span><span class="p">:</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">class</span><span class="o">/</span><span class="n">gpio</span><span class="o">/</span><span class="n">gpio484</span><span class="c1"># cat direction</span>
+<span class="ow">in</span>
+<span class="n">root</span><span class="nd">@sl1680</span><span class="p">:</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">class</span><span class="o">/</span><span class="n">gpio</span><span class="o">/</span><span class="n">gpio484</span><span class="c1"># cat value</span>
+<span class="mi">0</span>
+</pre></div>
+</div>
+<p>By default, GPIO[36] is set to input with the value 0. To changes these value, write to the corresponding sysfs file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@sl1680</span><span class="p">:</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">class</span><span class="o">/</span><span class="n">gpio</span><span class="o">/</span><span class="n">gpio484</span><span class="c1"># echo &quot;out&quot; &gt; direction</span>
+<span class="n">root</span><span class="nd">@sl1680</span><span class="p">:</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">class</span><span class="o">/</span><span class="n">gpio</span><span class="o">/</span><span class="n">gpio484</span><span class="c1"># cat direction</span>
+<span class="n">out</span>
+<span class="n">root</span><span class="nd">@sl1680</span><span class="p">:</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">class</span><span class="o">/</span><span class="n">gpio</span><span class="o">/</span><span class="n">gpio484</span><span class="c1"># echo 1 &gt; value</span>
+<span class="n">root</span><span class="nd">@sl1680</span><span class="p">:</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">class</span><span class="o">/</span><span class="n">gpio</span><span class="o">/</span><span class="n">gpio484</span><span class="c1"># cat value</span>
+<span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+<section id="changing-the-function-of-gpios">
+<h2>Changing the Function of GPIOs<a class="headerlink" href="#changing-the-function-of-gpios" title="Permalink to this heading"></a></h2>
+<p>GPIOs which are assigned to other functionality can be reconfigured to function as generic GPIOs. This is done by updating
+the device tree entries in the Linux Kernel. This requires modifying the <code class="docutils literal notranslate"><span class="pre">linux-syna</span></code> package using <code class="docutils literal notranslate"><span class="pre">devtool</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">devtool</span> <span class="n">modify</span> <span class="n">linux</span><span class="o">-</span><span class="n">syna</span>
+</pre></div>
+</div>
+<p>Modify the platform dts file located in <code class="docutils literal notranslate"><span class="pre">build-sl1680/workspace/sources/linux-syna/arch/arm64/boot/dts/synaptics</span></code>.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p>SL1620</p></td>
+<td><p>SL1640</p></td>
+<td><p>SL1680</p></td>
+</tr>
+<tr class="row-even"><td><p>DTS</p></td>
+<td><p>myna2-rdk.dst</p></td>
+<td><p>platypus-rdk.dts</p></td>
+<td><p>dolphin-rdk.dst</p></td>
+</tr>
+</tbody>
+</table>
+<p>First, identify where the GPIOs are currently configured in the dts file and disable them. Then reassign them to function as GPIOs.</p>
+<p>The following example will reassign GPIO[12] and GPIO[13] to function as GPIOs in SL1620.</p>
+<figure class="align-default">
+<img alt="../_images/sl1620-i2c-dts-section.png" src="../_images/sl1620-i2c-dts-section.png" />
+</figure>
+<figure class="align-default">
+<img alt="../_images/sl1620-lcdc-dts-section.png" src="../_images/sl1620-lcdc-dts-section.png" />
+</figure>
+<p>Build the image with the updated device tree entries:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">devtool</span> <span class="n">build</span> <span class="n">linux</span><span class="o">-</span><span class="n">syna</span>
+<span class="n">devtool</span> <span class="n">build</span><span class="o">-</span><span class="n">image</span> <span class="n">astra</span><span class="o">-</span><span class="n">media</span>
+</pre></div>
+</div>
+</section>
+<section id="gpio-mappings">
+<span id="mapping-table"></span><h2>GPIO Mappings<a class="headerlink" href="#gpio-mappings" title="Permalink to this heading"></a></h2>
+<section id="sl1620">
+<h3>SL1620<a class="headerlink" href="#sl1620" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>GPIO</p></th>
+<th class="head"><p>GPIO Number</p></th>
+<th class="head"><p>GPIO Chip</p></th>
+<th class="head"><p>Port</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>480</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>481</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>482</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>483</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>484</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>485</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>486</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>487</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>488</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>489</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>490</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>491</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>492</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>493</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>494</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>495</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>496</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>497</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>498</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p>499</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>500</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>21</p></td>
+<td><p>501</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>22</p></td>
+<td><p>502</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>23</p></td>
+<td><p>503</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>24</p></td>
+<td><p>504</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>25</p></td>
+<td><p>505</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>26</p></td>
+<td><p>506</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>27</p></td>
+<td><p>507</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>28</p></td>
+<td><p>508</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>29</p></td>
+<td><p>509</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>510</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>511</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>32</p></td>
+<td><p>416</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>33</p></td>
+<td><p>417</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>34</p></td>
+<td><p>418</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>35</p></td>
+<td><p>419</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>36</p></td>
+<td><p>420</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>37</p></td>
+<td><p>421</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>38</p></td>
+<td><p>422</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>39</p></td>
+<td><p>423</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>40</p></td>
+<td><p>424</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>41</p></td>
+<td><p>425</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>42</p></td>
+<td><p>426</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>43</p></td>
+<td><p>427</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>44</p></td>
+<td><p>428</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>45</p></td>
+<td><p>429</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>46</p></td>
+<td><p>430</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>47</p></td>
+<td><p>431</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>48</p></td>
+<td><p>432</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>49</p></td>
+<td><p>433</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>50</p></td>
+<td><p>434</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>51</p></td>
+<td><p>435</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>52</p></td>
+<td><p>436</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>53</p></td>
+<td><p>437</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>54</p></td>
+<td><p>438</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>55</p></td>
+<td><p>439</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>56</p></td>
+<td><p>440</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>57</p></td>
+<td><p>441</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>58</p></td>
+<td><p>442</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>59</p></td>
+<td><p>443</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>60</p></td>
+<td><p>444</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>61</p></td>
+<td><p>445</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>62</p></td>
+<td><p>446</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>63</p></td>
+<td><p>447</p></td>
+<td><p>2</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>64</p></td>
+<td><p>448</p></td>
+<td><p>3</p></td>
+<td><p>C</p></td>
+</tr>
+<tr class="row-odd"><td><p>65</p></td>
+<td><p>449</p></td>
+<td><p>3</p></td>
+<td><p>C</p></td>
+</tr>
+<tr class="row-even"><td><p>66</p></td>
+<td><p>450</p></td>
+<td><p>3</p></td>
+<td><p>C</p></td>
+</tr>
+<tr class="row-odd"><td><p>67</p></td>
+<td><p>451</p></td>
+<td><p>3</p></td>
+<td><p>C</p></td>
+</tr>
+<tr class="row-even"><td><p>68</p></td>
+<td><p>452</p></td>
+<td><p>3</p></td>
+<td><p>C</p></td>
+</tr>
+<tr class="row-odd"><td><p>69</p></td>
+<td><p>453</p></td>
+<td><p>3</p></td>
+<td><p>C</p></td>
+</tr>
+<tr class="row-even"><td><p>70</p></td>
+<td><p>454</p></td>
+<td><p>3</p></td>
+<td><p>C</p></td>
+</tr>
+<tr class="row-odd"><td><p>71</p></td>
+<td><p>455</p></td>
+<td><p>3</p></td>
+<td><p>C</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sl1640-sl1680">
+<h3>SL1640 / SL1680<a class="headerlink" href="#sl1640-sl1680" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>GPIO</p></th>
+<th class="head"><p>GPIO Number</p></th>
+<th class="head"><p>GPIO Chip</p></th>
+<th class="head"><p>Port</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>416</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>417</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>418</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>419</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>420</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>421</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>422</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>423</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>424</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>425</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>426</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>427</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>428</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>429</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>430</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>431</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>432</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>433</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>434</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p>435</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>436</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>21</p></td>
+<td><p>437</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>22</p></td>
+<td><p>438</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>23</p></td>
+<td><p>439</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>24</p></td>
+<td><p>440</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>25</p></td>
+<td><p>441</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>26</p></td>
+<td><p>442</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>27</p></td>
+<td><p>443</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>28</p></td>
+<td><p>444</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>29</p></td>
+<td><p>445</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>446</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>447</p></td>
+<td><p>2</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>32</p></td>
+<td><p>480</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>33</p></td>
+<td><p>481</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>34</p></td>
+<td><p>482</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>35</p></td>
+<td><p>483</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>36</p></td>
+<td><p>484</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>37</p></td>
+<td><p>485</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>38</p></td>
+<td><p>486</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>39</p></td>
+<td><p>487</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>40</p></td>
+<td><p>488</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>41</p></td>
+<td><p>489</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>42</p></td>
+<td><p>490</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>43</p></td>
+<td><p>491</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>44</p></td>
+<td><p>492</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>45</p></td>
+<td><p>493</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>46</p></td>
+<td><p>494</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>47</p></td>
+<td><p>495</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>48</p></td>
+<td><p>496</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>49</p></td>
+<td><p>497</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>50</p></td>
+<td><p>498</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>51</p></td>
+<td><p>499</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>52</p></td>
+<td><p>500</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>53</p></td>
+<td><p>501</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>54</p></td>
+<td><p>502</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>55</p></td>
+<td><p>503</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="updating_isp_sensor_configuration.html" class="btn btn-neutral float-left" title="Updating the ISP Sensor Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../appnotes/index.html" class="btn btn-neutral float-right" title="Application Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2024, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

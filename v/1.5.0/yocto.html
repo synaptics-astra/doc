@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astra Yocto Linux Developer Guide &mdash; Synaptics Astra SDK User Guide 1.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=80d54a31"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Subject Specific User Guides" href="subject/index.html" />
+    <link rel="prev" title="Astra Yocto Linux User Guide" href="linux/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Astra Yocto Linux Developer Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-host-requirements">Build host requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#wsl-2-setup-required-only-when-using-windows">WSL 2 Setup (required only when using Windows)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-setup">Docker setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-build-an-image">How to build an image</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#start-the-build-environment">Start the build environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#obtain-the-sources">Obtain the sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-an-image">Build an image</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-develop-an-application">How to develop an application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-re-build-a-standalone-toolchain">How to re-build a standalone toolchain</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#compatible-layers">Compatible Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#astra-yocto-images">Astra Yocto Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distro-features">Distro Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#x11-display-server">X11 Display Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#virtualization-for-oobe">Virtualization for OOBE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#kernel-command-line">Kernel command line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#system-memory-configuration">System Memory configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#partition-tables">Partition tables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="subject/index.html">Subject Specific User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Astra Yocto Linux Developer Guide</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="astra-yocto-linux-developer-guide">
+<h1>Astra Yocto Linux Developer Guide<a class="headerlink" href="#astra-yocto-linux-developer-guide" title="Permalink to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>This guide describes Synaptics specific configurations and procedures
+required to build and use Yocto images with the supported Synaptics
+SoC and development boards.</p>
+<p>This guide assumes that the reader already has some familiarity
+with Yocto concepts. For introductory material about Yocto and general
+Yocto reference guides, please refer to the official
+<a class="reference external" href="https://docs.yoctoproject.org/">Yocto Documentation</a>.</p>
+<p>This BSP works with the Yocto Kirkstone release and provides support
+for the following machines, distributions and images:</p>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-text">Supported machines, distributions and images</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Machine</p></th>
+<th class="head"><p>Distribution</p></th>
+<th class="head"><p>Images</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>sl1620</p></td>
+<td><p>poky</p></td>
+<td><p>astra-media</p></td>
+</tr>
+<tr class="row-odd"><td><p>sl1640</p></td>
+<td><p>poky</p></td>
+<td><p>astra-media</p></td>
+</tr>
+<tr class="row-even"><td><p>sl1680</p></td>
+<td><p>poky</p></td>
+<td><p>astra-media</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="build-host-requirements">
+<span id="yocto-prerequisites"></span><h2>Build host requirements<a class="headerlink" href="#build-host-requirements" title="Permalink to this heading"></a></h2>
+<p>The recommended hardware is a <code class="docutils literal notranslate"><span class="pre">x86_64</span></code> host with at least:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>16 cores</p></li>
+<li><p>32 GB of RAM</p></li>
+<li><p>150 GB of disk</p></li>
+</ul>
+</div></blockquote>
+<p>As an example, building from scratch the <code class="docutils literal notranslate"><span class="pre">astra-media</span></code> image for <code class="docutils literal notranslate"><span class="pre">vs640</span></code> on a
+<code class="docutils literal notranslate"><span class="pre">c5a.4xlarge</span></code> AWS instance, which matches the requirements above, takes
+approximately 2 hours.</p>
+<p>The Yocto build system can very efficiently exploit more cores if these are available.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Building entirely from NFS mounted directories is not supported
+by the Yocto build system. Please refer to
+<a class="reference external" href="https://docs.yoctoproject.org/ref-manual/variables.html?highlight=nfs#term-TMPDIR">Yocto documentation on the TMPDIR variable</a>
+for more details.</p>
+</div>
+<p>The recommended software configuration is the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Ubuntu 22.04 LTS</p></li>
+<li><p>Docker 20.10 or later provided by the standard Ubuntu package <code class="docutils literal notranslate"><span class="pre">docker.io</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>Other versions of Linux and Docker may also work but may need special configuration. You can find more information on
+how to install Docker in Ubuntu in <a class="reference internal" href="#install-docker"><span class="std std-ref">Docker setup</span></a>.</p>
+<p>The Synaptics Astra SDK is known to work also on Ubuntu 22.04 installed inside Windows Subsystem For Linux (WSL) 2.0
+on Windows 11. You can find more information on how to install WSL2 in <a class="reference internal" href="#wsl-setup"><span class="std std-ref">WSL 2 Setup (required only when using Windows)</span></a>.</p>
+<p>The build can also be executed directly on a Linux host provided that the Yocto build dependencies are installed.
+This configuration is not supported by Synaptics.</p>
+<section id="wsl-2-setup-required-only-when-using-windows">
+<span id="wsl-setup"></span><h3>WSL 2 Setup (required only when using Windows)<a class="headerlink" href="#wsl-2-setup-required-only-when-using-windows" title="Permalink to this heading"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you previously installed WSL1, installed another WSL2 distribution or disabled the hyper-v support on
+your machine you may need to perform some additional steps. See the <a class="reference internal" href="#troubleshooting"><span class="std std-ref">Troubleshooting</span></a> section for some
+suggested steps.</p>
+</div>
+<p>First install Windows Subsystem for Linux with the following command in PowerShell (as administrator):</p>
+<div class="highlight-ps1con notranslate"><div class="highlight"><pre><span></span><span class="gp">PS C:\Users\username&gt; </span><span class="n">wsl</span> <span class="p">-</span><span class="n">-install</span>
+</pre></div>
+</div>
+<p>This command will setup WSL and the default distribution which is Ubuntu 22.04 at the time of writing.
+You can find more details on installation procedure the <a class="reference external" href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL website</a>.</p>
+<p>By default WSL only uses up to 50% of the RAM of the host, this may not be enough to reach the memory required to build
+an image. If that’s the case you can in increase the memory adding the following to the file <code class="docutils literal notranslate"><span class="pre">.wslconfig</span></code> in your
+user directory (normally <code class="docutils literal notranslate"><span class="pre">C:\Users\&lt;Username</span></code>):</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[wsl2]</span>
+<span class="na">memory</span><span class="o">=</span><span class="s">24GB</span>
+</pre></div>
+</div>
+<p>Then to apply the changes in powershell run the command:</p>
+<div class="highlight-ps1con notranslate"><div class="highlight"><pre><span></span><span class="gp">PS C:\Users\username&gt; </span><span class="n">wsl</span><span class="p">.</span><span class="n">exe</span> <span class="p">-</span><span class="n">-shutdown</span>
+</pre></div>
+</div>
+<p>You can find more information about WSL configuration <a class="reference external" href="https://learn.microsoft.com/en-us/windows/wsl/wsl-config">here</a>.</p>
+<p>Once you setup the WSL2 environment you can start a terminal from the start menu by selecting
+the Windows Terminal App and then select the Ubuntu-22.04 distribution.</p>
+<p>Once you are in the terminal you can install Docker as described in <a class="reference internal" href="#install-docker"><span class="std std-ref">Docker setup</span></a></p>
+</section>
+<section id="docker-setup">
+<span id="install-docker"></span><h3>Docker setup<a class="headerlink" href="#docker-setup" title="Permalink to this heading"></a></h3>
+<p>To install docker use the following steps:</p>
+<ol class="arabic">
+<li><p>Install the docker package:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>docker.io
+</pre></div>
+</div>
+</li>
+<li><p>Add the current user to the docker group so that it will be able to use docker:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>adduser<span class="w"> </span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="w"> </span>docker
+</pre></div>
+</div>
+</li>
+<li><p>The change of user will not be automatically applied until a reboot (in some situation a log-in may suffice). To
+apply the changes to the current shell you can also run the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>newgrp<span class="w"> </span>docker
+<span class="gp">$ </span>newgrp<span class="w"> </span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+<section id="how-to-build-an-image">
+<span id="yocto-build-image"></span><h2>How to build an image<a class="headerlink" href="#how-to-build-an-image" title="Permalink to this heading"></a></h2>
+<section id="start-the-build-environment">
+<span id="start-build-env"></span><h3>Start the build environment<a class="headerlink" href="#start-the-build-environment" title="Permalink to this heading"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following steps require an hosts with docker correctly installed,
+you can find more information on how to setup docker in <a class="reference internal" href="#yocto-prerequisites"><span class="std std-ref">Build host requirements</span></a>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When using WSL2 build from <code class="docutils literal notranslate"><span class="pre">/mnt/c</span></code> and other host file system drives is not supported. Your build
+folder must reside on the native WSL2 file system (e.g. <code class="docutils literal notranslate"><span class="pre">/home/${USER}</span></code>)</p>
+</div>
+<p>In order to ensure a correctly configured and clean environment, the build
+must be performed within a Docker container. To do so you need to start
+a new temporary container that will host the build. The container can be
+terminated when the build is finished and a new container can be started
+later to rebuild with the same command.</p>
+<p>To start the container use the following command line:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:<span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="w"> </span>ghcr.io/synaptics-astra/crops:1.0.0<span class="w"> </span>--workdir<span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
+</pre></div>
+</div>
+<p>This will spawn a shell inside the container. The current directory of the host
+is mounted inside the container so that the workspace is available within
+the container.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On Ubuntu 20 and 18 LTS the seccomp protection feature of docker has to be
+disabled when creating the build container by adding the parameter
+<code class="docutils literal notranslate"><span class="pre">--security-opt</span> <span class="pre">&quot;seccomp=unconfined&quot;</span></code> after the <code class="docutils literal notranslate"><span class="pre">--rm</span></code> parameter in the
+command line above.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If your environment requires a proxy to connect to the internet, please follow these instructions
+for <a class="reference external" href="https://docs.docker.com/config/daemon/proxy/">Configuring the Docker daemon</a>
+and <a class="reference external" href="https://docs.docker.com/network/proxy/#configure-the-docker-client">Configuring the Docker client</a> to use a proxy server.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Synaptics provides a pre-built container at <code class="docutils literal notranslate"><span class="pre">ghcr.io/synaptics-astra/crops</span></code>  that is automatically downloaded
+when you run the command above but you can also compile from the sources available
+<a class="reference external" href="https://github.com/synaptics-astra/crops">here</a>.</p>
+</div>
+</section>
+<section id="obtain-the-sources">
+<h3>Obtain the sources<a class="headerlink" href="#obtain-the-sources" title="Permalink to this heading"></a></h3>
+<p>The sources of the Astra Yocto release can be downloaded by cloning a <a class="reference external" href="https://github.com/synaptics-astra/sdk">top
+level git repo</a>. The repository contains
+all the required layers as submodules.</p>
+<p>To clone the repository within the build environment started with the instructions in <a class="reference internal" href="#start-build-env"><span class="std std-ref">Start the build environment</span></a>
+use the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">pokyuser@xyz:/path/to/workspace $ </span>git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>v1.5.0<span class="w"> </span>--recurse-submodules<span class="w"> </span><span class="se">\</span>
+<span class="w">                                            </span>https://github.com/synaptics-astra/sdk
+</pre></div>
+</div>
+<p>The recipes contained in the <code class="docutils literal notranslate"><span class="pre">meta-synaptics</span></code> layer point to the relevant git repository and will be downloaded
+using the standard bitbake fetching mechanism of Yocto.</p>
+</section>
+<section id="build-an-image">
+<h3>Build an image<a class="headerlink" href="#build-an-image" title="Permalink to this heading"></a></h3>
+<p>To build an image execute the following commands:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">pokyuser@xyz:/path/to/workspace $ </span><span class="nb">cd</span><span class="w"> </span>sdk
+
+<span class="gp">pokyuser@xyz:/path/to/workspace/sdk $ </span><span class="nb">source</span><span class="w"> </span>meta-synaptics/setup/setup-environment
+
+<span class="gp">pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ </span>bitbake<span class="w"> </span>astra-media
+</pre></div>
+</div>
+<p>The resulting image can be found in <code class="docutils literal notranslate"><span class="pre">build-${MACHINE}/tmp/deploy/images/${MACHINE}/SYNAIMG/</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This example builds the <code class="docutils literal notranslate"><span class="pre">astra-media</span></code> image. To build a different image replace <code class="docutils literal notranslate"><span class="pre">astra-media</span></code> with the image you want to build.
+See <a class="reference internal" href="#astra-images"><span class="std std-ref">Astra Yocto Images</span></a> for details on other images supported by Astra Yocto.</p>
+</div>
+<p>To build the <code class="docutils literal notranslate"><span class="pre">astra-media-oobe</span></code> image exectute the following commands:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">pokyuser@xyz:/path/to/workspace $ </span><span class="nb">cd</span><span class="w"> </span>sdk
+
+<span class="gp">pokyuser@xyz:/path/to/workspace/sdk $ </span><span class="nv">OOBE</span><span class="o">=</span>enabled<span class="w"> </span><span class="nb">source</span><span class="w"> </span>meta-synaptics/setup/setup-environment
+
+<span class="gp">pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ </span>bitbake<span class="w"> </span>astra-media-oobe
+</pre></div>
+</div>
+<p>The image can be flashed to an evaluation kit board as described in <a class="reference internal" href="linux/index.html#prepare-to-boot"><span class="std std-ref">Updating the Firmware</span></a>.</p>
+<p>After flashing the board, to log in to the board please refer to <a class="reference internal" href="linux/index.html#linux-login"><span class="std std-ref">Linux OS Login</span></a>.</p>
+</section>
+</section>
+<section id="how-to-develop-an-application">
+<span id="yocto-build-app"></span><h2>How to develop an application<a class="headerlink" href="#how-to-develop-an-application" title="Permalink to this heading"></a></h2>
+<p>One of the key features of the Yocto project is the ability to create a standalone SDK that includes everything you
+need to develop and test applications for a given target image.</p>
+<p>The standalone toolchain is a precompiled set of tools, libraries, and headers that match the configuration of your
+Yocto Project build. It provides a consistent and controlled development environment that closely mirrors the
+target system. This ensures that the applications you develop will be compatible with the specific image that
+you’re deploying on your embedded devices.</p>
+<p>Using the standalone toolchain, you can compile on your development machine before
+deploying them to the target device. This can greatly speed up the development process, as you don’t need to
+compile the entire image each time you want to test a change.</p>
+<p>Pre-compiled toolchains for the default Astra Machina images are also available
+on <a class="reference external" href="https://github.com/synaptics-astra/sdk/releases">GitHub</a>.</p>
+<p>Once you obtained the toolchain, you can install it on your development machine. The toolchain includes a script
+that sets up the environment variables needed to use the tools. The recommended and supported configuration of the
+development machine is the same as described in <a class="reference internal" href="#yocto-prerequisites"><span class="std std-ref">Build host requirements</span></a> but the toolchain is compatible with
+a wide range of environments.</p>
+<p>To setup the toolchain you first uncompress it as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>chmod<span class="w"> </span><span class="m">755</span><span class="w"> </span>poky-glibc-x86_64-astra-media-cortexa73-sl1680-toolchain-4.0.17.sh
+<span class="gp">$ </span>./poky-glibc-x86_64-astra-media-cortexa73-sl1680-toolchain-4.0.17.sh
+<span class="go">Poky (Yocto Project Reference Distro) SDK installer version 4.0.17</span>
+<span class="go">==================================================================</span>
+<span class="go">Enter target directory for SDK (default: /opt/poky/4.0.17): toolchain</span>
+<span class="go">You are about to install the SDK to &quot;/home/user/toolchain&quot;. Proceed [Y/n]?</span>
+<span class="go">Extracting SDK.................................................................................................................................................................................................................................................................................................................................done</span>
+<span class="go">Setting it up...done</span>
+<span class="go">SDK has been successfully set up and is ready to be used.</span>
+<span class="go">Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.</span>
+<span class="gp"> $ </span>.<span class="w"> </span>/home/user/toolchain/environment-setup-cortexa73-poky-linux
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The exact names of the toolchain environment files depend on the target board: <code class="docutils literal notranslate"><span class="pre">CPUTYPE</span></code> for <code class="docutils literal notranslate"><span class="pre">sl1680</span></code> is
+<code class="docutils literal notranslate"><span class="pre">cortexa73</span></code>, for <code class="docutils literal notranslate"><span class="pre">sl1620</span></code> and <code class="docutils literal notranslate"><span class="pre">sl1640</span></code> is <code class="docutils literal notranslate"><span class="pre">cortexa55</span></code></p>
+</div>
+<p>Then to configure the build environment you need to source a configuration script as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>.<span class="w"> </span>toolchain/environment-setup-cortexa73-poky-linux
+</pre></div>
+</div>
+<p>With the environment setup, you can use the provided cross-compiler to compile your applications. The
+toolchain also includes libraries and headers for the various components included in the image, so you can develop
+applications that take full advantage of these components. You can use the environment variables set by the script
+such as <code class="docutils literal notranslate"><span class="pre">CC</span></code> to invoke the cross-compiler and build your application with it.</p>
+<p>More information about the standalone toolchain are available in the
+<a class="reference external" href="https://docs.yoctoproject.org/sdk-manual/using.html">Yocto documentation</a>.</p>
+<section id="how-to-re-build-a-standalone-toolchain">
+<h3>How to re-build a standalone toolchain<a class="headerlink" href="#how-to-re-build-a-standalone-toolchain" title="Permalink to this heading"></a></h3>
+<p>You can re-generate a toolchain in your Yocto build environment configured as described in <a class="reference internal" href="#yocto-build-image"><span class="std std-ref">How to build an image</span></a>
+by running the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">pokyuser@xyz:/path/to/workspace $ </span><span class="nb">cd</span><span class="w"> </span>sdk
+
+<span class="gp">pokyuser@xyz:/path/to/workspace/sdk $ </span><span class="nb">source</span><span class="w"> </span>meta-synaptics/setup/setup-environment
+
+<span class="gp">pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ </span>bitbake<span class="w"> </span>astra-media<span class="w"> </span>-c<span class="w"> </span>do_populate_sdk
+</pre></div>
+</div>
+<p>The build proces will generate the toolchain in the directory <code class="docutils literal notranslate"><span class="pre">build-${MACHINE}/tmp/deploy/sdk</span></code>.</p>
+</section>
+</section>
+<section id="compatible-layers">
+<h2>Compatible Layers<a class="headerlink" href="#compatible-layers" title="Permalink to this heading"></a></h2>
+<p>This BSP is compatible with these layers:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">poky</span></code> [branch: <code class="docutils literal notranslate"><span class="pre">kirkstone</span></code>]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">meta-openembedded</span></code> [branch: <code class="docutils literal notranslate"><span class="pre">kirkstone</span></code>]</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">meta-oe</span></code> (required by <code class="docutils literal notranslate"><span class="pre">meta-python</span></code> below)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">meta-python</span></code> (required by <code class="docutils literal notranslate"><span class="pre">meta-multimedia</span></code> below)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">meta-multimedia</span></code> (optional - for gstreamer support)</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">meta-qt5</span></code> [branch <code class="docutils literal notranslate"><span class="pre">qt/upstream/kirkstone</span></code> ] (optional)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">meta-swupdate</span></code> (optional - for OTA support)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">meta-browser</span></code>  (optional - for Chromium support)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">meta-clang</span></code> (optional - for Chromium support)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">meta-ros</span></code> (optional - for the Robot Operating System support)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">meta-virtualization</span></code> (optional - for container support)</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="astra-yocto-images">
+<span id="astra-images"></span><h2>Astra Yocto Images<a class="headerlink" href="#astra-yocto-images" title="Permalink to this heading"></a></h2>
+<p>The Astra Yocto release contains several images which provide different levels of functionality.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Image</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Version Added</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>astra-tiny</p></td>
+<td><p>Minimal packages used to build image suitable for booting from 32MB SPI NOR Flash.</p></td>
+<td><p>v1.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>astra-core</p></td>
+<td><p>Core system packages Intended for power management testing.</p></td>
+<td><p>v1.2</p></td>
+</tr>
+<tr class="row-even"><td><p>astra-media</p></td>
+<td><p>Default image which contains core packages along with full packages supporting full multimedia
+capabilities.</p></td>
+<td><p>v0.9</p></td>
+</tr>
+<tr class="row-odd"><td><p>astra-media-oobe</p></td>
+<td><p>Contains all packages in astra-media, plus Chromium, Docker, development tools, and additional demo
+applications.</p></td>
+<td><p>v1.5</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">astra-media</span></code> image can be used as a starting point when developing a custom distribution. It contains all of the packages needed
+to create a fully functional system. While <code class="docutils literal notranslate"><span class="pre">astra-media-oobe</span></code> contains additional packages used to showcase the capabilities of Astra
+Machina.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">astra-media</span></code> images, based on the <code class="docutils literal notranslate"><span class="pre">poky</span></code> distribution, provides a basic graphical
+system with <code class="docutils literal notranslate"><span class="pre">weston</span></code> and it is suitable to test <code class="docutils literal notranslate"><span class="pre">sl1620</span></code>, <code class="docutils literal notranslate"><span class="pre">sl1640</span></code> and <code class="docutils literal notranslate"><span class="pre">sl1680</span></code> features.</p>
+<p>The image requires some specific configurations in <code class="docutils literal notranslate"><span class="pre">conf/local.conf</span></code> to work correctly. The
+<code class="docutils literal notranslate"><span class="pre">meta-synaptics/setup/setup-environment</span></code> script can be used to correctly setup an image to build automatically.</p>
+<p>For more details about these configurations please refer to the comments in the
+sample <code class="docutils literal notranslate"><span class="pre">local.conf</span></code> found in <code class="docutils literal notranslate"><span class="pre">meta-synaptics/setup/conf/local.conf.sample</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Building the <code class="docutils literal notranslate"><span class="pre">astra-media-oobe</span></code> image includes building the Chromium browser can add several hours to the build time and requires
+additional storage.</p>
+</div>
+</section>
+<section id="distro-features">
+<h2>Distro Features<a class="headerlink" href="#distro-features" title="Permalink to this heading"></a></h2>
+<p>Astra Yocto supports optional distribution features which can be enabled in the <code class="docutils literal notranslate"><span class="pre">local.conf</span></code> file or by passing variables to the
+<code class="docutils literal notranslate"><span class="pre">setup-environment</span></code> script.</p>
+<section id="x11-display-server">
+<h3>X11 Display Server<a class="headerlink" href="#x11-display-server" title="Permalink to this heading"></a></h3>
+<p>On Astra Yocto, Wayland is the default display server. Using X11 instead of Wayland requires passing the <code class="docutils literal notranslate"><span class="pre">DISPLAY_SERVER</span></code> variable to the <code class="docutils literal notranslate"><span class="pre">setup-environment</span></code> script.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">pokyuser@xyz:/path/to/workspace/sdk $ </span><span class="nv">DISPLAY_SERVER</span><span class="o">=</span>x11<span class="w"> </span><span class="nb">source</span><span class="w"> </span>meta-synaptics/setup/setup-environment
+
+<span class="gp">pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ </span>bitbake<span class="w"> </span>astra-media
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Support for using X11 was added to the v1.5 release. Older releases do not support X11.</p>
+</div>
+</section>
+<section id="virtualization-for-oobe">
+<h3>Virtualization for OOBE<a class="headerlink" href="#virtualization-for-oobe" title="Permalink to this heading"></a></h3>
+<p>Virtualization is used to enable container support and Docker on the OOBE image. Enabling virtualization
+and full OOBE support requires passing the <code class="docutils literal notranslate"><span class="pre">OOBE</span></code> variable to the <code class="docutils literal notranslate"><span class="pre">setup-environment</span></code> script.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">pokyuser@xyz:/path/to/workspace/sdk $ </span><span class="nv">OOBE</span><span class="o">=</span>enabled<span class="w"> </span><span class="nb">source</span><span class="w"> </span>meta-synaptics/setup/setup-environment
+
+<span class="gp">pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ </span>bitbake<span class="w"> </span>astra-media-oobe
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Support for building OOBE images and virtualization was added to the v1.5 release. Older releases do not support
+building OOBE images or virtualization.</p>
+</div>
+</section>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading"></a></h2>
+<section id="kernel-command-line">
+<h3>Kernel command line<a class="headerlink" href="#kernel-command-line" title="Permalink to this heading"></a></h3>
+<p>The kernel command line is defined by the variable <code class="docutils literal notranslate"><span class="pre">CMDLINE</span></code> of the <code class="docutils literal notranslate"><span class="pre">linux-syna</span></code>
+recipe.</p>
+</section>
+<section id="system-memory-configuration">
+<span id="system-memory-config"></span><h3>System Memory configuration<a class="headerlink" href="#system-memory-configuration" title="Permalink to this heading"></a></h3>
+<p>System memory configuration is performed by changing the variables <code class="docutils literal notranslate"><span class="pre">CONFIG_PREBOOT_</span></code>
+in the configuration file pointed by <code class="docutils literal notranslate"><span class="pre">SYNA_SDK_CONFIG_FILE</span></code> variable. The available
+configurations can be found by inspecting <a class="reference external" href="https://github.com/synaptics-astra/boot-preboot-prebuilts">https://github.com/synaptics-astra/boot-preboot-prebuilts</a> .</p>
+</section>
+<section id="partition-tables">
+<span id="partitions-config"></span><h3>Partition tables<a class="headerlink" href="#partition-tables" title="Permalink to this heading"></a></h3>
+<p>Partition tables are configured in the file <code class="docutils literal notranslate"><span class="pre">emmc.pt</span></code> found in the directory
+<code class="docutils literal notranslate"><span class="pre">product/${SYNA_SDK_CONFIG_NAME}/emmc.pt</span></code> found at <a class="reference external" href="http://github.com/synaptics-astra/configs">http://github.com/synaptics-astra/configs</a> .
+The <code class="docutils literal notranslate"><span class="pre">SYNA_SDK_CONFIG_NAME</span></code> depends on the <code class="docutils literal notranslate"><span class="pre">MACHINE</span></code> and <code class="docutils literal notranslate"><span class="pre">DISTRO_CONFIG</span></code> variables.</p>
+<p>To customize this file you can override the recipe <code class="docutils literal notranslate"><span class="pre">syna-config-native</span></code>.</p>
+<p>Some partitions are used by the early boot components stored in eMMC boot partition. These
+partitions cannot be removed but can be moved. The early boot components locate these partitions
+using the GPT found in the UDA. Loading from other hardware partitions is not supported.</p>
+</section>
+</section>
+<section id="frequently-asked-questions">
+<h2>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this heading"></a></h2>
+<p>How do I override the value of to a recipe variable in <code class="docutils literal notranslate"><span class="pre">local.conf</span></code>?</p>
+<blockquote>
+<div><p>To append the text <code class="docutils literal notranslate"><span class="pre">some</span> <span class="pre">text</span></code> to the variable <code class="docutils literal notranslate"><span class="pre">FOO</span></code> of recipe <code class="docutils literal notranslate"><span class="pre">bar</span></code> add
+the following line to <code class="docutils literal notranslate"><span class="pre">local.conf</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">FOO:append:pn-bar = &quot; some text&quot;</span>
+</pre></div>
+</div>
+<p>Other changes to the variable can be performed with the standard operators
+described in the <a class="reference external" href="https://docs.yoctoproject.org/bitbake/2.4/bitbake-user-manual/bitbake-user-manual-metadata.html#basic-syntax">Bitbake Guide</a>.</p>
+</div></blockquote>
+</section>
+<section id="troubleshooting">
+<span id="id1"></span><h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h2>
+<p>The build fails at the package <code class="docutils literal notranslate"><span class="pre">gdk-pixbuf-native</span></code> with error <code class="docutils literal notranslate"><span class="pre">Failed</span> <span class="pre">to</span>
+<span class="pre">close</span> <span class="pre">file</span> <span class="pre">descriptor</span> <span class="pre">for</span> <span class="pre">child</span> <span class="pre">process</span></code> on Ubuntu 20 or 18.</p>
+<blockquote>
+<div><p>This problem is caused by an incompatibility of the package build system with the <code class="docutils literal notranslate"><span class="pre">libseccomp</span></code>
+library on the host that is running docker. To solve this issue update the libseccomp2 library
+on the host that runs docker or add the parameter <code class="docutils literal notranslate"><span class="pre">--security-opt</span> <span class="pre">&quot;seccomp=unconfined</span></code> to
+the docker command line when creating the docker build environment.</p>
+</div></blockquote>
+<p>The build fails at package <code class="docutils literal notranslate"><span class="pre">astra-media</span></code> with the error <code class="docutils literal notranslate"><span class="pre">path</span> <span class="pre">mismatch</span></code>.</p>
+<blockquote>
+<div><p>This error can occur when adding a new package to the <code class="docutils literal notranslate"><span class="pre">astra-media</span></code> image. Preforming a clean on
+the <code class="docutils literal notranslate"><span class="pre">astra-media</span></code> package and then rebuilding it will fix the issue:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bitbake -c clean astra-media</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Build of packages with out-of-trees modules (such as <code class="docutils literal notranslate"><span class="pre">synasdk-synap-module</span></code>) fail with error
+<code class="docutils literal notranslate"><span class="pre">Kernel</span> <span class="pre">configuration</span> <span class="pre">is</span> <span class="pre">invalid.</span></code>.</p>
+<blockquote>
+<div><p>Under some circumstances the state of the recipe <code class="docutils literal notranslate"><span class="pre">make-mod-scripts</span></code> may become corrupted. To fix
+the issue clean the recipe with the command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bitbake -c cleansstate make-mod-scripts</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Docker commands fail with the error <code class="docutils literal notranslate"><span class="pre">permission</span> <span class="pre">denied</span> <span class="pre">while</span> <span class="pre">trying</span> <span class="pre">to</span> <span class="pre">connect</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">Docker</span> <span class="pre">daemon</span> <span class="pre">socket</span> <span class="pre">at</span> <span class="pre">unix:///var/run/docker.sock:</span> <span class="pre">Get</span> <span class="pre">&quot;http://%2Fvar%2Frun%2Fdocker.sock/v1.24/version&quot;:</span> <span class="pre">dial</span> <span class="pre">unix</span> <span class="pre">/var/run/docker.sock:</span> <span class="pre">connect:</span> <span class="pre">permission</span> <span class="pre">denied</span></code></p>
+<blockquote>
+<div><p>Make sure your user is in the <code class="docutils literal notranslate"><span class="pre">docker</span></code> group:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>getent<span class="w"> </span>group<span class="w"> </span>docker
+<span class="go">docker:x:133:yourusername</span>
+</pre></div>
+</div>
+<p>and that your current session is logged in to the <code class="docutils literal notranslate"><span class="pre">docker</span></code> group:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>id
+<span class="go">uid=1000(yourusername) gid=1000(yourusername) groups=1000(yourusername),133(docker)</span>
+</pre></div>
+</div>
+<p>To add your user to the docker group user the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>adduser<span class="w"> </span>yourusername<span class="w"> </span>docker
+</pre></div>
+</div>
+<p>To ensure your session logged in to the <code class="docutils literal notranslate"><span class="pre">docker</span></code> group use the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>newgrp<span class="w"> </span>docker
+</pre></div>
+</div>
+</div></blockquote>
+<p>The build fails on WSL2 when building from <code class="docutils literal notranslate"><span class="pre">/mnt/c</span></code></p>
+<blockquote>
+<div><p>The Yocto build requires a case-sensitive file system. By default WSL2 mounts of the <code class="docutils literal notranslate"><span class="pre">C:</span></code> drive found in <code class="docutils literal notranslate"><span class="pre">/mnt/c</span></code> is not. This leads to the following error:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">pokyuser@868531cb885f:/mnt/c/work/astra/sdk/build-sl1680$ </span>bitbake<span class="w"> </span>astra-media
+<span class="go">WARNING: You are running bitbake under WSLv2, this works properly but you should optimize your VHDX file eventually to avoid running out of storage space</span>
+<span class="go">ERROR:  OE-core&#39;s config sanity checker detected a potential misconfiguration.</span>
+<span class="go">    Either fix the cause of this error or at your own risk disable the checker (see sanity.conf).</span>
+<span class="go">    Following is the list of potential problems / advisories:</span>
+<span class="go">The TMPDIR (/mnt/c/work/astra/sdk/build-sl1680/tmp) can&#39;t be on a case-insensitive file system.</span>
+</pre></div>
+</div>
+<p>To solve this problem, either setup the build in the WSL2 home directory (i.e. <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~</span></code>) or enable case-sensitive on the main Windows file system with the following command in an admin PowerShell:</p>
+<div class="highlight-ps1con notranslate"><div class="highlight"><pre><span></span><span class="gp">PS C:&gt; </span><span class="n">fsutil</span><span class="p">.</span><span class="n">exe</span> <span class="n">file</span> <span class="n">SetCaseSensitiveInfo</span> <span class="n">C</span><span class="p">:\</span><span class="n">work</span><span class="p">\</span><span class="n">astra</span><span class="p">\</span><span class="n">sdk</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">C:\work\astra\sdk\</span></code> is the directory containing the sdk repository clone.</p>
+</div></blockquote>
+<p>WSL2 is not working correctly on my Windows machine</p>
+<blockquote>
+<div><p>You may try the following things to reset the state on your machine:</p>
+<ol class="arabic">
+<li><p>Enable the Windows Subsystem for Linux:</p>
+<blockquote>
+<div><div class="highlight-ps1con notranslate"><div class="highlight"><pre><span></span><span class="gp">PS C:\Users\username&gt; </span><span class="n">dism</span><span class="p">.</span><span class="n">exe</span> <span class="p">/</span><span class="n">online</span> <span class="p">/</span><span class="nb">enable-feature</span> <span class="p">/</span><span class="n">featurename</span><span class="p">:</span><span class="n">Microsoft-Windows-Subsystem-Linux</span> <span class="p">/</span><span class="n">all</span> <span class="p">/</span><span class="n">norestart</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Enable Virtual Machine feature:</p>
+<blockquote>
+<div><div class="highlight-ps1con notranslate"><div class="highlight"><pre><span></span><span class="gp">PS C:\Users\username&gt; </span><span class="n">dism</span><span class="p">.</span><span class="n">exe</span> <span class="p">/</span><span class="n">online</span> <span class="p">/</span><span class="nb">enable-feature</span> <span class="p">/</span><span class="n">featurename</span><span class="p">:</span><span class="n">VirtualMachinePlatform</span> <span class="p">/</span><span class="n">all</span> <span class="p">/</span><span class="n">norestart</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Restart your PC</p></li>
+<li><p>Download the <a class="reference external" href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi">Linux kernel update package</a>
+and install it</p></li>
+<li><p>Set WSL 2 as default version:</p>
+<blockquote>
+<div><div class="highlight-ps1con notranslate"><div class="highlight"><pre><span></span><span class="gp">PS C:\Users\username&gt; </span><span class="n">wsl</span> <span class="p">-</span><span class="n">-set-default-version</span> <span class="n">2</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Install Ubuntu 22.04 LTS from <a class="reference external" href="https://www.microsoft.com/store/apps/9PN20MSR04DW">Microsoft Store</a></p></li>
+<li><p>Set default distro to Ubuntu-22.04:</p>
+<blockquote>
+<div><div class="highlight-ps1con notranslate"><div class="highlight"><pre><span></span><span class="gp">PS C:\Users\username&gt; </span><span class="n">wsl</span> <span class="p">-</span><span class="n">-set-default</span> <span class="n">Ubuntu</span><span class="p">-</span><span class="n">22</span><span class="p">.</span><span class="n">04</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="linux/index.html" class="btn btn-neutral float-left" title="Astra Yocto Linux User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="subject/index.html" class="btn btn-neutral float-right" title="Subject Specific User Guides" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2025, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

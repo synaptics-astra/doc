@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astra Security &mdash; Synaptics Astra SDK User Guide 1.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b79f0e1f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Astra Machina Eval Platform" href="../hw/index.html" />
+    <link rel="prev" title="Astra Machina Video Decode and Encode Capabilities" href="decode_encode_capabilities.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subject/index.html">Subject Specific User Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Application Notes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="decode_encode_capabilities.html">Astra Machina Video Decode and Encode Capabilities</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Astra Security</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#boot-rom-spk">Boot ROM &amp; SPK</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#astra-pre-boot">Astra Pre-boot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#u-boot-os-bootloader">U-Boot (OS Bootloader)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linux-kernel-os">Linux Kernel (OS)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#astra-security-features">Astra Security Features</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#key-management">Key Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rsa-key-management">RSA Key Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aes-key-management">AES Key Management</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#secure-boot">Secure Boot</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#generic-boot-flow">Generic Boot Flow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#a-b-boot-flow-boot-failover">A/B Boot Flow (boot failover)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#emmc-boot">EMMC Boot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#spi-boot">SPI Boot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nand-boot">NAND Boot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sd-card-boot">SD Card Boot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#usb-host-boot">USB Host Boot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#software-image-verification">Software Image Verification</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#trusted-execution-environment-tee">Trusted Execution Environment (TEE)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#architecture">Architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tee-software">TEE Software</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#trusted-application-partitioning">Trusted Application Partitioning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ta-development">TA Development</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Application Notes</a></li>
+      <li class="breadcrumb-item active">Astra Security</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="astra-security">
+<h1>Astra Security<a class="headerlink" href="#astra-security" title="Permalink to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
+<p>The <strong>Astra SL16xx Secure Boot</strong> process is a multi-stage boot mechanism
+designed to ensure the integrity and authenticity of the firmware
+executed on the <strong>Astra Machina</strong> platform. It consists of the following
+main stages:</p>
+<ol class="arabic simple">
+<li><p><strong>ROM Boot &amp; SPK</strong> – The initial boot stage that establishes a root
+of trust</p></li>
+<li><p><strong>Pre-boot</strong> – The second stage that performs further system
+initialization and establish secure and nonsecure execution
+environment on ACPU</p></li>
+<li><p><strong>OS Bootloader</strong> – Customer Bootloader, such as u-boot, that runs in
+non-secure</p></li>
+<li><p><strong>Kernel and OS</strong> – Loads of the Linux Kernel and file system</p></li>
+</ol>
+<section id="boot-rom-spk">
+<h3>Boot ROM &amp; SPK<a class="headerlink" href="#boot-rom-spk" title="Permalink to this heading"></a></h3>
+<p>Astra Machina platform uses an ARM Cortex-M3 process as a dedicated
+security island. The boot process starts with ROM on this security
+island while all other CPUs remain in a reset state. The ROM code is
+embedded in the chip and cannot be modified. Key functions of ROM
+include:</p>
+<ul class="simple">
+<li><p>Initializes the crypto engine, DMA, and other essential hardware.</p></li>
+<li><p>Loads and authenticates RSA signing keys from the boot device</p></li>
+<li><p>Enforces OTP-based checks and hardware-enforced protections</p></li>
+<li><p>Loads the SPK (Secure Processor Kernel) from flash, decrypts, and
+verifies it.</p></li>
+</ul>
+<p>SPK provides cryptographic services for the system, functions supported
+are shown in the table below.</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Crypto algorithms supported by crypto engines</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Algorithm</p></th>
+<th class="head"><p>Encrypt</p></th>
+<th class="head"><p>Decrypt</p></th>
+<th class="head"><p>Key Length</p></th>
+<th class="head"><p>Mode</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>AES</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>128/192/256</p></td>
+<td><p>ECB
+/CBC/CTR/XTS/GCM</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDES</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>56/168</p></td>
+<td><p>ECB/CBC</p></td>
+</tr>
+<tr class="row-even"><td><p>RC4</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>256</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>ECC</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>224/256/384/521</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>RSA</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>102
+4/2048/4096/8192</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>SHA</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>SHA-1
+/SHA-224/SHA-256
+/SHA-384/SHA-512</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="astra-pre-boot">
+<h3>Astra Pre-boot<a class="headerlink" href="#astra-pre-boot" title="Permalink to this heading"></a></h3>
+<p>Pre-boot will initialize the basic services in secure world, performs
+necessary system and DDR initialization, validates the OS Bootloader
+image and prepare its running environment. Astra Pre-boot image is
+signed and encrypted using Synaptics key.</p>
+</section>
+<section id="u-boot-os-bootloader">
+<h3>U-Boot (OS Bootloader)<a class="headerlink" href="#u-boot-os-bootloader" title="Permalink to this heading"></a></h3>
+<p>Astra SDK uses U-Boot, a popular open-source bootloader, which</p>
+<ul class="simple">
+<li><p>Loads and executes the OS kernel (Linux, RTOS, etc.) based on A/B
+partition selection</p></li>
+<li><p>Handles boot sources (eMMC, SPI, NAND, SD card, USB, etc.)</p></li>
+<li><p>Supports debugging and firmware recovery</p></li>
+<li><p>Supports OTP programming and reading</p></li>
+<li><p>Supports on-board image updates</p></li>
+</ul>
+<p>In Astra SDK, U-Boot image is provided in clear mode, it is protected by
+ODM/OEM key after MP flow.</p>
+</section>
+<section id="linux-kernel-os">
+<h3>Linux Kernel (OS)<a class="headerlink" href="#linux-kernel-os" title="Permalink to this heading"></a></h3>
+<p>Once U-Boot hands over control to the Linux kernel (OS), the system goes
+through several critical steps to initialize hardware, set up the OS,
+and start user applications</p>
+<ul class="simple">
+<li><p>Kernel Initialization</p></li>
+<li><p>Start system services</p></li>
+<li><p>Start user applications</p></li>
+</ul>
+<p>In Astra SDK, Kernel image is provided in clear mode. It can be signed
+and encrypted by ODM/OEM key after MP flow, OPTEE can be used for
+decryption and authentication before Kernel loading.</p>
+</section>
+<section id="astra-security-features">
+<h3>Astra Security Features<a class="headerlink" href="#astra-security-features" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>SPK (Secure Processor Kernel)</p>
+<ul>
+<li><p>A dedicated security enclave with cryptographic acceleration.</p></li>
+<li><p>Implements runtime integrity checks to prevent code tampering.</p></li>
+</ul>
+</li>
+<li><p>Key Management</p>
+<ul>
+<li><p>Uses a hierarchical key structure with root RSA keys (K0_BOOT,
+K0_TEE, K0_REE).</p></li>
+<li><p>RSA keys are stored in external flash but are hash-locked in OTP
+to prevent unauthorized changes.</p></li>
+</ul>
+</li>
+<li><p>Boot Device and Failover</p>
+<ul>
+<li><p>Supports booting from eMMC, SPI, NAND, SD, and USB.</p></li>
+<li><p>Redundant boot partitions ensure failsafe in case of image
+corruption.</p></li>
+</ul>
+</li>
+<li><p>Security separation</p>
+<ul>
+<li><p>ARM TrustZone – secure and non-secure worlds separation</p></li>
+<li><p>Trusted OS – Secure world operating system</p></li>
+<li><p>Secure Zone Controller to protect memory and peripherals
+configurable for per-master, secure/non-secure, read/write
+attributes.</p></li>
+</ul>
+</li>
+<li><p>True Random Number Generator (TRNG)</p></li>
+<li><p>DDR scrambler</p>
+<ul>
+<li><p>Keys are managed and provisioned by SPK</p></li>
+</ul>
+</li>
+<li><p>Debug security</p>
+<ul>
+<li><p>JTAG protection is configurable via OTP with three levels</p>
+<ul>
+<li><p>Open</p></li>
+<li><p>Password protected</p></li>
+<li><p>Close</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Astra secure boot mechanism ensures that only verified and authorized
+firmware runs on the device, protecting it from unauthorized
+modifications and ensuring device integrity throughout its lifecycle.</p>
+</section>
+</section>
+<section id="key-management">
+<h2>Key Management<a class="headerlink" href="#key-management" title="Permalink to this heading"></a></h2>
+<p>The SL16xx Secure Boot implements a <strong>hierarchical key management
+system</strong> to ensure firmware authenticity, integrity, and
+confidentiality. It utilizes <strong>RSA keys for authentication</strong> and <strong>AES
+keys for encryption</strong>. Through defined key management scheme, we ensure:</p>
+<ul class="simple">
+<li><p>Device security and trusted boot based on Hardware Root of Trust</p></li>
+<li><p>Only authenticated firmware runs via RSA signature verification</p></li>
+<li><p>Firmware confidentiality is maintained through AES encryption</p></li>
+<li><p>Security is reinforced with segmentation, version control, and OEM
+Signing &amp; MP flow</p></li>
+</ul>
+<section id="rsa-key-management">
+<h3>RSA Key Management<a class="headerlink" href="#rsa-key-management" title="Permalink to this heading"></a></h3>
+<p>Synaptics devices implement a hierarchy of signing keys that are used
+for authenticating all software images involved in the secure boot
+chain.</p>
+<p>At the root of the hierarchy there are independent root keys which are
+stored in the external flash and hash-locked to their SHA-256 hash value
+in the OTP to make them immutable. The root keys are verified by the ROM
+code which establishes independent root of trust.</p>
+<p>The root keys are not used directly; they are used to sign “level one”
+keys which are then used to sign the different software images.</p>
+<figure class="align-default" id="id2">
+<img alt="../_images/key_hierarchy.png" src="../_images/key_hierarchy.png" />
+<figcaption>
+<p><span class="caption-text">The key hierarchy</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="aes-key-management">
+<h3>AES Key Management<a class="headerlink" href="#aes-key-management" title="Permalink to this heading"></a></h3>
+<p>Four symmetric key slots are allocated in OTP.</p>
+<table class="docutils align-default" id="id3">
+<caption><span class="caption-text">AES root keys summary</span><a class="headerlink" href="#id3" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Key ID</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Key size
+(bit)</p></th>
+<th class="head"><p>Owner /
+provisioned
+by</p></th>
+<th class="head"><p>Scope</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MDK</p></td>
+<td><p>Master
+Distribution
+Key</p></td>
+<td><p>128</p></td>
+<td><p>Synaptics</p></td>
+<td><p>Common to
+all chips</p></td>
+</tr>
+<tr class="row-odd"><td><p>CUK</p></td>
+<td><p>Chip Unique
+Key</p></td>
+<td><p>128</p></td>
+<td><p>Synaptics</p></td>
+<td><p>Unique for
+each chip</p></td>
+</tr>
+<tr class="row-even"><td><p>AESK0</p></td>
+<td><p>AES key 0</p></td>
+<td><p>128</p></td>
+<td><p>OEM</p></td>
+<td><p>Common for
+all chips</p></td>
+</tr>
+<tr class="row-odd"><td><p>RKEK</p></td>
+<td><p>Root Key
+Encryption
+Key</p></td>
+<td><p>128</p></td>
+<td><p>OEM</p></td>
+<td><p>Unique for
+each device</p></td>
+</tr>
+</tbody>
+</table>
+<p>The root keys are generated from a qualified HSM offline before being
+programmed into OTP.</p>
+<p>MDK is typically used as the root key for deriving image-specific
+encryption key.</p>
+<p>CUK is used as the root key for deriving chip-unique key for encrypting
+secure data.</p>
+<p>AESK0 and RKEK are the counterparts of MDK and CUK and managed by OEM.</p>
+</section>
+</section>
+<section id="secure-boot">
+<h2>Secure Boot<a class="headerlink" href="#secure-boot" title="Permalink to this heading"></a></h2>
+<p>The generic secure boot flow is consistent across all Astra Machina
+platforms, with some differences based on the booting media. Astra
+supports A/B boot mechanisms for failover at multiple stages, including
+pre-boot, U-Boot, and the operating system. The pre-boot A/B
+functionality is provided by Synaptics, while the A/B boot process for
+U-Boot and the kernel can be customized by OEMs to suit their specific
+needs.</p>
+<section id="generic-boot-flow">
+<h3>Generic Boot Flow<a class="headerlink" href="#generic-boot-flow" title="Permalink to this heading"></a></h3>
+<figure class="align-default" id="id4">
+<a class="reference internal image-reference" href="../_images/generic-boot-flow.png"><img alt="../_images/generic-boot-flow.png" src="../_images/generic-boot-flow.png" style="width: 4.15972in; height: 3.31978in;" /></a>
+<figcaption>
+<p><span class="caption-text">Astra Generic Boot Flow</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="a-b-boot-flow-boot-failover">
+<h3>A/B Boot Flow (boot failover)<a class="headerlink" href="#a-b-boot-flow-boot-failover" title="Permalink to this heading"></a></h3>
+<p>A/B boot is a fault-tolerant boot mechanism designed to ensure system
+reliability during software updates. It maintains two sets of images,
+referred as slot A and slot B, or partition A and partition B. This
+allows the device to fall back to the inactive slot if the active one
+fails to boot. This approach also helps prevent bricking and supports
+seamless over-the-air (OTA) updates.</p>
+<section id="pre-boot-a-b-boot-flow">
+<h4>Pre-boot A/B Boot Flow<a class="headerlink" href="#pre-boot-a-b-boot-flow" title="Permalink to this heading"></a></h4>
+<p>Astra Machina ROM can select the correct pre-boot image to boot based on
+image verification result. When active partition boot fails, device can
+boot from the alternative partition if contained images pass integrity
+checks.</p>
+</section>
+<section id="user-space-a-b-boot-flow">
+<h4>User Space A/B Boot Flow<a class="headerlink" href="#user-space-a-b-boot-flow" title="Permalink to this heading"></a></h4>
+<p>A partition flag in the boot control block in misc partition is used by
+pre-boot image to decide which U-boot copy to use. Similarly, U-boot
+checks the same boot control block to decide which Kernel image to load.</p>
+</section>
+</section>
+<section id="emmc-boot">
+<h3>EMMC Boot<a class="headerlink" href="#emmc-boot" title="Permalink to this heading"></a></h3>
+<figure class="align-default" id="id5">
+<a class="reference internal image-reference" href="../_images/emmc-boot-flow.png"><img alt="../_images/emmc-boot-flow.png" src="../_images/emmc-boot-flow.png" style="width: 4.34597in; height: 5.20727in;" /></a>
+<figcaption>
+<p><span class="caption-text">Astra eMMC Boot Flow</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p><strong>Boot Flow Explanation:</strong></p>
+<ol class="arabic simple">
+<li><p>Upon a cold boot, ROM first verifies and sets up SPK:</p>
+<ul class="simple">
+<li><p>SPK provides crypto functionalities to the system at later stage</p></li>
+<li><p>SPK runs in a dedicated security domain, where only authorized
+security entity (such as TA) can request security services via a
+mailbox call</p></li>
+</ul>
+</li>
+<li><p>After the SPK is loaded, Pre-boot images are loaded and verified by
+SPK:</p>
+<ul class="simple">
+<li><p>SPK loads and verifies the Pre-boot images which are responsible
+for setting up the system and environment for Secure OS and Rich
+OS</p></li>
+<li><p>Any failure will trigger failsafe mechanism leading to boot
+attempt from other partition</p></li>
+</ul>
+</li>
+<li><p>The last preboot image (1<sup>st</sup> stage loader) is responsible for
+loading the U-Boot (2<sup>nd</sup> stage loader)</p>
+<ul class="simple">
+<li><p>1st stage loader checks the OS-boot partition flag within the boot
+control block.  This boot control block is located in a misc
+partition on the flash.</p></li>
+<li><p>To ensure failsafe, 1st stage loader has a factory copy of the
+boot control block, this ensures device can continue to boot when
+the active boot control block is corrupted (See misc partition
+selection handling for details in subsection 5.2)</p></li>
+</ul>
+</li>
+<li><p>The 1<sup>st</sup> stage loader loads and verifies the OPTEE according
+to the OS boot partition flag.</p>
+<ul class="simple">
+<li><p>With Astra SDK, OPTEE and U-Boot are in clear by default, they are
+only signed and encrypted if OEM security is enabled via MP flow</p></li>
+<li><p>OPTEE lives in the secure domain of the A-CPU, often referred to
+as trusted execution environment (TEE).</p></li>
+<li><p>Applications in rich execution environment (REE) can communicate
+with TEE through trusted application (TA)</p></li>
+</ul>
+</li>
+<li><p>The 1st stage loader loads and verifies U-Boot according to the OS
+boot partition flag.</p>
+<ul class="simple">
+<li><p>If OEM security is enabled, U-Boot is signed and encrypted by
+using the OEM key</p></li>
+<li><p>Once U-Boot is running, the trusted secure boot chain
+responsibility is in OEM’s hand.</p></li>
+</ul>
+</li>
+<li><p>The U-Boot loads and verifies kernel Image.</p>
+<ul class="simple">
+<li><p>The kernel Image is signed and encrypted by using the OEM key,
+OPTEE is used to verify the image</p></li>
+<li><p>For failsafe, OEM can use its own A/B logic or use the same
+OS-Boot partition flag.</p></li>
+<li><p>If OS-Boot partition flag is used, U-Boot and kernel are always
+coming from the same partition because the same flag is used</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="spi-boot">
+<h3>SPI Boot<a class="headerlink" href="#spi-boot" title="Permalink to this heading"></a></h3>
+<p>Astra SPI booting sequence is same as Astra eMMC Boot, please refer to
+Figure 3: Astra eMMC Boot Flow for details.</p>
+</section>
+<section id="nand-boot">
+<h3>NAND Boot<a class="headerlink" href="#nand-boot" title="Permalink to this heading"></a></h3>
+<p>NAND flash could have bad blocks due to manufacturing defects and wear
+over time. To ensure reliable booting, most NAND flash vendors guarantee
+that the initial few blocks are error-free.</p>
+<p>For NAND boot, ROM reads essential information for boundary scan from
+block 0. In Synaptics Astra SDK, up to 8 copies of preboot images are
+stored starting from NAND flash block 1, by default, each copy occupies
+2 flash blocks and each block is 256 Bytes (block number and block size
+are configurable). ROM loads SPK and preboot images based on boundary
+scan result and executes.</p>
+<p><strong>Note:</strong> Astra Machina board does not have NAND interface support; as a
+result, NAND boot can only be done on vendor HW device.</p>
+<figure class="align-default" id="id6">
+<a class="reference internal image-reference" href="../_images/nand-boot-flow.png"><img alt="../_images/nand-boot-flow.png" src="../_images/nand-boot-flow.png" style="width: 4.62085in; height: 6.46549in;" /></a>
+<figcaption>
+<p><span class="caption-text">Astra NAND Boot Flow</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="sd-card-boot">
+<h3>SD Card Boot<a class="headerlink" href="#sd-card-boot" title="Permalink to this heading"></a></h3>
+<p>Astra SDK SD Card boot flow is similar to Astra SPI boot. It relies on
+Astra Machina onboard SPI NOR to complete the Pre-boot and uses inserted
+SD card to complete the remaining boot process, U-boot and OS.</p>
+<figure class="align-default" id="id7">
+<a class="reference internal image-reference" href="../_images/sdcard-boot-flow.png"><img alt="../_images/sdcard-boot-flow.png" src="../_images/sdcard-boot-flow.png" style="width: 4.87678in; height: 5.4077in;" /></a>
+<figcaption>
+<p><span class="caption-text">Astra SD Card Boot</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="usb-host-boot">
+<h3>USB Host Boot<a class="headerlink" href="#usb-host-boot" title="Permalink to this heading"></a></h3>
+<p>Astra USB Host Boot uses the same boot flow without A/B. Please see
+Figure 2: Astra Generic Boot Flow for details.</p>
+</section>
+<section id="software-image-verification">
+<h3>Software Image Verification<a class="headerlink" href="#software-image-verification" title="Permalink to this heading"></a></h3>
+<p>SPK is responsible for image verification. It uses the hardware crypto
+engine to accelerate operations.</p>
+<p>All software images are signed and encrypted. The image signature scheme
+is SHA256-RSA2048. Images are encrypted with image-specific keys derived
+from root symmetric key. AES-CBC is the algorithm for encryption, and
+the key size is 128-bit. The key derivation function (KDF) is compliant
+with NIST SP800-108 standard.</p>
+</section>
+</section>
+<section id="trusted-execution-environment-tee">
+<h2>Trusted Execution Environment (TEE)<a class="headerlink" href="#trusted-execution-environment-tee" title="Permalink to this heading"></a></h2>
+<section id="architecture">
+<h3>Architecture<a class="headerlink" href="#architecture" title="Permalink to this heading"></a></h3>
+<p>The figure below depicts an example system architecture from a SoC,
+indicating the components that make up the Rich Execution Environment
+(REE) vs the components that make up the Trusted Execution Environment
+(TEE).</p>
+<figure class="align-default" id="id8">
+<img alt="../_images/tee-architecture-diagram.png" src="../_images/tee-architecture-diagram.png" />
+<figcaption>
+<p><span class="caption-text">TEE architecture diagram</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>In this figure, the system is shown to consist of non-secure software
+running in the REE; secure software running in the TEE; non-secure
+hardware controlled by the REE; and secure hardware controlled by the
+TEE.</p>
+<p>Additionally, there is some hardware which is consider both part of the
+REE and the TEE. The application CPU (Cortex-A class) has the capability
+to execute secure or non-secure workloads by means of time sharing. The
+Dynamic RAM is partitioned into an area which is accessible by the REE,
+and another area which is only accessible by the TEE.</p>
+<p>The system can be further subdivided into different security domains
+based on use-cases, for example TA executes its own isolated space,
+which is managed by OP-TEE.</p>
+</section>
+<section id="tee-software">
+<h3>TEE Software<a class="headerlink" href="#tee-software" title="Permalink to this heading"></a></h3>
+<p>The software architecture of the software running on the Host CPU is
+depicted in the figure below, indicating the secure vs. non-secure state and
+exception level.</p>
+<p>The open-source OP-TEE is integrated and serves as the Trusted-OS.</p>
+<figure class="align-default" id="id9">
+<img alt="../_images/tee-software.png" src="../_images/tee-software.png" />
+<figcaption>
+<p><span class="caption-text">Cortex-A (ACPU) TEE software architecture</span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Communication from Linux User Space to a Trusted Application follows
+these steps:</p>
+<ol class="arabic simple">
+<li><p>The user-space application calls a client API, which packs the
+parameters into a message buffer</p></li>
+<li><p>The user space application issues a system call to the Linux
+TrustZone Driver (TZD) to pass the message to the TEE</p></li>
+<li><p>The TZD uses the SMC instruction to trap into EL3</p></li>
+<li><p>ARM Trusted Firmware (ATF) switches the CPU to secure state and
+resumes TZ Kernel in Secure EL1 with the message being passed</p></li>
+<li><p>OP-TEE locates the target Trusted Application, and switches the
+secure execution context to Secure EL0 in the target TA</p></li>
+<li><p>The target TA processes the command</p></li>
+</ol>
+</section>
+<section id="trusted-application-partitioning">
+<h3>Trusted Application Partitioning<a class="headerlink" href="#trusted-application-partitioning" title="Permalink to this heading"></a></h3>
+<p>Each trusted application is isolated from other trusted applications and
+has access to its own memory space. This isolation is done using the
+ACPU MMU. The MMU is under the control of the OP-TEE executing in Secure
+EL1 and cannot be modified by trusted applications executing in Secure
+EL0.</p>
+</section>
+<section id="ta-development">
+<h3>TA Development<a class="headerlink" href="#ta-development" title="Permalink to this heading"></a></h3>
+<p>TA development follows OP-TEE specification. In Astra SDK, TA encryption
+is not enabled. OEM can enable it by setting <code class="docutils literal notranslate"><span class="pre">CFG_ENCRYPT_TA=y</span></code> before
+building OPTEE OS. For TA development and encryption, please refer to
+OP-TEE document <a class="reference external" href="https://optee.readthedocs.io/en/latest/building/trusted_applications.html">Trusted
+Applications</a>
+for details.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="decode_encode_capabilities.html" class="btn btn-neutral float-left" title="Astra Machina Video Decode and Encode Capabilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../hw/index.html" class="btn btn-neutral float-right" title="Astra Machina Eval Platform" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2025, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

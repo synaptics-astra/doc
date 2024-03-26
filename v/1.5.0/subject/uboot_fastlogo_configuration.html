@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Uboot Fastlogo Customization User Guide &mdash; Synaptics Astra SDK User Guide 1.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=80d54a31"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SWUpdate User Guide" href="swupdate_user_guide.html" />
+    <link rel="prev" title="FastLogo Sub-Image(fastlogo.subimg.gz) File Generation" href="fastlogo_image_generation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Subject Specific User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="syna_drm_kms_user_guide.html">SYNA DRM / KMS Driver User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waveshare_7inch_dsi-configuration.html">Waveshare Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="haier_panel_configuration.html">Haier Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory_layout_customization.html">Memory Layout Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emmc_layout_customization.html">eMMC Partition Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dvfs_user_guide.html">Dynamic Voltage and Frequency Switching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power_measurement.html">Power Measurements with Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weston_default_display.html">Setting the Weston Default Display for Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isp_sensor_integration.html">ISP Sensor Integration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating_isp_sensor_configuration.html">Updating the ISP Sensor Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpios.html">GPIOs on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp_flow_user_guide.html">Astra MP Flow User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastlogo_image_generation.html">FastLogo Sub-Image(fastlogo.subimg.gz) File Generation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Uboot Fastlogo Customization User Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astra-machina-display-capabilities">Astra Machina Display Capabilities</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#display-capability-of-the-supported-socs">Display capability of the supported SoC’s</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#syna-uboot-fastlogo-configuration">SYNA Uboot Fastlogo Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configurations-based-on-defconfig">Configurations based on defconfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-based-on-dts">Configuration based on dts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dts-configuration-template-for-sl16xx-given-below">dts configuration template for SL16XX given below</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dts-for-sl1640-and-sl1680"><em>dts</em> for SL1640 and SL1680</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dts-for-sl1620"><em>dts</em> for SL1620</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#generic-display-configuration">Generic Display Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mipi-dsi-display-configuration">MIPI-DSI Display Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mipi-dsi-panel-commands">MIPI-DSI panel commands</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#reference-panel-cfg-h-for-haier-800x1280-panel"><em>Reference panel_cfg.h for Haier 800x1280 Panel :</em></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="swupdate_user_guide.html">SWUpdate User Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Subject Specific User Guides</a></li>
+      <li class="breadcrumb-item active">Uboot Fastlogo Customization User Guide</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="uboot-fastlogo-customization-user-guide">
+<h1>Uboot Fastlogo Customization User Guide<a class="headerlink" href="#uboot-fastlogo-customization-user-guide" title="Permalink to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>The scope of the document is to provide detailed steps to customize Uboot Fastlogo for SL16xx display interfaces.</p>
+</section>
+<section id="astra-machina-display-capabilities">
+<h2>Astra Machina Display Capabilities<a class="headerlink" href="#astra-machina-display-capabilities" title="Permalink to this heading"></a></h2>
+<p>Syna Uboot video driver is supported for the SL16xx Astra Machina platforms.</p>
+<section id="display-capability-of-the-supported-socs">
+<h3>Display capability of the supported SoC’s<a class="headerlink" href="#display-capability-of-the-supported-socs" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>SL1680: Supports Dual Fastlogo Display (HDMI and MIPI-DSI)</p></li>
+<li><p>SL1640: Supports Single Fastlogo (Either HDMI or MIPI-DSI)</p></li>
+<li><p>SL1620: Supports Dual Fastlogo (TFT and MIPI-DSI)</p></li>
+</ul>
+</section>
+</section>
+<section id="syna-uboot-fastlogo-configuration">
+<h2>SYNA Uboot Fastlogo Configuration<a class="headerlink" href="#syna-uboot-fastlogo-configuration" title="Permalink to this heading"></a></h2>
+<p>Uboot video driver and panel configurations are handled through <em>defconfig</em>, <em>dts</em> and header files.</p>
+</section>
+<section id="configurations-based-on-defconfig">
+<h2>Configurations based on defconfig<a class="headerlink" href="#configurations-based-on-defconfig" title="Permalink to this heading"></a></h2>
+<p>Uboot <em>defconfig</em> for each platform is given below:</p>
+<ol class="arabic simple">
+<li><p>SL1680: <code class="docutils literal notranslate"><span class="pre">dolphin_suboot_defconfig</span></code></p></li>
+<li><p>SL1640: <code class="docutils literal notranslate"><span class="pre">platypus_suboot_defconfig</span></code></p></li>
+<li><p>SL1620: <code class="docutils literal notranslate"><span class="pre">myna2_suboot_defconfig</span></code></p></li>
+</ol>
+<p>Following configurations are enabled in <em>defconfig</em>:</p>
+<ol class="arabic simple">
+<li><p>Video driver</p></li>
+<li><p>Backlight</p></li>
+<li><p>Panel name</p></li>
+</ol>
+</section>
+<section id="configuration-based-on-dts">
+<h2>Configuration based on dts<a class="headerlink" href="#configuration-based-on-dts" title="Permalink to this heading"></a></h2>
+<p><em>dts</em> files of each platform given below:</p>
+<ul class="simple">
+<li><p>SL1620: <code class="docutils literal notranslate"><span class="pre">myna2-rdk.dts</span></code></p></li>
+<li><p>SL1640: <code class="docutils literal notranslate"><span class="pre">platypus-rdk.dts</span></code></p></li>
+<li><p>SL1680: <code class="docutils literal notranslate"><span class="pre">dolphin-rdk.dts</span></code></p></li>
+</ul>
+<p>Following device configurations are handled through <em>dts</em> files:</p>
+<ol class="arabic simple">
+<li><p>Generic Display configuration</p></li>
+<li><p>MIPI-DSI Panel configuration</p></li>
+<li><p>LCDC panel configuration</p></li>
+</ol>
+<section id="dts-configuration-template-for-sl16xx-given-below">
+<h3>dts configuration template for SL16XX given below<a class="headerlink" href="#dts-configuration-template-for-sl16xx-given-below" title="Permalink to this heading"></a></h3>
+</section>
+<section id="dts-for-sl1640-and-sl1680">
+<h3><em>dts</em> for SL1640 and SL1680<a class="headerlink" href="#dts-for-sl1640-and-sl1680" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">vpp_fb</span> <span class="p">{</span>
+  <span class="n">Generic</span> <span class="n">Display</span> <span class="n">configuration</span>
+  <span class="n">MIPI</span><span class="o">-</span><span class="n">DSI</span> <span class="n">Panel</span> <span class="n">configuration</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="dts-for-sl1620">
+<h3><em>dts</em> for SL1620<a class="headerlink" href="#dts-for-sl1620" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">lcdc_fb</span> <span class="p">{</span>
+   <span class="n">MIPI</span><span class="o">-</span><span class="n">DSI</span> <span class="n">Panel</span> <span class="n">configuration</span>
+   <span class="n">LCDC</span> <span class="n">panel</span> <span class="n">specific</span> <span class="n">configuration</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="generic-display-configuration">
+<h3>Generic Display Configuration<a class="headerlink" href="#generic-display-configuration" title="Permalink to this heading"></a></h3>
+<p>For SL1640 or SL1680, the default display type on bootup need be
+specified.</p>
+<p>Below are the parameters which need be configured for the display.</p>
+<ul class="simple">
+<li><p><strong>disp-mode:</strong> Specifies the display mode. Whether it is single
+display/ dual display.</p></li>
+<li><p><strong>disp1-res-id:</strong> Resolution Id corresponding to a timing
+information.</p></li>
+</ul>
+<p>More information on the timing and resolution id are available in
+below file.</p>
+<p><code class="docutils literal notranslate"><span class="pre">u-boot/arch/arm/mach-synaptics/drivers/video/vpp_ca/thinvpp_ca/include/vpp_api.h</span></code></p>
+<ul class="simple">
+<li><p><strong>disp1-type:</strong> Type of the Display1 whether it is HDMI or MIPI-DSI.</p></li>
+<li><p><strong>disp2-res-id:</strong> Resolution Id corresponding to the timing
+information. In case of dual Display, display2 must be MIPI-DSI and
+resolution id is fixed to 102.</p></li>
+<li><p><strong>disp2-type:</strong> Type of the Display2.</p></li>
+</ul>
+<section id="sl1640-sl1680-single-dual-display-configuration">
+<h4>SL1640/SL1680 Single/Dual Display configuration<a class="headerlink" href="#sl1640-sl1680-single-dual-display-configuration" title="Permalink to this heading"></a></h4>
+<p>Default configuration for SL1640 and SL1680 given as below.</p>
+<ul class="simple">
+<li><p>SL1640 - Single Display mode – HDMI only.</p></li>
+<li><p>SL1680 - Dual Display mode – HDMI + MIPI-DSI</p></li>
+</ul>
+<p>Display mode can be changed in <em>dts</em>. Single Display mode is
+applicable for both SL1640 and SL1680.</p>
+<p>Below is an example for Single display mode.</p>
+<p><strong>Single Display: HDMI Display Mode</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">vpp_fb</span> <span class="p">{</span>
+   <span class="n">disp</span><span class="o">-</span><span class="n">mode</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">disp1</span><span class="o">-</span><span class="n">res</span><span class="o">-</span><span class="nb">id</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">24</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>Single Display mode: MIPI-DSI Display Mode</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">vpp_fb</span> <span class="p">{</span>
+   <span class="n">disp</span><span class="o">-</span><span class="n">mode</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">disp1</span><span class="o">-</span><span class="n">res</span><span class="o">-</span><span class="nb">id</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">102</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="sl1680-dual-display-configuration">
+<h4>SL1680 Dual Display configuration<a class="headerlink" href="#sl1680-dual-display-configuration" title="Permalink to this heading"></a></h4>
+<p><strong>Dual Display Mode (HDMI as primary + MIPI-DSI as secondary)</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">vpp_fb</span> <span class="p">{</span>
+   <span class="n">disp</span><span class="o">-</span><span class="n">mode</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">disp1</span><span class="o">-</span><span class="n">res</span><span class="o">-</span><span class="nb">id</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">24</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">disp2</span><span class="o">-</span><span class="n">res</span><span class="o">-</span><span class="nb">id</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">102</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Note:</p>
+<ul class="simple">
+<li><p>For MIPI-DSI Display: RESID is fixed to <strong>102</strong> where it takes the
+custom timing provided in the <em>dts</em>.</p></li>
+</ul>
+</section>
+<section id="sl1620-display-configuration">
+<h4>SL1620 Display configuration<a class="headerlink" href="#sl1620-display-configuration" title="Permalink to this heading"></a></h4>
+<p>Default display configuration for SL1620 is Dual – TFT + MIPI-DSI.</p>
+<p><em>lcdc_panel</em> node and <em>dsi_panel</em> nodes in <em>dts</em> decide the number of
+displays.</p>
+</section>
+</section>
+<section id="mipi-dsi-display-configuration">
+<h3>MIPI-DSI Display Configuration<a class="headerlink" href="#mipi-dsi-display-configuration" title="Permalink to this heading"></a></h3>
+<section id="mipi-dsi-panel-configuration-parameters">
+<h4>MIPI-DSI panel configuration parameters<a class="headerlink" href="#mipi-dsi-panel-configuration-parameters" title="Permalink to this heading"></a></h4>
+<ol class="arabic simple">
+<li><p><em>Lanes</em> - Number of Data lanes</p></li>
+<li><p><em>Data_Lane_Polarity</em> - Polarity of the Data Lane</p></li>
+<li><p><em>Clk_Lane_Polarity</em> - Polarity of the clock lane</p></li>
+<li><p><em>virtual_chan</em> - virtual channel number</p></li>
+<li><p><em>Vid_mode</em> - Video mode. Supported video mode are:</p>
+<ul class="simple">
+<li><p>0 - non-burst mode + sync pulse</p></li>
+<li><p>1 - non-burst mode + sync event</p></li>
+<li><p>2 - Burst mode</p></li>
+</ul>
+</li>
+<li><p><em>non-Continuous_clk</em> - 0 for continuous and 1 for non-continuous clock configuration</p></li>
+<li><p><em>Byte_clk</em> - Byte clock rate. Calculated as Total Bandwidth / (Lanes * 8)</p></li>
+<li><p><em>Recv_ack</em> - Receive acknowledgement.</p></li>
+<li><p><em>Color_format</em> - Color coding output format</p></li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>RGB888 - 5</p></li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="10">
+<li><p><em>Loosely_18</em> - Loosely 18 packed</p></li>
+<li><p><em>Data_Polarity</em> – Data enable signal. Assertion indicates valid pixel. 0 – Positive &amp; 1 - negative</p></li>
+<li><p><em>H_polarity</em> - Horizontal polarity active low/High</p></li>
+<li><p><em>V_Polarity</em> - Vertical polarity</p></li>
+<li><p><em>Eotp_rx</em> - EOTP Reception support enable/disable.</p></li>
+<li><p><em>Eotp_tx</em> - EOTP Transmission enable/disable.</p></li>
+<li><p><em>HTOTAL</em> – Total number of pixels in a line.</p></li>
+<li><p><em>Chunks</em> - Number of Chunks in case of multiple chunk transmission otherwise ‘1’ for single.</p></li>
+<li><p><em>Null_Pkt</em> - Size of the null packet.</p></li>
+<li><p><em>dpi_lp_cmd</em> - Enable DPI low power command.</p></li>
+<li><p><em>ACTIVE_WIDTH</em> - Active width of the Panel</p></li>
+<li><p><em>ACTIVE_HEIGHT</em> - Active height of the panel</p></li>
+<li><p><em>HFP</em> - Horizontal Front porch</p></li>
+<li><p><em>HSYNCWIDTH</em> - Horizontal sync width</p></li>
+<li><p><em>HBP</em> - Horizontal Back porch</p></li>
+<li><p><em>VFP</em> - vertical Front porch</p></li>
+<li><p><em>VSYNCWIDTH</em> - Vertical sync width</p></li>
+<li><p><em>VBP</em> - Vertical Back porch</p></li>
+<li><p><em>TYPE</em> - ‘0’ for SD, ‘1’ for Full HD ‘2’ for UHD</p></li>
+<li><p><em>SCAN</em> - ‘1’ for Progressive, ‘0’ for Interlaced</p></li>
+<li><p><em>FRAME_RATE</em> - Frame rate, ENUMs mentioned as below.</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>FRAME_RATE_23P98</em> = 0</p></li>
+<li><p><em>FRAME_RATE_24</em> = 1</p></li>
+<li><p><em>FRAME_RATE_25</em> = 2</p></li>
+<li><p><em>FRAME_RATE_29P97</em> = 3</p></li>
+<li><p><em>FRAME_RATE_30</em> = 4</p></li>
+<li><p><em>FRAME_RATE_47P96</em> = 5</p></li>
+<li><p><em>FRAME_RATE_48</em> = 6</p></li>
+<li><p><em>FRAME_RATE_50</em> = 7</p></li>
+<li><p><em>FRAME_RATE_59P94</em> = 8</p></li>
+<li><p><em>FRAME_RATE_60</em> = 9</p></li>
+<li><p><em>FRAME_RATE_100</em> = 10</p></li>
+<li><p><em>FRAME_RATE_119P88</em> = 11</p></li>
+<li><p><em>FRAME_RATE_120</em> = 12</p></li>
+<li><p><em>FRAME_RATE_89P91</em> = 13</p></li>
+<li><p><em>FRAME_RATE_90</em> = 14</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic" start="31">
+<li><p><em>FLAG_3D</em> – Disabled always.</p></li>
+<li><div class="line-block">
+<div class="line"><em>FREQ</em> - Pixel clock frequency for primary display in KHz. Pixel frequency is calculated as</div>
+<div class="line">FREQ = HTOTAL * VTOTAL * FRAME_RATE</div>
+<div class="line">For instance, for 1080P60Hz standard resolution, HTOTAL – 2200, VTOTAL – 1125 FREQ = (2200 * 1125 * 60)/1000</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><em>PTS_PER_4</em> - PTS for every four count Which is nothing but PTS/4. For instance:</div>
+<div class="line">Crystal frequency is 90kHz and frame rate is 60fps, then</div>
+<div class="line">PTS_PER_4 = (4*90*1000)/60 = 6000</div>
+</div>
+</li>
+<li><p><em>PIXEL_CLOCK</em> - Pixel clock frequency for Secondary display in KHz. Make it same as FREQ.</p></li>
+<li><p><em>mipirst-gpio</em> - Reset Gpio for the MIPI.</p></li>
+<li><p><em>power-supply</em> - External power supply control.</p></li>
+<li><p><em>backlight</em> - External backlight control.</p></li>
+</ol>
+</section>
+<section id="display-timing-parameters">
+<h4>Display Timing Parameters<a class="headerlink" href="#display-timing-parameters" title="Permalink to this heading"></a></h4>
+<p>These parameters are mandatory for SL1640/SL1680 and optional for
+SL1620.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>VB_MIN</em> - Minimum vertical blanking for the Display TG</p></li>
+<li><p><em>HB_MIN</em> - Minimum Horizontal blanking for the Display TG</p></li>
+<li><p><em>V_OFF</em> - Vertical offset for the Display TG.</p></li>
+<li><p><em>H_OFF</em> - Horizontal offset for the Display TG.</p></li>
+<li><p><em>HB_VOP_OFF</em> - Horizontal VOP offset for the Display TG.</p></li>
+<li><p><em>VB_VOP_OFF</em> - Vertical VOP offset for the Display TG</p></li>
+<li><p><em>HB_BE</em> - Horizontal Blanking Back Edge for the Display TG.</p></li>
+<li><p><em>VB_BE</em> - Vertical Blanking Back Edge for the Display TG.</p></li>
+<li><p><em>HB_FP</em> - Horizontal Blanking Front porch for the Display TG.</p></li>
+<li><p><em>VB_FP</em> - Vertical Blanking Front porch for the Display TG.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="reference-entry-for-the-mipi-dsi-panel">
+<h4>Reference entry for the MIPI DSI panel<a class="headerlink" href="#reference-entry-for-the-mipi-dsi-panel" title="Permalink to this heading"></a></h4>
+<p>Below is default entry for the MIPI-DSI in <em>dts</em>.</p>
+<p>This serves as a reference for a panel with resolution 800x1280 and
+HTotal = 952, VTOTAL = 1312.</p>
+<p>Refer the parameters above for further information on the panel.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&amp;vpp_fb {
+
+   …
+
+   dsi_panel {
+      status= &quot;okay&quot;;
+
+      /* Reset PIN configuration for the MIPI-DSI if available in the
+      platform */
+
+      mipirst-gpio = &lt;&amp;expander0 7 GPIO_ACTIVE_LOW&gt;;
+      NO_OF_RESID = &lt;1&gt;;
+      DSI_RES = &lt;102&gt;;
+      ACTIVE_WIDTH = &lt;800&gt;;
+      HFP = &lt;60&gt;;
+      HSYNCWIDTH = &lt;32&gt;;
+      HBP = &lt;60&gt;;
+      ACTIVE_HEIGHT = &lt;1280&gt;;
+      VFP = &lt;16&gt;;
+      VSYNCWIDTH = &lt;2&gt;;
+      VBP = &lt;14&gt;;
+      TYPE = &lt;1&gt;;
+      SCAN = &lt;0&gt;;
+      FRAME_RATE = &lt;9&gt;;
+      FLAG_3D = &lt;0&gt;;
+      FREQ = &lt;75000&gt;;
+      PTS_PER_4 = &lt;6000&gt;;
+
+      bits_per_pixel = &lt;24&gt;;
+      busformat = &lt;0&gt;;
+
+      HTOTAL = &lt;952&gt;;
+      Lanes = /bits/ 8 &lt;4&gt;;
+      Vid_mode = /bits/ 8 &lt;2&gt;;
+      virtual_chan = /bits/ 8 &lt;0&gt;;
+      Clk_Lane_Polarity = /bits/ 8 &lt;0&gt;;
+      Data_Lane_Polarity = /bits/ 8 &lt;0&gt;;
+      Recv_ack = /bits/ 8 &lt;0&gt;;
+      Loosely_18 = /bits/ 8 &lt;0&gt;;
+      H_polarity = /bits/ 8 &lt;1&gt;;
+      V_Polarity = /bits/ 8 &lt;1&gt;;
+      Data_Polarity = /bits/ 8 &lt;1&gt;;
+      Eotp_tx = /bits/ 8 &lt;1&gt;;
+      Eotp_rx = /bits/ 8 &lt;0&gt;;
+      non-Continuous_clk = /bits/ 8 &lt;1&gt;;
+      dpi_lp_cmd = /bits/ 8 &lt;1&gt;;
+      Color_coding = /bits/ 8 &lt;5&gt;;
+      Chunks = &lt;0&gt;;
+      Null_Pkt = &lt;0&gt;;
+      Byte_clk = &lt;56250&gt;;
+
+      VB_MIN = /bits/ 8 &lt;6&gt;;
+      HB_MIN = /bits/ 8 &lt;30&gt;;
+      V_OFF = /bits/ 8 &lt;6&gt;;
+      H_OFF = /bits/ 8 &lt;20&gt;;
+      HB_VOP_OFF = /bits/ 8 &lt;8&gt;;
+      VB_VOP_OFF = /bits/ 8 &lt;3&gt;;
+      HB_BE = /bits/ 8 &lt;7&gt;;
+      VB_BE = /bits/ 8 &lt;2&gt;;
+      VB_FP = /bits/ 8 &lt;2&gt;;
+      HB_FP = /bits/ 8 &lt;10&gt;;
+      PIXEL_CLOCK = &lt;75000&gt;;
+   };
+};
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="mipi-dsi-panel-commands">
+<h2>MIPI-DSI panel commands<a class="headerlink" href="#mipi-dsi-panel-commands" title="Permalink to this heading"></a></h2>
+<p>Panel Initialization Commands are added in panel_cfg.h. Command format is as given below</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Format</span> <span class="o">-</span> <span class="o">&lt;</span><span class="n">CMD</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">Payloadlength</span><span class="o">-</span><span class="n">n</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">BYTE1</span><span class="o">&gt;</span> <span class="o">&lt;...&gt;</span> <span class="o">&lt;</span><span class="n">BYTEn</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Long write Ex: 39 04 FF 98 81 03
+CMD =&gt; 0x39
+Length =&gt; 0x04
+Data/Payload =&gt; FF 98 81 03</p>
+<p>Incase a delay need be added, refer below:</p>
+<dl class="simple">
+<dt>Delay in microseconds Command format: 0xFF &lt;4BYTE delay&gt;</dt><dd><p><strong>FF A0 86 01 00</strong> (Command for 100ms Delay (100000us =&gt; 0x000186A0))</p>
+</dd>
+</dl>
+<p>For ex: Haier MIPI-DSI panel header file is located in <code class="docutils literal notranslate"><span class="pre">&lt;UBoot_path&gt;/arch/arm/mach-synaptics/drivers/video/panel/haier_800_1280/panelcfg.h</span></code></p>
+<p>Incase of new panel support, it can be under <code class="docutils literal notranslate"><span class="pre">panel/&lt;panel_name&gt;/panel_cfg.h</span></code></p>
+<p>To select panel, name of the panel (folder in which the panel_cfg.h is available) should be specified in <code class="docutils literal notranslate"><span class="pre">configs/&lt;platform&gt;*_defconfig</span></code>.</p>
+<div class="line-block">
+<div class="line">For ex: If haier panel has to be chosen in SL1620: Below line should be added to <code class="docutils literal notranslate"><span class="pre">myna2_suboot_defconfig</span></code>.</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>CONFIG_PANEL_CFG=”haier_800_1280”</strong></div>
+</div>
+<section id="reference-panel-cfg-h-for-haier-800x1280-panel">
+<h3><em>Reference panel_cfg.h for Haier 800x1280 Panel :</em><a class="headerlink" href="#reference-panel-cfg-h-for-haier-800x1280-panel" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">UINT8</span> <span class="n">panel_commands</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+   <span class="mh">0x39</span><span class="p">,</span> <span class="mh">0x04</span><span class="p">,</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0x81</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">,</span>
+   <span class="mh">0x15</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span>
+   <span class="mh">0x15</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span>
+   <span class="mh">0x15</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x73</span><span class="p">,</span>
+   <span class="mh">0x15</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x04</span><span class="p">,</span> <span class="mh">0xD7</span><span class="p">,</span>
+   <span class="o">...</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="fastlogo_image_generation.html" class="btn btn-neutral float-left" title="FastLogo Sub-Image(fastlogo.subimg.gz) File Generation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="swupdate_user_guide.html" class="btn btn-neutral float-right" title="SWUpdate User Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2025, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

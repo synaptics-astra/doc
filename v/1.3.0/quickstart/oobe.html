@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using the Built-in Applications &mdash; Synaptics Astra SDK User Guide 1.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ee41c26d"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Installing a pre-built system image" href="flash_image.html" />
+    <link rel="prev" title="Setting up the hardware" href="hw_setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting Started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hw_setup.html">Setting up the hardware</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using the Built-in Applications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#terminal">Terminal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chromium-browser">Chromium Browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#synaexplorer">SynaExplorer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#video">Video</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#graphics">Graphics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#syna-ai">Syna AI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="flash_image.html">Installing a pre-built system image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multimedia.html">Playing a video</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_app.html">Building an application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ai_demo.html">Running a pre-converted neural network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ai_model.html">Converting and running a custom neural network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_image.html">Building and installing a custom system image</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subject/index.html">Subject Specific User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Getting Started</a></li>
+      <li class="breadcrumb-item active">Using the Built-in Applications</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="using-the-built-in-applications">
+<h1>Using the Built-in Applications<a class="headerlink" href="#using-the-built-in-applications" title="Permalink to this heading"></a></h1>
+<p>Astra Machina comes preinstalled with several applications which showcase the capabilities of the platform.</p>
+<p>As shown in the <a class="reference internal" href="hw_setup.html"><span class="doc">Setting up the hardware</span></a> guide, Astra Machina starts up with the welcome screen. The welcome screen is a
+customized Weston desktop.</p>
+<figure class="align-default" id="id1">
+<img alt="../_images/welcome_screen.jpg" src="../_images/welcome_screen.jpg" />
+<figcaption>
+<p><span class="caption-text">The Welcome Screen</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>At the bottom is a quick access panel with icons which will launch the three applications.</p>
+<ul class="simple">
+<li><p>Terminal</p></li>
+<li><p>Chromium Browser</p></li>
+<li><p>SynaExplorer</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The customized Weston desktop only supports one display at a time.</p>
+</div>
+<section id="terminal">
+<h2>Terminal<a class="headerlink" href="#terminal" title="Permalink to this heading"></a></h2>
+<p>A standard Linux terminal can be launched by clicking the terminal icon on the quick access panel.</p>
+<figure class="align-default">
+<img alt="../_images/terminal.jpg" src="../_images/terminal.jpg" />
+</figure>
+</section>
+<section id="chromium-browser">
+<h2>Chromium Browser<a class="headerlink" href="#chromium-browser" title="Permalink to this heading"></a></h2>
+<p>Chromium can be launched by clicking the Chromium icon in the quick access panel.</p>
+<figure class="align-default">
+<img alt="../_images/chromium.jpg" src="../_images/chromium.jpg" />
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Chromium’s state is not saved. Stored bookmarks and setting will be cleared on reboot.</p>
+</div>
+</section>
+<section id="synaexplorer">
+<h2>SynaExplorer<a class="headerlink" href="#synaexplorer" title="Permalink to this heading"></a></h2>
+<p>The SynaExplorer app demonstrates the capabilities of the Astra platform. It showcases multimedia and AI inferencing using files,
+USB cameras, and RTSP camera streams. AI inferencing is done using YOLO v5 and v8 models.</p>
+<p>Open the SynaExplorer app by clicking the icon with the four squares in the quick access panel.</p>
+<figure class="align-default" id="id2">
+<img alt="../_images/syna-explorer-icon.jpg" src="../_images/syna-explorer-icon.jpg" />
+<figcaption>
+<p><span class="caption-text">SynaExplorer icon highlighted in quick access panel</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The app opens to the landing page, with demo category buttons on the left and a “Getting Started” pane on the right.
+The pane displays a thumbnail of the Astra promo video, which plays when clicked. The app uses Gstreamer to handle
+video and audio playback of the video file.</p>
+<figure class="align-default" id="id3">
+<img alt="../_images/syna-explorer-getting-started.jpg" src="../_images/syna-explorer-getting-started.jpg" />
+<figcaption>
+<p><span class="caption-text">Getting Started pane on SL1640</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The video will play continuously until the “Close” button in the lower right hand corner is clicked. This will return the user
+to the main page.</p>
+<figure class="align-default" id="id4">
+<img alt="../_images/getting-started-video-close-button-crop.jpg" src="../_images/getting-started-video-close-button-crop.jpg" />
+<figcaption>
+<p><span class="caption-text">Highlighted Close button during video playback</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<section id="video">
+<h3>Video<a class="headerlink" href="#video" title="Permalink to this heading"></a></h3>
+<p>The second button on the left is the “Video” button, which opens the “Video” pane. This pane has a button for the “Video Player”
+demo. On SL1640 and SL1680 there will also be a button for the “Video Mixer” demo.</p>
+<figure class="align-default" id="id5">
+<img alt="../_images/syna-explorer-video-pane-sl1680.jpg" src="../_images/syna-explorer-video-pane-sl1680.jpg" />
+<figcaption>
+<p><span class="caption-text">Screenshot of the “Video” pane on SL1640.</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<section id="syna-video-player">
+<h4>Syna Video Player<a class="headerlink" href="#syna-video-player" title="Permalink to this heading"></a></h4>
+<p>The “Video Player” demonstrates video playback from multiple sources.
+- File source - Astra video files (1080p30)
+- USB camera source
+- RTSP camera source</p>
+<figure class="align-default" id="id6">
+<img alt="../_images/syna-video-player-main.jpg" src="../_images/syna-video-player-main.jpg" />
+<figcaption>
+<p><span class="caption-text">Video Player on SL1640</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Use the dropdown to the right of the “Video 1” label to select a source.</p>
+<figure class="align-default" id="id7">
+<img alt="../_images/syna-video-player-source-dropdown.jpg" src="../_images/syna-video-player-source-dropdown.jpg" />
+<figcaption>
+<p><span class="caption-text">Video Player on dropdown menu on SL1640</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Use the “Update RTSP Urls” windows to set the RTSP URL when using a RTSP camera as the source.</p>
+<figure class="align-default" id="id8">
+<img alt="../_images/syna-video-player-rtsp.jpg" src="../_images/syna-video-player-rtsp.jpg" />
+<figcaption>
+<p><span class="caption-text">Update RTSP Urls window on SL1640</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<section id="multi-view">
+<h5>Multi View<a class="headerlink" href="#multi-view" title="Permalink to this heading"></a></h5>
+<p>SL1680 supports playback of four streams at once. In the Syna Video Player app, the UI shows four video
+stream options and a “Quad View” setting. To play all streams, select one stream from each dropdown menus
+and choose the “Quad View” option.</p>
+<figure class="align-default" id="id9">
+<img alt="../_images/syna-video-player-multiview.jpg" src="../_images/syna-video-player-multiview.jpg" />
+<figcaption>
+<p><span class="caption-text">Video Player on SL1680 with Quad View support</span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Support for 4 USB cameras require that at least 2 of the camera use USB 3.0.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Synaptics has tested 4 USB cameras using 2 Logitech Brio 4K Ultra USB 3.0 cameras along with 2 Logitech
+C920 HD Pro USB 2.0 cameras.</p>
+</div>
+<p>On SL1680 the RTSP URL window will allow 4 RTSP camera URLs to be set.</p>
+<figure class="align-default" id="id10">
+<img alt="../_images/syna-video-player-multiview-rtsp.jpg" src="../_images/syna-video-player-multiview-rtsp.jpg" />
+<figcaption>
+<p><span class="caption-text">Update RTSP Urls window on SL1680 with Quad View support</span><a class="headerlink" href="#id10" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Synaptics has verified using 4 1080p15 RTSP streams with Quad View.</p>
+</div>
+</section>
+</section>
+<section id="video-mixer">
+<h4>Video Mixer<a class="headerlink" href="#video-mixer" title="Permalink to this heading"></a></h4>
+<p>SL1640 and Sl1680 support the “Video Mixer” demo. This demo uses an OpenGL based mixer to composite 9 streams and outputs
+them to the display. SL1640 supports 9 640x480p streams while SL1680 supports 9 1280x720p streams.</p>
+<figure class="align-default" id="id11">
+<img alt="../_images/syna-explorer-gl-mixer.jpg" src="../_images/syna-explorer-gl-mixer.jpg" />
+<figcaption>
+<p><span class="caption-text">Video Mixer on SL1680</span><a class="headerlink" href="#id11" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="graphics">
+<h3>Graphics<a class="headerlink" href="#graphics" title="Permalink to this heading"></a></h3>
+<p>The third button on the left is the “Graphics” button, which opens the “Graphics” pane. This pane contains three demos which
+showcase the graphics capability of Astra Machina. These demos are stock QT examples which are included as part of the QT 5
+environment. These demos are <a class="reference external" href="https://doc.qt.io/qt-5/qtopengl-textures-example.html">Textures</a>,
+<a class="reference external" href="https://doc.qt.io/qt-5/qtwidgets-animation-animatedtiles-example.html">Animated Tiles</a>, and
+<a class="reference external" href="https://doc.qt.io/qt-5/qtwidgets-touch-fingerpaint-example.html">FingerPaint</a>.</p>
+<figure class="align-default" id="id12">
+<img alt="../_images/syna-explorer-graphics.jpg" src="../_images/syna-explorer-graphics.jpg" />
+<figcaption>
+<p><span class="caption-text">Graphics pane on SL1640</span><a class="headerlink" href="#id12" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The FingerPaint application is intended to be used with displays with a touch panel.</p>
+</div>
+</section>
+<section id="syna-ai">
+<h3>Syna AI<a class="headerlink" href="#syna-ai" title="Permalink to this heading"></a></h3>
+<p>The fourth button on the left is the “AI” button, which opens the “AI” pane. This pane contains a button to launch the
+“AI Player” app, which includes object detection, pose estimation, and face detection examples. There is also an example
+which does object detection using a USB camera and encodes then streams the output over UDP. SL1680 supports Multi-AI
+which supports doing AI inferencing on four streams and outputting the result to the display.</p>
+<figure class="align-default" id="id13">
+<img alt="../_images/syna-explorer-ai-pane.jpg" src="../_images/syna-explorer-ai-pane.jpg" />
+<figcaption>
+<p><span class="caption-text">AI pane on SL1640</span><a class="headerlink" href="#id13" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<section id="object-detection">
+<h4>Object Detection<a class="headerlink" href="#object-detection" title="Permalink to this heading"></a></h4>
+<p>The object detection example uses a YOLOv8 model to detect object from a 1080p25 file source or a USB camera at 640x480 resolution.</p>
+<figure class="align-default" id="id14">
+<img alt="../_images/syna-ai-player-object-detection.jpg" src="../_images/syna-ai-player-object-detection.jpg" />
+<figcaption>
+<p><span class="caption-text">The Object Detection Window on SL1640</span><a class="headerlink" href="#id14" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id15">
+<img alt="../_images/syna-ai-player-object-detection-output.jpg" src="../_images/syna-ai-player-object-detection-output.jpg" />
+<figcaption>
+<p><span class="caption-text">Object Detection output from the default 1080p25 file</span><a class="headerlink" href="#id15" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="pose-estimation">
+<h4>Pose Estimation<a class="headerlink" href="#pose-estimation" title="Permalink to this heading"></a></h4>
+<p>The pose estimation example uses a YOLOv8 model to do pose estimation on a 1080p25 file source or a USB camera at 640x480 resolution.</p>
+<figure class="align-default" id="id16">
+<img alt="../_images/syna-ai-player-pose-estimation.jpg" src="../_images/syna-ai-player-pose-estimation.jpg" />
+<figcaption>
+<p><span class="caption-text">The Pose Estimation Window on SL1640</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id17">
+<img alt="../_images/syna-ai-player-pose-estimation-output.jpg" src="../_images/syna-ai-player-pose-estimation-output.jpg" />
+<figcaption>
+<p><span class="caption-text">Pose Estimation output from the default 1080p25 file</span><a class="headerlink" href="#id17" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="face-detection">
+<h4>Face Detection<a class="headerlink" href="#face-detection" title="Permalink to this heading"></a></h4>
+<p>The face detection example uses a YOLOv5 model to detect faces using a USB camera at 640x480 resolution.</p>
+<figure class="align-default" id="id18">
+<img alt="../_images/syna-ai-player-face-detection.jpg" src="../_images/syna-ai-player-face-detection.jpg" />
+<figcaption>
+<p><span class="caption-text">The Face Detection Window on SL1640</span><a class="headerlink" href="#id18" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="multi-ai">
+<h4>Multi-AI<a class="headerlink" href="#multi-ai" title="Permalink to this heading"></a></h4>
+<p>SL1680 supports AI inferencing of four camera streams and displaying the output. The streams can be from four USB cameras
+at 640x480 resolution or four RTSP camera at 1080p15. RTSP streams can be configured using the “Update RTSP Urls” window.
+In this example, person detection is performed on all four streams.</p>
+<figure class="align-default" id="id19">
+<img alt="../_images/syna-ai-player-multi-ai.jpg" src="../_images/syna-ai-player-multi-ai.jpg" />
+<figcaption>
+<p><span class="caption-text">Multi-AI pane on SL1680</span><a class="headerlink" href="#id19" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Support for 4 USB cameras require that at least 2 of the camera use USB 3.0.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Synaptics has tested 4 USB cameras using 2 Logitech Brio 4K Ultra USB 3.0 cameras along with 2 Logitech
+C920 HD Pro USB 2.0 cameras.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Synaptics has verified using 4 1080p15 RTSP streams with Quad View.</p>
+</div>
+</section>
+<section id="ai-encoding">
+<h4>AI + Encoding<a class="headerlink" href="#ai-encoding" title="Permalink to this heading"></a></h4>
+<p>The AI + Encoding example showcases Astra Machina’s ability to create a pipeline which performs Decoding + AI + Encoding + Streaming.
+The input source is a USB camera at 640x480 resolution and the output is streamed over the network using UDP. A host can then connect
+the the stream using Gstreamer to view the output. Output is also output to the display.</p>
+<figure class="align-default" id="id20">
+<img alt="../_images/syna-ai-player-ai-encoding.jpg" src="../_images/syna-ai-player-ai-encoding.jpg" />
+<figcaption>
+<p><span class="caption-text">AI + Encoding pane on SL1640</span><a class="headerlink" href="#id20" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>A window will open when the camera button is clicked. The window will ask for the IP address of the host which will be receiving the
+stream. Enter the IP address and click “OK”.</p>
+<figure class="align-default" id="id21">
+<img alt="../_images/syna-ai-player-ai-encoding-host.jpg" src="../_images/syna-ai-player-ai-encoding-host.jpg" />
+<figcaption>
+<p><span class="caption-text">Host IP window on SL1680</span><a class="headerlink" href="#id21" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The host receiving the stream will need Gstreamer installed to receive it. They run <code class="docutils literal notranslate"><span class="pre">gst-launch-1.0</span></code> to view the stream.</p>
+<p>For example, run this command on Window:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gst-launch-1.0.exe udpsrc port=8003 ! &quot;application/x-rtp, media=video, clock-rate=90000, \
+    encodingname=H264, payload=96&quot; ! queue ! rtph264depay ! h264parse ! avdec_h264 ! d3dvideosink
+</pre></div>
+</div>
+<p>or, run this command on Linux:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gst-launch-1.0 udpsrc port=8003 ! &quot;application/x-rtp, media=video, clock-rate=90000,encodingname=H264, \
+    payload=96&quot; ! queue ! rtph264depay ! h264parse ! avdec_h264 ! autovideosink
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hw_setup.html" class="btn btn-neutral float-left" title="Setting up the hardware" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="flash_image.html" class="btn btn-neutral float-right" title="Installing a pre-built system image" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2024, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

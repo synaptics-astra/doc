@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SWUpdate User Guide &mdash; Synaptics Astra SDK User Guide 1.4.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=9213762b"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Application Notes" href="../appnotes/index.html" />
+    <link rel="prev" title="Uboot Fastlogo Customization User Guide" href="uboot_fastlogo_configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Subject Specific User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="syna_drm_kms_user_guide.html">SYNA DRM / KMS Driver User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waveshare_7inch_dsi-configuration.html">Waveshare Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="haier_panel_configuration.html">Haier Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory_layout_customization.html">Memory Layout Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emmc_layout_customization.html">eMMC Partition Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dvfs_user_guide.html">Dynamic Voltage and Frequency Switching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power_measurement.html">Power Measurements with Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weston_default_display.html">Setting the Weston Default Display for Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isp_sensor_integration.html">ISP Sensor Integration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating_isp_sensor_configuration.html">Updating the ISP Sensor Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpios.html">GPIOs on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastlogo_image_generation.html">FastLogo Sub-Image(fastlogo.subimg.gz) File Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uboot_fastlogo_configuration.html">Uboot Fastlogo Customization User Guide</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SWUpdate User Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisite">Prerequisite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-swupdate">Running the swupdate</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#via-usb-root-file-system">Via USB/root file system</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#via-mongoose-webserver">Via Mongoose webserver</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#expected-results">Expected results</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#success-case">Success case</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#failure-case">Failure case</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Subject Specific User Guides</a></li>
+      <li class="breadcrumb-item active">SWUpdate User Guide</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="swupdate-user-guide">
+<h1>SWUpdate User Guide<a class="headerlink" href="#swupdate-user-guide" title="Permalink to this heading"></a></h1>
+<section id="prerequisite">
+<h2>Prerequisite<a class="headerlink" href="#prerequisite" title="Permalink to this heading"></a></h2>
+<p>When a new SDK is flashed onto the device, it is essential to save both the primary and redundant environment variables to the eMMC storage only once (this step is not needed after it is done).</p>
+<p><strong>Steps:</strong></p>
+<ol class="arabic simple">
+<li><p>Reboot the device and continuously press any key during the boot process to enter the U-Boot menu (eMMC boot/U-Boot window).</p></li>
+<li><p>Use the command <code class="docutils literal notranslate"><span class="pre">saveenv</span></code> twice to save the primary and redundant environment variables to the eMMC storage.</p></li>
+</ol>
+</section>
+<section id="running-the-swupdate">
+<h2>Running the swupdate<a class="headerlink" href="#running-the-swupdate" title="Permalink to this heading"></a></h2>
+<section id="via-usb-root-file-system">
+<h3>Via USB/root file system<a class="headerlink" href="#via-usb-root-file-system" title="Permalink to this heading"></a></h3>
+<p>To start the SWUpdate, execute the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>update<span class="w"> </span>-i<span class="w"> </span>&lt;filename&gt;<span class="w"> </span>-k<span class="w"> </span>&lt;key/cert&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Place the .swu package and its corresponding cert/key in the local space (/home/root/) and mention the .swu image and key/cert with the correct relative path in the command. Alternatively, if the .swu file and its corresponding cert/key are stored on a USB drive, execute the above command in the desired directory located on the USB drive.</p>
+</div>
+<p>For example:
+If the <code class="docutils literal notranslate"><span class="pre">test.swu</span></code> file and <code class="docutils literal notranslate"><span class="pre">mycert.cert.pem</span></code> are placed on <code class="docutils literal notranslate"><span class="pre">/home/root</span></code> on the device, run the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>update<span class="w"> </span>-i<span class="w"> </span>test.swu<span class="w"> </span>-k<span class="w"> </span>mycert.cert.pem
+</pre></div>
+</div>
+</section>
+<section id="via-mongoose-webserver">
+<h3>Via Mongoose webserver<a class="headerlink" href="#via-mongoose-webserver" title="Permalink to this heading"></a></h3>
+<p>To start the embedded web server, “document-root (-r)” and “port (-p)” are the mandatory parameters. Execute the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>update<span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;-r /etc/www -p 8080&quot;</span><span class="w"> </span>-k<span class="w"> </span>&lt;key/cert&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <strong>www</strong> web folder will be located on the /etc directory of the device by default.
+The corresponding key/cert should be stored in the device’s local space.</p>
+</div>
+<p>The default port for the web server is 8080. To access it, open any web browser and navigate to the following URL: <code class="docutils literal notranslate"><span class="pre">&lt;device_ip&gt;:8080</span></code>.</p>
+<p>The following image displays the user interface of the hosted web server on the URL: <code class="docutils literal notranslate"><span class="pre">&lt;device_ip&gt;:8080</span></code>.</p>
+<img alt="User Interface of the Web Server" src="../_images/web_server_ui.png" />
+<p>Click the file upload box (<code class="docutils literal notranslate"><span class="pre">click</span> <span class="pre">here</span></code>) on the hosted web page, which will open a dialog box allowing you to select the .swu image from your system.</p>
+<p>The following image shows the file upload box on the hosted web page:</p>
+<img alt="File Upload Box on the Hosted Web Page" src="../_images/file_upload_box.png" />
+</section>
+</section>
+<section id="expected-results">
+<h2>Expected results<a class="headerlink" href="#expected-results" title="Permalink to this heading"></a></h2>
+<section id="success-case">
+<h3>Success case<a class="headerlink" href="#success-case" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>The user will observe the update progress bar, which will display the logs <strong>SUCCESS!</strong> and <strong>DONE</strong>, indicating that the device has successfully rebooted into the updated partition.</p></li>
+<li><p>The user can also verify the successful update by checking the ustate environment variable using the <strong>fw_printenv</strong> command</p></li>
+<li><p>The environment variable <strong>ustate</strong> sets to <strong>1</strong>, if the update is successful.</p></li>
+</ul>
+</section>
+<section id="failure-case">
+<h3>Failure case<a class="headerlink" href="#failure-case" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>If the update fails, then the error log will prompt during the update and the update will be stopped.</p></li>
+<li><p>The environment variable <strong>ustate</strong> is set to <strong>7</strong>, and <strong>recovery_status</strong> is set to <strong>“in_progress”</strong> if the update fails or is interrupted by external factors, such as a power outage or a corrupted image.</p></li>
+<li><p>If the device fails to boot the updated partition due to a crash caused by the new image, it will automatically revert to the stable alternate partition after several boot attempts.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="uboot_fastlogo_configuration.html" class="btn btn-neutral float-left" title="Uboot Fastlogo Customization User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../appnotes/index.html" class="btn btn-neutral float-right" title="Application Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2024, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

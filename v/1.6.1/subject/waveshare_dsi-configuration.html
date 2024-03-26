@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Waveshare Panel Configuration Guide &mdash; Synaptics Astra SDK User Guide 1.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b79f0e1f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Haier Panel Configuration Guide" href="haier_panel_configuration.html" />
+    <link rel="prev" title="SYNA DRM / KMS Driver User Guide" href="syna_drm_kms_user_guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Subject Specific User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="syna_drm_kms_user_guide.html">SYNA DRM / KMS Driver User Guide</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Waveshare Panel Configuration Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#connection">Connection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#software-configuration">Software Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="haier_panel_configuration.html">Haier Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory_layout_customization.html">Memory Layout Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emmc_layout_customization.html">eMMC Partition Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dvfs_user_guide.html">Dynamic Voltage and Frequency Switching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power_measurement.html">Power Measurements with Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weston_default_display.html">Setting the Weston Default Display for Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isp_sensor_integration.html">ISP Sensor Integration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating_isp_sensor_configuration.html">Updating the ISP Sensor Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpios.html">GPIOs on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp_flow_user_guide.html">Astra MP Flow User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastlogo_image_generation.html">FastLogo Sub-Image(fastlogo.subimg.gz) File Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uboot_fastlogo_configuration.html">Uboot Fastlogo Customization User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="swupdate_user_guide.html">SWUpdate User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controlling_volume_with_gpios.html">Controlling ALSA Volume using GPIOs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thermal_protection.html">CPU Thermal Protection on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_docker.html">Ubuntu-based Docker Container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enable_sdio_wifi.html">Enabling SDIO WiFi for SL640 and SL680</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Subject Specific User Guides</a></li>
+      <li class="breadcrumb-item active">Waveshare Panel Configuration Guide</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="waveshare-panel-configuration-guide">
+<h1>Waveshare Panel Configuration Guide<a class="headerlink" href="#waveshare-panel-configuration-guide" title="Permalink to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h3>
+<p>The scope of the document is to enable Waveshare panel on SL16xx platform. It provide details about the hardware connection required between Waveshare panels
+and SL16xx platform and the software configuration changes required in device tree files (.dts extension). Astra Machina supports the 7” and 13.3” panels.</p>
+</section>
+</section>
+<section id="connection">
+<h2>Connection<a class="headerlink" href="#connection" title="Permalink to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Connect the 5V and Ground of the waveshare panel to the 40 pin
+connector. 5V to the Pin4 and Ground to Pin6 (GND).</p>
+<p><strong>Refer the connection below:</strong></p>
+</li>
+</ol>
+<figure class="align-default">
+<img alt="../_images/SL16xx_waveshare_5v_connection.png" src="../_images/SL16xx_waveshare_5v_connection.png" />
+</figure>
+<ol class="arabic simple" start="2">
+<li><p>Connect the 15-22 pin DSI cable as shown in the below connection.</p></li>
+</ol>
+<figure class="align-default">
+<img alt="../_images/SL16xx_waveshare_dsi_cable_connection.png" src="../_images/SL16xx_waveshare_dsi_cable_connection.png" />
+</figure>
+</section>
+<section id="software-configuration">
+<h2>Software Configuration<a class="headerlink" href="#software-configuration" title="Permalink to this heading"></a></h2>
+<p>The Waveshare panel can be enabled by setting the <code class="docutils literal notranslate"><span class="pre">dtbo</span></code> variable, in U-Boot, to the correct device tree overlay.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p>SL1620</p></td>
+<td><p>SL1640</p></td>
+<td><p>SL1680</p></td>
+</tr>
+<tr class="row-even"><td><p>7” Panel</p></td>
+<td><p>myna2-ws-panel-overlay.dtbo</p></td>
+<td><p>platypus-ws-panel-overlay.dtbo</p></td>
+<td><p>dolphin-ws-panel-overlay.dtbo</p></td>
+</tr>
+<tr class="row-odd"><td><p>13.3” Panel</p></td>
+<td><p>myna2-ws-1080p-panel-overlay.dtbo</p></td>
+<td><p>platypus-ws-1080p-panel-overlay.dtbo</p></td>
+<td><p>dolphin-ws-1080p-panel-overlay.dtbo</p></td>
+</tr>
+</tbody>
+</table>
+<p>Setting the device tree overlay requires booting into U-Boot and setting
+the <code class="docutils literal notranslate"><span class="pre">dtbo</span></code> variable to the required device tree overlay. See <a class="reference internal" href="../linux/index.html#uboot-prompt"><span class="std std-ref">U-Boot Prompt with SU-Boot</span></a> for instructions on getting to the
+U-Boot prompt.</p>
+<p>Once at the U-Boot prompt run the following commands to enable the Device Tree Overlay.</p>
+<p>Set the <code class="docutils literal notranslate"><span class="pre">dtbo</span></code> variables:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">setenv</span> <span class="n">dtbo</span> <span class="n">myna2</span><span class="o">-</span><span class="n">ws</span><span class="o">-</span><span class="n">panel</span><span class="o">-</span><span class="n">overlay</span><span class="o">.</span><span class="n">dtbo</span>
+</pre></div>
+</div>
+<p>Save the environment to the eMMC so that the new variable will persist across reboots.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">saveenv</span>
+<span class="n">Saving</span> <span class="n">Environment</span> <span class="n">to</span> <span class="n">MMC</span><span class="o">...</span> <span class="n">Writing</span> <span class="n">to</span> <span class="n">redundant</span> <span class="n">MMC</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">...</span> <span class="n">OK</span>
+</pre></div>
+</div>
+<p>Optionally, confirm that the variable was correctly set.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>=&gt; printenv
+altbootcmd=if test ${boot_slot}  = 1; then bootslot set b; bootcount reset;bootcount reset; run bootcmd; else bootslot set a; bootcount reset; bootcount reset; run bootcmd;  fi
+autoload=n
+baudrate=115200
+bootcmd=bootmmc
+bootcount=1
+bootdelay=0
+bootlimit=3
+dtbo=myna2-ws-panel-overlay.dtbo
+fdtcontroladdr=2172e190
+preboot=show_logo;
+upgrade_available=0
+ver=U-Boot 2019.10 (Nov 21 2024 - 14:01:42 +0000)
+Environment size: 407/65531 bytesboo
+</pre></div>
+</div>
+<p>Finally, boot with the new overlay applied.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">boot</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="syna_drm_kms_user_guide.html" class="btn btn-neutral float-left" title="SYNA DRM / KMS Driver User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="haier_panel_configuration.html" class="btn btn-neutral float-right" title="Haier Panel Configuration Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2025, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

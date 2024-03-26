@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Converting and running a custom neural network &mdash; Synaptics Astra SDK User Guide 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=fc87fe77"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Building and installing a custom system image" href="build_image.html" />
+    <link rel="prev" title="Running a pre-converted neural network" href="ai_demo.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting Started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hw_setup.html">Setting up the hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flash_image.html">Installing a pre-built system image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multimedia.html">Playing a video</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_app.html">Building an application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ai_demo.html">Running a pre-converted neural network</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Converting and running a custom neural network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_image.html">Building and installing a custom system image</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subject/index.html">Subject Specific User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Getting Started</a></li>
+      <li class="breadcrumb-item active">Converting and running a custom neural network</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="converting-and-running-a-custom-neural-network">
+<h1>Converting and running a custom neural network<a class="headerlink" href="#converting-and-running-a-custom-neural-network" title="Permalink to this heading"></a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In addition to the <a class="reference internal" href="../linux/index.html#prepare-to-boot"><span class="std std-ref">prerequisites for flashing</span></a> you also need a host with
+docker installed, an ethernet cable and a local network with DHCP.</p>
+</div>
+<p>To convert your own AI model and run it on an evaluation kit use the following steps:</p>
+<ol class="arabic">
+<li><p>Install a pre-built image and connect to the board as described <a class="reference internal" href="flash_image.html"><span class="doc">here</span></a></p></li>
+<li><p>Connect the board to a local network using the ethernet cable</p></li>
+<li><p>Download <code class="docutils literal notranslate"><span class="pre">1.tflite</span></code> from <a class="reference external" href="https://www.kaggle.com/models/tensorflow/mobilenet-v2/frameworks/tfLite/variations/1-0-224-quantized">Kaggle</a>
+and save it as <code class="docutils literal notranslate"><span class="pre">mymodel.tflite</span></code>.</p></li>
+<li><p>Download the docker image of the SyNAP toolkit on the host:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/synaptics-synap/toolkit:3.0.0
+</pre></div>
+</div>
+</li>
+<li><p>Install an alias in the shell of the host to run the SyNAP Toolkit container:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">alias</span><span class="w"> </span><span class="nv">synap</span><span class="o">=</span><span class="s1">&#39;docker run -i --rm -u $(id -u):$(id -g) -v ${MOUNTPATH}:${MOUNTPATH} \</span>
+<span class="s1">               -w $(pwd) ghcr.io/synaptics-synap/toolkit:3.0.0&#39;</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">${MOUNTPATH}</span></code> is the absolute path of the directory of the host to mount inside the container.
+This command can be executed in any directory and will be valid for the current session.
+You can add it to your shell startup file (e.g. <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> or <code class="docutils literal notranslate"><span class="pre">.zshrc</span></code>).</p>
+<p>You can get help on the available toolkit commands by running it without parameters:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>synap
+</pre></div>
+</div>
+</li>
+<li><p>Convert the model with the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>synap<span class="w"> </span>convert<span class="w"> </span>--model<span class="w"> </span>mymodel.tflite<span class="w"> </span>--target<span class="w"> </span><span class="si">${</span><span class="nv">CHIP_NAME</span><span class="si">}</span><span class="w"> </span>--out-dir<span class="w"> </span>converted
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">${CHIP_NAME}</span></code> is either <code class="docutils literal notranslate"><span class="pre">SL1620</span></code>, <code class="docutils literal notranslate"><span class="pre">SL1640</span></code> or <code class="docutils literal notranslate"><span class="pre">SL1680</span></code> depending on the target device.</p>
+<p>This command converts <code class="docutils literal notranslate"><span class="pre">mymodel.tflite</span></code> to <code class="docutils literal notranslate"><span class="pre">converted/model.synap</span></code>, the model converted
+for execution on the evaluation kit.</p>
+</li>
+<li><p>Find the ip address of the board with the following command on the target:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>ifconfig<span class="w"> </span>eth0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;/inet addr/&quot;</span>
+<span class="go">          inet addr:192.168.1.110  Bcast:192.168.1.255  Mask:255.255.255.0</span>
+</pre></div>
+</div>
+</li>
+<li><p>Upload the converted model to the board by running the following command on the host:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$  </span>scp<span class="w"> </span>converted-model/model.synap<span class="w"> </span>root@192.168.1.110:/tmp
+</pre></div>
+</div>
+</li>
+<li><p>Connect to the board and issue the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span><span class="nb">cd</span><span class="w"> </span>/tmp
+<span class="gp"># </span>synap_cli<span class="w"> </span>random
+<span class="go">Flush/invalidate: yes</span>
+<span class="go">Loop period (ms): 0</span>
+<span class="go">Network inputs: 1</span>
+<span class="go">Network outputs: 1</span>
+<span class="go">Input buffer: input size: 150528 : random</span>
+<span class="go">Output buffer: output size: 1001</span>
+
+<span class="go">Predict #0: 12.49 ms</span>
+
+<span class="go">Inference timings (ms):  load: 30.72  init: 3.35  min: 12.49  median: 12.49  max: 12.49  stddev: 0.00  mean: 12.49</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>To learn more about model conversion options, more model testing tools and how to use the model in your own
+application refer to <a class="reference internal" href="../linux/index.html#synap"><span class="std std-ref">Machine Learning with SyNAP</span></a>.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ai_demo.html" class="btn btn-neutral float-left" title="Running a pre-converted neural network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="build_image.html" class="btn btn-neutral float-right" title="Building and installing a custom system image" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2024, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

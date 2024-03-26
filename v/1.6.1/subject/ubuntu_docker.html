@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ubuntu-based Docker Container &mdash; Synaptics Astra SDK User Guide 1.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b79f0e1f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Enabling SDIO WiFi for SL640 and SL680" href="enable_sdio_wifi.html" />
+    <link rel="prev" title="CPU Thermal Protection on Astra Machina" href="thermal_protection.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Subject Specific User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="syna_drm_kms_user_guide.html">SYNA DRM / KMS Driver User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waveshare_dsi-configuration.html">Waveshare Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="haier_panel_configuration.html">Haier Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory_layout_customization.html">Memory Layout Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emmc_layout_customization.html">eMMC Partition Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dvfs_user_guide.html">Dynamic Voltage and Frequency Switching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power_measurement.html">Power Measurements with Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weston_default_display.html">Setting the Weston Default Display for Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isp_sensor_integration.html">ISP Sensor Integration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating_isp_sensor_configuration.html">Updating the ISP Sensor Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpios.html">GPIOs on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp_flow_user_guide.html">Astra MP Flow User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastlogo_image_generation.html">FastLogo Sub-Image(fastlogo.subimg.gz) File Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uboot_fastlogo_configuration.html">Uboot Fastlogo Customization User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="swupdate_user_guide.html">SWUpdate User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controlling_volume_with_gpios.html">Controlling ALSA Volume using GPIOs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thermal_protection.html">CPU Thermal Protection on Astra Machina</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Ubuntu-based Docker Container</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installing-and-running-the-astra-dev-docker-image">Installing and Running the Astra Dev Docker Image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#saving-state">Saving State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stopping-the-astra-dev-container">Stopping the Astra Dev Container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building-the-image">Building the Image</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="enable_sdio_wifi.html">Enabling SDIO WiFi for SL640 and SL680</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Subject Specific User Guides</a></li>
+      <li class="breadcrumb-item active">Ubuntu-based Docker Container</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ubuntu-based-docker-container">
+<h1>Ubuntu-based Docker Container<a class="headerlink" href="#ubuntu-based-docker-container" title="Permalink to this heading"></a></h1>
+<p>Astra Machina supports a Ubuntu-based development environment using Docker. This provides the flexibility of Ubuntu
+in a container while maintaining the benefits using Yocto as the host OS. The container also has access to the NPU hardware for
+prototyping AI applications.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, docker is only enabled on the SL1680 OOBE image. OOBE Images with less then 4GB RAM
+are not supported.</p>
+</div>
+<section id="installing-and-running-the-astra-dev-docker-image">
+<h2>Installing and Running the Astra Dev Docker Image<a class="headerlink" href="#installing-and-running-the-astra-dev-docker-image" title="Permalink to this heading"></a></h2>
+<p>A prebuilt version of the Astra Dev Docker Image is hosted on GitHub. To get started, download the <code class="docutils literal notranslate"><span class="pre">docker-compose.yaml</span></code> file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">O</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">aduggan</span><span class="o">-</span><span class="n">syna</span><span class="o">/</span><span class="n">astra_dev</span><span class="o">/</span><span class="n">refs</span><span class="o">/</span><span class="n">heads</span><span class="o">/</span><span class="n">v1</span><span class="mf">.6.0</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+<p>Start the container using the <code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">up</span></code> command. This will download the image from GitHub and start a container using the parameters specified
+in the <code class="docutils literal notranslate"><span class="pre">docker-compose.yaml</span></code> file. This includes mapping the <code class="docutils literal notranslate"><span class="pre">/home/syna</span></code> directory into the container. It also maps hardware devices such as the NPU
+into the container so that apps in the container can benefit from hardware acceleration of AI workflows.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span>
+</pre></div>
+</div>
+<p>Access a shell inside the container using the <code class="docutils literal notranslate"><span class="pre">exec</span></code> command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">exec</span> <span class="n">astra_dev</span> <span class="n">bash</span>
+</pre></div>
+</div>
+<p>The container has a default user <code class="docutils literal notranslate"><span class="pre">syna</span></code> with the home directory <code class="docutils literal notranslate"><span class="pre">/home/syna</span></code>.
+The home directory is mapped from the host so files stored there can also be accessed from the host. The default user, <code class="docutils literal notranslate"><span class="pre">syna</span></code>, also has <code class="docutils literal notranslate"><span class="pre">sudo</span></code> privileges
+enabled. Run <code class="docutils literal notranslate"><span class="pre">sudo</span></code> for any operations which require root privileges. For example, you can run <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">...</span></code> to install additional packages.</p>
+<figure class="align-default" id="id1">
+<img alt="../_images/docker-compose-complete.png" src="../_images/docker-compose-complete.png" />
+<figcaption>
+<p><span class="caption-text">Output of docker-compose</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="saving-state">
+<h2>Saving State<a class="headerlink" href="#saving-state" title="Permalink to this heading"></a></h2>
+<p>Installing packages in a docker container will not update the docker image. Any new packages will not persist after shutting down the container.
+To save changes you can use the <code class="docutils literal notranslate"><span class="pre">commit</span></code> command to create a new image which contains your modifications.</p>
+<p>To save state, start be identifying the container containing the updates.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">container</span> <span class="n">ps</span>
+</pre></div>
+</div>
+<figure class="align-default">
+<img alt="../_images/docker-container-ps.png" src="../_images/docker-container-ps.png" />
+</figure>
+<p>Commit the new image.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">commit</span> <span class="n">astra_dev</span> <span class="n">astra_dev_new</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The container ID can also be used instead of the container name.</p>
+</div>
+<p>Update the <code class="docutils literal notranslate"><span class="pre">docker-compose.yaml</span></code> <code class="docutils literal notranslate"><span class="pre">image</span></code> entry to use the newly created image.</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/updated-docker-compose.png"><img alt="../_images/updated-docker-compose.png" src="../_images/updated-docker-compose.png" style="width: 349.05px; height: 275.6px;" /></a>
+</figure>
+</section>
+<section id="stopping-the-astra-dev-container">
+<h2>Stopping the Astra Dev Container<a class="headerlink" href="#stopping-the-astra-dev-container" title="Permalink to this heading"></a></h2>
+<p>When done with the container it can be shutdown with the done command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">down</span>
+</pre></div>
+</div>
+</section>
+<section id="building-the-image">
+<h2>Building the Image<a class="headerlink" href="#building-the-image" title="Permalink to this heading"></a></h2>
+<p>The prebuilt docker image was created using the scripts in <a class="reference external" href="https://github.com/aduggan-syna/astra_dev/tree/v1.6.0">https://github.com/aduggan-syna/astra_dev/tree/v1.6.0</a>. The
+<code class="docutils literal notranslate"><span class="pre">build.sh</span></code> copies files from the host rootfs so that they can be installed into the image, and accessed from inside of the
+container.</p>
+<p>Next, modify the <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code> if you want to add additional packages or perform additional setup. Once complete, run the <code class="docutils literal notranslate"><span class="pre">build.sh</span></code>
+command to build the image.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">build</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Next modify the image name in <code class="docutils literal notranslate"><span class="pre">docker-compose.yaml</span></code> to use the locally created image instead of the version hosted on GitHub.
+Then start the container as usual.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Astra Dev uses files from the host rootfs to interface with hardware components such as the NPU. Astra Dev images
+have version numbers which match Astra SDK release versions. Using a version of Astra Dev which does not match
+the Astra SDK release version could result in compatibility issues.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="thermal_protection.html" class="btn btn-neutral float-left" title="CPU Thermal Protection on Astra Machina" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="enable_sdio_wifi.html" class="btn btn-neutral float-right" title="Enabling SDIO WiFi for SL640 and SL680" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2025, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

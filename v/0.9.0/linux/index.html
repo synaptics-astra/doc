@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astra Yocto Linux User Guide &mdash; Synaptics Astra SDK User Guide 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=c2bece13"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Astra Yocto Linux Developer Guide" href="../yocto.html" />
+    <link rel="prev" title="Building and installing a custom system image" href="../quickstart/build_image.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Astra Yocto Linux User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#supported-hardware">Supported Hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interfacing-with-astra-machina">Interfacing with Astra Machina</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-graphical-desktop">The Graphical Desktop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-shell-with-ssh">The Shell with SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-shell-with-adb">The Shell with ADB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-serial-console">The Serial Console</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#setting-up-the-serial-console">Setting up the Serial Console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linux-os-login">Linux OS Login</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#multimedia">Multimedia</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gstreamer-plugins">Gstreamer Plugins</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#video-codes">Video Codes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#audio-codecs">Audio Codecs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#gstreamer-examples">Gstreamer Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#media-playback">Media Playback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#audio-playback">Audio Playback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#video-playback">Video Playback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#audio-video-file-playback">Audio / Video File Playback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#recording">Recording</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#camera">Camera</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gstreamer-playbin-plugin">Gstreamer Playbin Plugin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gstreamer-synap-plugin">GStreamer SyNAP Plugin</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#machine-learning-with-synap">Machine Learning with SyNAP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#connectivity">Connectivity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-wifi-with-wpa-supplicant">Setting up Wifi with WPA Supplicant</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#generate-the-wpa-pre-shared-key">Generate the WPA Pre-shared Key</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bringing-up-the-wlan-interface">Bringing up the WLAN Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#creating-the-wpa-supplicant-configuration-file">Creating the WPA Supplicant Configuration File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configure-systemd-networkd">Configure systemd-networkd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#enable-wifi-services">Enable Wifi Services</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#performing-throughput-tests">Performing throughput tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tcp-traffic">TCP traffic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#udp-traffic">UDP traffic</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#using-the-bluetooth-a2dp-source-role">Using the Bluetooth A2DP source role</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#searching-and-connecting-to-the-headset">Searching and connecting to the headset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#playing-music-to-the-headset">Playing music to the headset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#the-linux-boot-process">The Linux Boot Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#software-overview">Software Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#preboot-firmware">Preboot Firmware</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bootloader">Bootloader</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linux-kernel-and-device-tree">Linux Kernel and Device Tree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#root-file-system">Root File System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#u-boot">U-Boot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#booting-from-spi-and-sd-cards">Booting from SPI and SD Cards</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#updating-the-firmware">Updating the Firmware</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-astra-system-image">The Astra System Image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updating-the-firmware-using-usb">Updating the Firmware using USB</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#setting-up-the-usb-boot-environment">Setting up the USB Boot Environment</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#resetting">Resetting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updating-the-firmware-from-spi">Updating the Firmware from SPI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#setting-up-the-spi-boot-environment">Setting up the SPI Boot Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#flashing-images-from-a-usb-drive">Flashing Images from a USB Drive</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#flashing-images-from-a-tftp-server">Flashing Images from a TFTP Server</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#updating-internal-spi-flash-firmware">Updating Internal SPI Flash Firmware</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#flashing-image-from-usb-boot">Flashing Image from USB Boot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#flashing-image-from-an-external-usb-drive">Flashing Image from an External USB Drive</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#flashing-image-from-tftp-server">Flashing Image from TFTP Server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Astra Yocto Linux User Guide</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="astra-yocto-linux-user-guide">
+<h1>Astra Yocto Linux User Guide<a class="headerlink" href="#astra-yocto-linux-user-guide" title="Permalink to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>This document describes the Synaptics Astra Linux OS environment and
+Board Support Package (BSP). It provides information on the components
+which make up the BSP and how to interface with them.</p>
+<section id="supported-hardware">
+<h3>Supported Hardware<a class="headerlink" href="#supported-hardware" title="Permalink to this heading"></a></h3>
+<p>The following Reference Kits and platforms are covered by this guide:</p>
+<ul class="simple">
+<li><p>Astra Machina (Foundation) SL1620</p></li>
+<li><p>Astra Machina (Foundation) SL1640</p></li>
+<li><p>Astra Machina (Foundation) SL1680</p></li>
+</ul>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://synaptics-synap.github.io/doc/v/3.0.0/">SyNAP User Guide</a></p></li>
+</ul>
+</section>
+</section>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
+<p>The Synaptics Linux Board Support Package (BSP) contains the software
+and firmware required to operate Astra Machina. It contains the
+components needed to boot OSes and interface with the hardware. This
+guide provides a description of these software components and information
+on how to interface with them. This document is useful for users who
+want to evaluate Astra Machina and build products using these processors.</p>
+<p>This document covers the components which are used by the Linux OS. For
+instructions on setting up the build environment and creating a Yocto-based
+image for Astra Machina, please see the <a class="reference internal" href="../yocto.html"><span class="doc">Astra Yocto Linux Developer Guide</span></a>.</p>
+<p>Specific information about the Astra Machina hardware can be found on the <a class="reference internal" href="../hw/index.html"><span class="doc">Astra Machina Eval Platform</span></a> page.</p>
+</section>
+<section id="interfacing-with-astra-machina">
+<h2>Interfacing with Astra Machina<a class="headerlink" href="#interfacing-with-astra-machina" title="Permalink to this heading"></a></h2>
+<p>Several methods exist for interfacing with Astra Machina, including using a graphical desktop
+on an external display. Additionally, Shell access is available through SSH, ADB, and the serial console.</p>
+<section id="the-graphical-desktop">
+<h3>The Graphical Desktop<a class="headerlink" href="#the-graphical-desktop" title="Permalink to this heading"></a></h3>
+<p>Astra Machina’s graphical desktop is enabled be default. It can be displayed on an external display connected
+to the HDMI port or a MIPI display. Input can be provided by connecting a standard HID USB keyboard and mouse.</p>
+<figure class="align-default" id="id4">
+<img alt="../_images/wayland-desktop.jpg" src="../_images/wayland-desktop.jpg" />
+<figcaption>
+<p><span class="caption-text">The Wayland Desktop on Astra Machina</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Clicking on the icon in the top left corner will open a terminal.</p>
+<figure class="align-default" id="id5">
+<img alt="../_images/wayland-terminal.jpg" src="../_images/wayland-terminal.jpg" />
+<figcaption>
+<p><span class="caption-text">The Wayland Desktop with a terminal open</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>HDMI is not currently supported on SL1620</p>
+</div>
+</section>
+<section id="the-shell-with-ssh">
+<h3>The Shell with SSH<a class="headerlink" href="#the-shell-with-ssh" title="Permalink to this heading"></a></h3>
+<p>Astra Machina has ssh enabled by default. It will accept connections from ssh
+clients over the network. Login with the username <code class="docutils literal notranslate"><span class="pre">root</span></code>. No password is required:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">root</span><span class="o">@</span><span class="mf">10.10.10.100</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the examples above the Astra Machina’s address is
+10.10.10.100. Please replace this IP with the IP address of your device.</p>
+</div>
+</section>
+<section id="the-shell-with-adb">
+<h3>The Shell with ADB<a class="headerlink" href="#the-shell-with-adb" title="Permalink to this heading"></a></h3>
+<p>Astra Machina supports Android Debug Bridge (ADB) over USB. ADB is used on Android devices and has been
+ported to Astra Machina. Google provides extensive documentation on ADB <a class="reference external" href="https://developer.android.com/tools/adb">here</a>.</p>
+<p>To use ADB connect a USB cable from the host system to the USB Type-C USB 2.0 port on Astra Machina (next to the ethernet port).</p>
+<figure class="align-default" id="id6">
+<img alt="../_images/usb-c.png" src="../_images/usb-c.png" />
+<figcaption>
+<p><span class="caption-text">Astra Machina Component Diagram with USB Type-C USB 2.0 port highlighted</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Google provides versions of ADB for Mac, Linux, and Windows. Once ADB is installed run <code class="docutils literal notranslate"><span class="pre">adb</span> <span class="pre">devices</span></code> to see all ADB devices
+connected to the host. Then run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">adb</span> <span class="n">shell</span>
+</pre></div>
+</div>
+<p>Or if there is more then one ADB device:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">adb</span> <span class="o">-</span><span class="n">s</span> <span class="n">SL16x0</span> <span class="n">shell</span>
+</pre></div>
+</div>
+<figure class="align-default" id="id7">
+<img alt="../_images/powershell-adb.png" src="../_images/powershell-adb.png" />
+<figcaption>
+<p><span class="caption-text">Using ADB with Windows Powershell</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="the-serial-console">
+<h3>The Serial Console<a class="headerlink" href="#the-serial-console" title="Permalink to this heading"></a></h3>
+<p>Astra Machina provides a serial console which displays bootloader
+and OS messages to a terminal emulator running on the host system. These messages are
+useful for determining the status of Astra Machina early in the boot process
+or when a display is not connected. It can also provides useful information
+during operation. The serial console is also needed during the firmware update process.</p>
+<section id="setting-up-the-serial-console">
+<span id="setup-serial-console"></span><h4>Setting up the Serial Console<a class="headerlink" href="#setting-up-the-serial-console" title="Permalink to this heading"></a></h4>
+<p>The Astra Machina (Foundation) SL16xx Developer Kits come with a USB-TTL board and a flying-wire style cable.
+Use the cable to connect the USB-TTL board to Astra Machina’s 40 pin GPIO header.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>USB TTL</p></th>
+<th class="head"><p>Astra Machina</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GND</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-odd"><td><p>RXD</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>TXD</p></td>
+<td><p>10</p></td>
+</tr>
+</tbody>
+</table>
+<figure class="align-default" id="id8">
+<img alt="../_images/usb-ttl-board.png" src="../_images/usb-ttl-board.png" />
+<figcaption>
+<p><span class="caption-text">USB TTL board provided in Developer Kit</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id9">
+<img alt="../_images/board-ports.png" src="../_images/board-ports.png" />
+<figcaption>
+<p><span class="caption-text">Astra Machina with 40 GPIO Header labeled</span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id10">
+<img alt="../_images/40-pin-connector.png" src="../_images/40-pin-connector.png" />
+<figcaption>
+<p><span class="caption-text">Astra Machina’s 40 Pin GPIO Header pinout</span><a class="headerlink" href="#id10" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Windows and Mac hosts will require an additional driver to interface with the
+USB to UART chip on the USB-TTL board. Please download the appropriate driver for your
+host from <a class="reference external" href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads">Silicon Labs CP210x USB to UART Bridge VCP
+Drivers</a>
+page. Linux hosts generally have support for this chip enabled by
+default.</p>
+<p>Once the driver is installed the serial console can be
+accessed using a terminal emulator program such as Putty, HyperTerminal,
+Tera Term, Screen, or Minicom.</p>
+<figure class="align-default" id="id11">
+<img alt="../_images/putty.png" src="../_images/putty.png" />
+<figcaption>
+<p><span class="caption-text">Putty terminal emulator on Windows</span><a class="headerlink" href="#id11" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id12">
+<img alt="../_images/configure-minicom.png" src="../_images/configure-minicom.png" />
+<figcaption>
+<p><span class="caption-text">Minicon terminal emulator on Mac OS</span><a class="headerlink" href="#id12" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="linux-os-login">
+<span id="linux-login"></span><h4>Linux OS Login<a class="headerlink" href="#linux-os-login" title="Permalink to this heading"></a></h4>
+<p>After Linux successfully boots, a login prompt will be displayed in the
+serial console. To login use the username <code class="docutils literal notranslate"><span class="pre">root</span></code>. No password is required.</p>
+<figure class="align-default" id="id13">
+<img alt="../_images/login-prompt.png" src="../_images/login-prompt.png" />
+<figcaption>
+<p><span class="caption-text">Successful boot seen in Minicom</span><a class="headerlink" href="#id13" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+</section>
+<section id="multimedia">
+<span id="id1"></span><h2>Multimedia<a class="headerlink" href="#multimedia" title="Permalink to this heading"></a></h2>
+<p>The Astra Machina contains hardware and software components which accelerate
+the processing of multimedia workloads. The Linux BSP provides Gstreamer
+plugins which allow users to develop programs which utilize these
+multimedia components to improve multimedia performance. This section
+provides an overview on how to use the Gstreamer command line interface
+to build pipelines using these plugins. Information on the Gstreamer framework
+can be found at <a class="reference external" href="https://gstreamer.freedesktop.org/">https://gstreamer.freedesktop.org/</a>.</p>
+<section id="gstreamer-plugins">
+<h3>Gstreamer Plugins<a class="headerlink" href="#gstreamer-plugins" title="Permalink to this heading"></a></h3>
+<p>Gstreamer uses plugin modules which are used to extend Gstreamer functionality.
+The Astra Machina uses plugins to allow its hardware components to be used
+in a Gstreamer pipeline. The tables below list plugins which are used by
+the codecs supported by the Astra Machina.</p>
+<section id="video-codes">
+<h4>Video Codes<a class="headerlink" href="#video-codes" title="Permalink to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Codec</p></th>
+<th class="head"><p>Parser Plugin</p></th>
+<th class="head"><p>Decoder Plugin</p></th>
+<th class="head"><p>Encoder Plugin</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>H.264</p></td>
+<td><p>h264parse</p></td>
+<td><p>v4l2h264dec</p></td>
+<td><p>v4l2h264enc</p></td>
+</tr>
+<tr class="row-odd"><td><p>H.265</p></td>
+<td><p>h265parse</p></td>
+<td><p>v4l2h265dec</p></td>
+<td><p>None</p></td>
+</tr>
+<tr class="row-even"><td><p>VP8</p></td>
+<td><p>N/A</p></td>
+<td><p>v4l2vp8dec</p></td>
+<td><p>v4l2vp8enc</p></td>
+</tr>
+<tr class="row-odd"><td><p>VP9</p></td>
+<td><p>vp9parse</p></td>
+<td><p>v4l2vp9dec</p></td>
+<td><p>None</p></td>
+</tr>
+<tr class="row-even"><td><p>AV1</p></td>
+<td><p>av1parse</p></td>
+<td><p>v4l2av1dec</p></td>
+<td><p>None</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="audio-codecs">
+<h4>Audio Codecs<a class="headerlink" href="#audio-codecs" title="Permalink to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Codec</p></th>
+<th class="head"><p>Parser Plugin</p></th>
+<th class="head"><p>Decoder Plugin</p></th>
+<th class="head"><p>Encoder Plugin</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>AAC</p></td>
+<td><p>aacparse</p></td>
+<td><p>fdkaacdec</p></td>
+<td><p>fdkaacenc</p></td>
+</tr>
+<tr class="row-odd"><td><p>Vorbis</p></td>
+<td><p>N/A</p></td>
+<td><p>vorbisdec</p></td>
+<td><p>vorbisenc</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="gstreamer-examples">
+<h3>Gstreamer Examples<a class="headerlink" href="#gstreamer-examples" title="Permalink to this heading"></a></h3>
+<p>To run the following Gstreamer examples, please make sure to set the
+following variables in your environment. These variables may need to be
+set when running commands from the serial console or a remote shell:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">XDG_RUNTIME_DIR</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="mi">0</span>
+<span class="n">export</span> <span class="n">WAYLAND_DISPLAY</span><span class="o">=</span><span class="n">wayland</span><span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">XDG_RUNTIME_DIR</span></code> variable specifies the directory which contains the
+Wayland socket belonging to the user. The <code class="docutils literal notranslate"><span class="pre">WAYLAND_DISPLAY</span></code> variable
+specifies which Wayland compositor to connect to.</p>
+<p>The following examples use the gst-launch-1.0 command line program to
+construct a pipeline and begin playing it. The gst-launch-1.0 command
+takes in a list of element types separated by exclamation points.
+Elements can also contain optional properties. (see <a class="reference external" href="https://gstreamer.freedesktop.org/documentation/tutorials/basic/gstreamer-tools.html?gi-language=c">GStreamer documentation</a> for more details).
+The examples below will show the structure of the command with a brief description.
+Followed by one or more examples.</p>
+<section id="media-playback">
+<h4>Media Playback<a class="headerlink" href="#media-playback" title="Permalink to this heading"></a></h4>
+<section id="audio-sinks">
+<span id="id2"></span><h5>Audio Sinks<a class="headerlink" href="#audio-sinks" title="Permalink to this heading"></a></h5>
+<p>The following examples use the ALSA audio sink to output audio using the ALSA
+audio API (for more details refer to the <a class="reference external" href="https://gstreamer.freedesktop.org/documentation/alsa/alsasink.html?gi-language=c#alsasink">Gstreamer documentation</a> for more details).
+The examples use the device hw:0,7 which corresponds to
+the HDMI output device on SL1680. Hardware devices can be found in the file
+/proc/asound/pcm. Below is an example of the pcm devices on SL1680.
+Device 0-7 corresponds to the HDMI device and will be used in the
+examples below.</p>
+<p>Example /proc/asound/pcm output from SL1680:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@sl1680</span><span class="p">:</span><span class="o">~</span><span class="c1"># cat /proc/asound/pcm</span>
+<span class="mi">00</span><span class="o">-</span><span class="mi">00</span><span class="p">:</span> <span class="n">soc</span><span class="o">-</span><span class="n">i2so1</span> <span class="n">snd</span><span class="o">-</span><span class="n">soc</span><span class="o">-</span><span class="n">dummy</span><span class="o">-</span><span class="n">dai</span><span class="o">-</span><span class="mi">0</span> <span class="p">:</span>  <span class="p">:</span> <span class="n">playback</span> <span class="mi">1</span>
+<span class="mi">00</span><span class="o">-</span><span class="mi">01</span><span class="p">:</span> <span class="n">soc</span><span class="o">-</span><span class="n">i2so3</span> <span class="n">snd</span><span class="o">-</span><span class="n">soc</span><span class="o">-</span><span class="n">dummy</span><span class="o">-</span><span class="n">dai</span><span class="o">-</span><span class="mi">1</span> <span class="p">:</span>  <span class="p">:</span> <span class="n">playback</span> <span class="mi">1</span>
+<span class="mi">00</span><span class="o">-</span><span class="mi">02</span><span class="p">:</span> <span class="n">soc</span><span class="o">-</span><span class="n">dmic</span> <span class="n">snd</span><span class="o">-</span><span class="n">soc</span><span class="o">-</span><span class="n">dummy</span><span class="o">-</span><span class="n">dai</span><span class="o">-</span><span class="mi">2</span> <span class="p">:</span>  <span class="p">:</span> <span class="n">capture</span> <span class="mi">1</span>
+<span class="mi">00</span><span class="o">-</span><span class="mi">03</span><span class="p">:</span> <span class="n">soc</span><span class="o">-</span><span class="n">i2si2</span> <span class="n">snd</span><span class="o">-</span><span class="n">soc</span><span class="o">-</span><span class="n">dummy</span><span class="o">-</span><span class="n">dai</span><span class="o">-</span><span class="mi">3</span> <span class="p">:</span>  <span class="p">:</span> <span class="n">capture</span> <span class="mi">1</span>
+<span class="mi">00</span><span class="o">-</span><span class="mi">04</span><span class="p">:</span> <span class="n">btsco</span><span class="o">-</span><span class="ow">in</span> <span class="n">snd</span><span class="o">-</span><span class="n">soc</span><span class="o">-</span><span class="n">dummy</span><span class="o">-</span><span class="n">dai</span><span class="o">-</span><span class="mi">4</span> <span class="p">:</span>  <span class="p">:</span> <span class="n">capture</span> <span class="mi">1</span>
+<span class="mi">00</span><span class="o">-</span><span class="mi">05</span><span class="p">:</span> <span class="n">soc</span><span class="o">-</span><span class="n">i2s</span><span class="o">-</span><span class="n">pri</span><span class="o">-</span><span class="n">lpbk</span> <span class="n">snd</span><span class="o">-</span><span class="n">soc</span><span class="o">-</span><span class="n">dummy</span><span class="o">-</span><span class="n">dai</span><span class="o">-</span><span class="mi">5</span> <span class="p">:</span>  <span class="p">:</span> <span class="n">capture</span> <span class="mi">1</span>
+<span class="mi">00</span><span class="o">-</span><span class="mi">06</span><span class="p">:</span> <span class="n">soc</span><span class="o">-</span><span class="n">i2s</span><span class="o">-</span><span class="n">hdmi</span><span class="o">-</span><span class="n">lpbk</span> <span class="n">snd</span><span class="o">-</span><span class="n">soc</span><span class="o">-</span><span class="n">dummy</span><span class="o">-</span><span class="n">dai</span><span class="o">-</span><span class="mi">6</span> <span class="p">:</span>  <span class="p">:</span> <span class="n">capture</span> <span class="mi">1</span>
+<span class="mi">00</span><span class="o">-</span><span class="mi">07</span><span class="p">:</span> <span class="n">soc</span><span class="o">-</span><span class="n">hdmio</span> <span class="n">snd</span><span class="o">-</span><span class="n">soc</span><span class="o">-</span><span class="n">dummy</span><span class="o">-</span><span class="n">dai</span><span class="o">-</span><span class="mi">7</span> <span class="p">:</span>  <span class="p">:</span> <span class="n">playback</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+<section id="video-sinks">
+<h5>Video Sinks<a class="headerlink" href="#video-sinks" title="Permalink to this heading"></a></h5>
+<p>The following examples use the Wayland video sink to create a window and
+render the decoded frames (see <a class="reference external" href="https://gstreamer.freedesktop.org/documentation/waylandsink/index.html?gi-language=c#waylandsink">GStreamer documentation</a> for more details)</p>
+</section>
+</section>
+<section id="audio-playback">
+<h4>Audio Playback<a class="headerlink" href="#audio-playback" title="Permalink to this heading"></a></h4>
+<p>Playing audio files involves reading and parsing the encoded audio data,
+decoding the data, and outputting it to the audio sink. Some data
+formats and audio sinks may also need to convert and resample the data
+before sending it to the audio sink:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gst-launch-1.0 filesrc location=audio_file ! parser ! decoder ! [ convert ] ! [ resample ] ! audiosink
+</pre></div>
+</div>
+<p>This example plays an MP3 file using the speakers of the attached HDMI
+device:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gst-launch-1.0 filesrc location=audio_file.mp3 ! mpegaudioparse ! mpg123audiodec ! audioconvert ! audioresample ! alsasink device=hw:0,7
+</pre></div>
+</div>
+</section>
+<section id="video-playback">
+<h4>Video Playback<a class="headerlink" href="#video-playback" title="Permalink to this heading"></a></h4>
+<p>Playing a video file involves reading the file, demuxing a video stream,
+parsing the encoded data, and decoding the data using the video decoder.
+Finally, the decoded frames our output to the video sink:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gst-launch-1.0 filesrc location=video_file ! demux ! queue ! parser ! decoder ! videosink
+</pre></div>
+</div>
+<p>The following example plays the main video stream of an MP4 file and
+displays the video using Wayland. In this example the video is encoded
+with H265:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! v4l2h265dec ! waylandsink fullscreen=true
+</pre></div>
+</div>
+<p>A similar example, but with a file using AV1 encoding:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! av1parse ! v4l2av1dec ! waylandsink fullscreen=true
+</pre></div>
+</div>
+</section>
+<section id="audio-video-file-playback">
+<h4>Audio / Video File Playback<a class="headerlink" href="#audio-video-file-playback" title="Permalink to this heading"></a></h4>
+<p>Playing a file which contains both audio and video streams requires
+creating a pipeline which parses and decodes both streams:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! av1parse ! v4l2av1dec ! waylandsink fullscreen=true
+</pre></div>
+</div>
+<p>Play an MP4 file with a H265 encoded video stream and an AAC encoded
+audio stream:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gst-launch-1.0 filesrc location=test_file.mp4  ! qtdemux name=demux \
+    demux.video_0 ! queue ! h265parse ! v4l2h265dec ! queue ! waylandsink fullscreen=true \
+    demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,7
+</pre></div>
+</div>
+</section>
+<section id="recording">
+<h4>Recording<a class="headerlink" href="#recording" title="Permalink to this heading"></a></h4>
+<section id="audio-recording">
+<h5>Audio Recording<a class="headerlink" href="#audio-recording" title="Permalink to this heading"></a></h5>
+<p>Recording audio involves reading data from a capture device like a
+microphone, converting, encoding, and multiplexing the data before
+writing it to an output file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gst-launch-1.0 -v alsasrc device=device ! queue ! convert ! encode ! mux ! filesink location=output file
+</pre></div>
+</div>
+<p>The following example records audio from the ALSA capture device 0,2. It
+then converts the raw data into a format which can encoded into the Vorbis
+codec by the encoder. Once the data is encoded, it is then multiplexed into an Ogg
+container and written to the file /tmp/alsasrc.ogg:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gst-launch-1.0 -v alsasrc device=hw:0,2 ! queue ! audioconvert ! vorbisenc ! oggmux ! filesink location=/tmp/alsasrc.ogg
+</pre></div>
+</div>
+</section>
+</section>
+<section id="camera">
+<h4>Camera<a class="headerlink" href="#camera" title="Permalink to this heading"></a></h4>
+<p>Astra Machina supports USB (UVC) cameras with the V4L2 driver stack.
+This stack can be used with Gstreamer to construct pipelines using a
+camera.</p>
+<p>To display video captured from a camera to output it to the video sink:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gst-launch-1.0 v4l2src device=/dev/videoX ! &quot;video data,framerate,format,width,height&quot; ! video sink
+</pre></div>
+</div>
+<p>The following example reads captured data from the V4L2 device
+/dev/video2 and applies the capabilities filter before sending the
+output to the wayland sink:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gst-launch-1.0 v4l2src device=/dev/video2 ! &quot;video/x-raw,framerate=30/1,format=YUY2,width=640,height=480&quot; ! waylandsink fullscreen=true
+</pre></div>
+</div>
+</section>
+<section id="gstreamer-playbin-plugin">
+<h4>Gstreamer Playbin Plugin<a class="headerlink" href="#gstreamer-playbin-plugin" title="Permalink to this heading"></a></h4>
+<p>Astra Machina contains the Gstreamer playbin plugin. This plugin can
+automatically determine what type of pipeline to construct based on
+automatic file type recognition (see <a class="reference external" href="https://gstreamer.freedesktop.org/documentation/playback/playbin.html?gi-language=c">Gstreamer documentation</a>). This simplifies pipeline creation.</p>
+<p>Playbin will autodetect the media file located at the specified uri, and create a
+pipeline for it. It will then display the video on the video sink and
+render the audio on the audio sink. The video-sink and audio-sink
+parameters are optional. If the parameters are not included, default video and
+audio sinks will be used instead:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gst</span><span class="o">-</span><span class="n">launch</span><span class="o">-</span><span class="mf">1.0</span> <span class="n">playbin</span> <span class="n">uri</span><span class="o">=</span><span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span> <span class="n">video</span><span class="o">-</span><span class="n">sink</span><span class="o">=</span><span class="s2">&quot;video sink&quot;</span> <span class="n">audio</span><span class="o">-</span><span class="n">sink</span><span class="o">=</span><span class="s2">&quot;audio sink&quot;</span>
+</pre></div>
+</div>
+<p>Using playbin the example in <a class="reference internal" href="#audio-sinks"><span class="std std-ref">Audio Sinks</span></a> can be reduced to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gst</span><span class="o">-</span><span class="n">launch</span><span class="o">-</span><span class="mf">1.0</span> <span class="n">playbin</span> <span class="n">uri</span><span class="o">=</span><span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span> <span class="n">video</span><span class="o">-</span><span class="n">sink</span><span class="o">=</span><span class="s2">&quot;waylandsink fullscreen=true&quot;</span> <span class="n">audio</span><span class="o">-</span><span class="n">sink</span><span class="o">=</span><span class="s2">&quot;alsasink device=hw:0,7&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="gstreamer-synap-plugin">
+<h4>GStreamer SyNAP Plugin<a class="headerlink" href="#gstreamer-synap-plugin" title="Permalink to this heading"></a></h4>
+<p>Astra Machina provides a Gstreamer plugin which allows adding ML processing to Gstreamer pipelines.
+This plugin uses the SyNAP framework to interface with the hardware accelerators to improve the performance
+of ML processing. For information on SyNAP see <a class="reference internal" href="#synap"><span class="std std-ref">Machine Learning with SyNAP</span></a> below.</p>
+<p>The SyNAP plugin works as a Gstreamer appsrc and appsink. It takes samples from the pipeline and uses the SyNAP
+framework to perform classification or detection on the frame using a neural network. It then outputs the results
+as JSON formatted data.</p>
+<p>We provide a <a class="reference external" href="https://github.com/synaptics-astra/application-gstreamer-plugins-syna/tree/v0.9.0/examples/gst-ai">sample application</a>
+which plays a video while simultaneously performing image classification on the video frames, and then overlaying labels of the
+results onto the video. A prebuilt version of the application is included in the Astra system image.</p>
+<p>Run the example application using the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gst</span><span class="o">-</span><span class="n">ai</span> <span class="o">--</span><span class="n">appmode</span><span class="o">=</span><span class="n">IC</span> <span class="o">--</span><span class="nb">input</span><span class="o">=</span><span class="n">test_file</span><span class="o">.</span><span class="n">mp4</span> <span class="o">--</span><span class="n">output</span><span class="o">=</span><span class="n">screen</span> <span class="o">--</span><span class="n">paramfile</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">gst</span><span class="o">-</span><span class="n">ai</span><span class="o">/</span><span class="n">ic</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="machine-learning-with-synap">
+<span id="synap"></span><h2>Machine Learning with SyNAP<a class="headerlink" href="#machine-learning-with-synap" title="Permalink to this heading"></a></h2>
+<p>Astra Machina uses the SyNAP framework for execution of neural networks using the platforms hardware accelerators.
+This framework allows users to run programs which take advantage of the Neural Processing Unit (NPU)
+and Graphics Processing Unit (GPU) to accelerate the execution of neural networks. (see the <a class="reference external" href="https://synaptics-synap.github.io/doc/v/3.0.0/">SyNAP documentation</a> for more details.)</p>
+</section>
+<section id="connectivity">
+<h2>Connectivity<a class="headerlink" href="#connectivity" title="Permalink to this heading"></a></h2>
+<p>Bluetooth and Wi-Fi are supported on Astra Machina through on-board chip
+solutions and external hardware. The following table lists the various
+on-board chips and external solutions:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>SL Processor</p></th>
+<th class="head"><p>Wireless Device</p></th>
+<th class="head"><p>Physical Interface</p>
+<p>(M.2 PCIe / M.2 SDIO)</p>
+</th>
+<th class="head"><p>Software Information</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SL1620</p></td>
+<td><p>SYNA 43456</p></td>
+<td><p>M.2 SDIO</p></td>
+<td><ul class="simple">
+<li><p>wpa_supplicant v3.0 enterprise (excluding 192bit mode)</p></li>
+<li><p>WIFI driver version:</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>SL1620</p></td>
+<td><p>SYNA 43711</p></td>
+<td><p>M.2 SDIO</p></td>
+<td><ul class="simple">
+<li><p>wpa_supplicant v3.0 enterprise (excluding 192bit mode)</p></li>
+<li><p>WIFI driver version:</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>SL1640</p></td>
+<td><p>SYNA 43752</p></td>
+<td><p>M.2 PCIe</p></td>
+<td><ul class="simple">
+<li><p>wpa_supplicant v2.10</p></li>
+<li><p>WIFI driver version: v101.10.478</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>SL1640</p></td>
+<td><p>SYNA 43756E</p></td>
+<td><p>M.2 PCIe</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>SL1680</p></td>
+<td><p>SYNA 43752</p></td>
+<td><p>M.2 PCIe</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>SL1680</p></td>
+<td><p>SYNA 43756E</p></td>
+<td><p>M.2 PCIe</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The Synaptics Astra Linux BSP contains all of the drivers and firmware required to use the 43xxx modules with both PCIe and SDIO interfaces.
+Wireless network management is handled by the WPA Supplicant daemon which key negotiation with a WPA Authenticator. It supports WEP, WPA, WPA2, and WPA3
+authentication standards. ( See <a class="reference external" href="https://wiki.archlinux.org/title/wpa_supplicant">wpa_supplicant</a> for more details)</p>
+<section id="setting-up-wifi-with-wpa-supplicant">
+<h3>Setting up Wifi with WPA Supplicant<a class="headerlink" href="#setting-up-wifi-with-wpa-supplicant" title="Permalink to this heading"></a></h3>
+<p>The following section describes how to setup Wifi on Astra Machina using WPA Supplicant.</p>
+<section id="generate-the-wpa-pre-shared-key">
+<h4>Generate the WPA Pre-shared Key<a class="headerlink" href="#generate-the-wpa-pre-shared-key" title="Permalink to this heading"></a></h4>
+<p>Generating a pre-shared key from a passphrase avoids having to store the passphrase in the WPA Supplicant config file.</p>
+<p>From the shell, use the wpa_passphrase command line tool to generate a WPA pre-shared key from a passphrase:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@sl1680</span><span class="p">:</span><span class="o">^</span><span class="c1"># wpa_passphrase network_name 12345678</span>
+<span class="n">network</span><span class="o">=</span><span class="p">{</span>
+    <span class="n">ssid</span><span class="o">=</span><span class="s2">&quot;network_name&quot;</span>
+    <span class="n">psk</span><span class="o">=</span><span class="mi">5</span><span class="n">ba83b0673ea069dafe5d5f1af8216771c13be6ad6f11dac9dc0e90b0c604981</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="bringing-up-the-wlan-interface">
+<h4>Bringing up the WLAN Interface<a class="headerlink" href="#bringing-up-the-wlan-interface" title="Permalink to this heading"></a></h4>
+<p>Use ifconfig to instruct the kernel to bring up the wlan interface:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ifconfig</span> <span class="n">wlan0</span> <span class="n">up</span>
+</pre></div>
+</div>
+</section>
+<section id="creating-the-wpa-supplicant-configuration-file">
+<h4>Creating the WPA Supplicant Configuration File<a class="headerlink" href="#creating-the-wpa-supplicant-configuration-file" title="Permalink to this heading"></a></h4>
+<p>WPA Supplicant uses a config file to configure the Wifi connection. This configuration file is located in /etc/wpa_supplicant.</p>
+<p>Create the /etc/wpa_supplicant directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">wpa_supplicant</span>
+</pre></div>
+</div>
+<p>Create the file /etc/wpa_supplicant/wpa_supplicant-wlan0.conf with options for your Wifi Network.</p>
+<p>Contents of an example wpa_supplicant-wlan0.conf:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ctrl_interface</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">wpa_supplicant</span>
+<span class="n">ctrl_interface_group</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">update_config</span><span class="o">=</span><span class="mi">1</span>
+
+<span class="n">network</span><span class="o">=</span><span class="p">{</span>
+    <span class="n">ssid</span><span class="o">=</span><span class="s2">&quot;network_name&quot;</span>
+    <span class="n">psk</span><span class="o">=</span><span class="mi">5</span><span class="n">ba83b0673ea069dafe5d5f1af8216771c13be6ad6f11dac9dc0e90b0c604981</span>
+    <span class="n">key_mgmt</span><span class="o">=</span><span class="n">WPA</span><span class="o">-</span><span class="n">PSK</span>
+    <span class="n">scan_ssid</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="configure-systemd-networkd">
+<h4>Configure systemd-networkd<a class="headerlink" href="#configure-systemd-networkd" title="Permalink to this heading"></a></h4>
+<p>The wlan interface needs to be enabled in the systemd-networkd system daemon configuration.</p>
+<p>Create the new file /etc/systemd/network/25-wlan.network with the following contents:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Match</span><span class="p">]</span>
+<span class="n">Name</span><span class="o">=</span><span class="n">wlan0</span>
+
+<span class="p">[</span><span class="n">Network</span><span class="p">]</span>
+<span class="n">DHCP</span><span class="o">=</span><span class="n">ipv4</span>
+</pre></div>
+</div>
+</section>
+<section id="enable-wifi-services">
+<h4>Enable Wifi Services<a class="headerlink" href="#enable-wifi-services" title="Permalink to this heading"></a></h4>
+<p>The network daemons need to be restarted to load the new configuration.</p>
+<p>Restart network daemons:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">restart</span> <span class="n">systemd</span><span class="o">-</span><span class="n">networkd</span><span class="o">.</span><span class="n">service</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">wpa_supplicant</span><span class="nd">@wlan0</span><span class="o">.</span><span class="n">service</span>
+</pre></div>
+</div>
+<p>Enable wpa_supplicant on boot up:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">enable</span> <span class="n">wpa_supplicant</span><span class="nd">@wlan0</span><span class="o">.</span><span class="n">service</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="performing-throughput-tests">
+<h3>Performing throughput tests<a class="headerlink" href="#performing-throughput-tests" title="Permalink to this heading"></a></h3>
+<p>The following section describes how to run throughput tests using iPerf commands in TCP and UDP modes.</p>
+<section id="tcp-traffic">
+<h4>TCP traffic<a class="headerlink" href="#tcp-traffic" title="Permalink to this heading"></a></h4>
+<p>Client Side:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ iperf -c &lt;IP address of iperf server&gt; -i 1 -w 12M -t 60 -l 1470
+</pre></div>
+</div>
+<p>Server side:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ iperf -s -i 1 -w 12M -l 1470
+</pre></div>
+</div>
+</section>
+<section id="udp-traffic">
+<h4>UDP traffic<a class="headerlink" href="#udp-traffic" title="Permalink to this heading"></a></h4>
+<p>Client side:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ iperf -c &lt;IP address of iperf server&gt; -i 1 -w 12M -u -b 1000M -t 60 -l 1470
+</pre></div>
+</div>
+<p>Server side:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ iperf -s -i 1 -w 12M -l 1470
+</pre></div>
+</div>
+</section>
+</section>
+<section id="using-the-bluetooth-a2dp-source-role">
+<h3>Using the Bluetooth A2DP source role<a class="headerlink" href="#using-the-bluetooth-a2dp-source-role" title="Permalink to this heading"></a></h3>
+<section id="searching-and-connecting-to-the-headset">
+<h4>Searching and connecting to the headset<a class="headerlink" href="#searching-and-connecting-to-the-headset" title="Permalink to this heading"></a></h4>
+<p>First you need to enter the Bluetooth console using the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@sl1640</span><span class="p">:</span><span class="o">~</span><span class="c1"># bluetoothctl</span>
+<span class="p">[</span><span class="n">bluetooth</span><span class="p">]</span><span class="c1">#</span>
+</pre></div>
+</div>
+<p>Once in the Bluetooth console you can run various commands to control the Bluetooth stack described in the following
+paragraphs.</p>
+<p>You can show information about the Bluetooth controller on the board with the <code class="docutils literal notranslate"><span class="pre">show</span></code> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">bluetooth</span><span class="p">]</span><span class="c1"># show</span>
+<span class="n">Controller</span> <span class="n">C0</span><span class="p">:</span><span class="n">F5</span><span class="p">:</span><span class="mi">35</span><span class="p">:</span><span class="n">AA</span><span class="p">:</span><span class="mi">7</span><span class="n">D</span><span class="p">:</span><span class="mi">8</span><span class="n">F</span> <span class="p">(</span><span class="n">public</span><span class="p">)</span>
+        <span class="n">Name</span><span class="p">:</span> <span class="n">sl1640</span>
+        <span class="n">Alias</span><span class="p">:</span> <span class="n">sl1640</span>
+        <span class="n">Class</span><span class="p">:</span> <span class="mh">0x00000000</span>
+        <span class="n">Powered</span><span class="p">:</span> <span class="n">no</span>
+        <span class="n">Discoverable</span><span class="p">:</span> <span class="n">no</span>
+        <span class="n">DiscoverableTimeout</span><span class="p">:</span> <span class="mh">0x000000b4</span>
+        <span class="n">Pairable</span><span class="p">:</span> <span class="n">yes</span>
+        <span class="n">UUID</span><span class="p">:</span> <span class="n">Audio</span> <span class="n">Source</span>              <span class="p">(</span><span class="mi">0000110</span><span class="n">a</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span><span class="p">)</span>
+        <span class="n">UUID</span><span class="p">:</span> <span class="n">Generic</span> <span class="n">Attribute</span> <span class="n">Profile</span> <span class="p">(</span><span class="mi">00001801</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span><span class="p">)</span>
+        <span class="n">UUID</span><span class="p">:</span> <span class="n">Generic</span> <span class="n">Access</span> <span class="n">Profile</span>    <span class="p">(</span><span class="mi">00001800</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span><span class="p">)</span>
+        <span class="n">UUID</span><span class="p">:</span> <span class="n">PnP</span> <span class="n">Information</span>           <span class="p">(</span><span class="mi">00001200</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span><span class="p">)</span>
+        <span class="n">UUID</span><span class="p">:</span> <span class="n">A</span><span class="o">/</span><span class="n">V</span> <span class="n">Remote</span> <span class="n">Control</span> <span class="n">Target</span> <span class="p">(</span><span class="mi">0000110</span><span class="n">c</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span><span class="p">)</span>
+        <span class="n">UUID</span><span class="p">:</span> <span class="n">A</span><span class="o">/</span><span class="n">V</span> <span class="n">Remote</span> <span class="n">Control</span>        <span class="p">(</span><span class="mf">0000110e-0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span><span class="p">)</span>
+        <span class="n">UUID</span><span class="p">:</span> <span class="n">Device</span> <span class="n">Information</span>        <span class="p">(</span><span class="mi">0000180</span><span class="n">a</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span><span class="p">)</span>
+        <span class="n">Modalias</span><span class="p">:</span> <span class="n">usb</span><span class="p">:</span><span class="n">v1D6Bp0246d0541</span>
+        <span class="n">Discovering</span><span class="p">:</span> <span class="n">no</span>
+        <span class="n">Roles</span><span class="p">:</span> <span class="n">central</span>
+        <span class="n">Roles</span><span class="p">:</span> <span class="n">peripheral</span>
+<span class="n">Advertising</span> <span class="n">Features</span><span class="p">:</span>
+        <span class="n">ActiveInstances</span><span class="p">:</span> <span class="mh">0x00</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">SupportedInstances</span><span class="p">:</span> <span class="mh">0x06</span> <span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">SupportedIncludes</span><span class="p">:</span> <span class="n">tx</span><span class="o">-</span><span class="n">power</span>
+        <span class="n">SupportedIncludes</span><span class="p">:</span> <span class="n">appearance</span>
+        <span class="n">SupportedIncludes</span><span class="p">:</span> <span class="n">local</span><span class="o">-</span><span class="n">name</span>
+        <span class="n">SupportedSecondaryChannels</span><span class="p">:</span> <span class="mi">1</span><span class="n">M</span>
+        <span class="n">SupportedSecondaryChannels</span><span class="p">:</span> <span class="mi">2</span><span class="n">M</span>
+        <span class="n">SupportedSecondaryChannels</span><span class="p">:</span> <span class="n">Coded</span>
+</pre></div>
+</div>
+<p>In order to connect to the headset you first need to power on the bluetooth controller:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">bluetooth</span><span class="p">]</span><span class="c1"># power on</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Controller</span> <span class="n">C0</span><span class="p">:</span><span class="n">F5</span><span class="p">:</span><span class="mi">35</span><span class="p">:</span><span class="n">AA</span><span class="p">:</span><span class="mi">7</span><span class="n">D</span><span class="p">:</span><span class="mi">8</span><span class="n">F</span> <span class="n">Class</span><span class="p">:</span> <span class="mh">0x00080000</span>
+<span class="n">Changing</span> <span class="n">power</span> <span class="n">on</span> <span class="n">succeeded</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Controller</span> <span class="n">C0</span><span class="p">:</span><span class="n">F5</span><span class="p">:</span><span class="mi">35</span><span class="p">:</span><span class="n">AA</span><span class="p">:</span><span class="mi">7</span><span class="n">D</span><span class="p">:</span><span class="mi">8</span><span class="n">F</span> <span class="n">Powered</span><span class="p">:</span> <span class="n">yes</span>
+</pre></div>
+</div>
+<p>You then need to set the controller in pairable mode:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">bluetooth</span><span class="p">]</span><span class="c1"># pairable on</span>
+<span class="n">Changing</span> <span class="n">pairable</span> <span class="n">on</span> <span class="n">succeeded</span>
+</pre></div>
+</div>
+<p>You can then search for the headset (make sure the headset is in discoverable mode):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">bluetooth</span><span class="p">]</span><span class="c1"># scan on</span>
+<span class="n">Discovery</span> <span class="n">started</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Controller</span> <span class="n">C0</span><span class="p">:</span><span class="n">F5</span><span class="p">:</span><span class="mi">35</span><span class="p">:</span><span class="n">AA</span><span class="p">:</span><span class="mi">7</span><span class="n">D</span><span class="p">:</span><span class="mi">8</span><span class="n">F</span> <span class="n">Discovering</span><span class="p">:</span> <span class="n">yes</span>
+<span class="p">[</span><span class="n">NEW</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">2</span><span class="n">D</span><span class="p">:</span><span class="mi">9</span><span class="n">A</span><span class="p">:</span><span class="n">A9</span><span class="p">:</span><span class="mi">4</span><span class="n">F</span><span class="p">:</span><span class="mi">54</span><span class="p">:</span><span class="mi">37</span> <span class="mi">2</span><span class="n">D</span><span class="o">-</span><span class="mi">9</span><span class="n">A</span><span class="o">-</span><span class="n">A9</span><span class="o">-</span><span class="mi">4</span><span class="n">F</span><span class="o">-</span><span class="mi">54</span><span class="o">-</span><span class="mi">37</span>
+<span class="p">[</span><span class="n">NEW</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">4</span><span class="n">E</span><span class="p">:</span><span class="n">E7</span><span class="p">:</span><span class="n">B0</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">2</span><span class="n">A</span><span class="p">:</span><span class="mi">11</span> <span class="mi">4</span><span class="n">E</span><span class="o">-</span><span class="n">E7</span><span class="o">-</span><span class="n">B0</span><span class="o">-</span><span class="mi">20</span><span class="o">-</span><span class="mi">2</span><span class="n">A</span><span class="o">-</span><span class="mi">11</span>
+<span class="p">[</span><span class="n">NEW</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">7</span><span class="n">F</span><span class="p">:</span><span class="mi">84</span><span class="p">:</span><span class="n">A3</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="n">E9</span><span class="p">:</span><span class="n">E9</span> <span class="mi">7</span><span class="n">F</span><span class="o">-</span><span class="mi">84</span><span class="o">-</span><span class="n">A3</span><span class="o">-</span><span class="mi">29</span><span class="o">-</span><span class="n">E9</span><span class="o">-</span><span class="n">E9</span>
+<span class="p">[</span><span class="n">NEW</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">6</span><span class="n">A</span><span class="p">:</span><span class="n">B0</span><span class="p">:</span><span class="mi">95</span><span class="p">:</span><span class="mi">7</span><span class="n">E</span><span class="p">:</span><span class="mi">58</span><span class="p">:</span><span class="mi">79</span> <span class="mi">6</span><span class="n">A</span><span class="o">-</span><span class="n">B0</span><span class="o">-</span><span class="mi">95</span><span class="o">-</span><span class="mf">7E-58</span><span class="o">-</span><span class="mi">79</span>
+<span class="p">[</span><span class="n">NEW</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">7</span><span class="n">E</span><span class="p">:</span><span class="mi">4</span><span class="n">D</span><span class="p">:</span><span class="mi">8</span><span class="n">F</span><span class="p">:</span><span class="n">C4</span><span class="p">:</span><span class="mi">3</span><span class="n">B</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span> <span class="mf">7E-4</span><span class="n">D</span><span class="o">-</span><span class="mi">8</span><span class="n">F</span><span class="o">-</span><span class="n">C4</span><span class="o">-</span><span class="mi">3</span><span class="n">B</span><span class="o">-</span><span class="mi">6</span><span class="n">F</span>
+<span class="p">[</span><span class="n">NEW</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">40</span><span class="p">:</span><span class="mi">93</span><span class="p">:</span><span class="n">CE</span><span class="p">:</span><span class="mi">4</span><span class="n">D</span><span class="p">:</span><span class="n">F1</span><span class="p">:</span><span class="mi">8</span><span class="n">E</span> <span class="mi">40</span><span class="o">-</span><span class="mi">93</span><span class="o">-</span><span class="n">CE</span><span class="o">-</span><span class="mi">4</span><span class="n">D</span><span class="o">-</span><span class="n">F1</span><span class="o">-</span><span class="mi">8</span><span class="n">E</span>
+<span class="p">[</span><span class="n">NEW</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">47</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">71</span><span class="p">:</span><span class="n">A3</span><span class="p">:</span><span class="mi">79</span><span class="p">:</span><span class="n">A9</span> <span class="mi">47</span><span class="o">-</span><span class="mi">14</span><span class="o">-</span><span class="mi">71</span><span class="o">-</span><span class="n">A3</span><span class="o">-</span><span class="mi">79</span><span class="o">-</span><span class="n">A9</span>
+<span class="p">[</span><span class="n">NEW</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">67</span><span class="p">:</span><span class="mi">62</span><span class="p">:</span><span class="mi">9</span><span class="n">C</span><span class="p">:</span><span class="mi">4</span><span class="n">B</span><span class="p">:</span><span class="n">F9</span><span class="p">:</span><span class="mi">7</span><span class="n">D</span> <span class="mi">67</span><span class="o">-</span><span class="mi">62</span><span class="o">-</span><span class="mi">9</span><span class="n">C</span><span class="o">-</span><span class="mi">4</span><span class="n">B</span><span class="o">-</span><span class="n">F9</span><span class="o">-</span><span class="mi">7</span><span class="n">D</span>
+<span class="p">[</span><span class="n">NEW</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">8</span><span class="n">C</span><span class="p">:</span><span class="n">F8</span><span class="p">:</span><span class="n">C5</span><span class="p">:</span><span class="n">BD</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="mi">1</span><span class="n">D</span> <span class="n">DTKBTQ3</span>
+<span class="p">[</span><span class="n">NEW</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">BT208</span>
+</pre></div>
+</div>
+<p>This command returns the MAC address of all the devices that are currently discoverable. You need to identify the one
+of the headset you want to pair.</p>
+<p>Once you found the headset you can pair to it by using the <code class="docutils literal notranslate"><span class="pre">pair</span></code> command with the MAC address of the headset:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">bluetooth</span><span class="p">]</span><span class="c1"># pair 0A:73:76:09:55:C0</span>
+<span class="n">Attempting</span> <span class="n">to</span> <span class="n">pair</span> <span class="k">with</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">Connected</span><span class="p">:</span> <span class="n">yes</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">Bonded</span><span class="p">:</span> <span class="n">yes</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">UUIDs</span><span class="p">:</span> <span class="mi">00001108</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">UUIDs</span><span class="p">:</span> <span class="mi">0000110</span><span class="n">b</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">UUIDs</span><span class="p">:</span> <span class="mi">0000110</span><span class="n">c</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">UUIDs</span><span class="p">:</span> <span class="mf">0000110e-0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">UUIDs</span><span class="p">:</span> <span class="mf">0000111e-0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">ServicesResolved</span><span class="p">:</span> <span class="n">yes</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">Paired</span><span class="p">:</span> <span class="n">yes</span>
+<span class="n">Pairing</span> <span class="n">successful</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">ServicesResolved</span><span class="p">:</span> <span class="n">no</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">Connected</span><span class="p">:</span> <span class="n">no</span>
+</pre></div>
+</div>
+<p>The next step is to mark the device as trusted:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">bluetooth</span><span class="p">]</span><span class="c1"># trust 0A:73:76:09:55:C0</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">Trusted</span><span class="p">:</span> <span class="n">yes</span>
+<span class="n">Changing</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">trust</span> <span class="n">succeeded</span>
+</pre></div>
+</div>
+<p>The last step is to setup the connection with the headset:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">bluetooth</span><span class="p">]</span><span class="c1"># connect 0A:73:76:09:55:C0</span>
+<span class="n">Attempting</span> <span class="n">to</span> <span class="n">connect</span> <span class="n">to</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">Connected</span><span class="p">:</span> <span class="n">yes</span>
+<span class="p">[</span><span class="n">NEW</span><span class="p">]</span> <span class="n">Endpoint</span> <span class="o">/</span><span class="n">org</span><span class="o">/</span><span class="n">bluez</span><span class="o">/</span><span class="n">hci0</span><span class="o">/</span><span class="n">dev_0A_73_76_09_55_C0</span><span class="o">/</span><span class="n">sep1</span>
+<span class="p">[</span><span class="n">NEW</span><span class="p">]</span> <span class="n">Transport</span> <span class="o">/</span><span class="n">org</span><span class="o">/</span><span class="n">bluez</span><span class="o">/</span><span class="n">hci0</span><span class="o">/</span><span class="n">dev_0A_73_76_09_55_C0</span><span class="o">/</span><span class="n">sep1</span><span class="o">/</span><span class="n">fd0</span>
+<span class="n">Connection</span> <span class="n">successful</span>
+<span class="p">[</span><span class="n">BT208</span><span class="p">]</span><span class="c1"># [  286.922414] input: BT208 (AVRCP) as /devices/virtual/input/input1</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Transport</span> <span class="o">/</span><span class="n">org</span><span class="o">/</span><span class="n">bluez</span><span class="o">/</span><span class="n">hci0</span><span class="o">/</span><span class="n">dev_0A_73_76_09_55_C0</span><span class="o">/</span><span class="n">sep1</span><span class="o">/</span><span class="n">fd0</span> <span class="n">Volume</span><span class="p">:</span> <span class="mh">0x0060</span> <span class="p">(</span><span class="mi">96</span><span class="p">)</span>
+<span class="p">[</span><span class="n">DEL</span><span class="p">]</span> <span class="n">Device</span> <span class="n">D4</span><span class="p">:</span><span class="n">D2</span><span class="p">:</span><span class="n">D6</span><span class="p">:</span><span class="mi">4</span><span class="n">F</span><span class="p">:</span><span class="mi">80</span><span class="p">:</span><span class="mi">60</span> <span class="mi">445</span><span class="n">HD_BT_60</span>
+<span class="p">[</span><span class="n">CHG</span><span class="p">]</span> <span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="n">ServicesResolved</span><span class="p">:</span> <span class="n">ye</span>
+<span class="p">[</span><span class="n">BT208</span><span class="p">]</span><span class="c1">#</span>
+</pre></div>
+</div>
+<p>If we connection was successful the console prompt will show the name of device we connected to.</p>
+<p>We can now get the information about the device:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">BT208</span><span class="p">]</span><span class="c1"># info</span>
+<span class="n">Device</span> <span class="mi">0</span><span class="n">A</span><span class="p">:</span><span class="mi">73</span><span class="p">:</span><span class="mi">76</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="n">C0</span> <span class="p">(</span><span class="n">public</span><span class="p">)</span>
+        <span class="n">Name</span><span class="p">:</span> <span class="n">BT208</span>
+        <span class="n">Alias</span><span class="p">:</span> <span class="n">BT208</span>
+        <span class="n">Class</span><span class="p">:</span> <span class="mh">0x00240404</span>
+        <span class="n">Icon</span><span class="p">:</span> <span class="n">audio</span><span class="o">-</span><span class="n">headset</span>
+        <span class="n">Paired</span><span class="p">:</span> <span class="n">yes</span>
+        <span class="n">Bonded</span><span class="p">:</span> <span class="n">yes</span>
+        <span class="n">Trusted</span><span class="p">:</span> <span class="n">yes</span>
+        <span class="n">Blocked</span><span class="p">:</span> <span class="n">no</span>
+        <span class="n">Connected</span><span class="p">:</span> <span class="n">yes</span>
+        <span class="n">LegacyPairing</span><span class="p">:</span> <span class="n">no</span>
+        <span class="n">UUID</span><span class="p">:</span> <span class="n">Headset</span>                   <span class="p">(</span><span class="mi">00001108</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span><span class="p">)</span>
+        <span class="n">UUID</span><span class="p">:</span> <span class="n">Audio</span> <span class="n">Sink</span>                <span class="p">(</span><span class="mi">0000110</span><span class="n">b</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span><span class="p">)</span>
+        <span class="n">UUID</span><span class="p">:</span> <span class="n">A</span><span class="o">/</span><span class="n">V</span> <span class="n">Remote</span> <span class="n">Control</span> <span class="n">Target</span> <span class="p">(</span><span class="mi">0000110</span><span class="n">c</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span><span class="p">)</span>
+        <span class="n">UUID</span><span class="p">:</span> <span class="n">A</span><span class="o">/</span><span class="n">V</span> <span class="n">Remote</span> <span class="n">Control</span>        <span class="p">(</span><span class="mf">0000110e-0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span><span class="p">)</span>
+        <span class="n">UUID</span><span class="p">:</span> <span class="n">Handsfree</span>                 <span class="p">(</span><span class="mf">0000111e-0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span><span class="p">)</span>
+        <span class="n">RSSI</span><span class="p">:</span> <span class="o">-</span><span class="mi">69</span>
+        <span class="n">TxPower</span><span class="p">:</span> <span class="mi">4</span>
+</pre></div>
+</div>
+</section>
+<section id="playing-music-to-the-headset">
+<h4>Playing music to the headset<a class="headerlink" href="#playing-music-to-the-headset" title="Permalink to this heading"></a></h4>
+<p>In order to test playback you need to upload a sound file (in <code class="docutils literal notranslate"><span class="pre">.wav</span></code> format)  to the board for instance using <code class="docutils literal notranslate"><span class="pre">scp</span></code>.</p>
+<p>The file can be played to the A2DP sink using the <code class="docutils literal notranslate"><span class="pre">aplay</span></code> command. The takes as parameter the MAC address of the
+headeset (in the example below <code class="docutils literal notranslate"><span class="pre">0A:73:76:09:55:C0</span></code>) and the name of wave file (in the example below
+<code class="docutils literal notranslate"><span class="pre">/home/root/example.wav</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@sl1640</span><span class="p">:</span><span class="o">~</span><span class="c1"># aplay --verbose -D  bluealsa:DEV=0A:73:76:09:55:C0 -t wav /home/root/example.wav</span>
+<span class="n">Playing</span> <span class="n">WAVE</span> <span class="s1">&#39;/home/root/example.wav&#39;</span> <span class="p">:</span> <span class="n">Signed</span> <span class="mi">16</span> <span class="n">bit</span> <span class="n">Little</span> <span class="n">Endian</span><span class="p">,</span> <span class="n">Rate</span> <span class="mi">48000</span> <span class="n">Hz</span><span class="p">,</span> <span class="n">Stereo</span>
+<span class="n">Plug</span> <span class="n">PCM</span><span class="p">:</span> <span class="n">BlueALSA</span> <span class="n">PCM</span><span class="p">:</span> <span class="o">/</span><span class="n">org</span><span class="o">/</span><span class="n">bluealsa</span><span class="o">/</span><span class="n">hci0</span><span class="o">/</span><span class="n">dev_0A_73_76_09_55_C0</span><span class="o">/</span><span class="n">a2dpsrc</span><span class="o">/</span><span class="n">sink</span>
+<span class="n">BlueALSA</span> <span class="n">BlueZ</span> <span class="n">device</span><span class="p">:</span> <span class="o">/</span><span class="n">org</span><span class="o">/</span><span class="n">bluez</span><span class="o">/</span><span class="n">hci0</span><span class="o">/</span><span class="n">dev_0A_73_76_09_55_C0</span>
+<span class="n">BlueALSA</span> <span class="n">Bluetooth</span> <span class="n">codec</span><span class="p">:</span> <span class="n">SBC</span>
+<span class="n">Its</span> <span class="n">setup</span> <span class="ow">is</span><span class="p">:</span>
+  <span class="n">stream</span>       <span class="p">:</span> <span class="n">PLAYBACK</span>
+  <span class="n">access</span>       <span class="p">:</span> <span class="n">RW_INTERLEAVED</span>
+  <span class="nb">format</span>       <span class="p">:</span> <span class="n">S16_LE</span>
+  <span class="n">subformat</span>    <span class="p">:</span> <span class="n">STD</span>
+  <span class="n">channels</span>     <span class="p">:</span> <span class="mi">2</span>
+  <span class="n">rate</span>         <span class="p">:</span> <span class="mi">48000</span>
+  <span class="n">exact</span> <span class="n">rate</span>   <span class="p">:</span> <span class="mi">48000</span> <span class="p">(</span><span class="mi">48000</span><span class="o">/</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">msbits</span>       <span class="p">:</span> <span class="mi">16</span>
+  <span class="n">buffer_size</span>  <span class="p">:</span> <span class="mi">24000</span>
+  <span class="n">period_size</span>  <span class="p">:</span> <span class="mi">6000</span>
+  <span class="n">period_time</span>  <span class="p">:</span> <span class="mi">125000</span>
+  <span class="n">tstamp_mode</span>  <span class="p">:</span> <span class="n">NONE</span>
+  <span class="n">tstamp_type</span>  <span class="p">:</span> <span class="n">GETTIMEOFDAY</span>
+  <span class="n">period_step</span>  <span class="p">:</span> <span class="mi">1</span>
+  <span class="n">avail_min</span>    <span class="p">:</span> <span class="mi">6000</span>
+  <span class="n">period_event</span> <span class="p">:</span> <span class="mi">0</span>
+  <span class="n">start_threshold</span>  <span class="p">:</span> <span class="mi">24000</span>
+  <span class="n">stop_threshold</span>   <span class="p">:</span> <span class="mi">24000</span>
+  <span class="n">silence_threshold</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="n">silence_size</span> <span class="p">:</span> <span class="mi">0</span>
+  <span class="n">boundary</span>     <span class="p">:</span> <span class="mi">6755399441055744000</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="the-linux-boot-process">
+<h2>The Linux Boot Process<a class="headerlink" href="#the-linux-boot-process" title="Permalink to this heading"></a></h2>
+<p>Before the Linux Kernel begins executing on Astra Machina, low level
+firmware and software initializes the hardware and prepares the system for boot.
+This section provides an overview of the software components which prepare the
+system for booting the Linux Kernel.</p>
+<section id="software-overview">
+<h3>Software Overview<a class="headerlink" href="#software-overview" title="Permalink to this heading"></a></h3>
+<p>Astra Machina uses a multistage boot process. This
+section gives a brief description of each component.</p>
+<section id="preboot-firmware">
+<h4>Preboot Firmware<a class="headerlink" href="#preboot-firmware" title="Permalink to this heading"></a></h4>
+<p>The Preboot firmware is a collection of low level firmware which
+initializes specific hardware components and loads the software which
+runs in the Arm TrustZone environment. Once the Preboot firmware
+completes, execution will be transferred to the bootloader. The Preboot
+firmware is provided as binary images which are written to the boot
+device.</p>
+</section>
+<section id="bootloader">
+<span id="bootloader-overview"></span><h4>Bootloader<a class="headerlink" href="#bootloader" title="Permalink to this heading"></a></h4>
+<p>Astra Machina uses the Synaptics U-Boot (SUBoot) bootloader to do additional
+hardware initialization and to boot the Linux Kernel. SUBoot is based on the
+open source U-Boot project. (<a class="reference external" href="https://docs.u-boot.org/en/latest/">U-Boot Documentation</a>)</p>
+</section>
+<section id="linux-kernel-and-device-tree">
+<h4>Linux Kernel and Device Tree<a class="headerlink" href="#linux-kernel-and-device-tree" title="Permalink to this heading"></a></h4>
+<p>Astra Machina primarily run OSes which use the Linux
+Kernel. The Linux Kernel provides the environment in which applications
+run and it manages resources such as CPU, memory, and devices.
+Generally, the Linux Kernel will be built as part of the Yocto build
+process described in the Astra Yocto User Guide.</p>
+<p>The Linux Kernel uses Device Tree data structures to describe the
+hardware components and their configurations on the system. The device
+tree source files are in the Linux Kernel source tree under that path
+<code class="docutils literal notranslate"><span class="pre">arch/arm64/boot/dts/synaptics/</span></code>. These files are maintained in the <a class="reference external" href="https://github.com/synaptics-astra/linux_5_15-overlay">Astra Linux Kernel Overlay repository</a></p>
+</section>
+<section id="root-file-system">
+<h4>Root File System<a class="headerlink" href="#root-file-system" title="Permalink to this heading"></a></h4>
+<p>The root file system (rootfs) contains all the user space binaries and
+libraries needed to execute programs in the Linux OS along with system
+configuration files. The prebuilt images use Yocto to build the rootfs.
+Instructions on how to build and configure a rootfs using Yocto can be
+found in the <a class="reference internal" href="../yocto.html"><span class="doc">Astra Yocto Linux Developer Guide</span></a>.</p>
+</section>
+</section>
+<section id="u-boot">
+<h3>U-Boot<a class="headerlink" href="#u-boot" title="Permalink to this heading"></a></h3>
+<p>As mentioned above, Astra Machina uses U-Boot as its bootloader. There
+are three types of U-Boot which are used with Astra Machina. In addition
+to SUBoot, there are SPI U-Boot and USB U-Boot variants which are used to
+flash or recover a device.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>image type</p></th>
+<th class="head"><p>image usage</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SPI U-Boot</p></td>
+<td><p>burn eMMC image via TFTP server or USB host</p></td>
+</tr>
+<tr class="row-odd"><td><p>USB U-Boot</p></td>
+<td><p>burn eMMC image via TFTP server of USB disk</p></td>
+</tr>
+<tr class="row-even"><td><p>SUBoot</p></td>
+<td><p>burn eMMC image via TFTP server or USB disk, Booting Linux</p></td>
+</tr>
+</tbody>
+</table>
+<p>USB U-Boot and SPI U-Boot are used to boot a device which does not have
+an image written to the eMMC or to do a update which overwrites all of
+the contents of the eMMC.</p>
+<p>USB U-Boot allows the board to receive a copy of the USB version of
+U-Boot over the USB interface. The host system runs the usb_boot tool
+to transfer the USB U-Boot image to the board and execute it. Once USB U-Boot
+is running on the board it can be used to write an image to the eMMC.</p>
+<p>SPI U-Boot is similar to USB U-Boot except that U-Boot runs from
+SPI flash. The SPI flash may be located on the main board of Astra Machina or
+it may be a located on a SPI daughter card which is plugged into the device.
+Once SPI U-Boot is running on the board it can be used to write an image to the eMMC.</p>
+</section>
+<section id="booting-from-spi-and-sd-cards">
+<span id="spi-sd-boot"></span><h3>Booting from SPI and SD Cards<a class="headerlink" href="#booting-from-spi-and-sd-cards" title="Permalink to this heading"></a></h3>
+<p>Astra Machina’s I/O board has a jumper labeled <code class="docutils literal notranslate"><span class="pre">SD-Boot</span></code>. This jumper controls
+whether the device boots from the eMMC or the internal SPI flash. If the jumper
+is attached then the device will boot from the internal SPI flash. Remove the jumper
+to boot from eMMC.</p>
+<figure class="align-default" id="id14">
+<img alt="../_images/sd-boot-jumper.png" src="../_images/sd-boot-jumper.png" />
+<figcaption>
+<p><span class="caption-text">Astra Machina Component Diagram with SD-Boot jumper highlighted</span><a class="headerlink" href="#id14" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Astra Machina’s internal SPI flash comes preprogrammed with SPI U-Boot. When the
+SD-Boot jumper is connected the device will either boot from SPI flash or from an
+SD Card if one is inserted in the SD Card slot.</p>
+</section>
+</section>
+<section id="updating-the-firmware">
+<span id="prepare-to-boot"></span><h2>Updating the Firmware<a class="headerlink" href="#updating-the-firmware" title="Permalink to this heading"></a></h2>
+<p>On power on, Astra Machina will read the firmware, bootloader, and the
+Linux Kernel from a boot device. The most common boot device is an eMMC
+device on the board. This section will discuss how to write a boot image
+to the eMMC.</p>
+<section id="the-astra-system-image">
+<h3>The Astra System Image<a class="headerlink" href="#the-astra-system-image" title="Permalink to this heading"></a></h3>
+<figure class="align-default" id="id15">
+<img alt="../_images/astra_image.png" src="../_images/astra_image.png" />
+<figcaption>
+<p><span class="caption-text">A screenshot of the Astra image</span><a class="headerlink" href="#id15" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The “Astra System Image” is a directory containing several subimg
+files and emmc_part_list, emmc_image_list, and emmc_image_list_full. The
+emmc_part_list describes the GUID Partition Table (GPT) which will be
+used for the eMMC. The emmc_image_list* files specify which sub image
+files should be written to which partition on the eMMC.</p>
+<p>Example SL1640 Partition Table:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Partition name</p></th>
+<th class="head"><p>Contents</p></th>
+<th class="head"><p>Can be removed</p></th>
+<th class="head"><p>Accessed by</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>factory_setting</p></td>
+<td><p>MAC address and other factory provisioned files, used by user space</p></td>
+<td><p>No</p></td>
+<td><p>Linux user space</p></td>
+</tr>
+<tr class="row-odd"><td><p>key_a</p></td>
+<td><p>AVB keys, user keys (A copy)</p></td>
+<td><p>Yes</p></td>
+<td><p>Early boot (boot partition)</p></td>
+</tr>
+<tr class="row-even"><td><p>tzk_a</p></td>
+<td><p>TrustZone Kernel (A copy)</p></td>
+<td><p>Yes</p></td>
+<td><p>Early boot (boot partition)</p></td>
+</tr>
+<tr class="row-odd"><td><p>key_b</p></td>
+<td><p>AVB keys, user keys (B copy)</p></td>
+<td><p>Yes</p></td>
+<td><p>Early boot (boot partition)</p></td>
+</tr>
+<tr class="row-even"><td><p>tzk_b</p></td>
+<td><p>TrustZone Kernel (B copy)</p></td>
+<td><p>Yes</p></td>
+<td><p>Early boot (boot partition)</p></td>
+</tr>
+<tr class="row-odd"><td><p>bl_a</p></td>
+<td><p>OEM Boot loader (A copy)</p></td>
+<td><p>Yes</p></td>
+<td><p>Early boot (boot partition)</p></td>
+</tr>
+<tr class="row-even"><td><p>bl_b</p></td>
+<td><p>OEM Boot loader (B copy)</p></td>
+<td><p>Yes</p></td>
+<td><p>Early boot (boot partition)</p></td>
+</tr>
+<tr class="row-odd"><td><p>boot_a</p></td>
+<td><p>Linux Kernel, loaded by OEM bootloader (A copy)</p></td>
+<td><p>No</p></td>
+<td><p>OEM boot loader (bl_a)</p></td>
+</tr>
+<tr class="row-even"><td><p>boot_b</p></td>
+<td><p>Linux Kernel, loaded by OEM bootloader (B copy)</p></td>
+<td><p>No</p></td>
+<td><p>OEM boot loader (bl_b)</p></td>
+</tr>
+<tr class="row-odd"><td><p>firmware_a</p></td>
+<td><p>GPU / DSP / SM firmwares, loaded by early boot, required (A copy)</p></td>
+<td><p>Yes</p></td>
+<td><p>Early boot (boot partition)</p></td>
+</tr>
+<tr class="row-even"><td><p>firmware_b</p></td>
+<td><p>GPU / DSP / SM firmwares, loaded by early boot, required (B copy)</p></td>
+<td><p>Yes</p></td>
+<td><p>Early boot (boot partition)</p></td>
+</tr>
+<tr class="row-odd"><td><p>rootfs_a</p></td>
+<td><p>Root file system, used by Linux, can be changed (A copy)</p></td>
+<td><p>No</p></td>
+<td><p>Linux (boot_a)</p></td>
+</tr>
+<tr class="row-even"><td><p>rootfs_b</p></td>
+<td><p>Root file system, used by Linux, can be changed (B copy)</p></td>
+<td><p>No</p></td>
+<td><p>Linux (boot_b)</p></td>
+</tr>
+<tr class="row-odd"><td><p>fastlogo_a</p></td>
+<td><p>Fast logo image, loaded by OEM bootloader, can be changed (A copy)</p></td>
+<td><p>No</p></td>
+<td><p>OEM bootloader (bl_a)</p></td>
+</tr>
+<tr class="row-even"><td><p>fastlogo_b</p></td>
+<td><p>Fast logo image, loaded by OEM bootloader, can be changed (B copy)</p></td>
+<td><p>No</p></td>
+<td><p>OEM bootloader (bl_b)</p></td>
+</tr>
+<tr class="row-odd"><td><p>devinfo</p></td>
+<td><p>Device information (such as serial number, mac address ) required</p></td>
+<td><p>Yes</p></td>
+<td><p>Early boot (boot partition)</p></td>
+</tr>
+<tr class="row-even"><td><p>misc</p></td>
+<td><p>Boot control settings, required</p></td>
+<td><p>Yes</p></td>
+<td><p>Early boot (boot partition)</p></td>
+</tr>
+<tr class="row-odd"><td><p>home</p></td>
+<td><p>Mounted in /home, can be customized</p></td>
+<td><p>No</p></td>
+<td><p>Linux user space</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="updating-the-firmware-using-usb">
+<h3>Updating the Firmware using USB<a class="headerlink" href="#updating-the-firmware-using-usb" title="Permalink to this heading"></a></h3>
+<p>Astra Machina supports updating firmware using USB.</p>
+<section id="setting-up-the-usb-boot-environment">
+<span id="usb-boot-setup"></span><h4>Setting up the USB Boot Environment<a class="headerlink" href="#setting-up-the-usb-boot-environment" title="Permalink to this heading"></a></h4>
+<p>Booting from USB requires the usb_boot software tool to be the installed on
+a host system. Windows, Mac, and Linux hosts are supported. Windows systems
+also require the Synaptics WinUSB Driver. Mac and Linux systems do not require
+any additional drivers. USB Boot also requires setting up the serial console
+as described in the <a class="reference internal" href="#setup-serial-console"><span class="std std-ref">Setting up the Serial Console</span></a> section above. This section
+covers how to configure the host system and prepare for USB booting.</p>
+<section id="hardware-setup">
+<h5>Hardware Setup<a class="headerlink" href="#hardware-setup" title="Permalink to this heading"></a></h5>
+<p>To run usb_boot you will need to connect the USB-TTL board and cable to Astra
+Machina as described in the <a class="reference internal" href="#setup-serial-console"><span class="std std-ref">Setting up the Serial Console</span></a> section above.
+This will allow you to see console messages during the flashing process and input
+commands to the bootloader. You will also need to connect a USB cable from the host
+system to the USB Type-C USB 2.0 port on Astra Machina (next to the ethernet port).</p>
+<figure class="align-default" id="id16">
+<img alt="../_images/usb-c.png" src="../_images/usb-c.png" />
+<figcaption>
+<p><span class="caption-text">Astra Machina Component Diagram with USB Type-C USB 2.0 port highlighted</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="installing-the-winusb-driver-windows-only">
+<h5>Installing the WinUSB Driver (Windows Only)<a class="headerlink" href="#installing-the-winusb-driver-windows-only" title="Permalink to this heading"></a></h5>
+<p>Windows requires a special USB kernel driver to communicate with
+Astra Machina over USB. Please download the driver from
+<a class="reference external" href="https://github.com/synaptics-astra/usb-tool">GitHub</a>. Linux and Mac hosts
+can access the Astra board from user space and do not need any additional
+kernel drivers.</p>
+<p>After downloading and decompressing the USB Boot software package, right
+click on the <code class="docutils literal notranslate"><span class="pre">SYNA_WinUSB.inf</span></code> file in the <code class="docutils literal notranslate"><span class="pre">Synaptics_WinUSB_Driver</span></code>
+directory. Select “Install” from the drop down menu.</p>
+<figure class="align-default" id="id17">
+<img alt="../_images/install_driver_win.png" src="../_images/install_driver_win.png" />
+<figcaption>
+<p><span class="caption-text">Install the driver</span><a class="headerlink" href="#id17" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>After installing the driver, the Astra Machina will show up in
+the Windows Device Manager as the “Synaptics IoT: Tools package USB
+Driver for Synaptics Processors” when operating in USB Boot mode.</p>
+<figure class="align-default" id="id18">
+<img alt="../_images/devices_win.png" src="../_images/devices_win.png" />
+<figcaption>
+<p><span class="caption-text">Devices listed by the operating system after installing the driver</span><a class="headerlink" href="#id18" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="running-the-usb-boot-tool">
+<h5>Running the USB Boot Tool<a class="headerlink" href="#running-the-usb-boot-tool" title="Permalink to this heading"></a></h5>
+<p>Also included in the Synaptics usb-tool package is the usb_boot user space
+tool. This is the tool which communicates with Astra Machina over USB.
+Each Astra Machina variant will have its own usb_boot directory. Included in each
+directory will be a <code class="docutils literal notranslate"><span class="pre">usb_boot</span></code> binary and the <code class="docutils literal notranslate"><span class="pre">run</span></code> script used to run it.
+The directory will also contain an images directory which contains all of the
+image files needed to boot the board over USB. This include images which contain
+the USB U-Boot bootloader.</p>
+<p>On Windows, double click on the run.bat file to launch the tool. This
+script will execute the binary using the specific options required for
+Astra Machina variant being used.</p>
+<figure class="align-default" id="id19">
+<img alt="../_images/usb_user_tool_win.png" src="../_images/usb_user_tool_win.png" />
+<figcaption>
+<p><span class="caption-text">Directory containing the USBBoot tool on Windows</span><a class="headerlink" href="#id19" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>After running the <code class="docutils literal notranslate"><span class="pre">run.bat</span></code> a window will open showing the status of the flash process.</p>
+<figure class="align-default" id="id20">
+<img alt="../_images/usbtool_output_win.png" src="../_images/usbtool_output_win.png" />
+<figcaption>
+<p><span class="caption-text">Output of the usb_boot tool on Windows</span><a class="headerlink" href="#id20" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>On Mac, right click on the directory which contains the version of usb_boot which matches
+the Astra Machina variant which you are about to boot. From the drop down select <code class="docutils literal notranslate"><span class="pre">Services</span> <span class="pre">-&gt;</span> <span class="pre">New</span> <span class="pre">Terminal</span> <span class="pre">at</span> <span class="pre">Folder</span></code>.</p>
+<figure class="align-default" id="id21">
+<img alt="../_images/mac-open-terminal.jpg" src="../_images/mac-open-terminal.jpg" />
+<figcaption>
+<p><span class="caption-text">Opening a Terminal for USB Boot on Mac</span><a class="headerlink" href="#id21" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>This will open a terminal inside of the selected usb_boot directory. From there run the <code class="docutils literal notranslate"><span class="pre">run.sh</span></code> script to
+run the tool. You may be prompted for your password since the script internally calls sudo. The tool
+requires additional permissions to interface with USB devices and access system resources.</p>
+<figure class="align-default" id="id22">
+<img alt="../_images/mac-run-usbboot.png" src="../_images/mac-run-usbboot.png" />
+<figcaption>
+<p><span class="caption-text">Output of the usb_boot tool on Mac</span><a class="headerlink" href="#id22" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>On Linux, right click on the directory which contains the version of usb_boot which matches
+the Astra Machina variant which you are about to boot. From the drop down select  <code class="docutils literal notranslate"><span class="pre">Open</span> <span class="pre">in</span> <span class="pre">Terminal</span></code>.</p>
+<figure class="align-default" id="id23">
+<img alt="../_images/linux-open-terminal.png" src="../_images/linux-open-terminal.png" />
+<figcaption>
+<p><span class="caption-text">Opening a Terminal for USB Boot on Linux</span><a class="headerlink" href="#id23" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>This will open a terminal inside of the selected usb_boot directory. From there run the <code class="docutils literal notranslate"><span class="pre">run.sh</span></code> script to
+run the tool. You may be prompted for your password since the script internally calls sudo. The tool
+requires additional permissions to interface with USB devices and access system resources.</p>
+<figure class="align-default" id="id24">
+<img alt="../_images/linux-run-usbboot.png" src="../_images/linux-run-usbboot.png" />
+<figcaption>
+<p><span class="caption-text">Output of the usb_boot tool on Linux</span><a class="headerlink" href="#id24" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="booting-using-usb-boot">
+<h5>Booting using USB Boot<a class="headerlink" href="#booting-using-usb-boot" title="Permalink to this heading"></a></h5>
+<p>Once the usb_boot environment has been setup and the usb_boot tool is
+running on the host system, Astra Machina will need to be placed into USB
+Boot mode. To do that press and hold the “USB_BOOT” button on the
+I/O board. Then press and release the “RESET” button. Be sure to hold
+the “USB_BOOT” button long enough so that the board can reset and detect
+that the “USB_BOOT” button is pressed. After booting into USB Boot mode the U-Boot
+prompt “=&gt;” will be displayed in the serial console.</p>
+<figure class="align-default" id="id25">
+<img alt="../_images/usb-boot-and-reset.png" src="../_images/usb-boot-and-reset.png" />
+<figcaption>
+<p><span class="caption-text">Astra Machina Component Diagram with USB_BOOT and RESET buttons highlighted</span><a class="headerlink" href="#id25" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id26">
+<img alt="../_images/usb_boot_output_win.png" src="../_images/usb_boot_output_win.png" />
+<figcaption>
+<p><span class="caption-text">Output of the usb_boot tool and the serial console after successful boot</span><a class="headerlink" href="#id26" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id27">
+<img alt="../_images/putty-usb-boot.png" src="../_images/putty-usb-boot.png" />
+<figcaption>
+<p><span class="caption-text">Serial Console after booting using USB Boot</span><a class="headerlink" href="#id27" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Astra Machina will not show up in the Window’s Device Manager or be seen by the tool until putting the
+device into USB Boot Mode. Hold down the USB_BOOT and press the RESET button as described above.</p>
+</div>
+</section>
+<section id="flashing-firmware-to-emmc-using-usb-boot">
+<h5>Flashing Firmware to eMMC using USB Boot<a class="headerlink" href="#flashing-firmware-to-emmc-using-usb-boot" title="Permalink to this heading"></a></h5>
+<figure class="align-default" id="id28">
+<img alt="../_images/emmc_flash_snapshot.png" src="../_images/emmc_flash_snapshot.png" />
+<figcaption>
+<p><span class="caption-text">Directory with files used to flash the eMMC image</span><a class="headerlink" href="#id28" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>When booting from USB, the usb_boot tool allows transferring
+the eMMC image directly over the USB interface. To flash the eMMC image via USB, copy the image files
+to the ‘images’ folder in your Astra Machina variant’s usb_boot tool directory.</p>
+<p>Write the image to the eMMC using the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">l2emmc</span> <span class="n">eMMCimg</span>
+</pre></div>
+</div>
+<p>The parameter eMMCimg is the name of the image directory under the usb_boot
+tool’s images directory.</p>
+</section>
+</section>
+</section>
+<section id="resetting">
+<h3>Resetting<a class="headerlink" href="#resetting" title="Permalink to this heading"></a></h3>
+<p>Astra Machina will boot into linux if a valid image has been written to the eMMC
+when the board is powered on. After writing an image to the eMMC, issue the reset
+command in U-Boot. Press the “RESET” button on the board, or power cycle the board
+to boot into Linux.</p>
+<p>U-Boot reset command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">reset</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure that the <code class="docutils literal notranslate"><span class="pre">SD-Boot</span></code> jumper is not attached when booting from eMMC. Otherwise,
+the device will boot from internal SPI flash or an SD Card. See <a class="reference internal" href="#spi-sd-boot"><span class="std std-ref">Booting from SPI and SD Cards</span></a>.</p>
+</div>
+</section>
+<section id="updating-the-firmware-from-spi">
+<h3>Updating the Firmware from SPI<a class="headerlink" href="#updating-the-firmware-from-spi" title="Permalink to this heading"></a></h3>
+<p>As described in <a class="reference internal" href="#spi-sd-boot"><span class="std std-ref">Booting from SPI and SD Cards</span></a>, Astra Machina has an internal SPI flash chip which contains
+the SPI U-Boot bootloader. This allows doing firmware updates without using a USB host system.
+Images can be loaded using an external USB drive or downloaded from a TFTP server on a local network.</p>
+<section id="setting-up-the-spi-boot-environment">
+<h4>Setting up the SPI Boot Environment<a class="headerlink" href="#setting-up-the-spi-boot-environment" title="Permalink to this heading"></a></h4>
+<p>Booting from the internal SPI flash does not require any additional software on the host
+besides the software for using the serial console as described in the <a class="reference internal" href="#setup-serial-console"><span class="std std-ref">Setting up the Serial Console</span></a> section above.</p>
+<section id="id3">
+<h5>Hardware Setup<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h5>
+<p>For SPI boot, you will need to connect the USB cable for the
+serial port as described in the <a class="reference internal" href="#setup-serial-console"><span class="std std-ref">Setting up the Serial Console</span></a> section above.
+This will allow you to see console messages during the flashing process and input commands to the SPI U-Boot
+bootloader. You will also need a USB drive or Ethernet cable depending on where the eMMC image files are located.
+The USB drive can be inserted into any of the 4 USB Type-A USB 3.0 ports or the USB Type-C USB 2.0 port (may require
+USB Type-C to USB Type-A adaptor).</p>
+<figure class="align-default" id="id29">
+<img alt="../_images/usb-and-ethernet-ports.png" src="../_images/usb-and-ethernet-ports.png" />
+<figcaption>
+<p><span class="caption-text">Astra Machina Component Diagram with USB and Ethernet ports highlighted</span><a class="headerlink" href="#id29" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="flashing-images-from-a-usb-drive">
+<span id="flashing-from-usb-drive"></span><h4>Flashing Images from a USB Drive<a class="headerlink" href="#flashing-images-from-a-usb-drive" title="Permalink to this heading"></a></h4>
+<p>To flash an Astra system image from an external USB drive simply copy the image
+directory to the USB drive. The USB drive will need a partition with a
+Fat32 formatted file system and enough capacity to fit the Astra system image.</p>
+<p>Write the image to eMMC using the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">usb2emmc</span> <span class="n">eMMCimg</span>
+</pre></div>
+</div>
+<p>The parameter eMMCimg is the name of the image directory on the USB drive.</p>
+</section>
+<section id="flashing-images-from-a-tftp-server">
+<h4>Flashing Images from a TFTP Server<a class="headerlink" href="#flashing-images-from-a-tftp-server" title="Permalink to this heading"></a></h4>
+<p>To flash an Astra system image from a TFTP server you will first need to
+connect Astra Machina to a local network using the ethernet port. Copy the
+Astra image to the TFTP server so that it can be accessed by the device
+over the network. Once the device is connected to the network, boot to
+the U-Boot prompt.</p>
+<p>Initialize networking and request an IP address from a DHCP server on the local network:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">net_init</span><span class="p">;</span> <span class="n">dhcp</span><span class="p">;</span> <span class="n">setenv</span> <span class="n">serverip</span> <span class="mf">10.10.10.10</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Write the image to eMMC from the TFTP server using the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">tftp2emmc</span> <span class="n">eMMCimg</span>
+</pre></div>
+</div>
+<p>The parameter eMMCimg is the name of the image directory on the TFTP server.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the examples above the TFTP server’s address is
+10.10.10.10. Please replace this IP with the IP address of the server
+hosting TFTP.</p>
+</div>
+</section>
+</section>
+<section id="updating-internal-spi-flash-firmware">
+<h3>Updating Internal SPI Flash Firmware<a class="headerlink" href="#updating-internal-spi-flash-firmware" title="Permalink to this heading"></a></h3>
+<p>The internal SPI flash on Astra Machina can also be updated using the methods described above.</p>
+<section id="flashing-image-from-usb-boot">
+<h4>Flashing Image from USB Boot<a class="headerlink" href="#flashing-image-from-usb-boot" title="Permalink to this heading"></a></h4>
+<p>To update the internal SPI flash firmware using usb_boot you must first follow the steps in section <a class="reference internal" href="#usb-boot-setup"><span class="std std-ref">Setting up the USB Boot Environment</span></a>.</p>
+<figure class="align-default" id="id30">
+<img alt="../_images/spi_flash_snapshot.png" src="../_images/spi_flash_snapshot.png" />
+<figcaption>
+<p><span class="caption-text">Directory with files used to flash the SPI flash</span><a class="headerlink" href="#id30" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Once Astra Machina has booted U-Boot from USB, program the SPI flash by copying the SPI image
+file to the “images” directory in the usb_boot tool’s directory.</p>
+<p>Then write the image to the SPI flash using the commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">usbload</span> <span class="n">spi_uboot_en</span><span class="o">.</span><span class="n">bin</span> <span class="mh">0x10000000</span>
+<span class="o">=&gt;</span> <span class="n">spinit</span><span class="p">;</span> <span class="n">erase</span> <span class="n">f0000000</span> <span class="n">f02fffff</span><span class="p">;</span> <span class="n">cp</span><span class="o">.</span><span class="n">b</span> <span class="mh">0x10000000</span> <span class="mh">0xf0000000</span> <span class="mh">0x300000</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="flashing-image-from-an-external-usb-drive">
+<h4>Flashing Image from an External USB Drive<a class="headerlink" href="#flashing-image-from-an-external-usb-drive" title="Permalink to this heading"></a></h4>
+<p>To update the internal SPI flash firmware using an external USB drive, simply copy the image to the drive.
+Details on the how to setup the USB drive are covered in <a class="reference internal" href="#flashing-from-usb-drive"><span class="std std-ref">Flashing Images from a USB Drive</span></a>.</p>
+<p>Write the image to SPI flash using the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">usb</span> <span class="n">start</span><span class="p">;</span> <span class="n">fatload</span> <span class="n">usb</span> <span class="mi">0</span> <span class="mh">0x10000000</span> <span class="n">spi_uboot_en</span><span class="o">.</span><span class="n">bin</span><span class="p">;</span>
+<span class="o">=&gt;</span> <span class="n">spinit</span><span class="p">;</span> <span class="n">erase</span> <span class="n">f0000000</span> <span class="n">f02fffff</span><span class="p">;</span> <span class="n">cp</span><span class="o">.</span><span class="n">b</span> <span class="mh">0x10000000</span> <span class="mh">0xf0000000</span> <span class="mh">0x300000</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="flashing-image-from-tftp-server">
+<h4>Flashing Image from TFTP Server<a class="headerlink" href="#flashing-image-from-tftp-server" title="Permalink to this heading"></a></h4>
+<p>To update the internal SPI flash firmware by downloading it from a TFTP server, simply copy the image to
+the TFTP server.</p>
+<p>Write the SPI image to the SPI flash from the TFTP server using the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">net_init</span><span class="p">;</span> <span class="n">dhcp</span><span class="p">;</span> <span class="n">setenv</span> <span class="n">serverip</span> <span class="mf">10.10.10.10</span><span class="p">;</span>
+<span class="o">=&gt;</span> <span class="n">tftpboot</span> <span class="mh">0x10000000</span> <span class="n">spi_uboot_en</span><span class="o">.</span><span class="n">bin</span><span class="p">;</span>
+<span class="o">-&gt;</span> <span class="n">spinit</span><span class="p">;</span> <span class="n">erase</span> <span class="n">f0000000</span> <span class="n">f02fffff</span><span class="p">;</span> <span class="n">cp</span><span class="o">.</span><span class="n">b</span> <span class="mh">0x10000000</span> <span class="mh">0xf0000000</span> <span class="mh">0x300000</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the examples above the TFTP server’s address is
+10.10.10.10. Please replace this IP with the IP address of the server
+hosting TFTP.</p>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../quickstart/build_image.html" class="btn btn-neutral float-left" title="Building and installing a custom system image" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../yocto.html" class="btn btn-neutral float-right" title="Astra Yocto Linux Developer Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

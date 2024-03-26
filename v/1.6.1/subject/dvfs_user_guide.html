@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Voltage and Frequency Switching &mdash; Synaptics Astra SDK User Guide 1.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b79f0e1f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Power Measurements with Astra Machina" href="power_measurement.html" />
+    <link rel="prev" title="eMMC Partition Customization on Astra Machina" href="emmc_layout_customization.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Subject Specific User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="syna_drm_kms_user_guide.html">SYNA DRM / KMS Driver User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waveshare_dsi-configuration.html">Waveshare Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="haier_panel_configuration.html">Haier Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory_layout_customization.html">Memory Layout Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emmc_layout_customization.html">eMMC Partition Customization on Astra Machina</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Dynamic Voltage and Frequency Switching</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cpufreq-sysfs-interface">CPUFreq sysfs Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#devfreq-sysfs-interface">DevFreq sysfs Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checking-regulator-voltage">Checking Regulator Voltage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="power_measurement.html">Power Measurements with Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weston_default_display.html">Setting the Weston Default Display for Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isp_sensor_integration.html">ISP Sensor Integration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating_isp_sensor_configuration.html">Updating the ISP Sensor Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpios.html">GPIOs on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp_flow_user_guide.html">Astra MP Flow User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastlogo_image_generation.html">FastLogo Sub-Image(fastlogo.subimg.gz) File Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uboot_fastlogo_configuration.html">Uboot Fastlogo Customization User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="swupdate_user_guide.html">SWUpdate User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controlling_volume_with_gpios.html">Controlling ALSA Volume using GPIOs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thermal_protection.html">CPU Thermal Protection on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_docker.html">Ubuntu-based Docker Container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enable_sdio_wifi.html">Enabling SDIO WiFi for SL640 and SL680</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Subject Specific User Guides</a></li>
+      <li class="breadcrumb-item active">Dynamic Voltage and Frequency Switching</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dynamic-voltage-and-frequency-switching">
+<h1>Dynamic Voltage and Frequency Switching<a class="headerlink" href="#dynamic-voltage-and-frequency-switching" title="Permalink to this heading"></a></h1>
+<p>Astra Machina supports Dynamic Voltage and Frequency Switching using the Linux Kernel’s CPUFreq and DevFreq subsystems. This allows
+the system to adjust VCPU and VCORE clock frequencies and voltages based on system performance. VCPU is the power supplied to the
+CPU cores and VCORE is the power supplied to the GPU, DDR, NPU, and other modules.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p>SL1620</p></td>
+<td><p>SL1640</p></td>
+<td><p>SL1680</p></td>
+</tr>
+<tr class="row-even"><td><p>VCPU (CPUFreq)</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+</tr>
+<tr class="row-odd"><td><p>VCORE (DevFreq)</p></td>
+<td><p>N</p></td>
+<td><p>Y</p></td>
+<td><p>N</p></td>
+</tr>
+</tbody>
+</table>
+<p><em>DVFS Support Table</em></p>
+<p>Clock frequencies and voltage configurations are defined in the Operating Performance Points (OPP) table in device tree. The <code class="docutils literal notranslate"><span class="pre">opp_table0</span></code>
+is defined in <code class="docutils literal notranslate"><span class="pre">dolphin.dtsi</span></code>, <code class="docutils literal notranslate"><span class="pre">platypus.dtsi</span></code>, and <code class="docutils literal notranslate"><span class="pre">myna2.dtsi</span></code> for VCPU. The <code class="docutils literal notranslate"><span class="pre">vcore_opp_table</span></code> is defined in <code class="docutils literal notranslate"><span class="pre">platypus.dtsi</span></code> for VCORE.</p>
+<figure class="align-default" id="id1">
+<img alt="../_images/sl1680-opp-table.png" src="../_images/sl1680-opp-table.png" />
+<figcaption>
+<p><span class="caption-text">SL1680 OPP table defined in dolphin.dtsi</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id2">
+<img alt="../_images/sl1640-vcore-opp-table.png" src="../_images/sl1640-vcore-opp-table.png" />
+<figcaption>
+<p><span class="caption-text">SL1640 VCORE OPP table defined in platypus.dtsi</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<section id="cpufreq-sysfs-interface">
+<h2>CPUFreq sysfs Interface<a class="headerlink" href="#cpufreq-sysfs-interface" title="Permalink to this heading"></a></h2>
+<p>The Linux CPUFreq subsystem provides a sysfs interface for viewing and setting frequencies and governor policies at <code class="docutils literal notranslate"><span class="pre">/sys/devices/system/cpu/cpufreq/policy0</span></code>.</p>
+<figure class="align-default" id="id3">
+<img alt="../_images/sl1640-cpufreq-sysfs.png" src="../_images/sl1640-cpufreq-sysfs.png" />
+<figcaption>
+<p><span class="caption-text">SL1640 CPUFreq sysfs files</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>More information at <a class="reference external" href="https://www.kernel.org/doc/html/v5.15/admin-guide/pm/cpufreq.html">CPUFreq Linux Kernel Documentation</a>.</p>
+</section>
+<section id="devfreq-sysfs-interface">
+<h2>DevFreq sysfs Interface<a class="headerlink" href="#devfreq-sysfs-interface" title="Permalink to this heading"></a></h2>
+<p>The Linux DevFreq subsystem also provides a sysfs interface similar to the one provided by CPUFreq at <code class="docutils literal notranslate"><span class="pre">:/sys/class/devfreq/soc:dvfs</span></code>.</p>
+<figure class="align-default" id="id4">
+<img alt="../_images/sl1640-devfreq-sysfs.png" src="../_images/sl1640-devfreq-sysfs.png" />
+<figcaption>
+<p><span class="caption-text">SL1640 DevFreq sysfs files</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>More information at <a class="reference external" href="https://www.kernel.org/doc/Documentation/ABI/testing/sysfs-class-devfreq">DevFreq Linux Kernel Documentation</a>.</p>
+</section>
+<section id="checking-regulator-voltage">
+<h2>Checking Regulator Voltage<a class="headerlink" href="#checking-regulator-voltage" title="Permalink to this heading"></a></h2>
+<p>The voltages being supplied to VCPU and VCORE can be viewed using the regulator sysfs interface located at <code class="docutils literal notranslate"><span class="pre">/sys/class/regulator</span></code>.</p>
+<figure class="align-default" id="id5">
+<img alt="../_images/sl1640-regulators.png" src="../_images/sl1640-regulators.png" />
+<figcaption>
+<p><span class="caption-text">SL1640 output from sysfs regulator interface</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="emmc_layout_customization.html" class="btn btn-neutral float-left" title="eMMC Partition Customization on Astra Machina" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="power_measurement.html" class="btn btn-neutral float-right" title="Power Measurements with Astra Machina" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2025, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

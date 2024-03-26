@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Haier Panel Configuration Guide &mdash; Synaptics Astra SDK User Guide 1.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ee41c26d"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Memory Layout Customization on Astra Machina" href="memory_layout_customization.html" />
+    <link rel="prev" title="Waveshare Panel Configuration Guide" href="waveshare_7inch_dsi-configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Subject Specific User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="syna_drm_kms_user_guide.html">SYNA DRM / KMS Driver User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waveshare_7inch_dsi-configuration.html">Waveshare Panel Configuration Guide</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Haier Panel Configuration Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connection">Connection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#software-configuration">Software Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="memory_layout_customization.html">Memory Layout Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emmc_layout_customization.html">eMMC Partition Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dvfs_user_guide.html">Dynamic Voltage and Frequency Switching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power_measurement.html">Power Measurements with Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weston_default_display.html">Setting the Weston Default Display for Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isp_sensor_integration.html">ISP Sensor Integration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating_isp_sensor_configuration.html">Updating the ISP Sensor Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpios.html">GPIOs on Astra Machina</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Subject Specific User Guides</a></li>
+      <li class="breadcrumb-item active">Haier Panel Configuration Guide</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="haier-panel-configuration-guide">
+<h1>Haier Panel Configuration Guide<a class="headerlink" href="#haier-panel-configuration-guide" title="Permalink to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
+<p>This document provides steps on how to enable the Haier reference panel on SL16XX platforms.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Haier reference panel was the default output for SL1620 up until v1.3. Follow these instructions
+to switch back to MIPI output with the Haier panel.</p>
+</div>
+</section>
+<section id="connection">
+<h2>Connection<a class="headerlink" href="#connection" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Connect the USB cable on the Haier panel’s adapter board to the USB ports on the SL16XX I/O board.</dt><dd><p>This provides power to the panel.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<figure class="align-default" id="id1">
+<img alt="../_images/usb-ports.png" src="../_images/usb-ports.png" />
+<figcaption>
+<p><span class="caption-text">SL16XX I/O board with USB ports highlighted</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<ol class="arabic simple" start="2">
+<li><p>Connect the 22 pin DSI cable to the MIPI DSI connector on the SL16XX I/O board.</p></li>
+</ol>
+<figure class="align-default" id="id2">
+<img alt="../_images/mipi-dsi-port.png" src="../_images/mipi-dsi-port.png" />
+<figcaption>
+<p><span class="caption-text">SL16XX I/O board with MIPI DSI port highlighted</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id3">
+<img alt="../_images/haier-mipi-adapter-board.jpg" src="../_images/haier-mipi-adapter-board.jpg" />
+<figcaption>
+<p><span class="caption-text">Picture of the Haier MIPI Panel adapter board connected to the MIPI DSI port on the SL16XX I/O board.</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="software-configuration">
+<h2>Software Configuration<a class="headerlink" href="#software-configuration" title="Permalink to this heading"></a></h2>
+<p>The panel needs to be enabled by modifying the Synaptics DRM DSI configuration in the kernels device tree. This requires modifying the
+<code class="docutils literal notranslate"><span class="pre">linux-syna</span></code> package using <code class="docutils literal notranslate"><span class="pre">devtool</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">devtool</span> <span class="n">modify</span> <span class="n">linux</span><span class="o">-</span><span class="n">syna</span>
+</pre></div>
+</div>
+<p>Modify the platform dts file located in <code class="docutils literal notranslate"><span class="pre">build-sl1680/workspace/sources/linux-syna/arch/arm64/boot/dts/synaptics</span></code>.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p>SL1620</p></td>
+<td><p>SL1640</p></td>
+<td><p>SL1680</p></td>
+</tr>
+<tr class="row-even"><td><p>DTS</p></td>
+<td><p>myna2-rdk.dst</p></td>
+<td><p>platypus-rdk.dts</p></td>
+<td><p>dolphin-rdk.dst</p></td>
+</tr>
+</tbody>
+</table>
+<p>Replace the <code class="docutils literal notranslate"><span class="pre">dsi_panel</span></code> entry in the <code class="docutils literal notranslate"><span class="pre">drm</span></code> section with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dsi_panel</span> <span class="p">{</span>
+            <span class="n">status</span><span class="o">=</span> <span class="s2">&quot;okay&quot;</span><span class="p">;</span>
+
+            <span class="n">ACTIVE_WIDTH</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">800</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">HFP</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">60</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">HSYNCWIDTH</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">HBP</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">60</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">ACTIVE_HEIGHT</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1280</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">VFP</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">16</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">VSYNCWIDTH</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">VBP</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">14</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">FREQ</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">75000</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">bits_per_pixel</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">24</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">busformat</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+
+            <span class="n">HTOTAL</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">952</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">Lanes</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">Vid_mode</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">virtual_chan</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">Clk_Lane_Polarity</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">Data_Lane_Polarity</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">Recv_ack</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">Loosely_18</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">H_polarity</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">V_Polarity</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">Data_Polarity</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">Eotp_tx</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">Eotp_rx</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">non</span><span class="o">-</span><span class="n">Continuous_clk</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">dpi_lp_cmd</span> <span class="o">=</span>  <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">Color_coding</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">5</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">Chunks</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">Null_Pkt</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">Byte_clk</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">56250</span><span class="o">&gt;</span><span class="p">;</span>
+
+            <span class="o">/*</span>  <span class="n">COMMAND</span><span class="o">=</span> <span class="n">Command</span> <span class="k">for</span> <span class="n">initialisation</span>
+             <span class="o">*</span>  <span class="n">Format</span> <span class="o">-</span> <span class="o">&lt;</span><span class="n">CMD</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">Payloadlength</span><span class="o">-</span><span class="n">n</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">BYTE1</span><span class="o">&gt;</span> <span class="o">&lt;...&gt;</span> <span class="o">&lt;</span><span class="n">BYTEn</span><span class="o">&gt;</span>
+             <span class="o">*</span>  <span class="n">Long</span> <span class="n">write</span> <span class="n">Ex</span><span class="p">:</span> <span class="mi">39</span> <span class="mi">04</span> <span class="n">FF</span> <span class="mi">98</span> <span class="mi">81</span> <span class="mi">03</span>
+
+             <span class="o">*</span>  <span class="n">Delay</span> <span class="ow">in</span> <span class="n">micro</span> <span class="n">seconds</span> <span class="n">Command</span> <span class="nb">format</span><span class="p">:</span> <span class="mh">0xFF</span> <span class="o">&lt;</span><span class="mi">4</span><span class="n">BYTE</span> <span class="n">delay</span><span class="o">&gt;</span>
+             <span class="o">*</span>  <span class="n">Delay</span> <span class="k">for</span> <span class="mi">100</span><span class="n">ms</span><span class="p">(</span><span class="mi">100000</span><span class="n">us</span> <span class="o">=&gt;</span> <span class="mh">0x000186A0</span><span class="p">)</span>
+             <span class="o">*</span>      <span class="o">-</span> <span class="n">FF</span> <span class="n">A0</span> <span class="mi">86</span> <span class="mi">01</span> <span class="mi">00</span>
+             <span class="o">*/</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mh">0x39</span> <span class="mh">0x04</span> <span class="mh">0xFF</span> <span class="mh">0x98</span> <span class="mh">0x81</span> <span class="mh">0x03</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x01</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x02</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x03</span> <span class="mh">0x73</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x04</span> <span class="mh">0xD7</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x05</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x06</span> <span class="mh">0x08</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x07</span> <span class="mh">0x11</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x08</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x09</span> <span class="mh">0x3F</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x0a</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x0b</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x0c</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x0d</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x0e</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x0f</span> <span class="mh">0x3F</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x10</span> <span class="mh">0x3F</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x11</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x12</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x13</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x14</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x15</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x16</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x17</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x18</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x19</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x1a</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x1b</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x1c</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x1d</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x1e</span> <span class="mh">0x40</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x1f</span> <span class="mh">0x80</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x20</span> <span class="mh">0x06</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x21</span> <span class="mh">0x01</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x22</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x23</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x24</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x25</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x26</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x27</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x28</span> <span class="mh">0x33</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x29</span> <span class="mh">0x33</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x2a</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x2b</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x2c</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x2d</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x2e</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x2f</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x30</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x31</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x32</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x33</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x34</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x35</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x36</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x37</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x38</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x39</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x3a</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x3b</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x3c</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x3d</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x3e</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x3f</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x40</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x41</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x42</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x43</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x44</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x50</span> <span class="mh">0x01</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x51</span> <span class="mh">0x23</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x52</span> <span class="mh">0x44</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x53</span> <span class="mh">0x67</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x54</span> <span class="mh">0x89</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x55</span> <span class="mh">0xab</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x56</span> <span class="mh">0x01</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x57</span> <span class="mh">0x23</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x58</span> <span class="mh">0x45</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x59</span> <span class="mh">0x67</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x5a</span> <span class="mh">0x89</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x5b</span> <span class="mh">0xab</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x5c</span> <span class="mh">0xcd</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x5d</span> <span class="mh">0xef</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x5e</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x5f</span> <span class="mh">0x0C</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x60</span> <span class="mh">0x0C</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x61</span> <span class="mh">0x0F</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x62</span> <span class="mh">0x0F</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x63</span> <span class="mh">0x0E</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x64</span> <span class="mh">0x0E</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x65</span> <span class="mh">0x06</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x66</span> <span class="mh">0x07</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x67</span> <span class="mh">0x0D</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x68</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x69</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x6a</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x6b</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x6c</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x6d</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x6e</span> <span class="mh">0x0D</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x6f</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x70</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x71</span> <span class="mh">0x05</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x72</span> <span class="mh">0x01</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x73</span> <span class="mh">0x08</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x74</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x75</span> <span class="mh">0x0C</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x76</span> <span class="mh">0x0C</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x77</span> <span class="mh">0x0F</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x78</span> <span class="mh">0x0F</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x79</span> <span class="mh">0x0E</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x7a</span> <span class="mh">0x0E</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x7b</span> <span class="mh">0x06</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x7c</span> <span class="mh">0x07</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x7d</span> <span class="mh">0x0D</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x7e</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x7f</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x80</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x81</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x82</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x83</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x84</span> <span class="mh">0x0D</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x85</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x86</span> <span class="mh">0x02</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x87</span> <span class="mh">0x05</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x88</span> <span class="mh">0x01</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x89</span> <span class="mh">0x08</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x8A</span> <span class="mh">0x00</span>
+                    <span class="mh">0x39</span> <span class="mh">0x04</span> <span class="mh">0xFF</span> <span class="mh">0x98</span> <span class="mh">0x81</span> <span class="mh">0x04</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x6E</span> <span class="mh">0x3B</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x6F</span> <span class="mh">0x57</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x3A</span> <span class="mh">0xA4</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x35</span> <span class="mh">0x17</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x8D</span> <span class="mh">0x1F</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x87</span> <span class="mh">0xBA</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xB2</span> <span class="mh">0xD1</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x88</span> <span class="mh">0x0B</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x38</span> <span class="mh">0x01</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x39</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xB5</span> <span class="mh">0x07</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x31</span> <span class="mh">0x75</span>
+                    <span class="mh">0x39</span> <span class="mh">0x04</span> <span class="mh">0xFF</span> <span class="mh">0x98</span> <span class="mh">0x81</span> <span class="mh">0x01</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x22</span> <span class="mh">0x0A</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x31</span> <span class="mh">0x09</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x50</span> <span class="mh">0x86</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x51</span> <span class="mh">0x82</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x60</span> <span class="mh">0x27</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0x62</span> <span class="mh">0x20</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xA0</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xA1</span> <span class="mh">0x12</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xA2</span> <span class="mh">0x21</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xA3</span> <span class="mh">0x12</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xA4</span> <span class="mh">0x15</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xA5</span> <span class="mh">0x27</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xA6</span> <span class="mh">0x1C</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xA7</span> <span class="mh">0x1E</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xA8</span> <span class="mh">0x7D</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xA9</span> <span class="mh">0x1C</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xAA</span> <span class="mh">0x2B</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xAB</span> <span class="mh">0x6C</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xAC</span> <span class="mh">0x1B</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xAD</span> <span class="mh">0x19</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xAE</span> <span class="mh">0x4D</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xAF</span> <span class="mh">0x29</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xB0</span> <span class="mh">0x2A</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xB1</span> <span class="mh">0x4D</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xB2</span> <span class="mh">0x5A</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xB3</span> <span class="mh">0x23</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xC0</span> <span class="mh">0x00</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xC1</span> <span class="mh">0x14</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xC2</span> <span class="mh">0x21</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xC3</span> <span class="mh">0x11</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xC4</span> <span class="mh">0x16</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xC5</span> <span class="mh">0x28</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xC6</span> <span class="mh">0x1C</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xC7</span> <span class="mh">0x1D</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xC8</span> <span class="mh">0x7B</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xC9</span> <span class="mh">0x1D</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xCA</span> <span class="mh">0x29</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xCB</span> <span class="mh">0x6B</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xCC</span> <span class="mh">0x19</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xCD</span> <span class="mh">0x18</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xCE</span> <span class="mh">0x4B</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xCF</span> <span class="mh">0x21</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xD0</span> <span class="mh">0x29</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xD1</span> <span class="mh">0x4D</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xD2</span> <span class="mh">0x5B</span>
+                    <span class="mh">0x15</span> <span class="mh">0x02</span> <span class="mh">0xD3</span> <span class="mh">0x23</span>
+                    <span class="mh">0x39</span> <span class="mh">0x04</span> <span class="mh">0xFF</span> <span class="mh">0x98</span> <span class="mh">0x81</span> <span class="mh">0x00</span>
+                    <span class="mh">0x05</span> <span class="mh">0x01</span> <span class="mh">0x11</span>
+                    <span class="mh">0xFF</span> <span class="mh">0xC0</span> <span class="mh">0xD4</span> <span class="mh">0x01</span> <span class="mh">0x00</span>
+                    <span class="mh">0x05</span> <span class="mh">0x01</span> <span class="mh">0x29</span>
+                    <span class="mh">0xFF</span> <span class="mh">0x10</span> <span class="mh">0x27</span> <span class="mh">0x00</span> <span class="mh">0x00</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="p">};</span>
+</pre></div>
+</div>
+<p>Build the image with the updated device tree entries:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">devtool</span> <span class="n">build</span> <span class="n">linux</span><span class="o">-</span><span class="n">syna</span>
+<span class="n">devtool</span> <span class="n">build</span><span class="o">-</span><span class="n">image</span> <span class="n">astra</span><span class="o">-</span><span class="n">media</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="waveshare_7inch_dsi-configuration.html" class="btn btn-neutral float-left" title="Waveshare Panel Configuration Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="memory_layout_customization.html" class="btn btn-neutral float-right" title="Memory Layout Customization on Astra Machina" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2024, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

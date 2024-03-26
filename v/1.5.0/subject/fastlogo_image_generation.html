@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FastLogo Sub-Image(fastlogo.subimg.gz) File Generation &mdash; Synaptics Astra SDK User Guide 1.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=80d54a31"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Uboot Fastlogo Customization User Guide" href="uboot_fastlogo_configuration.html" />
+    <link rel="prev" title="Astra MP Flow User Guide" href="mp_flow_user_guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Subject Specific User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="syna_drm_kms_user_guide.html">SYNA DRM / KMS Driver User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waveshare_7inch_dsi-configuration.html">Waveshare Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="haier_panel_configuration.html">Haier Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory_layout_customization.html">Memory Layout Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emmc_layout_customization.html">eMMC Partition Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dvfs_user_guide.html">Dynamic Voltage and Frequency Switching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power_measurement.html">Power Measurements with Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weston_default_display.html">Setting the Weston Default Display for Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isp_sensor_integration.html">ISP Sensor Integration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating_isp_sensor_configuration.html">Updating the ISP Sensor Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpios.html">GPIOs on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp_flow_user_guide.html">Astra MP Flow User Guide</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">FastLogo Sub-Image(fastlogo.subimg.gz) File Generation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fastlogo-subimg-gz-file-layout">fastlogo.subimg.gz file layout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customization-of-fastlogo-subimg-gz">Customization of fastlogo.subimg.gz</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#data-format-for-fastlogo-subimg-gz-logo-image-across-different-platforms">Data format for fastlogo.subimg.gz logo/image across different platforms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sl1640-sl1680-fastlogo-subimg-gz-generation-in-yuv422-video-format">SL1640/SL1680: fastlogo.subimg.gz generation in YUV422 Video format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sl1620-fastlogo-sub-image-fastlogo-subimg-gz-file-generation-in-rgb24-graphics-format">SL1620: FastLogo Sub-Image(fastlogo.subimg.gz) File Generation in RGB24 Graphics format</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#steps-to-generate-fastlogo-subimg-gz">Steps to generate fastlogo.subimg.gz</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fastlogo-subimg-gz-file-generation-script-parameters">fastlogo.subimg.gz file generation script parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="uboot_fastlogo_configuration.html">Uboot Fastlogo Customization User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="swupdate_user_guide.html">SWUpdate User Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Subject Specific User Guides</a></li>
+      <li class="breadcrumb-item active">FastLogo Sub-Image(fastlogo.subimg.gz) File Generation</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fastlogo-sub-image-fastlogo-subimg-gz-file-generation">
+<h1>FastLogo Sub-Image(fastlogo.subimg.gz) File Generation<a class="headerlink" href="#fastlogo-sub-image-fastlogo-subimg-gz-file-generation" title="Permalink to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
+<p>The scope of the document is to provide information and instructions for generating a fastlogo sub-image(fastlogo.subimg.gz) file from a given PNG or JPEG file.</p>
+</section>
+<section id="fastlogo-subimg-gz-file-layout">
+<h2>fastlogo.subimg.gz file layout<a class="headerlink" href="#fastlogo-subimg-gz-file-layout" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">fastlogo.subimg.gz</span></code> is a compressed file consisting of two sections: a header and the logo/image data. The first 1 KB of the file is the header, which contains information about the logo/image, such as version, the number of logos/images, and specific details for each logo/image, including offset, width, height, and size. The logo/image data is stored immediately after the header</p>
+<p>Below Layout gives a brief on the partition.
+The diagram below illustrates the high-level structure of the <code class="docutils literal notranslate"><span class="pre">fastlogo.subimg.gz</span></code> file.</p>
+<figure class="align-default">
+<img alt="../_images/fastlogo_partition_layout.png" src="../_images/fastlogo_partition_layout.png" />
+</figure>
+</section>
+<section id="customization-of-fastlogo-subimg-gz">
+<h2>Customization of fastlogo.subimg.gz<a class="headerlink" href="#customization-of-fastlogo-subimg-gz" title="Permalink to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">The script for generating fastlogo.subimg.gz is located at the path below in sdk codebase.</div>
+</div>
+<div class="line-block">
+<div class="line">- YUV422 fastlogo generation script - <code class="docutils literal notranslate"><span class="pre">&lt;sdk_path&gt;/build/tools/bin/create_fastlogo.sh</span></code></div>
+<div class="line">- RGB24 fastlogo generation script - <code class="docutils literal notranslate"><span class="pre">&lt;sdk_path&gt;/build/tools/bin/create_fastlogo_rgb24.sh</span></code></div>
+</div>
+<section id="data-format-for-fastlogo-subimg-gz-logo-image-across-different-platforms">
+<h3>Data format for fastlogo.subimg.gz logo/image across different platforms<a class="headerlink" href="#data-format-for-fastlogo-subimg-gz-logo-image-across-different-platforms" title="Permalink to this heading"></a></h3>
+<p>If customization is required, the above fastlogo.subimg.gz file must be modified/generated with the custom logo using provided reference script and then update accordingly.</p>
+<div class="line-block">
+<div class="line"><strong>Fastlogo input of different platforms:</strong></div>
+<div class="line">-  SL1680/SL1640: logo/image should be in YUV422 video format.</div>
+<div class="line">-  SL1620: logo/image should be in RGB24 graphics format.</div>
+</div>
+</section>
+<section id="sl1640-sl1680-fastlogo-subimg-gz-generation-in-yuv422-video-format">
+<h3>SL1640/SL1680: fastlogo.subimg.gz generation in YUV422 Video format<a class="headerlink" href="#sl1640-sl1680-fastlogo-subimg-gz-generation-in-yuv422-video-format" title="Permalink to this heading"></a></h3>
+<p>The default script, create_fastlogo.sh, generates three images with resolutions of 1920x1080, 1280x720, and 800x1280 in YUV422 video format. To adjust the resolution, please refer to the image below, focusing on the lines that start with ‘append_header’ and ‘ffmpeg’ where the resolution is specified.</p>
+<figure class="align-default">
+<img alt="../_images/fastlogo_yuv.png" src="../_images/fastlogo_yuv.png" />
+</figure>
+<p><strong>append_header</strong>: Adds header information for the logo image, such as width, height, and stride. Adjust the width and height according to the desired display resolution</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>let logo_offset=1024
+append_binary8 $logo_offset $ofile
+append_header 1920 1080 $ofile
+</pre></div>
+</div>
+<p><strong>ffmpeg</strong>: This script uses ffmpeg to convert JPG/PNG files to YUV422 format. Adjust/Modify the width and height according to the required display resolution.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>ffmpeg -i $ifile -pix_fmt uyvy422 -s 1920x1080 -f rawvideo - | cat &gt;&gt; $ofile
+</pre></div>
+</div>
+</section>
+<section id="sl1620-fastlogo-sub-image-fastlogo-subimg-gz-file-generation-in-rgb24-graphics-format">
+<h3>SL1620: FastLogo Sub-Image(fastlogo.subimg.gz) File Generation in RGB24 Graphics format<a class="headerlink" href="#sl1620-fastlogo-sub-image-fastlogo-subimg-gz-file-generation-in-rgb24-graphics-format" title="Permalink to this heading"></a></h3>
+<p>The default script, create_fastlogo_rgb24.sh, generates three images with resolutions of 800x1280, and 800x480 in RGB24 graphics format. To adjust the resolution, please refer to the image below, focusing on the lines that start with ‘append_header’ and ‘ffmpeg’ where the resolution is specified.</p>
+<figure class="align-default">
+<img alt="../_images/fastlogo_rbg24.png" src="../_images/fastlogo_rbg24.png" />
+</figure>
+<p><strong>append_header</strong>: Adds header information for the logo image, such as width, height, and stride. Adjust the width and height according to the desired display resolution</p>
+<p><strong>ffmpeg</strong>: This script uses ffmpeg to convert JPG/PNG files to RGB24 format. Adjust/Modify the width and height according to the required display resolution.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>let logo_offset=1024
+append_binary8 $logo_offset $ofile
+append_header 800 1280 $ofile
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>ffmpeg -i $ifile -pix_fmt rgb24 -s 800x1280 -f rawvideo -vf transpose=2 - | cat &gt;&gt; $ofile
+</pre></div>
+</div>
+</section>
+</section>
+<section id="steps-to-generate-fastlogo-subimg-gz">
+<h2>Steps to generate fastlogo.subimg.gz<a class="headerlink" href="#steps-to-generate-fastlogo-subimg-gz" title="Permalink to this heading"></a></h2>
+<p>The fastlogo.subimg.gz file containing the “Astra reference logo” can be found in the following location.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">SDK_PATH</span><span class="o">&gt;/</span><span class="n">configs</span><span class="o">/</span><span class="n">product</span><span class="o">/&lt;</span><span class="n">profile</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<section id="fastlogo-subimg-gz-file-generation-script-parameters">
+<h3>fastlogo.subimg.gz file generation script parameters<a class="headerlink" href="#fastlogo-subimg-gz-file-generation-script-parameters" title="Permalink to this heading"></a></h3>
+<p><strong>SL1620</strong>: Generate RGB24 logo subimage</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">create_fastlogo_rgb24</span><span class="o">.</span><span class="n">sh</span> <span class="o">-</span><span class="n">i</span> <span class="o">&lt;</span><span class="nb">input</span> <span class="n">Jpeg</span><span class="o">/</span><span class="n">PNG</span> <span class="n">file</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">o</span> <span class="n">fastlogo</span><span class="o">.</span><span class="n">subimg</span>
+</pre></div>
+</div>
+<p><strong>SL1640/SL1680</strong>: Generate YUV422 logo subimage</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">create_fastlogo</span><span class="o">.</span><span class="n">sh</span> <span class="o">-</span><span class="n">i</span> <span class="o">&lt;</span><span class="nb">input</span> <span class="n">Jpeg</span><span class="o">/</span><span class="n">PNG</span> <span class="n">file</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">o</span> <span class="n">fastlogo</span><span class="o">.</span><span class="n">subimg</span>
+</pre></div>
+</div>
+<section id="steps-to-get-the-display-of-the-custom-fastlogo">
+<h4>Steps to get the display of the custom fastlogo<a class="headerlink" href="#steps-to-get-the-display-of-the-custom-fastlogo" title="Permalink to this heading"></a></h4>
+<div class="line-block">
+<div class="line">- The above command/script generates the fastlogo.subimg.gz file.</div>
+<div class="line">- Copy the generated fastlogo.subimg.gz in above step to <code class="docutils literal notranslate"><span class="pre">&lt;sdk_path&gt;/configs/product/</span></code></div>
+<div class="line">- Build the image.</div>
+<div class="line">- The generated <code class="docutils literal notranslate"><span class="pre">fastlogo.subimg.gz</span></code> in the <code class="docutils literal notranslate"><span class="pre">eMMCimg</span></code> directory will contain the custom fastlogo.</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mp_flow_user_guide.html" class="btn btn-neutral float-left" title="Astra MP Flow User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="uboot_fastlogo_configuration.html" class="btn btn-neutral float-right" title="Uboot Fastlogo Customization User Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2025, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

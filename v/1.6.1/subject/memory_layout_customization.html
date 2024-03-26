@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Layout Customization on Astra Machina &mdash; Synaptics Astra SDK User Guide 1.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b79f0e1f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="eMMC Partition Customization on Astra Machina" href="emmc_layout_customization.html" />
+    <link rel="prev" title="Haier Panel Configuration Guide" href="haier_panel_configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Subject Specific User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="syna_drm_kms_user_guide.html">SYNA DRM / KMS Driver User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waveshare_dsi-configuration.html">Waveshare Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="haier_panel_configuration.html">Haier Panel Configuration Guide</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Memory Layout Customization on Astra Machina</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#memory-layouts">Memory Layouts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sl1620-memory-layout">SL1620 Memory Layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sl1640-memory-layout">SL1640 Memory Layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sl1680-memory-layout">SL1680 Memory Layout</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#changing-memory-parameters">Changing Memory Parameters</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#changing-the-memory-layout">Changing the Memory Layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#changing-the-preboot-memory-size">Changing the Preboot Memory Size</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#changing-the-ddr-type">Changing the DDR Type</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modifying-u-boot">Modifying U-Boot</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modifying-the-memory-layout">Modifying the Memory Layout</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="emmc_layout_customization.html">eMMC Partition Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dvfs_user_guide.html">Dynamic Voltage and Frequency Switching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power_measurement.html">Power Measurements with Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weston_default_display.html">Setting the Weston Default Display for Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isp_sensor_integration.html">ISP Sensor Integration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating_isp_sensor_configuration.html">Updating the ISP Sensor Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpios.html">GPIOs on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp_flow_user_guide.html">Astra MP Flow User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastlogo_image_generation.html">FastLogo Sub-Image(fastlogo.subimg.gz) File Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uboot_fastlogo_configuration.html">Uboot Fastlogo Customization User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="swupdate_user_guide.html">SWUpdate User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controlling_volume_with_gpios.html">Controlling ALSA Volume using GPIOs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thermal_protection.html">CPU Thermal Protection on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_docker.html">Ubuntu-based Docker Container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enable_sdio_wifi.html">Enabling SDIO WiFi for SL640 and SL680</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Subject Specific User Guides</a></li>
+      <li class="breadcrumb-item active">Memory Layout Customization on Astra Machina</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="memory-layout-customization-on-astra-machina">
+<h1>Memory Layout Customization on Astra Machina<a class="headerlink" href="#memory-layout-customization-on-astra-machina" title="Permalink to this heading"></a></h1>
+<p>Astra Machina uses DRAM for several components in the SoC. The DRAM is divided up into several sections
+depending on what it is used for. These sections include System memory, NonSecure (CMA), NonSecure (non-cached),
+and Secure memory. System memory is the memory available to the Linux kernel. Included in System memory
+is the NonSecure section which is used by the kernel for CMA. Secure memory is reserved for when the SoC
+is operating secure environments such as TrustZone, and is not accessible to Linux. The NonSecure
+(non-cached) section is reserved for SoC components which require non-cached memory.</p>
+<section id="memory-layouts">
+<h2>Memory Layouts<a class="headerlink" href="#memory-layouts" title="Permalink to this heading"></a></h2>
+<p>Astra Machina supports predefined memory layouts for various DDR configurations. The default configuration
+can be changed based on the amount of DDR in the system.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Chip</p></th>
+<th class="head"><p>Default Memory</p></th>
+<th class="head"><p>Supported Memory</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SL1620</p></td>
+<td><p>2GB</p></td>
+<td><p>1GB / 2GB / 4GB</p></td>
+</tr>
+<tr class="row-odd"><td><p>SL1640</p></td>
+<td><p>2GB</p></td>
+<td><p>2GB / 3GB / 4GB</p></td>
+</tr>
+<tr class="row-even"><td><p>SL1680</p></td>
+<td><p>4GB</p></td>
+<td><p>2GB / 4GB</p></td>
+</tr>
+</tbody>
+</table>
+<p>Below are the memory layouts for all available DDR sizes.</p>
+<section id="sl1620-memory-layout">
+<h3>SL1620 Memory Layout<a class="headerlink" href="#sl1620-memory-layout" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Memory Size</p></td>
+<td><p>Memory Section</p></td>
+<td><p>Size</p></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><p>1 GB DDR</p></td>
+<td><p>NonSecure (CMA)</p></td>
+<td><p>64MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>System</p></td>
+<td><p>930MB</p></td>
+</tr>
+<tr class="row-even"><td><p>NonSecure (Non-cached)</p></td>
+<td><p>4MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Secure</p></td>
+<td><p>16MB</p></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><p>2 GB DDR</p></td>
+<td><p>NonSecure (CMA)</p></td>
+<td><p>512MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>System</p></td>
+<td><p>1.950GB</p></td>
+</tr>
+<tr class="row-even"><td><p>NonSecure (Non-cached)</p></td>
+<td><p>8MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Secure</p></td>
+<td><p>16MB</p></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><p>4 GB DDR</p></td>
+<td><p>NonSecure (CMA)</p></td>
+<td><p>64MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>System</p></td>
+<td><p>3.482GB</p></td>
+</tr>
+<tr class="row-even"><td><p>NonSecure (Non-cached)</p></td>
+<td><p>8MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Secure</p></td>
+<td><p>16MB</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sl1640-memory-layout">
+<h3>SL1640 Memory Layout<a class="headerlink" href="#sl1640-memory-layout" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Memory Size</p></td>
+<td><p>Memory Section</p></td>
+<td><p>Size</p></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><p>2 GB DDR</p></td>
+<td><p>NonSecure (CMA)</p></td>
+<td><p>260MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>System</p></td>
+<td><p>1.948GB</p></td>
+</tr>
+<tr class="row-even"><td><p>NonSecure (Non-cached)</p></td>
+<td><p>8MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Secure</p></td>
+<td><p>16MB</p></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><p>3 GB DDR</p></td>
+<td><p>NonSecure (CMA)</p></td>
+<td><p>500MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>System</p></td>
+<td><p>2.901GB</p></td>
+</tr>
+<tr class="row-even"><td><p>NonSecure (Non-cached)</p></td>
+<td><p>8MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Secure</p></td>
+<td><p>16MB</p></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><p>4 GB DDR</p></td>
+<td><p>NonSecure (CMA)</p></td>
+<td><p>500MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>System</p></td>
+<td><p>3.482GB</p></td>
+</tr>
+<tr class="row-even"><td><p>NonSecure (Non-cached)</p></td>
+<td><p>8MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Secure</p></td>
+<td><p>16MB</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sl1680-memory-layout">
+<h3>SL1680 Memory Layout<a class="headerlink" href="#sl1680-memory-layout" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Memory Size</p></td>
+<td><p>Memory Section</p></td>
+<td><p>Size</p></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><p>2 GB DDR</p></td>
+<td><p>NonSecure (CMA)</p></td>
+<td><p>260MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>System</p></td>
+<td><p>1.948GB</p></td>
+</tr>
+<tr class="row-even"><td><p>NonSecure (Non-cached)</p></td>
+<td><p>8MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Secure</p></td>
+<td><p>16MB</p></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><p>4 GB DDR</p></td>
+<td><p>NonSecure (CMA)</p></td>
+<td><p>500MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>System</p></td>
+<td><p>3.482GB</p></td>
+</tr>
+<tr class="row-even"><td><p>NonSecure (Non-cached)</p></td>
+<td><p>8MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Secure</p></td>
+<td><p>16MB</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>NonSecure (CMA) memory sections can be used as system memory when CMA is not needed. System
+memory’s size includes the size of the NonSecure (CMA) section.</p>
+</div>
+</section>
+</section>
+<section id="changing-memory-parameters">
+<h2>Changing Memory Parameters<a class="headerlink" href="#changing-memory-parameters" title="Permalink to this heading"></a></h2>
+<p>The memory parameters are set in the configuration file included in the <code class="docutils literal notranslate"><span class="pre">synasdk-config-native</span></code> package. Use the <code class="docutils literal notranslate"><span class="pre">devtool</span></code> utility to
+modify the config file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">devtool</span> <span class="n">modify</span> <span class="n">synasdk</span><span class="o">-</span><span class="n">config</span><span class="o">-</span><span class="n">native</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">devtool</span></code> utility will create the <code class="docutils literal notranslate"><span class="pre">build-sl1680/workspace/sources/synasdk-config-native/configs/product</span></code> directory which will contain the source for
+the config package. In the product directory is a subdirectory containing a config file for each of the  platforms. Edit the config file for the platform which
+you are building for.</p>
+<section id="changing-the-memory-layout">
+<h3>Changing the Memory Layout<a class="headerlink" href="#changing-the-memory-layout" title="Permalink to this heading"></a></h3>
+<p>To change the memory layout, set the <code class="docutils literal notranslate"><span class="pre">CONFIG_TZK_MEM_LAYOUT</span></code> parameter to the layout which matches the DDR on your board. The supported memory layouts are listed
+below in the <code class="docutils literal notranslate"><span class="pre">CONFIG_TZK_SUPPORTED_MEM_LAYOUT</span></code> parameter.</p>
+<p>For example, to change the memory layout for SL1620, edit <code class="docutils literal notranslate"><span class="pre">sl1620_poky_aarch64_rdk/sl1620_poky_aarch64_rdk_defconfig</span></code>.</p>
+<figure class="align-default">
+<img alt="../_images/sl1620-config-mem-layout.png" src="../_images/sl1620-config-mem-layout.png" />
+</figure>
+<p>For SL1640 <code class="docutils literal notranslate"><span class="pre">sl1640_poky_aarch64_rdk/sl1640_poky_aarch64_rdk_defconfig</span></code> and SL1680 <code class="docutils literal notranslate"><span class="pre">sl1680_poky_aarch64_rdk/sl1680_poky_aarch64_rdk_defconfig</span></code></p>
+<figure class="align-default">
+<img alt="../_images/sl1680-config-mem-layout.png" src="../_images/sl1680-config-mem-layout.png" />
+</figure>
+</section>
+<section id="changing-the-preboot-memory-size">
+<h3>Changing the Preboot Memory Size<a class="headerlink" href="#changing-the-preboot-memory-size" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">CONFIG_PREBOOT_MEMORY_SIZE</span></code> parameter sets the memory size which the preboot firmware will use. Set this parameter to the size of the DDR being used.</p>
+<p>To change the preboot memory size, set <code class="docutils literal notranslate"><span class="pre">CONFIG_PREBOOT_MEMORY_SIZE</span></code> parameter. For example, to change the memory layout for SL1620,
+edit <code class="docutils literal notranslate"><span class="pre">sl1620_poky_aarch64_rdk/sl1620_poky_aarch64_rdk_defconfig</span></code>.</p>
+<figure class="align-default">
+<img alt="../_images/sl1620-config-mem-layout-preboot.png" src="../_images/sl1620-config-mem-layout-preboot.png" />
+</figure>
+<p>For SL1640 <code class="docutils literal notranslate"><span class="pre">sl1640_poky_aarch64_rdk/sl1640_poky_aarch64_rdk_defconfig</span></code> and SL1680 <code class="docutils literal notranslate"><span class="pre">sl1680_poky_aarch64_rdk/sl1680_poky_aarch64_rdk_defconfig</span></code></p>
+<figure class="align-default">
+<img alt="../_images/sl1680-config-mem-layout-preboot.png" src="../_images/sl1680-config-mem-layout-preboot.png" />
+</figure>
+</section>
+<section id="changing-the-ddr-type">
+<h3>Changing the DDR Type<a class="headerlink" href="#changing-the-ddr-type" title="Permalink to this heading"></a></h3>
+<p>The default DDR type can also be changed in the config file. To change the preboot DDR type, set <code class="docutils literal notranslate"><span class="pre">CONFIG_PREBOOT_DDR_TYPE</span></code> parameter. For example, to change the memory layout for SL1620,
+edit <code class="docutils literal notranslate"><span class="pre">sl1620_poky_aarch64_rdk/sl1620_poky_aarch64_rdk_defconfig</span></code>.</p>
+<figure class="align-default">
+<img alt="../_images/sl1620-preboot-ddr-type.png" src="../_images/sl1620-preboot-ddr-type.png" />
+</figure>
+<p>For SL1640 <code class="docutils literal notranslate"><span class="pre">sl1640_poky_aarch64_rdk/sl1640_poky_aarch64_rdk_defconfig</span></code> and SL1680 <code class="docutils literal notranslate"><span class="pre">sl1680_poky_aarch64_rdk/sl1680_poky_aarch64_rdk_defconfig</span></code></p>
+<figure class="align-default">
+<img alt="../_images/sl1680-preboot-ddr-type.png" src="../_images/sl1680-preboot-ddr-type.png" />
+</figure>
+<p><a class="reference external" href="https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/v1.6.0/myna2/A0/generic/hwinit">Supported DDR types for SL1620</a></p>
+<p><a class="reference external" href="https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/v1.6.0/platypus/A0/generic/hwinit">Supported DDR types for SL1640</a></p>
+<p><a class="reference external" href="https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/v1.6.0/dolphin/A0/generic/hwinit">Supported DDR types for SL1680</a></p>
+<p>Finally, build an image with the modified memory layout:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">devtool</span> <span class="n">build</span> <span class="n">synasdk</span><span class="o">-</span><span class="n">config</span><span class="o">-</span><span class="n">native</span>
+<span class="n">devtool</span> <span class="n">build</span><span class="o">-</span><span class="n">image</span> <span class="n">astra</span><span class="o">-</span><span class="n">media</span>
+</pre></div>
+</div>
+</section>
+<section id="modifying-u-boot">
+<h3>Modifying U-Boot<a class="headerlink" href="#modifying-u-boot" title="Permalink to this heading"></a></h3>
+<p>By default, U-Boot uses a default memory layout of 2GB. Using the 1GB memory layout on SL1620 requires modifying U-Boot. Since SL1640 and SL1680
+do not support a 1GB memory layout, no modification is required on these platforms.</p>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">devtool</span></code> utility to checkout the U-Boot source code. However, the syna-u-boot recipe is not fully compatible with <code class="docutils literal notranslate"><span class="pre">devtool</span></code>. As a
+result, some changes to the recipe and build steps are required. First, remove the <code class="docutils literal notranslate"><span class="pre">file://0001-Force-gcc-as-HOSTCC.patch</span></code> patch from the <code class="docutils literal notranslate"><span class="pre">SRC_URI</span></code>
+entry in <code class="docutils literal notranslate"><span class="pre">meta-synaptics/recipes-bsp/syna-bootloader/syna-u-boot_git.bb</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">diff</span> <span class="o">--</span><span class="n">git</span> <span class="n">a</span><span class="o">/</span><span class="n">recipes</span><span class="o">-</span><span class="n">bsp</span><span class="o">/</span><span class="n">syna</span><span class="o">-</span><span class="n">bootloader</span><span class="o">/</span><span class="n">syna</span><span class="o">-</span><span class="n">u</span><span class="o">-</span><span class="n">boot_git</span><span class="o">.</span><span class="n">bb</span> <span class="n">b</span><span class="o">/</span><span class="n">recipes</span><span class="o">-</span><span class="n">bsp</span><span class="o">/</span><span class="n">syna</span><span class="o">-</span><span class="n">bootloader</span><span class="o">/</span><span class="n">syna</span><span class="o">-</span><span class="n">u</span><span class="o">-</span><span class="n">boot_git</span><span class="o">.</span><span class="n">bb</span>
+<span class="n">index</span> <span class="mi">6</span><span class="n">a0fe87</span><span class="o">.</span><span class="mf">.0521</span><span class="n">d1e</span> <span class="mi">100644</span>
+<span class="o">---</span> <span class="n">a</span><span class="o">/</span><span class="n">recipes</span><span class="o">-</span><span class="n">bsp</span><span class="o">/</span><span class="n">syna</span><span class="o">-</span><span class="n">bootloader</span><span class="o">/</span><span class="n">syna</span><span class="o">-</span><span class="n">u</span><span class="o">-</span><span class="n">boot_git</span><span class="o">.</span><span class="n">bb</span>
+<span class="o">+++</span> <span class="n">b</span><span class="o">/</span><span class="n">recipes</span><span class="o">-</span><span class="n">bsp</span><span class="o">/</span><span class="n">syna</span><span class="o">-</span><span class="n">bootloader</span><span class="o">/</span><span class="n">syna</span><span class="o">-</span><span class="n">u</span><span class="o">-</span><span class="n">boot_git</span><span class="o">.</span><span class="n">bb</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">35</span><span class="p">,</span><span class="mi">7</span> <span class="o">+</span><span class="mi">35</span><span class="p">,</span><span class="mi">6</span> <span class="o">@@</span> <span class="n">SRC_URI</span> <span class="o">=</span> <span class="s2">&quot; </span><span class="se">\</span>
+<span class="s2">    $</span><span class="si">{SYNA_SRC_BOOT}</span><span class="s2"> </span><span class="se">\</span>
+<span class="s2">    $</span><span class="si">{SYNA_SRC_UBOOT}</span><span class="s2"> </span><span class="se">\</span>
+<span class="s2">    $</span><span class="si">{SYNA_SRC_EXTERNAL}</span><span class="s2"> </span><span class="se">\</span>
+<span class="s2">-    file://0001-Force-gcc-as-HOSTCC.patch </span><span class="se">\</span>
+<span class="s2">&quot;</span>
+
+<span class="n">SRCREV_uboot</span> <span class="o">=</span> <span class="s2">&quot;$</span><span class="si">{SYNA_SRCREV_UBOOT}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>Next, use the <code class="docutils literal notranslate"><span class="pre">devtool</span></code> utility to modify the source code.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">devtool</span> <span class="n">modify</span> <span class="n">syna</span><span class="o">-</span><span class="n">u</span><span class="o">-</span><span class="n">boot</span>
+</pre></div>
+</div>
+<p>The U-Boot source code has now been checkout out under <code class="docutils literal notranslate"><span class="pre">build-sl1620/workspace/sources/syna-u-boot</span></code>. Manually,
+apply the patch which was removed from the recipe:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">build</span><span class="o">-</span><span class="n">sl1620</span><span class="o">/</span><span class="n">workspace</span><span class="o">/</span><span class="n">sources</span><span class="o">/</span><span class="n">syna</span><span class="o">-</span><span class="n">u</span><span class="o">-</span><span class="n">boot</span>
+<span class="n">git</span> <span class="n">apply</span> <span class="o">../../../../</span><span class="n">meta</span><span class="o">-</span><span class="n">synaptics</span><span class="o">/</span><span class="n">recipes</span><span class="o">-</span><span class="n">bsp</span><span class="o">/</span><span class="n">syna</span><span class="o">-</span><span class="n">bootloader</span><span class="o">/</span><span class="n">syna</span><span class="o">-</span><span class="n">u</span><span class="o">-</span><span class="n">boot</span><span class="o">/</span><span class="mi">0001</span><span class="o">-</span><span class="n">Force</span><span class="o">-</span><span class="n">gcc</span><span class="o">-</span><span class="k">as</span><span class="o">-</span><span class="n">HOSTCC</span><span class="o">.</span><span class="n">patch</span>
+</pre></div>
+</div>
+<p>Change the memory size to 1GB in <code class="docutils literal notranslate"><span class="pre">build-sl1620/workspace/sources/syna-u-boot/boot/u-boot_2019_10/arch/arm/dts/myna2-rdk.dts</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">diff</span> <span class="o">--</span><span class="n">git</span> <span class="n">a</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">arm</span><span class="o">/</span><span class="n">dts</span><span class="o">/</span><span class="n">myna2</span><span class="o">-</span><span class="n">rdk</span><span class="o">.</span><span class="n">dts</span> <span class="n">b</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">arm</span><span class="o">/</span><span class="n">dts</span><span class="o">/</span><span class="n">myna2</span><span class="o">-</span><span class="n">rdk</span><span class="o">.</span><span class="n">dts</span>
+<span class="n">index</span> <span class="n">d6a160450e</span><span class="o">.</span><span class="mf">.36464</span><span class="n">c9202</span> <span class="mi">100644</span>
+<span class="o">---</span> <span class="n">a</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">arm</span><span class="o">/</span><span class="n">dts</span><span class="o">/</span><span class="n">myna2</span><span class="o">-</span><span class="n">rdk</span><span class="o">.</span><span class="n">dts</span>
+<span class="o">+++</span> <span class="n">b</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">arm</span><span class="o">/</span><span class="n">dts</span><span class="o">/</span><span class="n">myna2</span><span class="o">-</span><span class="n">rdk</span><span class="o">.</span><span class="n">dts</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">33</span><span class="p">,</span><span class="mi">7</span> <span class="o">+</span><span class="mi">33</span><span class="p">,</span><span class="mi">7</span> <span class="o">@@</span>
+
+    <span class="n">memory</span> <span class="p">{</span>
+        <span class="n">device_type</span> <span class="o">=</span> <span class="s2">&quot;memory&quot;</span><span class="p">;</span>
+<span class="o">-</span>           <span class="n">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mh">0x80000000</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="o">+</span>           <span class="n">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mh">0x40000000</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="n">chosen</span> <span class="p">{</span>
+</pre></div>
+</div>
+<p>Set the malloc length in <code class="docutils literal notranslate"><span class="pre">build-sl1620/workspace/sources/syna-u-boot/boot/u-boot_2019_10/include/configs/myna2.h</span></code> to 500MB. 500MB is the recommended
+value for the 1GB profile.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">diff</span> <span class="o">--</span><span class="n">git</span> <span class="n">a</span><span class="o">/</span><span class="n">include</span><span class="o">/</span><span class="n">configs</span><span class="o">/</span><span class="n">myna2</span><span class="o">.</span><span class="n">h</span> <span class="n">b</span><span class="o">/</span><span class="n">include</span><span class="o">/</span><span class="n">configs</span><span class="o">/</span><span class="n">myna2</span><span class="o">.</span><span class="n">h</span>
+<span class="n">index</span> <span class="n">e7750403c2</span><span class="o">..</span><span class="n">ee714094e0</span> <span class="mi">100644</span>
+<span class="o">---</span> <span class="n">a</span><span class="o">/</span><span class="n">include</span><span class="o">/</span><span class="n">configs</span><span class="o">/</span><span class="n">myna2</span><span class="o">.</span><span class="n">h</span>
+<span class="o">+++</span> <span class="n">b</span><span class="o">/</span><span class="n">include</span><span class="o">/</span><span class="n">configs</span><span class="o">/</span><span class="n">myna2</span><span class="o">.</span><span class="n">h</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">47</span><span class="p">,</span><span class="mi">7</span> <span class="o">+</span><span class="mi">47</span><span class="p">,</span><span class="mi">7</span> <span class="o">@@</span>
+<span class="c1">#define CONFIG_SYS_AUTOLOAD         &quot;n&quot;                     /* disable autoload image via tftp after dhcp */</span>
+
+<span class="o">//</span><span class="nb">max</span> <span class="n">malloc</span> <span class="n">length</span>
+<span class="o">-</span><span class="c1">#define CONFIG_SYS_MALLOC_LEN              (1450 &lt;&lt; 20)</span>
+<span class="o">+</span><span class="c1">#define CONFIG_SYS_MALLOC_LEN              (500 &lt;&lt; 20)</span>
+
+<span class="o">//</span><span class="c1">#define CONFIG_SYS_MALLOC_F_LEN           (4 &lt;&lt; 20) /* Serial is required before relocation */</span>
+</pre></div>
+</div>
+<p>Build the modified <code class="docutils literal notranslate"><span class="pre">syna-u-boot</span></code> package using <code class="docutils literal notranslate"><span class="pre">bitbake</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bitbake</span> <span class="o">-</span><span class="n">f</span> <span class="n">syna</span><span class="o">-</span><span class="n">u</span><span class="o">-</span><span class="n">boot</span> <span class="o">-</span><span class="n">c</span> <span class="nb">compile</span>
+</pre></div>
+</div>
+<p>After rebuilding the modified package, build an image which contains the u-boot modifications using bitbake.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bitbake</span> <span class="o">-</span><span class="n">f</span> <span class="n">astra</span><span class="o">-</span><span class="n">media</span> <span class="o">-</span><span class="n">c</span> <span class="nb">compile</span>
+<span class="n">bitbake</span> <span class="o">-</span><span class="n">f</span> <span class="n">astra</span><span class="o">-</span><span class="n">media</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="modifying-the-memory-layout">
+<h2>Modifying the Memory Layout<a class="headerlink" href="#modifying-the-memory-layout" title="Permalink to this heading"></a></h2>
+<p>The memory sections within a memory layout can also be modified. The amount of memory reserved for secure memory and CMA can be optimized for
+specific use cases. The memory layout is defined in OP-TEE and can be modified by editing the <code class="docutils literal notranslate"><span class="pre">synasdk-tee-bootparam-native</span></code> package.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Memory layouts cannot be modified in previous releases. Before v1.3.0, OP-TEE required Synaptics to sign the OP-TEE image.
+Release v1.3.0 and later, no longer require Synaptics to sign OP-TEE.</p>
+</div>
+<p>To update the memory layout in the <code class="docutils literal notranslate"><span class="pre">synasdk-tee-bootparam-native</span></code> package:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">devtool</span> <span class="n">modify</span> <span class="n">synasdk</span><span class="o">-</span><span class="n">tee</span><span class="o">-</span><span class="n">bootparam</span><span class="o">-</span><span class="n">native</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">devtool</span></code> utility will create the <code class="docutils literal notranslate"><span class="pre">build-sl1680/workspace/sources/synasdk-tee-bootparam-native/tee/tee/products/</span></code> directory. This directory contains
+three directories for each of the platforms. These directories include dolphin (sl1680), platypus (sl1640), and myna2 (sl1620). Each platform specific directory
+contains directories for each of the supported DDR sizes.</p>
+<figure class="align-default" id="id1">
+<img alt="../_images/tee-products-dir.png" src="../_images/tee-products-dir.png" />
+<figcaption>
+<p><span class="caption-text">Chip Specific directories in synasdk-tee-bootparam-native</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id2">
+<img alt="../_images/tee-platypus-layouts.png" src="../_images/tee-platypus-layouts.png" />
+<figcaption>
+<p><span class="caption-text">SL1640 layout directories</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id3">
+<img alt="../_images/tee-platypus-2gb-layout.png" src="../_images/tee-platypus-2gb-layout.png" />
+<figcaption>
+<p><span class="caption-text">SL1640 2GB memory layout files</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The memory layout directory contains two files which need to be updated in order to change the memory section size. The files <code class="docutils literal notranslate"><span class="pre">tz_boot_param_value.c``and</span>
+<span class="pre">``tz_boot_param_value_recovery.c</span></code>. Macros define the sizes of the memory sections in the <code class="docutils literal notranslate"><span class="pre">tz_boot_param_value*.c</span></code> files. Update
+the values to change the size of the memory sections.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Memory section changes should be made to both <code class="docutils literal notranslate"><span class="pre">tz_boot_param_value.c</span></code> and <code class="docutils literal notranslate"><span class="pre">tz_boot_param_value_recovery.c</span></code>.</p>
+</div>
+<figure class="align-default">
+<img alt="../_images/sl1680-boot-param.png" src="../_images/sl1680-boot-param.png" />
+</figure>
+<p>Here is an example of resizing SL1680’s CMA section to 1GB.</p>
+<figure class="align-default" id="id4">
+<img alt="../_images/sl1680-double-cma-memory.png" src="../_images/sl1680-double-cma-memory.png" />
+<figcaption>
+<p><span class="caption-text">Modifications made to SL1680’s 4GB memory layout to double the CMA section</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Finally, build an image with the modified memory sections:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">devtool</span> <span class="n">build</span> <span class="n">synasdk</span><span class="o">-</span><span class="n">tee</span><span class="o">-</span><span class="n">bootparam</span><span class="o">-</span><span class="n">native</span>
+<span class="n">devtool</span> <span class="n">build</span><span class="o">-</span><span class="n">image</span> <span class="n">astra</span><span class="o">-</span><span class="n">media</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="haier_panel_configuration.html" class="btn btn-neutral float-left" title="Haier Panel Configuration Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="emmc_layout_customization.html" class="btn btn-neutral float-right" title="eMMC Partition Customization on Astra Machina" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2025, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

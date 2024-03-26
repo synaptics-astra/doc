@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enabling SDIO WiFi for SL640 and SL680 &mdash; Synaptics Astra SDK User Guide 1.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b79f0e1f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Application Notes" href="../appnotes/index.html" />
+    <link rel="prev" title="Ubuntu-based Docker Container" href="ubuntu_docker.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Subject Specific User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="syna_drm_kms_user_guide.html">SYNA DRM / KMS Driver User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waveshare_dsi-configuration.html">Waveshare Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="haier_panel_configuration.html">Haier Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory_layout_customization.html">Memory Layout Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emmc_layout_customization.html">eMMC Partition Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dvfs_user_guide.html">Dynamic Voltage and Frequency Switching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power_measurement.html">Power Measurements with Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weston_default_display.html">Setting the Weston Default Display for Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isp_sensor_integration.html">ISP Sensor Integration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating_isp_sensor_configuration.html">Updating the ISP Sensor Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpios.html">GPIOs on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp_flow_user_guide.html">Astra MP Flow User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastlogo_image_generation.html">FastLogo Sub-Image(fastlogo.subimg.gz) File Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uboot_fastlogo_configuration.html">Uboot Fastlogo Customization User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="swupdate_user_guide.html">SWUpdate User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controlling_volume_with_gpios.html">Controlling ALSA Volume using GPIOs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thermal_protection.html">CPU Thermal Protection on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_docker.html">Ubuntu-based Docker Container</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Enabling SDIO WiFi for SL640 and SL680</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modifying-the-kernel">Modifying the Kernel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#updating-the-dts-file">Updating the DTS File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#updating-the-defconfig">Updating the defconfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-the-updated-image">Build the Updated Image</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Subject Specific User Guides</a></li>
+      <li class="breadcrumb-item active">Enabling SDIO WiFi for SL640 and SL680</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="enabling-sdio-wifi-for-sl640-and-sl680">
+<h1>Enabling SDIO WiFi for SL640 and SL680<a class="headerlink" href="#enabling-sdio-wifi-for-sl640-and-sl680" title="Permalink to this heading"></a></h1>
+<p>By default, SL1640 and SL1680 are configured to use PCIe based WiFi modules. But, SDIO support with the 43711S WiFi module
+can be enabled by updating the Linux Kernel’s DTS and config.</p>
+<section id="modifying-the-kernel">
+<h2>Modifying the Kernel<a class="headerlink" href="#modifying-the-kernel" title="Permalink to this heading"></a></h2>
+<p>This requires modifying the <code class="docutils literal notranslate"><span class="pre">linux-syna</span></code> package using <code class="docutils literal notranslate"><span class="pre">devtool</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">devtool</span> <span class="n">modify</span> <span class="n">linux</span><span class="o">-</span><span class="n">syna</span>
+</pre></div>
+</div>
+<section id="updating-the-dts-file">
+<h3>Updating the DTS File<a class="headerlink" href="#updating-the-dts-file" title="Permalink to this heading"></a></h3>
+<p>Modify the platform dts file located in <code class="docutils literal notranslate"><span class="pre">build-sl1680/workspace/sources/linux-syna/arch/arm64/boot/dts/synaptics</span></code>.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p>SL1640</p></td>
+<td><p>SL1680</p></td>
+</tr>
+<tr class="row-even"><td><p>DTS</p></td>
+<td><p>platypus-rdk.dts</p></td>
+<td><p>dolphin-rdk.dts</p></td>
+</tr>
+</tbody>
+</table>
+<p>The following sections need to be added / modified. The sections in <code class="docutils literal notranslate"><span class="pre">dolphin-rdk.dts</span></code> and <code class="docutils literal notranslate"><span class="pre">platypus-rdk.dts</span></code> are identical so the
+below patch applies to both platforms.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">diff</span> <span class="o">--</span><span class="n">git</span> <span class="n">a</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">arm64</span><span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">dts</span><span class="o">/</span><span class="n">synaptics</span><span class="o">/</span><span class="n">platypus</span><span class="o">-</span><span class="n">rdk</span><span class="o">.</span><span class="n">dts</span> <span class="n">b</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">arm64</span><span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">dts</span><span class="o">/</span><span class="n">synaptics</span><span class="o">/</span><span class="n">platypus</span><span class="o">-</span><span class="n">rdk</span><span class="o">.</span><span class="n">dts</span>
+<span class="n">index</span> <span class="n">c7c388d</span><span class="o">.</span><span class="mf">.26</span><span class="n">ff787</span> <span class="mi">100644</span>
+<span class="o">---</span> <span class="n">a</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">arm64</span><span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">dts</span><span class="o">/</span><span class="n">synaptics</span><span class="o">/</span><span class="n">platypus</span><span class="o">-</span><span class="n">rdk</span><span class="o">.</span><span class="n">dts</span>
+<span class="o">+++</span> <span class="n">b</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">arm64</span><span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">dts</span><span class="o">/</span><span class="n">synaptics</span><span class="o">/</span><span class="n">platypus</span><span class="o">-</span><span class="n">rdk</span><span class="o">.</span><span class="n">dts</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">69</span><span class="p">,</span><span class="mi">6</span> <span class="o">+</span><span class="mi">69</span><span class="p">,</span><span class="mi">12</span> <span class="o">@@</span>
+        <span class="n">pool</span><span class="o">-</span><span class="n">attributes</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mh">0x00000105</span> <span class="mh">0x00000F3A</span> <span class="mh">0x00000102</span> <span class="mh">0x00000F3D</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="p">};</span>
+
+<span class="o">+</span>   <span class="n">sdhci1_pwrseq</span><span class="p">:</span> <span class="n">sdhci1</span><span class="o">-</span><span class="n">pwrseq</span> <span class="p">{</span>
+<span class="o">+</span>           <span class="n">compatible</span> <span class="o">=</span> <span class="s2">&quot;mmc-pwrseq-simple&quot;</span><span class="p">;</span>
+<span class="o">+</span>           <span class="n">reset</span><span class="o">-</span><span class="n">gpios</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">expander1</span> <span class="mi">2</span> <span class="n">GPIO_ACTIVE_LOW</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="o">+</span>           <span class="n">post</span><span class="o">-</span><span class="n">power</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">delay</span><span class="o">-</span><span class="n">ms</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">50</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="o">+</span>   <span class="p">};</span>
+<span class="o">+</span>
+    <span class="n">regulators</span> <span class="p">{</span>
+        <span class="n">compatible</span> <span class="o">=</span> <span class="s2">&quot;simple-bus&quot;</span><span class="p">;</span>
+        <span class="c1">#address-cells = &lt;1&gt;;</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">114</span><span class="p">,</span><span class="mi">6</span> <span class="o">+</span><span class="mi">120</span><span class="p">,</span><span class="mi">12</span> <span class="o">@@</span>
+    <span class="n">bluesleep</span><span class="p">:</span> <span class="n">bluesleep</span> <span class="p">{</span>
+        <span class="n">compatible</span> <span class="o">=</span> <span class="s2">&quot;syna,bluesleep&quot;</span><span class="p">;</span>
+        <span class="n">bt</span><span class="o">-</span><span class="n">dev</span><span class="o">-</span><span class="n">wake</span><span class="o">-</span><span class="n">gpio</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">expander1</span> <span class="mi">3</span> <span class="n">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="o">+</span>   <span class="p">};</span>
+<span class="o">+</span>
+<span class="o">+</span>   <span class="n">bcmdhd</span> <span class="p">{</span>
+<span class="o">+</span>           <span class="n">compatible</span> <span class="o">=</span> <span class="s2">&quot;synaptics,bcmdhd_wlan&quot;</span><span class="p">;</span>
+<span class="o">+</span>           <span class="n">wl_reg_on</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">expander1</span> <span class="mi">2</span> <span class="n">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span>         <span class="o">/*</span> <span class="n">wifi</span> <span class="n">reg_on</span> <span class="n">pin</span> <span class="o">*/</span>
+<span class="o">+</span>           <span class="n">wl_host_wake</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">expander1</span> <span class="mi">3</span> <span class="n">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span>      <span class="o">/*</span> <span class="n">wifi</span> <span class="n">host</span> <span class="n">wake</span> <span class="p">(</span><span class="n">OOB</span><span class="p">)</span> <span class="n">pin</span> <span class="o">*/</span>
+    <span class="p">};</span>
+
+    <span class="n">gpio_keys</span> <span class="p">{</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">261</span><span class="p">,</span><span class="mi">9</span> <span class="o">+</span><span class="mi">273</span><span class="p">,</span><span class="mi">11</span> <span class="o">@@</span>
+    <span class="n">pinctrl</span><span class="o">-</span><span class="mi">0</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">sdhci1_pmux</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;&amp;</span><span class="n">sdhci1_gpio_pmux</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;&amp;</span><span class="n">sdhci1_cd_pmux</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="n">pinctrl</span><span class="o">-</span><span class="n">names</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">;</span>
+    <span class="n">bus</span><span class="o">-</span><span class="n">width</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="o">-</span>   <span class="n">no</span><span class="o">-</span><span class="n">sdio</span><span class="p">;</span>
+<span class="o">+</span>   <span class="n">no</span><span class="o">-</span><span class="n">sd</span><span class="p">;</span>
+    <span class="n">no</span><span class="o">-</span><span class="n">mmc</span><span class="p">;</span>
+<span class="o">-</span>   <span class="n">disable</span><span class="o">-</span><span class="n">wp</span><span class="p">;</span>
+<span class="o">+</span>   <span class="n">non</span><span class="o">-</span><span class="n">removable</span><span class="p">;</span>
+<span class="o">+</span>   <span class="n">mmc</span><span class="o">-</span><span class="n">pwrseq</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">sdhci1_pwrseq</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="o">+</span>   <span class="n">mode1</span><span class="o">-</span><span class="n">tune</span><span class="p">;</span>
+    <span class="n">sdclkdl</span><span class="o">-</span><span class="n">dc</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">75</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="n">pad</span><span class="o">-</span><span class="n">sp</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="n">pad</span><span class="o">-</span><span class="n">sn</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="updating-the-defconfig">
+<h3>Updating the defconfig<a class="headerlink" href="#updating-the-defconfig" title="Permalink to this heading"></a></h3>
+<p>Modify the <code class="docutils literal notranslate"><span class="pre">defconfig</span></code> file located in <code class="docutils literal notranslate"><span class="pre">build-sl1680/workspace/sources/linux-syna/arch/arm64/configs</span></code>.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p>SL1640</p></td>
+<td><p>SL1680</p></td>
+</tr>
+<tr class="row-even"><td><p>defconfig</p></td>
+<td><p>platypus_defconfig</p></td>
+<td><p>dolphin_defconfig</p></td>
+</tr>
+</tbody>
+</table>
+<p>The following sections need to be added / modified. The sections in <code class="docutils literal notranslate"><span class="pre">dolphin_defconfig</span></code> and <code class="docutils literal notranslate"><span class="pre">platypus_defconfig</span></code> are identical so the
+below patch applies to both platforms.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">diff</span> <span class="o">--</span><span class="n">git</span> <span class="n">a</span><span class="o">/</span><span class="n">recipes</span><span class="o">-</span><span class="n">kernel</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">files</span><span class="o">/</span><span class="n">platypus_defconfig</span> <span class="n">b</span><span class="o">/</span><span class="n">recipes</span><span class="o">-</span><span class="n">kernel</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">files</span><span class="o">/</span><span class="n">platypus_defconfig</span>
+<span class="n">index</span> <span class="n">b57eac8</span><span class="o">..</span><span class="n">fc22a7e</span> <span class="mi">100644</span>
+<span class="o">---</span> <span class="n">a</span><span class="o">/</span><span class="n">recipes</span><span class="o">-</span><span class="n">kernel</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">files</span><span class="o">/</span><span class="n">platypus_defconfig</span>
+<span class="o">+++</span> <span class="n">b</span><span class="o">/</span><span class="n">recipes</span><span class="o">-</span><span class="n">kernel</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">files</span><span class="o">/</span><span class="n">platypus_defconfig</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">292</span><span class="p">,</span><span class="mi">13</span> <span class="o">+</span><span class="mi">292</span><span class="p">,</span><span class="mi">14</span> <span class="o">@@</span>
+<span class="c1"># CONFIG_WLAN_VENDOR_ZYDAS is not set</span>
+<span class="c1"># CONFIG_WLAN_VENDOR_QUANTENNA is not set</span>
+<span class="n">CONFIG_BCMDHD</span><span class="o">=</span><span class="n">m</span>
+<span class="o">-</span><span class="n">CONFIG_BCMDHD_PCIE</span><span class="o">=</span><span class="n">y</span>
+<span class="o">-</span><span class="n">CONFIG_BCMDHD_PCIE_RUNTIMEPM</span><span class="o">=</span><span class="n">y</span>
+<span class="o">+</span><span class="n">CONFIG_BCMDHD_SDIO</span><span class="o">=</span><span class="n">y</span>
+<span class="o">+</span><span class="c1">#CONFIG_BCMDHD_PCIE is not set</span>
+<span class="o">+</span><span class="c1">#CONFIG_BCMDHD_PCIE_RUNTIMEPM is not set</span>
+<span class="n">CONFIG_BCM4362</span><span class="o">=</span><span class="n">y</span>
+<span class="n">CONFIG_DHD_OF_SUPPORT</span><span class="o">=</span><span class="n">y</span>
+<span class="o">-</span><span class="n">CONFIG_BCMDHD_FW_PATH</span><span class="o">=</span><span class="s2">&quot;/data/etc/wifi/fw_bcmdhd.bin&quot;</span>
+<span class="o">-</span><span class="n">CONFIG_BCMDHD_NVRAM_PATH</span><span class="o">=</span><span class="s2">&quot;/data/etc/wifi/bcmdhd.cal&quot;</span>
+<span class="o">-</span><span class="n">CONFIG_BCMDHD_CLM_PATH</span><span class="o">=</span><span class="s2">&quot;/data/etc/wifi/bcmdhd_clm.blob&quot;</span>
+<span class="o">+</span><span class="c1">#CONFIG_BCMDHD_FW_PATH is not set</span>
+<span class="o">+</span><span class="c1">#CONFIG_BCMDHD_NVRAM_PATH is not set</span>
+<span class="o">+</span><span class="c1">#CONFIG_BCMDHD_CLM_PATH is not set</span>
+<span class="n">CONFIG_DHD_USE_SCHED_SCAN</span><span class="o">=</span><span class="n">y</span>
+<span class="c1"># CONFIG_WLAIBSS is not set</span>
+<span class="c1"># CONFIG_WL_RELMCAST is not set</span>
+</pre></div>
+</div>
+</section>
+<section id="build-the-updated-image">
+<h3>Build the Updated Image<a class="headerlink" href="#build-the-updated-image" title="Permalink to this heading"></a></h3>
+<p>Build the image with the updated device tree entries:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">devtool</span> <span class="n">build</span> <span class="n">linux</span><span class="o">-</span><span class="n">syna</span>
+<span class="n">devtool</span> <span class="n">build</span><span class="o">-</span><span class="n">image</span> <span class="n">astra</span><span class="o">-</span><span class="n">media</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ubuntu_docker.html" class="btn btn-neutral float-left" title="Ubuntu-based Docker Container" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../appnotes/index.html" class="btn btn-neutral float-right" title="Application Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2025, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

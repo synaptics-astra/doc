@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Release Notes v0.9.0 &mdash; Synaptics Astra SDK User Guide 1.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=80d54a31"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Release Notes v1.0.0" href="v1.0.0.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subject/index.html">Subject Specific User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="v1.5.0.html">Release Notes v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v1.4.0.html">Release Notes v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v1.3.0.html">Release Notes v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v1.2.0.html">Release Notes v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v1.1.0.html">Release Notes v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v1.0.0.html">Release Notes v1.0.0</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Release Notes v0.9.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#known-issues">Known issues</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../release_notes.html">SDK Release Notes</a></li>
+      <li class="breadcrumb-item active">Release Notes v0.9.0</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="release-notes-v0-9-0">
+<h1>Release Notes v0.9.0<a class="headerlink" href="#release-notes-v0-9-0" title="Permalink to this heading"></a></h1>
+<section id="known-issues">
+<h2>Known issues<a class="headerlink" href="#known-issues" title="Permalink to this heading"></a></h2>
+<p>System shell</p>
+<blockquote>
+<div><p>The build requires <code class="docutils literal notranslate"><span class="pre">bash</span></code> to be set as system shell <code class="docutils literal notranslate"><span class="pre">/bin/sh</span></code>, this already configured in the crops docker that is the recommended build environment but is not by default the case on Ubuntu 22.04 LTS.</p>
+<p>To configure the default system shell to bash on Ubuntu 22.04 use the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;dash dash/sh boolean false&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>debconf-set-selections<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive<span class="w"> </span>dpkg-reconfigure<span class="w"> </span>dash
+</pre></div>
+</div>
+</div></blockquote>
+<p>Warnings during build</p>
+<blockquote>
+<div><p>During the build the following messages are displayed:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">WARNING: synasdk-tools-native-0.0.1+gitAUTOINC+5b2d1a4ff6-r1 do_unpack: Failed to find a git repository in WORKDIR: /home/astra-test/sdk/build-sl1680/tmp/work/x86_64-linux/synasdk-tools-native/0.0.1+gitAUTOINC+5b2d1a4ff6-r1</span>
+<span class="go">WARNING: synasdk-security-0.0.1+gitAUTOINC+5b2d1a4ff6-r2 do_unpack: Failed to find a git repository in WORKDIR: /home/astra-test/sdk/build-sl1680/tmp/work/sl1680-poky-linux/synasdk-security/0.0.1+gitAUTOINC+5b2d1a4ff6-r2</span>
+<span class="go"> linux-firmware-syna-5.15.140-r0 do_package_qa: QA Issue: Recipe LICENSE includes obsolete licenses GPLv2 [obsolete-license]</span>
+</pre></div>
+</div>
+<p>These warnings can be ignored.</p>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="v1.0.0.html" class="btn btn-neutral float-left" title="Release Notes v1.0.0" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2025, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

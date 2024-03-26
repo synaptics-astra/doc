@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SYNA DRM / KMS Driver User Guide &mdash; Synaptics Astra SDK User Guide 1.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/synaptics.css?v=fae16d89" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=80d54a31"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Waveshare Panel Configuration Guide" href="waveshare_7inch_dsi-configuration.html" />
+    <link rel="prev" title="Subject Specific User Guides" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #007dc3" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo_full_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Astra Yocto Linux User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto.html">Astra Yocto Linux Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Subject Specific User Guides</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SYNA DRM / KMS Driver User Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acronyms">Acronyms</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#astra-machina-display-capabilities">Astra Machina Display Capabilities</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#display-capability-of-the-supported-socs">Display capability of the supported SoC’s.</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#syna-drm-kms-configuration">SYNA DRM/KMS Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configuration-based-on-defconfig">Configuration based on defconfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuration-based-on-dts">Configuration based on dts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dts-configuration-template-for-sl16xx-given-below">dts configuration template for SL16XX given below:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dts-for-sl1640-and-sl1680"><em>dts</em> for SL1640 and SL1680</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dts-for-sl1620"><em>dts</em> for SL1620</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#generic-display-configuration">Generic Display Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hdmi-configuration">HDMI configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mipi-dsi-display-configuration">MIPI-DSI Display Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tft-display-configuration">TFT Display configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#panel-backlight-configuration">Panel Backlight Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#syna-drm-kms-driver-testing">SYNA DRM/KMS driver testing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sl1680-display">SL1680 Display</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sl1640-display">SL1640 Display</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sl1620-display">SL1620 Display</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="waveshare_7inch_dsi-configuration.html">Waveshare Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="haier_panel_configuration.html">Haier Panel Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory_layout_customization.html">Memory Layout Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emmc_layout_customization.html">eMMC Partition Customization on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dvfs_user_guide.html">Dynamic Voltage and Frequency Switching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power_measurement.html">Power Measurements with Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weston_default_display.html">Setting the Weston Default Display for Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isp_sensor_integration.html">ISP Sensor Integration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating_isp_sensor_configuration.html">Updating the ISP Sensor Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpios.html">GPIOs on Astra Machina</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp_flow_user_guide.html">Astra MP Flow User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastlogo_image_generation.html">FastLogo Sub-Image(fastlogo.subimg.gz) File Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uboot_fastlogo_configuration.html">Uboot Fastlogo Customization User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="swupdate_user_guide.html">SWUpdate User Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appnotes/index.html">Application Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">Astra Machina Eval Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">SDK Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #007dc3" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Synaptics Astra SDK User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Subject Specific User Guides</a></li>
+      <li class="breadcrumb-item active">SYNA DRM / KMS Driver User Guide</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="syna-drm-kms-driver-user-guide">
+<h1>SYNA DRM / KMS Driver User Guide<a class="headerlink" href="#syna-drm-kms-driver-user-guide" title="Permalink to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>The scope of the document is to provide detailed steps to configure
+and unit test drm/kms driver for SL16xx display interfaces.</p>
+<p>This document emphasizes on MIPI-DSI related configuration like
+timing, initialization command, etc.</p>
+</div></blockquote>
+</section>
+<section id="acronyms">
+<h3>Acronyms<a class="headerlink" href="#acronyms" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>MIPI - Mobile Industry Processor Interface</p>
+<p>LCD – Liquid Crystal Display</p>
+<p>TFT – Thin Film Transistor</p>
+<p>DRM – Direct Rendering Manager</p>
+<p>KMS – Kernel Mode Setting</p>
+</div></blockquote>
+</section>
+</section>
+<section id="astra-machina-display-capabilities">
+<h2>Astra Machina Display Capabilities<a class="headerlink" href="#astra-machina-display-capabilities" title="Permalink to this heading"></a></h2>
+<blockquote>
+<div><p>syna drm/kms driver is supported for the SL16xx Astra Machina
+platforms.</p>
+</div></blockquote>
+<section id="display-capability-of-the-supported-socs">
+<h3>Display capability of the supported SoC’s.<a class="headerlink" href="#display-capability-of-the-supported-socs" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>SL1640: Supports Single Display (Either HDMI or MIPI-DSI)</p></li>
+<li><p>SL1680: Supports Dual Display (HDMI and MIPI-DSI)</p></li>
+<li><p>SL1620: Supports Dual Display (TFT and MIPI-DSI)</p></li>
+</ul>
+</section>
+</section>
+<section id="syna-drm-kms-configuration">
+<h2>SYNA DRM/KMS Configuration<a class="headerlink" href="#syna-drm-kms-configuration" title="Permalink to this heading"></a></h2>
+<blockquote>
+<div><p>Device driver configurations are handled through the <em>defconfig</em> and
+<em>dts</em> files.</p>
+</div></blockquote>
+<section id="configuration-based-on-defconfig">
+<h3>Configuration based on defconfig<a class="headerlink" href="#configuration-based-on-defconfig" title="Permalink to this heading"></a></h3>
+<p>Following device driver configuration available in <em>defconfig</em>:</p>
+<ol class="arabic simple">
+<li><p>DRM/KMS driver</p></li>
+<li><p>Backlight</p></li>
+</ol>
+<p><em>defconfig</em> for each platform is given below:</p>
+<ol class="arabic simple">
+<li><p>SL1620: <em>myna2_defconfig</em></p></li>
+<li><p>SL1640: <em>platypus_defconfig</em></p></li>
+<li><p>SL1680: <em>dolphin_defconfig</em></p></li>
+</ol>
+</section>
+<section id="configuration-based-on-dts">
+<h3>Configuration based on dts<a class="headerlink" href="#configuration-based-on-dts" title="Permalink to this heading"></a></h3>
+<p>Following device configuration are handled through <em>dts</em> files:</p>
+<ol class="arabic simple">
+<li><p>Generic Display configuration</p></li>
+<li><p>MIPI-DSI Panel configuration</p></li>
+<li><p>LCDC panel configuration</p></li>
+<li><p>HDMI TX configuration</p></li>
+</ol>
+<p><em>dts</em> files of each platform given below:</p>
+<ul class="simple">
+<li><p>SL1620: <em>myna2-rdk.dts</em></p></li>
+<li><p>SL1640: <em>platypus-rdk.dts</em></p></li>
+<li><p>SL1680: <em>dolphin-rdk.dts</em></p></li>
+</ul>
+</section>
+<section id="dts-configuration-template-for-sl16xx-given-below">
+<h3>dts configuration template for SL16XX given below:<a class="headerlink" href="#dts-configuration-template-for-sl16xx-given-below" title="Permalink to this heading"></a></h3>
+</section>
+<section id="dts-for-sl1640-and-sl1680">
+<h3><em>dts</em> for SL1640 and SL1680<a class="headerlink" href="#dts-for-sl1640-and-sl1680" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">drm</span> <span class="p">{</span>
+   <span class="n">Generic</span> <span class="n">Display</span> <span class="n">configuration</span>
+   <span class="n">MIPI</span><span class="o">-</span><span class="n">DSI</span> <span class="n">Panel</span> <span class="n">configuration</span>
+   <span class="n">HDMI</span> <span class="n">TX</span> <span class="n">configuration</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="dts-for-sl1620">
+<h3><em>dts</em> for SL1620<a class="headerlink" href="#dts-for-sl1620" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">drm</span> <span class="p">{</span>
+   <span class="n">MIPI</span><span class="o">-</span><span class="n">DSI</span> <span class="n">Panel</span> <span class="n">configuration</span>
+   <span class="n">LCDC</span> <span class="n">panel</span> <span class="n">specific</span> <span class="n">configuration</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="generic-display-configuration">
+<h3>Generic Display Configuration<a class="headerlink" href="#generic-display-configuration" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>For SL1640 or SL1680, the default display type on bootup need be
+specified.</p>
+<p>Below are the parameters which need be configured for the display.</p>
+<ul class="simple">
+<li><p><strong>disp-mode:</strong> Specifies the display mode. Whether it is single
+display/ dual display.</p></li>
+<li><p><strong>disp1-res-id:</strong> Resolution Id corresponding to a timing
+information.</p></li>
+</ul>
+</div></blockquote>
+<blockquote>
+<div><p>More information on the timing and resolution id are available in
+below file.</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;linux&gt;/drivers/soc/berlin/modules/avio/vpp/ca/include/vpp_defines.h</span></code></p>
+<ul class="simple">
+<li><p><strong>disp1-type:</strong> Type of the Display1 whether it is HDMI or MIPI-DSI.</p></li>
+<li><p><strong>disp2-res-id:</strong> Resolution Id corresponding to the timing
+information. In case of dual Display, display2 must be MIPI-DSI and
+resolution id is fixed to 102.</p></li>
+<li><p><strong>disp2-type:</strong> Type of the Display2.</p></li>
+</ul>
+</div></blockquote>
+<section id="sl1640-sl1680-single-display-configuration">
+<h4>SL1640/SL1680 Single Display configuration<a class="headerlink" href="#sl1640-sl1680-single-display-configuration" title="Permalink to this heading"></a></h4>
+<blockquote>
+<div><p>Default configuration for SL1640 and SL1680 given as below.</p>
+<ul class="simple">
+<li><p>SL1640 - Single Display mode – HDMI only.</p></li>
+<li><p>SL1680 - Dual Display mode – HDMI + MIPI-DSI</p></li>
+</ul>
+</div></blockquote>
+<blockquote>
+<div><p>Display mode can be changed in <em>dts</em>. Single Display mode is
+applicable for both SL1640 and SL1680.</p>
+<p>Below is an example for Single display mode.</p>
+<p><strong>Single Display: HDMI Display Mode</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">drm</span> <span class="p">{</span>
+   <span class="n">disp</span><span class="o">-</span><span class="n">mode</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">disp1</span><span class="o">-</span><span class="n">res</span><span class="o">-</span><span class="nb">id</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">24</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">disp1</span><span class="o">-</span><span class="nb">type</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>Single Display mode: MIPI-DSI Display Mode</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">drm</span> <span class="p">{</span>
+   <span class="n">disp</span><span class="o">-</span><span class="n">mode</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">disp1</span><span class="o">-</span><span class="n">res</span><span class="o">-</span><span class="nb">id</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">102</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">disp1</span><span class="o">-</span><span class="nb">type</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="sl1680-dual-display-configuration">
+<h4>SL1680 Dual Display configuration<a class="headerlink" href="#sl1680-dual-display-configuration" title="Permalink to this heading"></a></h4>
+<blockquote>
+<div><p><strong>Dual Display Mode (HDMI as primary + DSI as secondary)</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">drm</span> <span class="p">{</span>
+   <span class="n">disp</span><span class="o">-</span><span class="n">mode</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">disp1</span><span class="o">-</span><span class="n">res</span><span class="o">-</span><span class="nb">id</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">24</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">disp1</span><span class="o">-</span><span class="nb">type</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">disp2</span><span class="o">-</span><span class="n">res</span><span class="o">-</span><span class="nb">id</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">102</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">disp2</span><span class="o">-</span><span class="nb">type</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Note:</p>
+<ul class="simple">
+<li><p>For MIPI-DSI Display: RESID is fixed to <strong>102</strong> where it takes the
+custom timing provided in the <em>dts</em>.</p></li>
+<li><p>For HDMI display ID, depending on the capability of the SINK at
+bootup only 4K or 1080P are supported at present.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="sl1620-display-configuration">
+<h4>SL1620 Display configuration<a class="headerlink" href="#sl1620-display-configuration" title="Permalink to this heading"></a></h4>
+<blockquote>
+<div><p>Default display configuration for SL1620 is Dual – TFT + MIPI-DSI.</p>
+<p><em>lcdc_panel</em> node and <em>dsi_panel</em> nodes in <em>dts</em> decide the number of
+displays. Display configuration will be carried on based on the
+parameters in section 4.5 and section 4.3 respectively.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="hdmi-configuration">
+<h3>HDMI configuration<a class="headerlink" href="#hdmi-configuration" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>HDMI configuration options in <em>dts</em> are as below:</p>
+<p><strong>hdtx-core-config</strong>: used to configure HDMI output, it includes
+bitfields to control below options.</p>
+<p>Default options: <em>hdtx-core-config = /bits/ 8 &lt;1 0 1&gt;</em></p>
+<ul class="simple">
+<li><p><em>HPD handling</em>: to enable/disable handling of sink hotplug. If HPD handling is disabled, output format will be configured on bootup depending on sink capability and retained till next reboot.</p></li>
+<li><p><em>HDCP control</em>: to enable/disabled HDCP. Currently not handled.</p></li>
+<li><p><em>FixedModeset:</em> to let SYNA DRM/KMS driver handle the mode setting internally without exposing user interface. If set, it will configure output format without requiring the userspace application to configure output format, any attempt to override the configured format will be ignored.</p></li>
+</ul>
+<p><strong>hdtx-supported-formats</strong>:
+used to list the formats exposed to user via kms mode query.</p>
+<p>Default selection: <em>hdtx-supported-formats = /bits/ 8 &lt;12 9 10 13 22
+21 19 26 25 24 61 62 64&gt;.</em></p>
+<p>Refer below file for resolution indices in
+<code class="docutils literal notranslate"><span class="pre">&lt;linux&gt;/drivers/soc/berlin/modules/avio/vpp/ca/include/vpp_defines.h</span></code></p>
+<p>If needed, this can be overridden using parameter
+“<em>hdmi_preferred_mode</em> “, by adding/modifying the same in
+<code class="docutils literal notranslate"><span class="pre">/etc/modprobe.d/syna_drm.conf</span></code>.</p>
+<p>Example: To override preferred modes as 1080p:
+<em>hdmi_preferred_mode=1920x1080</em></p>
+<p>Below is out of box default configuration,</p>
+<ul class="simple">
+<li><p>syna drm/kms driver will internally configure HDMI output format.</p></li>
+</ul>
+<p>On connecting 4K supported sink, 4K30 RGB 8bit format will be
+selected.</p>
+<p>On 1080p TV, output will be configured as 1080p60 RGB 8bit.</p>
+<ul class="simple">
+<li><p>Preferred mode of EDID is override to 1080p.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="mipi-dsi-display-configuration">
+<h3>MIPI-DSI Display Configuration<a class="headerlink" href="#mipi-dsi-display-configuration" title="Permalink to this heading"></a></h3>
+<section id="mipi-dsi-panel-configuration-parameters">
+<h4>MIPI-DSI panel configuration parameters<a class="headerlink" href="#mipi-dsi-panel-configuration-parameters" title="Permalink to this heading"></a></h4>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><em>Lanes</em> - Number of Data lanes</p></li>
+<li><p><em>Data_Lane_Polarity</em> - Polarity of the Data Lane</p></li>
+<li><p><em>Clk_Lane_Polarity</em> - Polarity of the clock lane</p></li>
+<li><p><em>virtual_chan</em> - virtual channel number</p></li>
+<li><p><em>Vid_mode</em> - Video mode. Supported video mode are:</p>
+<ul class="simple">
+<li><p>0 - non-burst mode + sync pulse</p></li>
+<li><p>1 - non-burst mode + sync event</p></li>
+<li><p>2 - Burst mode</p></li>
+</ul>
+</li>
+<li><p><em>non-Continuous_clk</em> - 0 for continuous and 1 for non-continuous clock configuration</p></li>
+<li><p><em>Byte_clk</em> - Byte clock rate. Calculated as Total Bandwidth / (Lanes * 8)</p></li>
+<li><p><em>Recv_ack</em> - Receive acknowledgement.</p></li>
+<li><p><em>Color_format</em> - Color coding output format</p></li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>RGB888 - 5</p></li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="10">
+<li><p><em>Loosely_18</em> - Loosely 18 packed</p></li>
+<li><p><em>Data_Polarity</em> – Data enable signal. Assertion indicates valid pixel. 0 – Positive &amp; 1 - negative</p></li>
+<li><p><em>H_polarity</em> - Horizontal polarity active low/High</p></li>
+<li><p><em>V_Polarity</em> - Vertical polarity</p></li>
+<li><p><em>Eotp_rx</em> - EOTP Reception support enable/disable.</p></li>
+<li><p><em>Eotp_tx</em> - EOTP Transmission enable/disable.</p></li>
+<li><p><em>HTOTAL</em> – Total number of pixels in a line.</p></li>
+<li><p><em>Chunks</em> - Number of Chunks in case of multiple chunk transmission otherwise ‘1’ for single.</p></li>
+<li><p><em>Null_Pkt</em> - Size of the null packet.</p></li>
+<li><p><em>dpi_lp_cmd</em> - Enable DPI low power command.</p></li>
+<li><p><em>ACTIVE_WIDTH</em> - Active width of the Panel</p></li>
+<li><p><em>ACTIVE_HEIGHT</em> - Active height of the panel</p></li>
+<li><p><em>HFP</em> - Horizontal Front porch</p></li>
+<li><p><em>HSYNCWIDTH</em> - Horizontal sync width</p></li>
+<li><p><em>HBP</em> - Horizontal Back porch</p></li>
+<li><p><em>VFP</em> - vertical Front porch</p></li>
+<li><p><em>VSYNCWIDTH</em> - Vertical sync width</p></li>
+<li><p><em>VBP</em> - Vertical Back porch</p></li>
+<li><p><em>TYPE</em> - ‘0’ for SD, ‘1’ for Full HD ‘2’ for UHD</p></li>
+<li><p><em>SCAN</em> - ‘1’ for Progressive, ‘0’ for Interlaced</p></li>
+<li><p><em>FRAME_RATE</em> - Frame rate, ENUMs mentioned as below.</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>FRAME_RATE_23P98</em> = 0</p></li>
+<li><p><em>FRAME_RATE_24</em> = 1</p></li>
+<li><p><em>FRAME_RATE_25</em> = 2</p></li>
+<li><p><em>FRAME_RATE_29P97</em> = 3</p></li>
+<li><p><em>FRAME_RATE_30</em> = 4</p></li>
+<li><p><em>FRAME_RATE_47P96</em> = 5</p></li>
+<li><p><em>FRAME_RATE_48</em> = 6</p></li>
+<li><p><em>FRAME_RATE_50</em> = 7</p></li>
+<li><p><em>FRAME_RATE_59P94</em> = 8</p></li>
+<li><p><em>FRAME_RATE_60</em> = 9</p></li>
+<li><p><em>FRAME_RATE_100</em> = 10</p></li>
+<li><p><em>FRAME_RATE_119P88</em> = 11</p></li>
+<li><p><em>FRAME_RATE_120</em> = 12</p></li>
+<li><p><em>FRAME_RATE_89P91</em> = 13</p></li>
+<li><p><em>FRAME_RATE_90</em> = 14</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic" start="31">
+<li><p><em>FLAG_3D</em> – Disabled always.</p></li>
+<li><div class="line-block">
+<div class="line"><em>FREQ</em> - Pixel clock frequency for primary display in KHz. Pixel frequency is calculated as</div>
+<div class="line">FREQ = HTOTAL * VTOTAL * FRAME_RATE</div>
+<div class="line">For instance, for 1080P60Hz standard resolution, HTOTAL – 2200, VTOTAL – 1125 FREQ = (2200 * 1125 * 60)/1000</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><em>PTS_PER_4</em> - PTS for every four count Which is nothing but PTS/4. For instance:</div>
+<div class="line">Crystal frequency is 90kHz and frame rate is 60fps, then</div>
+<div class="line">PTS_PER_4 = (4*90*1000)/60 = 6000</div>
+</div>
+</li>
+<li><p><em>PIXEL_CLOCK</em> - Pixel clock frequency for Secondary display in KHz. Make it same as FREQ.</p></li>
+<li><p><em>mipirst-gpio</em> - Reset Gpio for the MIPI.</p></li>
+<li><p><em>power-supply</em> - External power supply control.</p></li>
+<li><p><em>backlight</em> - External backlight control.</p></li>
+<li><p><em>COMMAND</em> = Command for initialization in Hex</p></li>
+</ol>
+<blockquote>
+<div><p><em>Format - &lt;CMD&gt; &lt;Payloadlength-n&gt; &lt;BYTE1&gt; &lt;…&gt; &lt;BYTEn&gt;</em></p>
+<ul class="simple">
+<li><p>Long write Ex: <em>39 04</em> <em>FF 98 81 03</em></p></li>
+</ul>
+<p><em>CMD =&gt; 0x39</em></p>
+<p><em>Length =&gt; 0x04</em></p>
+<p><em>PayLoad =&gt; FF 98 81 03</em></p>
+<ul class="simple">
+<li><p>Delay in microseconds Command format: 0xFF &lt;4BYTE delay&gt;</p>
+<ul>
+<li><p>Delay for 100ms (100000us =&gt; 0x000186A0)</p></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<div><p>FF A0 86 01 00</p>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</section>
+<section id="display-timing-parameters">
+<h4>Display Timing Parameters<a class="headerlink" href="#display-timing-parameters" title="Permalink to this heading"></a></h4>
+<blockquote>
+<div><p>These parameters are mandatory for SL1640/SL1680 and optional for
+SL1620.</p>
+<ul class="simple">
+<li><p><em>VB_MIN</em> - Minimum vertical blanking for the Display TG</p></li>
+<li><p><em>HB_MIN</em> - Minimum Horizontal blanking for the Display TG</p></li>
+<li><p><em>V_OFF</em> - Vertical offset for the Display TG.</p></li>
+<li><p><em>H_OFF</em> - Horizontal offset for the Display TG.</p></li>
+<li><p><em>HB_VOP_OFF</em> - Horizontal VOP offset for the Display TG.</p></li>
+<li><p><em>VB_VOP_OFF</em> - Vertical VOP offset for the Display TG</p></li>
+<li><p><em>HB_BE</em> - Horizontal Blanking Back Edge for the Display TG.</p></li>
+<li><p><em>VB_BE</em> - Vertical Blanking Back Edge for the Display TG.</p></li>
+<li><p><em>HB_FP</em> - Horizontal Blanking Front porch for the Display TG.</p></li>
+<li><p><em>VB_FP</em> - Vertical Blanking Front porch for the Display TG.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="reference-entry-for-the-mipi-dsi-panel">
+<h4>Reference entry for the MIPI DSI panel<a class="headerlink" href="#reference-entry-for-the-mipi-dsi-panel" title="Permalink to this heading"></a></h4>
+<blockquote>
+<div><p>Below is default entry for the MIPI-DSI in <em>dts</em>.</p>
+<p>This serves as a reference for a panel with resolution 800x1280 and
+HTotal = 952, VTOTAL = 1312.</p>
+<p>Refer the parameters above for further information on the panel.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&amp;drm {
+
+   …
+
+   dsi_panel {
+      status= &quot;okay&quot;;
+
+      \* Reset PIN configuration for the MIPI-DSI if available in the
+      platform */
+
+      mipirst-gpio = &lt;&amp;expander0 7 GPIO_ACTIVE_LOW&gt;;
+      NO_OF_RESID = &lt;1&gt;;
+      DSI_RES = &lt;102&gt;;
+      ACTIVE_WIDTH = &lt;800&gt;;
+      HFP = &lt;60&gt;;
+      HSYNCWIDTH = &lt;32&gt;;
+      HBP = &lt;60&gt;;
+      ACTIVE_HEIGHT = &lt;1280&gt;;
+      VFP = &lt;16&gt;;
+      VSYNCWIDTH = &lt;2&gt;;
+      VBP = &lt;14&gt;;
+      TYPE = &lt;1&gt;;
+      SCAN = &lt;0&gt;;
+      FRAME_RATE = &lt;9&gt;;
+      FLAG_3D = &lt;0&gt;;
+      FREQ = &lt;75000&gt;;
+      PTS_PER_4 = &lt;6000&gt;;
+
+      bits_per_pixel = &lt;24&gt;;
+      busformat = &lt;0&gt;;
+
+      HTOTAL = &lt;952&gt;;
+      Lanes = /bits/ 8 &lt;4&gt;;
+      Vid_mode = /bits/ 8 &lt;2&gt;;
+      virtual_chan = /bits/ 8 &lt;0&gt;;
+      Clk_Lane_Polarity = /bits/ 8 &lt;0&gt;;
+      Data_Lane_Polarity = /bits/ 8 &lt;0&gt;;
+      Recv_ack = /bits/ 8 &lt;0&gt;;
+      Loosely_18 = /bits/ 8 &lt;0&gt;;
+      H_polarity = /bits/ 8 &lt;1&gt;;
+      V_Polarity = /bits/ 8 &lt;1&gt;;
+      Data_Polarity = /bits/ 8 &lt;1&gt;;
+      Eotp_tx = /bits/ 8 &lt;1&gt;;
+      Eotp_rx = /bits/ 8 &lt;0&gt;;
+      non-Continuous_clk = /bits/ 8 &lt;1&gt;;
+      dpi_lp_cmd = /bits/ 8 &lt;1&gt;;
+      Color_coding = /bits/ 8 &lt;5&gt;;
+      Chunks = &lt;0&gt;;
+      Null_Pkt = &lt;0&gt;;
+      Byte_clk = &lt;56250&gt;;
+
+      VB_MIN = /bits/ 8 &lt;6&gt;;
+      HB_MIN = /bits/ 8 &lt;30&gt;;
+      V_OFF = /bits/ 8 &lt;6&gt;;
+      H_OFF = /bits/ 8 &lt;20&gt;;
+      HB_VOP_OFF = /bits/ 8 &lt;8&gt;;
+      VB_VOP_OFF = /bits/ 8 &lt;3&gt;;
+      HB_BE = /bits/ 8 &lt;7&gt;;
+      VB_BE = /bits/ 8 &lt;2&gt;;
+      VB_FP = /bits/ 8 &lt;2&gt;;
+      HB_FP = /bits/ 8 &lt;10&gt;;
+      PIXEL_CLOCK = &lt;75000&gt;;
+
+      command = /bits/ 8 &lt;0x39 0x04 0xFF 0x98 0x81 0x03
+                  0x15 0x02 0x01 0x00
+                  …..
+                  …..
+                  0xFF 0xC0 0xD4 0x01 0x00
+                  0x05 0x01 0x29
+                  0xFF 0x10 0x27 0x00 0x00&gt;;
+
+   };
+};
+</pre></div>
+</div>
+</div></blockquote>
+<p>Sample configuration for waveshare 7-inch DSI panel: <a class="reference internal" href="waveshare_7inch_dsi-configuration.html"><span class="doc">Waveshare Panel Configuration Guide</span></a></p>
+</section>
+</section>
+<section id="tft-display-configuration">
+<h3>TFT Display configuration<a class="headerlink" href="#tft-display-configuration" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>TBA</p>
+</div></blockquote>
+</section>
+<section id="panel-backlight-configuration">
+<h3>Panel Backlight Configuration<a class="headerlink" href="#panel-backlight-configuration" title="Permalink to this heading"></a></h3>
+<p id="section-1">Panel Backlight enable using Linux <em>defconfig</em> and <em>dts.</em></p>
+<p>1. External backlight driver-based Panel (Example: TI LP855x part of
+Panel DC)</p>
+<blockquote>
+<div><ol class="lowerroman simple">
+<li><p>Enable backlight driver in Linux kernel defconfig.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">CONFIG_BACKLIGHT_CLASS_DEVICE</span><span class="o">=</span><span class="n">m</span>
+<span class="o">+</span><span class="n">CONFIG_BACKLIGHT_CLASS_DEVICE</span><span class="o">=</span><span class="n">y</span>
+<span class="o">-</span><span class="c1"># CONFIG_BACKLIGHT_LP855X is not set</span>
+
+<span class="o">+</span><span class="n">CONFIG_BACKLIGHT_LP855X</span><span class="o">=</span><span class="n">y</span>
+</pre></div>
+</div>
+<ol class="lowerroman simple" start="2">
+<li><p>Create the entry in dts file for backlight driver.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">backlight</span><span class="o">@</span><span class="mi">2</span><span class="n">c</span> <span class="p">{</span>
+   <span class="n">compatible</span> <span class="o">=</span> <span class="s2">&quot;ti, lp8556&quot;</span><span class="p">;</span>
+   <span class="n">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mh">0x2c</span><span class="o">&gt;</span><span class="p">;</span>
+
+   <span class="n">bl</span><span class="o">-</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;lcd-bl&quot;</span><span class="p">;</span>
+   <span class="n">dev</span><span class="o">-</span><span class="n">ctrl</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mh">0x05</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">init</span><span class="o">-</span><span class="n">brt</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mh">0xFF</span><span class="o">&gt;</span><span class="p">;</span>
+
+   <span class="n">pwm</span><span class="o">-</span><span class="n">period</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mh">0x00</span><span class="o">&gt;</span><span class="p">;</span>
+
+   <span class="o">/*</span> <span class="n">CFG2</span> <span class="o">*/</span>
+
+   <span class="n">rom_A2h</span> <span class="p">{</span>
+      <span class="n">rom</span><span class="o">-</span><span class="n">addr</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mh">0xA2</span><span class="o">&gt;</span><span class="p">;</span>
+      <span class="n">rom</span><span class="o">-</span><span class="n">val</span> <span class="o">=</span> <span class="o">/</span><span class="n">bits</span><span class="o">/</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="mh">0x28</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="p">};</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>Panel using SL16xx SOC PWM to control the backlight.</p></li>
+</ol>
+<p><strong>Kernel dts:</strong></p>
+<p>Configure the pinmux to support the PWM Backlight configuration in
+the dts file. Below are the details for sample panel and SL1680
+platform.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">panel0</span><span class="o">-</span><span class="n">backlight</span> <span class="p">{</span>
+   <span class="n">compatible</span> <span class="o">=</span> <span class="s2">&quot;pwm-backlight&quot;</span><span class="p">;</span>
+   <span class="n">pwms</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">pwm0</span> <span class="mi">1</span> <span class="mi">1000000</span> <span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+
+   <span class="n">brightness</span><span class="o">-</span><span class="n">levels</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span> <span class="mi">4</span> <span class="mi">8</span> <span class="mi">16</span> <span class="mi">32</span> <span class="mi">64</span> <span class="mi">128</span> <span class="mi">255</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">default</span><span class="o">-</span><span class="n">brightness</span><span class="o">-</span><span class="n">level</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">6</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">enable</span><span class="o">-</span><span class="n">gpio</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">expander0</span> <span class="mi">4</span> <span class="n">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">pwm1_pmux</span><span class="p">:</span> <span class="n">pwm1</span><span class="o">-</span><span class="n">pmux</span> <span class="p">{</span>
+   <span class="n">groups</span> <span class="o">=</span> <span class="s2">&quot;SPI1_SS1n&quot;</span><span class="p">;</span>
+   <span class="n">function</span> <span class="o">=</span> <span class="s2">&quot;pwm&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">&amp;</span><span class="n">pwm0</span> <span class="p">{</span>
+   <span class="n">pinctrl</span><span class="o">-</span><span class="n">names</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">;</span>
+   <span class="n">pinctrl</span><span class="o">-</span><span class="mi">0</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">pwm1_pmux</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;okay&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="syna-drm-kms-driver-testing">
+<h2>SYNA DRM/KMS driver testing<a class="headerlink" href="#syna-drm-kms-driver-testing" title="Permalink to this heading"></a></h2>
+<p>Upon SL1XXX platform boot-up, display comes up with Weston desktop by
+default.</p>
+<p>To execute sample test application such as <code class="docutils literal notranslate"><span class="pre">modetest</span></code>, disable Weston
+using below command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">stop</span> <span class="n">weston</span><span class="o">.</span><span class="n">service</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">modetest</span></code> is a tool provided by <code class="docutils literal notranslate"><span class="pre">libdrm</span></code> library and is available as
+part of the SDK release/image (<code class="docutils literal notranslate"><span class="pre">/usr/local/bin/modetest</span></code>)</p>
+<p>Following are some of the tasks performed with <code class="docutils literal notranslate"><span class="pre">modetest</span></code></p>
+<ul class="simple">
+<li><p>List all display capabilities: CRTCs, encoders &amp; connectors (DP,
+HDMI, DSI …), planes, modes…</p></li>
+<li><p>Perform basic tests: display a test pattern, display 2 layers,
+perform a <em>vsync</em> test.</p></li>
+<li><p>Specify the video mode: resolution and <em>refreshrate</em>.</p></li>
+</ul>
+<p>Below is the syntax.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modetest</span> <span class="o">-</span><span class="n">M</span> <span class="n">synaptics</span> <span class="o">-</span><span class="n">s</span> <span class="o">&lt;</span><span class="n">connector_id</span><span class="o">&gt;</span> <span class="p">[,</span>
+<span class="o">&lt;</span><span class="n">connector_id</span><span class="o">&gt;</span><span class="p">][</span><span class="o">@&lt;</span><span class="n">crtc_id</span><span class="o">&gt;</span><span class="p">]:[</span><span class="c1">#&lt;mode index&gt;]&lt;mode&gt;[-&lt;vrefresh&gt;][@&lt;format&gt;]</span>
+</pre></div>
+</div>
+<p>Above application with the syntax provides the frame to Primary
+plane.</p>
+<p>To list the connector, CRTC and plane information for the platform,
+below command helps.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modetest</span> <span class="o">-</span><span class="n">M</span> <span class="n">synaptics</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The connector ID and CRTC ID may change. Use the <code class="docutils literal notranslate"><span class="pre">modetest</span> <span class="pre">-M</span> <span class="pre">synaptics</span></code> command to
+check te values of the connector ID and CRTC ID.</p>
+</div>
+<section id="sl1680-display">
+<h3>SL1680 Display<a class="headerlink" href="#sl1680-display" title="Permalink to this heading"></a></h3>
+<p>SL1680, default configuration provides Encoders – 2, connectors – 2,</p>
+<p>planes – 4 (MAIN, PIP, GFX1 and GFX2)</p>
+<p>Sample output of command <code class="docutils literal notranslate"><span class="pre">modetest</span> <span class="pre">-M</span> <span class="pre">synaptics</span></code> is as below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Encoders</span><span class="p">:</span>
+<span class="nb">id</span>      <span class="n">crtc</span>    <span class="nb">type</span>    <span class="n">possible</span> <span class="n">crtcs</span>  <span class="n">possible</span> <span class="n">clones</span>
+<span class="mi">37</span>      <span class="mi">34</span>      <span class="n">TMDS</span>    <span class="mh">0x00000001</span>      <span class="mh">0x00000001</span>
+<span class="mi">39</span>      <span class="mi">35</span>      <span class="n">DPI</span>     <span class="mh">0x00000002</span>      <span class="mh">0x00000002</span>
+
+<span class="n">Connectors</span><span class="p">:</span>
+<span class="nb">id</span>      <span class="n">encoder</span> <span class="n">status</span>          <span class="n">name</span>            <span class="n">size</span> <span class="p">(</span><span class="n">mm</span><span class="p">)</span>       <span class="n">modes</span>   <span class="n">encoders</span>
+<span class="mi">36</span>      <span class="mi">37</span>      <span class="n">connected</span>       <span class="n">HDMI</span><span class="o">-</span><span class="n">A</span><span class="o">-</span><span class="mi">1</span>        <span class="mi">1100</span><span class="n">x620</span>                <span class="mi">7</span>       <span class="mi">37</span>
+<span class="n">modes</span><span class="p">:</span>
+      <span class="n">index</span> <span class="n">name</span> <span class="n">refresh</span> <span class="p">(</span><span class="n">Hz</span><span class="p">)</span> <span class="n">hdisp</span> <span class="n">hss</span> <span class="n">hse</span> <span class="n">htot</span> <span class="n">vdisp</span> <span class="n">vss</span> <span class="n">vse</span> <span class="n">vtot</span>
+<span class="c1">#0 1920x1080 60.00 1920 2008 2052 2200 1080 1084 1089 1125 148500 flags: phsync, pvsync; type: preferred, driver</span>
+<span class="c1">#1 3840x2160 30.00 3840 4016 4104 4400 2160 2168 2178 2250 297000 flags: phsync, pvsync; type: driver</span>
+<span class="c1">#2 1920x1080 50.00 1920 2448 2492 2640 1080 1084 1089 1125 148500 flags: phsync, pvsync; type: driver</span>
+<span class="c1">#3 1920x1080 30.00 1920 2008 2052 2200 1080 1084 1089 1125 74250 flags: phsync, pvsync; type: driver</span>
+<span class="c1">#4 1920x1080 25.00 1920 2448 2492 2640 1080 1084 1089 1125 74250 flags: phsync, pvsync; type: driver</span>
+<span class="c1">#5 1920x1080 24.00 1920 2558 2602 2750 1080 1084 1089 1125 74250 flags: phsync, pvsync; type: driver</span>
+<span class="c1">#6 1280x720 60.00 1280 1390 1430 1650 720 725 730 750 74250 flags: phsync, pvsync; type: driver</span>
+<span class="n">props</span><span class="p">:</span>
+      <span class="mi">1</span> <span class="n">EDID</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="n">immutable</span> <span class="n">blob</span>
+               <span class="n">blobs</span><span class="p">:</span>
+
+               <span class="n">value</span><span class="p">:</span>
+                        <span class="mi">00</span><span class="n">ffffffffffff00593a181001010101</span>
+                        <span class="mf">00190103806e3</span><span class="n">e782afe2dab4f47a627</span>
+                        <span class="mi">0</span><span class="n">f474a200000d1c00101010101010101</span>
+                        <span class="mi">01010101010104740030</span><span class="n">f2705a80b058</span>
+                        <span class="mi">8</span><span class="n">a0048684200001e023a801871382d40</span>
+                        <span class="mi">582</span><span class="n">c450048684200001e000000fc0050</span>
+                        <span class="mi">35302</span><span class="n">d43310a202020202020000000fd</span>
+                        <span class="mi">00174</span><span class="n">c0f8c26000a2020202020200173</span>
+                        <span class="mi">02034571535</span><span class="n">f645d625e631022201f21</span>
+                        <span class="mi">05041303021112013257060000000000</span>
+                        <span class="mi">0000000000090707150750830100006</span><span class="n">f</span>
+                        <span class="mi">030</span><span class="n">c005000383ca029290060010304e5</span>
+                        <span class="mf">0e616660650000000000000000000000</span>
+                        <span class="mi">00000000000000000000000000000000</span>
+                        <span class="mi">00000000000000000000000000000000</span>
+                        <span class="mi">00000000000000000000000000000027</span>
+      <span class="mi">2</span> <span class="n">DPMS</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="n">enum</span>
+               <span class="n">enums</span><span class="p">:</span> <span class="n">On</span><span class="o">=</span><span class="mi">0</span> <span class="n">Standby</span><span class="o">=</span><span class="mi">1</span> <span class="n">Suspend</span><span class="o">=</span><span class="mi">2</span> <span class="n">Off</span><span class="o">=</span><span class="mi">3</span>
+               <span class="n">value</span><span class="p">:</span> <span class="mi">0</span>
+      <span class="mi">5</span> <span class="n">link</span><span class="o">-</span><span class="n">status</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="n">enum</span>
+               <span class="n">enums</span><span class="p">:</span> <span class="n">Good</span><span class="o">=</span><span class="mi">0</span> <span class="n">Bad</span><span class="o">=</span><span class="mi">1</span>
+               <span class="n">value</span><span class="p">:</span> <span class="mi">0</span>
+      <span class="mi">6</span> <span class="n">non</span><span class="o">-</span><span class="n">desktop</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="n">immutable</span> <span class="nb">range</span>
+               <span class="n">values</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">1</span>
+               <span class="n">value</span><span class="p">:</span> <span class="mi">0</span>
+      <span class="mi">4</span> <span class="n">TILE</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="n">immutable</span> <span class="n">blob</span>
+               <span class="n">blobs</span><span class="p">:</span>
+
+               <span class="n">value</span><span class="p">:</span>
+<span class="mi">38</span>      <span class="mi">39</span>      <span class="n">connected</span>       <span class="n">DSI</span><span class="o">-</span><span class="mi">1</span>           <span class="mh">0x0</span>             <span class="mi">1</span>       <span class="mi">39</span>
+<span class="n">modes</span><span class="p">:</span>
+      <span class="n">index</span> <span class="n">name</span> <span class="n">refresh</span> <span class="p">(</span><span class="n">Hz</span><span class="p">)</span> <span class="n">hdisp</span> <span class="n">hss</span> <span class="n">hse</span> <span class="n">htot</span> <span class="n">vdisp</span> <span class="n">vss</span> <span class="n">vse</span> <span class="n">vtot</span>
+<span class="c1">#0 800x1280 60.05 800 860 892 952 1280 1296 1298 1312 75000 flags: ; type: preferred, driver</span>
+<span class="n">props</span><span class="p">:</span>
+      <span class="mi">1</span> <span class="n">EDID</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="n">immutable</span> <span class="n">blob</span>
+               <span class="n">blobs</span><span class="p">:</span>
+
+               <span class="n">value</span><span class="p">:</span>
+      <span class="mi">2</span> <span class="n">DPMS</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="n">enum</span>
+               <span class="n">enums</span><span class="p">:</span> <span class="n">On</span><span class="o">=</span><span class="mi">0</span> <span class="n">Standby</span><span class="o">=</span><span class="mi">1</span> <span class="n">Suspend</span><span class="o">=</span><span class="mi">2</span> <span class="n">Off</span><span class="o">=</span><span class="mi">3</span>
+               <span class="n">value</span><span class="p">:</span> <span class="mi">0</span>
+      <span class="mi">5</span> <span class="n">link</span><span class="o">-</span><span class="n">status</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="n">enum</span>
+               <span class="n">enums</span><span class="p">:</span> <span class="n">Good</span><span class="o">=</span><span class="mi">0</span> <span class="n">Bad</span><span class="o">=</span><span class="mi">1</span>
+               <span class="n">value</span><span class="p">:</span> <span class="mi">0</span>
+      <span class="mi">6</span> <span class="n">non</span><span class="o">-</span><span class="n">desktop</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="n">immutable</span> <span class="nb">range</span>
+               <span class="n">values</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">1</span>
+               <span class="n">value</span><span class="p">:</span> <span class="mi">0</span>
+      <span class="mi">4</span> <span class="n">TILE</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="n">immutable</span> <span class="n">blob</span>
+               <span class="n">blobs</span><span class="p">:</span>
+
+               <span class="n">value</span><span class="p">:</span>
+
+<span class="n">CRTCs</span><span class="p">:</span>
+<span class="nb">id</span>      <span class="n">fb</span>      <span class="n">pos</span>     <span class="n">size</span>
+<span class="mi">34</span>      <span class="mi">42</span>      <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>   <span class="p">(</span><span class="mi">1920</span><span class="n">x1080</span><span class="p">)</span>
+<span class="c1">#0 1920x1080 60.00 1920 2008 2052 2200 1080 1084 1089 1125 148500 flags: phsync, pvsync; type: preferred, driver</span>
+<span class="n">props</span><span class="p">:</span>
+      <span class="mi">24</span> <span class="n">VRR_ENABLED</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="nb">range</span>
+               <span class="n">values</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">1</span>
+               <span class="n">value</span><span class="p">:</span> <span class="mi">0</span>
+<span class="mi">35</span>      <span class="mi">43</span>      <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>   <span class="p">(</span><span class="mi">800</span><span class="n">x1280</span><span class="p">)</span>
+<span class="c1">#0 800x1280 60.05 800 860 892 952 1280 1296 1298 1312 75000 flags: ; type: preferred, driver</span>
+<span class="n">props</span><span class="p">:</span>
+      <span class="mi">24</span> <span class="n">VRR_ENABLED</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="nb">range</span>
+               <span class="n">values</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">1</span>
+               <span class="n">value</span><span class="p">:</span> <span class="mi">0</span>
+
+<span class="n">Planes</span><span class="p">:</span>
+<span class="nb">id</span>      <span class="n">crtc</span>    <span class="n">fb</span>      <span class="n">CRTC</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span>        <span class="n">x</span><span class="p">,</span><span class="n">y</span>     <span class="n">gamma</span> <span class="n">size</span>      <span class="n">possible</span> <span class="n">crtcs</span>
+<span class="mi">31</span>      <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span><span class="p">,</span><span class="mi">0</span>             <span class="mi">0</span><span class="p">,</span><span class="mi">0</span>     <span class="mi">0</span>               <span class="mh">0x00000001</span>
+<span class="n">formats</span><span class="p">:</span> <span class="n">NV12</span> <span class="n">NV21</span> <span class="n">UYVY</span> <span class="n">VYUY</span> <span class="n">YUYV</span> <span class="n">YVYU</span>
+<span class="n">props</span><span class="p">:</span>
+      <span class="mi">8</span> <span class="nb">type</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="n">immutable</span> <span class="n">enum</span>
+               <span class="n">enums</span><span class="p">:</span> <span class="n">Overlay</span><span class="o">=</span><span class="mi">0</span> <span class="n">Primary</span><span class="o">=</span><span class="mi">1</span> <span class="n">Cursor</span><span class="o">=</span><span class="mi">2</span>
+               <span class="n">value</span><span class="p">:</span> <span class="mi">0</span>
+<span class="mi">32</span>      <span class="mi">35</span>      <span class="mi">43</span>      <span class="mi">0</span><span class="p">,</span><span class="mi">0</span>             <span class="mi">0</span><span class="p">,</span><span class="mi">0</span>     <span class="mi">0</span>               <span class="mh">0x00000002</span>
+<span class="n">formats</span><span class="p">:</span> <span class="n">XR24</span> <span class="n">AR24</span> <span class="n">XB24</span> <span class="n">AB24</span> <span class="n">NV12</span> <span class="n">NV21</span>
+<span class="n">props</span><span class="p">:</span>
+      <span class="mi">8</span> <span class="nb">type</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="n">immutable</span> <span class="n">enum</span>
+               <span class="n">enums</span><span class="p">:</span> <span class="n">Overlay</span><span class="o">=</span><span class="mi">0</span> <span class="n">Primary</span><span class="o">=</span><span class="mi">1</span> <span class="n">Cursor</span><span class="o">=</span><span class="mi">2</span>
+               <span class="n">value</span><span class="p">:</span> <span class="mi">1</span>
+<span class="mi">33</span>      <span class="mi">34</span>      <span class="mi">42</span>      <span class="mi">0</span><span class="p">,</span><span class="mi">0</span>             <span class="mi">0</span><span class="p">,</span><span class="mi">0</span>     <span class="mi">0</span>               <span class="mh">0x00000001</span>
+<span class="n">formats</span><span class="p">:</span> <span class="n">XR24</span> <span class="n">AR24</span> <span class="n">XB24</span> <span class="n">AB24</span>
+<span class="n">props</span><span class="p">:</span>
+      <span class="mi">8</span> <span class="nb">type</span><span class="p">:</span>
+               <span class="n">flags</span><span class="p">:</span> <span class="n">immutable</span> <span class="n">enum</span>
+               <span class="n">enums</span><span class="p">:</span> <span class="n">Overlay</span><span class="o">=</span><span class="mi">0</span> <span class="n">Primary</span><span class="o">=</span><span class="mi">1</span> <span class="n">Cursor</span><span class="o">=</span><span class="mi">2</span>
+               <span class="n">value</span><span class="p">:</span> <span class="mi">1</span>
+
+<span class="n">Frame</span> <span class="n">buffers</span><span class="p">:</span>
+<span class="nb">id</span>      <span class="n">size</span>    <span class="n">pitch</span>
+</pre></div>
+</div>
+<section id="single-display-mode-hdmi-only">
+<h4>Single Display Mode (HDMI only)<a class="headerlink" href="#single-display-mode-hdmi-only" title="Permalink to this heading"></a></h4>
+<ul>
+<li><p>Push frame to GFX1 plane using below modetest command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modetest</span> <span class="o">-</span><span class="n">M</span> <span class="n">synaptics</span> <span class="o">-</span><span class="n">s</span> <span class="mi">37</span><span class="o">@</span><span class="mi">35</span><span class="p">:</span><span class="mi">1920</span><span class="n">x1080</span><span class="nd">@AR24</span>
+</pre></div>
+</div>
+</li>
+<li><p>Push frame to both GFX1 and PIP plane using below modetest command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modetest</span> <span class="o">-</span><span class="n">M</span> <span class="n">synaptics</span> <span class="o">-</span><span class="n">s</span> <span class="mi">37</span><span class="o">@</span><span class="mi">35</span><span class="p">:</span><span class="mi">1920</span><span class="n">x1080</span><span class="nd">@AR24</span> <span class="o">-</span><span class="n">P</span> <span class="mi">32</span><span class="o">@</span><span class="mi">37</span><span class="p">:</span><span class="mi">1920</span><span class="n">x1080</span><span class="nd">@AR24</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="dual-display-mode-hdmi-mipi-dsi">
+<h4>Dual Display Mode (HDMI + MIPI-DSI)<a class="headerlink" href="#dual-display-mode-hdmi-mipi-dsi" title="Permalink to this heading"></a></h4>
+<ul>
+<li><p>Push frame to GFX1 plane (Display on HDMI) using below modetest
+command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modetest</span> <span class="o">-</span><span class="n">M</span> <span class="n">synaptics</span> <span class="o">-</span><span class="n">s</span> <span class="mi">37</span><span class="o">@</span><span class="mi">35</span><span class="p">:</span><span class="mi">1920</span><span class="n">x1080</span><span class="nd">@AR24</span>
+</pre></div>
+</div>
+</li>
+<li><p>Push frame to PIP plane (Display on DSI) using below modetest
+command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modetest</span> <span class="o">-</span><span class="n">M</span> <span class="n">synaptics</span> <span class="o">-</span><span class="n">s</span> <span class="mi">39</span><span class="o">@</span><span class="mi">36</span><span class="p">:</span><span class="mi">800</span><span class="n">x1280</span><span class="nd">@AR24</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="sl1640-display">
+<h3>SL1640 Display<a class="headerlink" href="#sl1640-display" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>SL1640 Supports: Encoder – 1; CRTC – 1; Planes – 2 (MAIN and GFX1
+planes)</p>
+</div></blockquote>
+<section id="single-display-hdmi-only">
+<h4>Single Display (HDMI only)<a class="headerlink" href="#single-display-hdmi-only" title="Permalink to this heading"></a></h4>
+<ul>
+<li><p>Push frame to GFX1 plane using below modetest command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modetest</span> <span class="o">-</span><span class="n">M</span> <span class="n">synaptics</span> <span class="o">-</span><span class="n">s</span> <span class="mi">36</span><span class="o">@</span><span class="mi">35</span><span class="p">:</span><span class="mi">1920</span><span class="n">x1080</span><span class="nd">@AR24</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="single-display-mipi-dsi-only">
+<h4>Single Display (MIPI-DSI only)<a class="headerlink" href="#single-display-mipi-dsi-only" title="Permalink to this heading"></a></h4>
+<ul>
+<li><p>Push frame to GFX1 plane using below modetest command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modetest</span> <span class="o">-</span><span class="n">M</span> <span class="n">synaptics</span> <span class="o">-</span><span class="n">s</span> <span class="mi">36</span><span class="o">@</span><span class="mi">35</span><span class="p">:</span><span class="mi">800</span><span class="n">x1280</span><span class="nd">@AR24</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="sl1620-display">
+<h3>SL1620 Display<a class="headerlink" href="#sl1620-display" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>Default list of connector/mode details in SL1620 is as below:</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Encoders:
+id crtc type possible crtcs possible clones
+35 0 DPI 0x00000001 0x00000001
+37 0 DSI 0x00000002 0x00000002
+
+Connectors:
+id encoder status name size (mm) modes encoders
+36 0 connected DPI-1 0x0 1 35
+modes:
+   index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot
+#0 800x480 59.72 800 1010 1012 1058 480 502 504 527 33300 flags: ;
+type: preferred, driver
+…
+…
+
+38 0 connected DPI-2 0x0 1 37
+modes:
+   index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot
+
+#0 800x1280 60.05 800 860 892 952 1280 1296 1298 1312 75000 flags: ;
+type: preferred, driver
+…
+…
+</pre></div>
+</div>
+<section id="tft-display">
+<h4>TFT Display<a class="headerlink" href="#tft-display" title="Permalink to this heading"></a></h4>
+<ul>
+<li><p>Push frame to TFT display using below <em>modetest</em> command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modetest</span> <span class="o">-</span><span class="n">M</span> <span class="n">synaptics</span> <span class="o">-</span><span class="n">s</span> <span class="mi">36</span><span class="o">@</span><span class="mi">33</span><span class="p">:</span><span class="mi">800</span><span class="n">x480</span><span class="nd">@AR24</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="mipi-dsi-display">
+<h4>MIPI-DSI Display<a class="headerlink" href="#mipi-dsi-display" title="Permalink to this heading"></a></h4>
+<ul>
+<li><p>Push frame to MIPI-DSI display using below <em>modetest</em> command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modetest</span> <span class="o">-</span><span class="n">M</span> <span class="n">synaptics</span> <span class="o">-</span><span class="n">s</span> <span class="mi">38</span><span class="o">@</span><span class="mi">34</span><span class="p">:</span><span class="mi">800</span><span class="n">x1280</span><span class="nd">@AR24</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Subject Specific User Guides" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="waveshare_7inch_dsi-configuration.html" class="btn btn-neutral float-right" title="Waveshare Panel Configuration Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 - 2025, Synaptics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
