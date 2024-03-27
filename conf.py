@@ -5,6 +5,8 @@ copyright = '2023, Synaptics'
 author = 'Synaptics'
 release = '0.0.2'
 
+html_static_path = ['_static']
+
 exclude_patterns = ["README.rst", "org-docs/**"]
 
 # render private pages only when the private tag is set
@@ -28,7 +30,8 @@ templates_path = ['_templates']
 html_theme = "sphinx_rtd_theme"
 
 html_theme_options = {
-  'logo_only': True
+  'logo_only': True,
+  'style_nav_header_background': '#007dc3'
 }
 
 # enable edit links only on the internal builds
@@ -59,3 +62,4 @@ preprocessor_variables = {
 def setup(app):
     app.add_config_value('preprocessor_variables', {}, True)
     app.connect('source-read', preprocess_variables)
+    app.add_css_file('css/synaptics.css')
