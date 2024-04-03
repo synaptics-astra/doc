@@ -3,7 +3,7 @@ import os
 project = 'Synaptics Astra SDK User Guide'
 copyright = '2023, Synaptics'
 author = 'Synaptics'
-release = '0.0.2'
+release = '0.9.0'
 
 html_static_path = ['_static']
 
