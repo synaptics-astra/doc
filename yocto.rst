@@ -279,6 +279,75 @@ The image can be flashed to an evaluation kit board as described in :ref:`prepar
 
 After flashing the board, to log in to the board please refer to :ref:`linux_login`.
 
+.. _yocto_build_app:
+
+How to develop an application
+=============================
+
+One of the key features of the Yocto project is the ability to create a standalone SDK that includes everything you
+need to develop and test applications for a given target image.
+
+The standalone toolchain is a precompiled set of tools, libraries, and headers that match the configuration of your
+Yocto Project build. It provides a consistent and controlled development environment that closely mirrors the
+target system. This ensures that the applications you develop will be compatible with the specific image that
+you're deploying on your embedded devices.
+
+Using the standalone toolchain, you can compile on your development machine before
+deploying them to the target device. This can greatly speed up the development process, as you don't need to
+compile the entire image each time you want to test a change.
+
+Pre-compiled toolchains for the default Astra Machina images are also available
+on `GitHub <https://github.com/synaptics-astra/sdk/releases>`__.
+
+Once you obtained the toolchain, you can install it on your development machine. The toolchain includes a script
+that sets up the environment variables needed to use the tools. The recommended and supported configuration of the
+development machine is the same as described in :ref:`yocto_prerequisites` but the toolchain is compatible with
+a wide range of environments.
+
+To setup the toolchain you first uncompress it as follows::
+
+  $ ./poky-glibc-x86_64-astra-media-${CPUTYPE}-${MACHINE}-toolchain-4.0.9.sh
+  Poky (Yocto Project Reference Distro) SDK installer version 4.0.9
+  =================================================================
+  Enter target directory for SDK (default: /opt/poky/4.0.9): toolchain
+  You are about to install the SDK to "/home/user/toolchain". Proceed [Y/n]?
+  Extracting SDK.................................................................................................................................................................................................................................................................................................................................done
+  Setting it up...done
+  SDK has been successfully set up and is ready to be used.
+  Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.
+    $ . /home/user/toolchain/environment-setup-armv7at2hf-neon-vfpv4-pokymllib32-linux-gnueabi
+    $ . /home/user/toolchain/environment-setup-cortexa73-poky-linux
+
+The exact names of the toolchain environment files depend on the target board: ``CPUTYPE`` for ``sl1680`` is
+``cortexa73``, for ``sl1620`` and ``sl1640`` is ``cortexa55``
+
+Then to configure the build environment you need to source a configuration script as follows::
+
+  $ . toolchain/environment-setup-${CPUTYPE}-poky-linux
+
+With the environment setup, you can use the provided cross-compiler to compile your applications. The
+toolchain also includes libraries and headers for the various components included in the image, so you can develop
+applications that take full advantage of these components. You can use the environment variables set by the script
+such as ``CC`` to invoke the cross-compiler and build your application with it.
+
+More information about the standalone toolchain are available in the
+`Yocto documentation <https://docs.yoctoproject.org/sdk-manual/using.html>`__.
+
+How to re-build a standalone toolchain
+--------------------------------------
+
+You can re-generate a toolchain in your Yocto build environment configured as described in :ref:`yocto_build_image`
+by running the following command::
+
+  pokyuser@xyz:/path/to/workspace $ cd sdk
+
+  pokyuser@xyz:/path/to/workspace/sdk $ source meta-synaptics/setup/setup-environment
+
+  pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media -c do_populate_sdk
+
+The build proces will generate the toolchain in the directory ``build-${MACHINE}/tmp/deploy/sdk``.
+
+
 Compatible Layers
 =================
 
