@@ -73,7 +73,13 @@ This configuration is not supported by Synaptics.
 WSL 2 Setup (required only when using Windows)
 ----------------------------------------------
 
-First install Windows Subsystem for Linux with the following command in PowerShell:
+.. note::
+
+    If you previously installed WSL1, installed another WSL2 distribution or disabled the hyper-v support on
+    your machine you may need to perform some additional steps. See the :ref:`troubleshooting` section for some
+    suggested steps.
+
+First install Windows Subsystem for Linux with the following command in PowerShell (as administrator):
 
 .. code-block:: ps1con
 
@@ -99,7 +105,10 @@ Then to apply the changes in powershell run the command:
 
 You can find more information about WSL configuration `here <https://learn.microsoft.com/en-us/windows/wsl/wsl-config>`__.
 
-Once you setup the WSL2 environment you can install Docker as described in :ref:`install_docker`
+Once you setup the WSL2 environment you can start a terminal from the start menu by selecting
+the Windows Terminal App and then select the Ubuntu-22.04 distribution.
+
+Once you are in the terminal you can install Docker as described in :ref:`install_docker`
 
 .. _install_docker:
 
@@ -110,7 +119,7 @@ To install docker use the following steps:
 
 1. Install the docker package::
 
-    $ sudo apt-get install docker.io
+    $ sudo apt install docker.io
 
 2. Add the current user to the docker group so that it will be able to use docker::
 
@@ -347,6 +356,8 @@ How do I override the value of to a recipe variable in ``local.conf``?
   Other changes to the variable can be performed with the standard operators
   described in the `Bitbake Guide <https://docs.yoctoproject.org/bitbake/2.4/bitbake-user-manual/bitbake-user-manual-metadata.html#basic-syntax>`_.
 
+.. _troubleshooting:
+
 Troubleshooting
 ===============
 
@@ -385,3 +396,38 @@ Docker commands fail with the error ``permission denied while trying to connect 
   To ensure your session logged in to the ``docker`` group use the following command::
 
     $ newgrp docker
+
+WSL2 is not working correctly on my Windows machine
+
+    You may try the following things to reset the state on your machine:
+
+    1. Enable the Windows Subsystem for Linux:
+
+        .. code-block:: ps1con
+
+            PS C:\Users\username> dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+
+    2. Enable Virtual Machine feature:
+
+        .. code-block:: ps1con
+
+            PS C:\Users\username> dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+
+    3. Restart your PC
+
+    4. Download the `Linux kernel update package <https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi>`__
+       and install it
+
+    5. Set WSL 2 as default version:
+
+        .. code-block:: ps1con
+
+            PS C:\Users\username> wsl --set-default-version 2
+
+    6. Install Ubuntu 22.04 LTS from `Microsoft Store <https://www.microsoft.com/store/apps/9PN20MSR04DW>`__
+
+    7. Set default distro to Ubuntu-22.04:
+
+        .. code-block:: ps1con
+
+            PS C:\Users\username> wsl --set-default Ubuntu-22.04

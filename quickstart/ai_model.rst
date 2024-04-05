@@ -1,5 +1,5 @@
-Deploying a neural network
-==========================
+Converting and running a custom neural network
+==============================================
 
 .. highlight:: console
 

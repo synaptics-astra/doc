@@ -1,5 +1,5 @@
-Building a new image
-====================
+Building and installing a custom system image
+=============================================
 
 .. highlight:: console
 
@@ -32,7 +32,10 @@ To build a image run the following commands:
 
     You selection: 1
 
-5. Build the image::
+5. Modify the image configuration metadata as desired (e.g. by adding more packages to the image by
+   tweaking the ``conf/local.conf`` file). For more information on how to configure the image refer to :doc:`/yocto`
+
+6. Build the image::
 
     pokyuser@xyz:/path/to/workspace/sdk/build-slXYZ $ bitbake astra-media
 

@@ -1,5 +1,5 @@
-Running a neural network
-========================
+Running a pre-converted neural network
+======================================
 
 .. highlight:: console
 
