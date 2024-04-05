@@ -1,5 +1,5 @@
-Convert and test an AI model
-============================
+Deploying a neural network
+==========================
 
 .. highlight:: console
 

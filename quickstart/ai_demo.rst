@@ -1,5 +1,5 @@
-Run a neural network using hardware acceleration
-================================================
+Running a neural network
+========================
 
 .. highlight:: console
 

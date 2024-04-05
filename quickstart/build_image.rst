@@ -1,5 +1,5 @@
-Build a new image
-=================
+Building a new image
+====================
 
 .. highlight:: console
 

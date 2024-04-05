@@ -1,7 +1,7 @@
 .. _quickstart_install:
 
-Install and use a pre-built image
-=================================
+Installing a pre-built image
+============================
 
 To install a pre-built image on a Synaptics Astra evaluation kit:
 

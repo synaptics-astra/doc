@@ -1,6 +1,6 @@
-**********************
-Astra Yocto User Guide
-**********************
+*********************************
+Astra Yocto Linux Developer Guide
+*********************************
 
 .. highlight:: console
 

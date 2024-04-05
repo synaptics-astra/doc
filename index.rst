@@ -5,9 +5,10 @@ Synaptics ASTRA SDK
    :hidden:
    :glob:
 
-   quickstart.rst
+   quickstart/index.rst
    linux/index.rst
    yocto.rst
+   hw/index.rst
    release_notes.rst
    private/index*
 
@@ -19,7 +20,7 @@ Documentation
 
 For more in-depth information, the following documents are available:
 
-:doc:`quickstart`
+:doc:`quickstart/index`
 
   This guide explains in a few words how to get started with the Synaptics Astra SDK
 
@@ -34,6 +35,10 @@ For more in-depth information, the following documents are available:
   This guide provides detailed instructions on building custom images with Yocto, including
   code downloading and building, package management, image customization, and SDK package generation for development,
   serving as a comprehensive resource for users aiming to construct custom images.
+
+:doc:`hw/index`
+
+  This guide contains hardware specification, features, and interfaces.
 
 :doc:`release_notes`
 

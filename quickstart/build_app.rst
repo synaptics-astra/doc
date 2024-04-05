@@ -1,5 +1,5 @@
-Build an application
-====================
+Building an application
+=======================
 
 .. highlight:: console
 

@@ -1,5 +1,5 @@
-Play a video with hardware acceleration
-========================================
+Playing a video
+===============
 
 .. highlight:: console
 

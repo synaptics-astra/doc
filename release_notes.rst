@@ -1,6 +1,6 @@
-*************
-Release Notes
-*************
+*****************
+SDK Release Notes
+*****************
 
 .. highlight:: console
 
