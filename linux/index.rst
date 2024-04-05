@@ -14,16 +14,16 @@ Supported Hardware
 
 The following Reference Kits and platforms are covered by this guide:
 
--  Astra Machina SL1620
+-  Astra Machina (Foundation) SL1620
 
--  Astra Machina SL1640
+-  Astra Machina (Foundation) SL1640
 
--  Astra Machina SL1680
+-  Astra Machina (Foundation) SL1680
 
 References
 ----------
 
--  SyNAP User Guide
+-  `SyNAP User Guide <https://synaptics-synap.github.io/doc/v/3.0.0/>`__
 
 
 Introduction
@@ -34,29 +34,25 @@ and firmware required to operate Astra Machina. It contains the
 components needed to boot OSes and interface with the hardware. This
 guide provides a description of these software components and information
 on how to interface with them. This document is useful for users who
-want to evaluate Astra Machina and build products used
-these processors.
+want to evaluate Astra Machina and build products using these processors.
 
 This document covers the components which are used by the Linux OS. For
-specific information on how to setup the build environment and build a
-Yocto based image which runs on Astra Machina, please see the
-`Astra Yocto User Guide <https://synaptics-astra.github.io/doc/yocto.html>`__.
+instructions on setting up the build environment and creating a Yocto-based
+image for Astra Machina, please see the :doc:`/yocto`.
 
-Specific information about the Astra Machina hardware can be found in the
-Astra Machina SL16X0 User Guides.
+Specific information about the Astra Machina hardware can be found on the :doc:`/hw/index` page.
 
 Interfacing with Astra Machina
 ==============================
 
-There are several ways to interface with Astra Machina. Astra Machina has a graphical desktop which
-can be displayed on an external display. Shell access is supported with SSH, ADB, and via the serial
-console.
+Several methods exist for interfacing with Astra Machina, including using a graphical desktop
+on an external display. Additionally, Shell access is available through SSH, ADB, and the serial console.
 
 The Graphical Desktop
 ---------------------
 
-Astra Machina's grphical desktop is enabled be default. It can be displayed on an external display connected
-to the HDMI port. Input can be provided by connecting a standard HID USB keyboard and mouse. 
+Astra Machina's graphical desktop is enabled be default. It can be displayed on an external display connected
+to the HDMI port or a MIPI display. Input can be provided by connecting a standard HID USB keyboard and mouse. 
 
 .. figure:: media/wayland-desktop.jpg
 
@@ -67,6 +63,10 @@ Clicking on the icon in the top left corner will open a terminal.
 .. figure:: media/wayland-terminal.jpg
 
     The Wayland Desktop with a terminal open
+
+.. note::
+
+    HDMI is not currently supported on SL1620
 
 The Shell with SSH
 ------------------
@@ -87,11 +87,11 @@ The Shell with ADB
 Astra Machina supports Android Debug Bridge (ADB) over USB. ADB is used on Android devices and has been
 ported to Astra Machina. Google provides extensive documentation on ADB `here <https://developer.android.com/tools/adb>`__.
 
-To use ADB connect a USB cable from the host system to the USB type C USB 2.0 port on Astra Machina (next to the ethernet port).
+To use ADB connect a USB cable from the host system to the USB Type-C USB 2.0 port on Astra Machina (next to the ethernet port).
 
 .. figure:: media/usb-c.png
 
-    Astra Machina Component Diagram with USB type C USB 2.0 port highlighted
+    Astra Machina Component Diagram with USB Type-C USB 2.0 port highlighted
 
 Google provides versions of ADB for Mac, Linux, and Windows. Once ADB is installed run ``adb devices`` to see all ADB devices
 connected to the host. Then run::
@@ -110,10 +110,10 @@ The Serial Console
 ------------------
 
 Astra Machina provides a serial console which displays bootloader
-and OS messages to a console running on the host system. These messages are
-useful to determining the status of Astra Machina early in the boot process
+and OS messages to a terminal emulator running on the host system. These messages are
+useful for determining the status of Astra Machina early in the boot process
 or when a display is not connected. It can also provides useful information
-during operation.
+during operation. The serial console is also needed during the firmware update process.
 
 .. _setup_serial_console:
 
@@ -143,15 +143,15 @@ TXD        10
 
     Astra Machina's 40 Pin GPIO Header pinout
 
-Windows and Mac host PCs will require an additional driver to interface with the
-USB to UART chip on the external UART board. Please download the appropriate driver for your
+Windows and Mac hosts will require an additional driver to interface with the
+USB to UART chip on the USB-TTL board. Please download the appropriate driver for your
 host from `Silicon Labs CP210x USB to UART Bridge VCP
 Drivers <https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads>`__
 page. Linux hosts generally have support for this chip enabled by
 default.
 
 Once the driver is installed the serial console can be
-accessed using a serial communications program like Putty, HyperTerminal,
+accessed using a terminal emulator program such as Putty, HyperTerminal,
 Tera Term, Screen, or Minicom.
 
 .. figure:: media/putty.png
@@ -167,9 +167,8 @@ Tera Term, Screen, or Minicom.
 Linux OS Login
 ^^^^^^^^^^^^^^
 
-After Linux successfully boots a login prompt will be displayed in the
-serial console. To login use the username ``root``. The default password
-is empty.
+After Linux successfully boots, a login prompt will be displayed in the
+serial console. To login use the username ``root``. No password is required.
 
 .. figure:: media/login-prompt.png
 
@@ -180,23 +179,21 @@ is empty.
 Multimedia
 ==========
 
-The Synaptics Astra SoCs contain hardware and software components which accelerate
+The Astra Machina contains hardware and software components which accelerate
 the processing of multimedia workloads. The Linux BSP provides Gstreamer
 plugins which allow users to develop programs which utilize these
-multimedia components to improve multimedia performance. This chapter
+multimedia components to improve multimedia performance. This section
 provides an overview on how to use the Gstreamer command line interface
-to build pipelines using these plugins. More in depth information on how
-to use Gstreamer on Astra processors can be found in the Astra
-Gstreamer User Guide. Information on the Gstreamer framework can be
-found at https://gstreamer.freedesktop.org/.
+to build pipelines using these plugins. Information on the Gstreamer framework
+can be found at https://gstreamer.freedesktop.org/.
 
 Gstreamer Plugins
 -----------------
 
 Gstreamer uses plugin modules which are used to extend Gstreamer functionality.
-The Astra platform uses plugins to allow its hardware components to be used
+The Astra Machina uses plugins to allow its hardware components to be used
 in a Gstreamer pipeline. The tables below list plugins which are used by
-the codecs support by the Astra platform.
+the codecs supported by the Astra Machina.
 
 Video Codes
 ^^^^^^^^^^^
@@ -224,7 +221,7 @@ Vorbis    N/A               vorbisdec          vorbisenc
 Gstreamer Examples
 ------------------
 
-To run the following Gstreamer examples please make sure to set the
+To run the following Gstreamer examples, please make sure to set the
 following variables in your environment. These variables may need to be
 set when running commands from the serial console or a remote shell::
 
@@ -232,7 +229,7 @@ set when running commands from the serial console or a remote shell::
     export WAYLAND_DISPLAY=wayland-1
 
 The ``XDG_RUNTIME_DIR`` variable specifies the directory which contains the
-wayland socket belonging to the user. The ``WAYLAND_DISPLAY`` variable
+Wayland socket belonging to the user. The ``WAYLAND_DISPLAY`` variable
 specifies which Wayland compositor to connect to.
 
 The following examples use the gst-launch-1.0 command line program to
@@ -253,9 +250,9 @@ Audio Sinks
 The following examples use the ALSA audio sink to output audio using the ALSA
 audio API (for more details refer to the `Gstreamer documentation <https://gstreamer.freedesktop.org/documentation/alsa/alsasink.html?gi-language=c#alsasink>`__ for more details).
 The examples use the device hw:0,7 which corresponds to
-the HDMI output device. Hardware devices can be found in the file
-/proc/asound/pcm. Below is an example of the pcm devices on an SL1680
-board. Device 0-7 corresponds to the HDMI device and will be used in the
+the HDMI output device on SL1680. Hardware devices can be found in the file
+/proc/asound/pcm. Below is an example of the pcm devices on SL1680.
+Device 0-7 corresponds to the HDMI device and will be used in the
 examples below.
 
 Example /proc/asound/pcm output from SL1680::
@@ -296,7 +293,7 @@ Video Playback
 
 Playing a video file involves reading the file, demuxing a video stream,
 parsing the encoded data, and decoding the data using the video decoder.
-Finally the decodef frames our output to the video sink::
+Finally, the decoded frames our output to the video sink::
 
     gst-launch-1.0 filesrc location=video_file ! demux ! queue ! parser ! decoder ! videosink
 
@@ -318,7 +315,7 @@ creating a pipeline which parses and decodes both streams::
 
     gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! av1parse ! v4l2av1dec ! waylandsink fullscreen=true
 
-Play an MP4 file with a H265 encoded video stream end an AAC encoded
+Play an MP4 file with a H265 encoded video stream and an AAC encoded
 audio stream::
 
     gst-launch-1.0 filesrc location=test_file.mp4  ! qtdemux name=demux \
@@ -338,16 +335,16 @@ writing it to an output file::
     gst-launch-1.0 -v alsasrc device=device ! queue ! convert ! encode ! mux ! filesink location=output file
 
 The following example records audio from the ALSA capture device 0,2. It
-then converts the raw data into a format which can encoded by the Vorbis
-encoder. Once the data is encoded it is then multiplexed into an Ogg
-container file and written to the file /tmp/alsasrc.ogg::
+then converts the raw data into a format which can encoded into the Vorbis
+codec by the encoder. Once the data is encoded, it is then multiplexed into an Ogg
+container and written to the file /tmp/alsasrc.ogg::
 
     gst-launch-1.0 -v alsasrc device=hw:0,2 ! queue ! audioconvert ! vorbisenc ! oggmux ! filesink location=/tmp/alsasrc.ogg
 
 Camera
 ^^^^^^
 
-Astra platforms support USB (UVC) cameras with the V4L2 driver stack.
+Astra Machina supports USB (UVC) cameras with the V4L2 driver stack.
 This stack can be used with Gstreamer to construct pipelines using a
 camera.
 
@@ -364,14 +361,14 @@ output to the wayland sink::
 Gstreamer Playbin Plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Astra platforms contain the Gstreamer playbin plugin. This plugin can
+Astra Machina contains the Gstreamer playbin plugin. This plugin can
 automatically determine what type of pipeline to construct based on
 automatic file type recognition (see `Gstreamer documentation <https://gstreamer.freedesktop.org/documentation/playback/playbin.html?gi-language=c>`__). This simplifies pipeline creation.
 
-Playbin will autodetect the media file located at the specified uri and create a
+Playbin will autodetect the media file located at the specified uri, and create a
 pipeline for it. It will then display the video on the video sink and
 render the audio on the audio sink. The video-sink and audio-sink
-parameters are optional. I they are not included the default video and
+parameters are optional. If the parameters are not included, default video and
 audio sinks will be used instead::
 
     gst-launch-1.0 playbin uri=file:///path/to/file video-sink="video sink" audio-sink="audio sink"
@@ -383,17 +380,17 @@ Using playbin the example in :ref:`audio_sinks` can be reduced to::
 GStreamer SyNAP Plugin
 ^^^^^^^^^^^^^^^^^^^^^^
 
-The Astra platform provides a Gstreamer plugin which allows adding ML processing to Gstreamer pipelines.
+Astra Machina provides a Gstreamer plugin which allows adding ML processing to Gstreamer pipelines.
 This plugin uses the SyNAP framework to interface with the hardware accelerators to improve the performance
 of ML processing. For information on SyNAP see :ref:`synap` below.
 
 The SyNAP plugin works as a Gstreamer appsrc and appsink. It takes samples from the pipeline and uses the SyNAP
-framework to perform classification or detection on the frame using a neural network. It then outputs the results in
+framework to perform classification or detection on the frame using a neural network. It then outputs the results
 as JSON formatted data.
 
 We provide a `sample application <https://github.com/synaptics-astra/application-gstreamer-plugins-syna/tree/v#release#/examples/gst-ai>`__
-which plays a video while simultaneously performing image classification on the video frames and then overlaying labels of the
-classification results onto the video output. A prebuilt version of the application is included in the Astra image.
+which plays a video while simultaneously performing image classification on the video frames, and then overlaying labels of the
+results onto the video. A prebuilt version of the application is included in the Astra system image.
 
 Run the example application using the following command::
 
@@ -404,14 +401,14 @@ Run the example application using the following command::
 Machine Learning with SyNAP
 ===========================
 
-The Synaptics Astra platform provides the SyNAP framwork, which supports the execution of neural networks on the 
-platforms hardware accelerators. This framework allows users to run programs which take advantage of the Neural Prococessing Unit (NPU)
-and Graphics Processing Unit (GPU) to accelerate the excecution of neural networks. (see the `SyNAP documentation <https://synaptics-synap.github.io/doc/v/3.0.0/>`__ for more details.)
+Astra Machina uses the SyNAP framework for execution of neural networks using the platforms hardware accelerators.
+This framework allows users to run programs which take advantage of the Neural Processing Unit (NPU)
+and Graphics Processing Unit (GPU) to accelerate the execution of neural networks. (see the `SyNAP documentation <https://synaptics-synap.github.io/doc/v/3.0.0/>`__ for more details.)
 
 Connectivity
 ============
 
-Bluetooth and Wi-Fi are supported on Astra platforms through on-board chip
+Bluetooth and Wi-Fi are supported on Astra Machina through on-board chip
 solutions and external hardware. The following table lists the various
 on-board chips and external solutions:
 
@@ -440,13 +437,13 @@ authentication standards. ( See `wpa_supplicant <https://wiki.archlinux.org/titl
 
 Setting up Wifi with WPA Supplicant
 ------------------------------------
-The following setcion describes how to setup Wifi on the Astra platform using WPA Supplicant.
+The following section describes how to setup Wifi on Astra Machina using WPA Supplicant.
 
-Generate the WPA Preshared Key
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Generating a preshared key from a passphrase avoids having to store the passphrase in the WPA Supplicant config file.
+Generate the WPA Pre-shared Key
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Generating a pre-shared key from a passphrase avoids having to store the passphrase in the WPA Supplicant config file.
 
-From the shell, use the wpa_passphrase command line tool to generate a WPA preshared key from a passphrase::
+From the shell, use the wpa_passphrase command line tool to generate a WPA pre-shared key from a passphrase::
 
     root@sl1680:^# wpa_passphrase network_name 12345678
     network={
@@ -565,23 +562,23 @@ The root file system (rootfs) contains all the user space binaries and
 libraries needed to execute programs in the Linux OS along with system
 configuration files. The prebuilt images use Yocto to build the rootfs.
 Instructions on how to build and configure a rootfs using Yocto can be
-found in the Astra Yocto User Guide.
+found in the :doc:`/yocto`.
 
 U-Boot
 ------
 
 As mentioned above, Astra Machina uses U-Boot as its bootloader. There
-are three types of U-Boot which are used with the processor. In addition
-to SUBoot there are SPI U-Boot and USB U-Boot variants which are used to
+are three types of U-Boot which are used with Astra Machina. In addition
+to SUBoot, there are SPI U-Boot and USB U-Boot variants which are used to
 flash or recover a device.
 
-========== ================================================
+========== ==========================================================
 image type image usage
-========== ================================================
-SPI U-Boot burn eMMC image via TFTP/USB host
-USB U-Boot burn eMMC image via TFTP/USB slave
-SUBoot     burn eMMC image via TFTP/USB host, Booting Linux
-========== ================================================
+========== ==========================================================
+SPI U-Boot burn eMMC image via TFTP server or USB host
+USB U-Boot burn eMMC image via TFTP server of USB disk
+SUBoot     burn eMMC image via TFTP server or USB disk, Booting Linux
+========== ==========================================================
 
 USB U-Boot and SPI U-Boot are used to boot a device which does not have
 an image written to the eMMC or to do a update which overwrites all of
@@ -594,7 +591,7 @@ is running on the board it can be used to write an image to the eMMC.
 
 SPI U-Boot is similar to USB U-Boot except that U-Boot runs from
 SPI flash. The SPI flash may be located on the main board of Astra Machina or
-it may be a located on a SPI duagher card which is pluged into the device.
+it may be a located on a SPI daughter card which is plugged into the device.
 Once SPI U-Boot is running on the board it can be used to write an image to the eMMC.
 
 .. _spi_sd_boot:
@@ -612,27 +609,27 @@ to boot from eMMC.
     Astra Machina Component Diagram with SD-Boot jumper highlighted
 
 Astra Machina's internal SPI flash comes preprogrammed with SPI U-Boot. When the
-SD-Boot jumper is attached the device will either boot from SPI flash or from an
-SD Card it one is inserted in the SD Card slot.
+SD-Boot jumper is connected the device will either boot from SPI flash or from an
+SD Card if one is inserted in the SD Card slot.
 
 .. _prepare_to_boot:
 
 Updating the Firmware
 =====================
 
-On power on Astra Machina will read the firmware, the
-bootloader, and the Linux Kernel from a boot device. The most common
-boot device is an eMMC device on the board. This section will discuss
-how to write a boot image to the eMMC.
+On power on, Astra Machina will read the firmware, bootloader, and the
+Linux Kernel from a boot device. The most common boot device is an eMMC
+device on the board. This section will discuss how to write a boot image
+to the eMMC.
 
-The Astra Firmware Image
-------------------------
+The Astra System Image
+----------------------
 
 .. figure:: media/astra_image.png
 
     A screenshot of the Astra image
 
-The "Astra Image" is a directory containing several subimg
+The "Astra System Image" is a directory containing several subimg
 files and emmc_part_list, emmc_image_list, and emmc_image_list_full. The
 emmc_part_list describes the GUID Partition Table (GPT) which will be
 used for the eMMC. The emmc_image_list\* files specify which sub image
@@ -640,28 +637,28 @@ files should be written to which partition on the eMMC.
 
 Example SL1640 Partition Table:
 
-================== ================================================================== ================== ===========================
-Partition name     Contents                                                           Can be removed     Accessed by
-================== ================================================================== ================== ===========================
-factory_setting    MAC address and other factory provisioned files, used by userspace No                 Linux Userspace
-key_a              AVB keys, user keys (A copy)                                       Yes                Early boot (boot partition)
-tzk_a              TrustZone Kernel (A copy)                                          Yes                Early boot (boot partition)
-key_b              AVB keys, user keys (B copy)                                       Yes                Early boot (boot partition)
-tzk_b              TrustZone Kernel (B copy)                                          Yes                Early boot (boot partition)
-bl_a               OEM Boot loader (A copy)                                           Yes                Early boot (boot partition)
-bl_b               OEM Boot loader (B copy)                                           Yes                Early boot (boot partition)
-boot_a             Linux Kernel, loaded by OEM bootloader (A copy)                    No                 OEM boot loader (bl_a)
-boot_b             Linux Kernel, loaded by OEM bootloader (B copy)                    No                 OEM boot loader (bl_b)
-firmware_a         GPU / DSP / SM firmwares, loaded by early boot, required (A copy)  Yes                Early boot (boot partition)
-firmware_b         GPU / DSP / SM firmwares, loaded by early boot, required (B copy)  Yes                Early boot (boot partition)
-rootfs_a           Root file system, used by Linux, can be changed (A copy)           No                 Linux (boot_a)
-rootfs_b           Root file system, used by Linux, can be changed (B copy)           No                 Linux (boot_b)
-fastlogo_a         Fast logo image, loaded by OEM bootloader, can be changed (A copy) No                 OEM bootloader (bl_a)
-fastlogo_b         Fast logo image, loaded by OEM bootloader, can be changed (B copy) No                 OEM bootloader (bl_b)
-devinfo            Device information (such as serial number, mac address ) required  Yes                Early boot (boot partition)
-misc               Boot control settings, required                                    Yes                Early boot (boot partition)
-home               Mounted in /home, can be customized                                No                 Linux Userspace
-================== ================================================================== ================== ===========================
+================== =================================================================== ================== ===========================
+Partition name     Contents                                                            Can be removed     Accessed by
+================== =================================================================== ================== ===========================
+factory_setting    MAC address and other factory provisioned files, used by user space No                 Linux user space
+key_a              AVB keys, user keys (A copy)                                        Yes                Early boot (boot partition)
+tzk_a              TrustZone Kernel (A copy)                                           Yes                Early boot (boot partition)
+key_b              AVB keys, user keys (B copy)                                        Yes                Early boot (boot partition)
+tzk_b              TrustZone Kernel (B copy)                                           Yes                Early boot (boot partition)
+bl_a               OEM Boot loader (A copy)                                            Yes                Early boot (boot partition)
+bl_b               OEM Boot loader (B copy)                                            Yes                Early boot (boot partition)
+boot_a             Linux Kernel, loaded by OEM bootloader (A copy)                     No                 OEM boot loader (bl_a)
+boot_b             Linux Kernel, loaded by OEM bootloader (B copy)                     No                 OEM boot loader (bl_b)
+firmware_a         GPU / DSP / SM firmwares, loaded by early boot, required (A copy)   Yes                Early boot (boot partition)
+firmware_b         GPU / DSP / SM firmwares, loaded by early boot, required (B copy)   Yes                Early boot (boot partition)
+rootfs_a           Root file system, used by Linux, can be changed (A copy)            No                 Linux (boot_a)
+rootfs_b           Root file system, used by Linux, can be changed (B copy)            No                 Linux (boot_b)
+fastlogo_a         Fast logo image, loaded by OEM bootloader, can be changed (A copy)  No                 OEM bootloader (bl_a)
+fastlogo_b         Fast logo image, loaded by OEM bootloader, can be changed (B copy)  No                 OEM bootloader (bl_b)
+devinfo            Device information (such as serial number, mac address ) required   Yes                Early boot (boot partition)
+misc               Boot control settings, required                                     Yes                Early boot (boot partition)
+home               Mounted in /home, can be customized                                 No                 Linux user space
+================== =================================================================== ================== ===========================
 
 Updating the Firmware using USB
 -------------------------------
@@ -673,7 +670,7 @@ Astra Machina supports updating firmware using USB.
 Setting up the USB Boot Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Booting from USB requires the usb_boot software tool to the installed on
+Booting from USB requires the usb_boot software tool to be the installed on
 a host system. Windows, Mac, and Linux hosts are supported. Windows systems
 also require the Synaptics WinUSB Driver. Mac and Linux systems do not require
 any additional drivers. USB Boot also requires setting up the serial console
@@ -683,23 +680,23 @@ covers how to configure the host system and prepare for USB booting.
 Hardware Setup
 """"""""""""""
 
-To run usb_boot you will need to connect the USB TTL board and cable to Astra
+To run usb_boot you will need to connect the USB-TTL board and cable to Astra
 Machina as described in the :ref:`setup_serial_console` section above.
 This will allow you to see console messages during the flashing process and input
 commands to the bootloader. You will also need to connect a USB cable from the host
-system to the USB type C USB 2.0 port on Astra Machina (next to the ethernet port).
+system to the USB Type-C USB 2.0 port on Astra Machina (next to the ethernet port).
 
 .. figure:: media/usb-c.png
 
-    Astra Machina Component Diagram with USB type C USB 2.0 port highlighted
+    Astra Machina Component Diagram with USB Type-C USB 2.0 port highlighted
 
 Installing the WinUSB Driver (Windows Only)
 """""""""""""""""""""""""""""""""""""""""""
 
-Windows requires a special USB kernel driver to communicate with the
-Astra board over USB. Please download the driver from
+Windows requires a special USB kernel driver to communicate with
+Astra Machina over USB. Please download the driver from
 `GitHub <https://github.com/synaptics-astra/usb-tool>`__. Linux and Mac hosts
-can access the Astra board from userspace and do not need any additional
+can access the Astra board from user space and do not need any additional
 kernel drivers.
 
 After downloading and decompressing the USB Boot software package, right
@@ -710,7 +707,7 @@ directory. Select "Install" from the drop down menu.
 
     Install the driver
 
-After installing the driver, the Astra board will show up in
+After installing the driver, the Astra Machina will show up in
 the Windows Device Manager as the "Synaptics IoT: Tools package USB
 Driver for Synaptics Processors" when operating in USB Boot mode.
 
@@ -721,12 +718,12 @@ Driver for Synaptics Processors" when operating in USB Boot mode.
 Running the USB Boot Tool
 """""""""""""""""""""""""
 
-Also included in the Synaptics usb-tool package is the usb_boot userspace
+Also included in the Synaptics usb-tool package is the usb_boot user space
 tool. This is the tool which communicates with Astra Machina over USB.
 Each Astra Machina variant will have its own usb_boot directory. Included in each
 directory will be a ``usb_boot`` binary and the ``run`` script used to run it.
 The directory will also contain an images directory which contains all of the
-image files needed to boot the board ober USB. This include images which contain
+image files needed to boot the board over USB. This include images which contain
 the USB U-Boot bootloader. 
  
 On Windows, double click on the run.bat file to launch the tool. This
@@ -751,7 +748,7 @@ the Astra Machina variant which you are about to boot. From the drop down select
     Opening a Terminal for USB Boot on Mac
 
 This will open a terminal inside of the selected usb_boot directory. From there run the ``run.sh`` script to
-run the tool. You may be prompted for your password since the script internally calls sudo since the tool
+run the tool. You may be prompted for your password since the script internally calls sudo. The tool
 requires additional permissions to interface with USB devices and access system resources.
 
 .. figure:: media/mac-run-usbboot.png
@@ -766,7 +763,7 @@ the Astra Machina variant which you are about to boot. From the drop down select
     Opening a Terminal for USB Boot on Linux
 
 This will open a terminal inside of the selected usb_boot directory. From there run the ``run.sh`` script to
-run the tool. You may be prompted for your password since the script internally calls sudo since the tool
+run the tool. You may be prompted for your password since the script internally calls sudo. The tool
 requires additional permissions to interface with USB devices and access system resources.
 
 .. figure:: media/linux-run-usbboot.png
@@ -781,7 +778,7 @@ running on the host system, Astra Machina will need to be placed into USB
 Boot mode. To do that press and hold the "USB_BOOT" button on the
 I/O board. Then press and release the "RESET" button. Be sure to hold
 the "USB_BOOT" button long enough so that the board can reset and detect
-that the button is pressed. After booting into USB Boot mode the U-Boot
+that the "USB_BOOT" button is pressed. After booting into USB Boot mode the U-Boot
 prompt "=>" will be displayed in the serial console.
 
 .. figure:: media/usb-boot-and-reset.png
@@ -809,9 +806,8 @@ Flashing Firmware to eMMC using USB Boot
     Directory with files used to flash the eMMC image
 
 When booting from USB, the usb_boot tool allows transferring
-the eMMC image directly over the USB interface. To flash the eMMC using
-USB, first copy the directory containing the image files to the "images"
-directory in the usb_boot tool directory for your Astra Machina variant.
+the eMMC image directly over the USB interface. To flash the eMMC image via USB, copy the image files
+to the 'images' folder in your Astra Machina variant's usb_boot tool directory.
 
 Write the image to the eMMC using the command::
 
@@ -854,22 +850,23 @@ Hardware Setup
 """"""""""""""
 For SPI boot, you will need to connect the USB cable for the
 serial port as described in the :ref:`setup_serial_console` section above.
-This will allow you to see console messages during the flashing process and input command to the SPI U-Boot
+This will allow you to see console messages during the flashing process and input commands to the SPI U-Boot
 bootloader. You will also need a USB drive or Ethernet cable depending on where the eMMC image files are located.
-The USB drive can be inserted into any of the 4 USB type A USB 3.0 ports.
+The USB drive can be inserted into any of the 4 USB Type-A USB 3.0 ports or the USB Type-C USB 2.0 port (may require
+USB Type-C to USB Type-A adaptor).
 
 .. figure:: media/usb-and-ethernet-ports.png
 
-    Astra Machina Component Diagram with UAB and Ethernet ports highlighted
+    Astra Machina Component Diagram with USB and Ethernet ports highlighted
 
 .. _flashing_from_usb_drive:
 
 Flashing Images from a USB Drive
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To flash an Astra image from an external USB drive simply copy the image
+To flash an Astra system image from an external USB drive simply copy the image
 directory to the USB drive. The USB drive will need a partition with a 
-Fat32 formatted file system and enough capacity to fit the Astra image.
+Fat32 formatted file system and enough capacity to fit the Astra system image.
 
 Write the image to eMMC using the command::
 
@@ -880,7 +877,7 @@ The parameter eMMCimg is the name of the image directory on the USB drive.
 Flashing Images from a TFTP Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To flash an Astra image from a TFTP server you will first need to
+To flash an Astra system image from a TFTP server you will first need to
 connect Astra Machina to a local network using the ethernet port. Copy the
 Astra image to the TFTP server so that it can be accessed by the device
 over the network. Once the device is connected to the network, boot to
@@ -944,7 +941,8 @@ the TFTP server.
 Write the SPI image to the SPI flash from the TFTP server using the command::
 
     => net_init; dhcp; setenv serverip 10.10.10.10;
-    => tftp2emmc eMMCimg
+    => tftpboot 0x10000000 spi_uboot_en.bin;
+    -> spinit; erase f0000000 f02fffff; cp.b 0x10000000 0xf0000000 0x300000;
 
 .. note::
 
