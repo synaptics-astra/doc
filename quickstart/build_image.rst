@@ -9,20 +9,14 @@ Building a new image
 
 To build a image run the following commands:
 
-1. Setup a workspace as described in :ref:`workspace_setup`
+1. Start a build environment container::
 
-2. Start a build environment container::
-
-    $ cd workspace
-
-    $ docker run --rm -it -v $(pwd):$(pwd) \
-                 -v $(pwd)/.ssh:/home/pokyuser/.ssh \
-                 ghcr.io/synaptics-astra/crops:#release# --workdir=$(pwd)
+    $ docker run --rm -it -v $(pwd):$(pwd) ghcr.io/synaptics-astra/crops:#release# --workdir=$(pwd)
 
 3. Clone the sources from `GitHub <https://github.com/synaptics-astra/sdk>`_ ::
 
     pokyuser@xyz:/path/to/workspace $ git clone -b v#release# --recurse-submodules \
-                                                git@github.com:synaptics-astra/sdk
+                                                https://github.com/synaptics-astra/sdk
 
 4. Setup the build tree::
 
