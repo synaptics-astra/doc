@@ -508,6 +508,32 @@ Enable wpa_supplicant on boot up::
 
     systemctl enable wpa_supplicant@wlan0.service
 
+iPerf commands for throughput test
+----------------------------------
+The following section describes how to run throughput tests using iPerf commands in TCP and UDP modes.
+
+TCP traffic
+^^^^^^^^^^^
+
+Client Side::
+
+    iperf -c <IP address of iperf server> -i 1 -w 12M -t 60 -l 1470
+
+Server side::
+
+    iperf -s -i 1 -w 12M -l 1470
+
+UDP traffic
+^^^^^^^^^^^
+
+Client side::
+
+    iperf -c <IP address of iperf server> -i 1 -w 12M -u -b 1000M -t 60 -l 1470
+
+Server side::
+
+    iperf -s -i 1 -w 12M -l 1470
+
 The Linux Boot Process
 ======================
 
