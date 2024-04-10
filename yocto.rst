@@ -182,7 +182,7 @@ To clone the repository within the build environment started with the instructio
 use the following command::
 
      pokyuser@xyz:/path/to/workspace $ git clone -b v#release# --recurse-submodules \
-                                                 https://github.com:synaptics-astra/sdk
+                                                 https://github.com/synaptics-astra/sdk
 
 The recipes contained in the ``meta-synaptics`` layer point to the relevant git repository and will be downloaded
 using the standard bitbake fetching mechanism of Yocto.
