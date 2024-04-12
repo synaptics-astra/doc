@@ -13,12 +13,12 @@ To build a image run the following commands:
 
     $ docker run --rm -it -v $(pwd):$(pwd) ghcr.io/synaptics-astra/crops:#release# --workdir=$(pwd)
 
-3. Clone the sources from `GitHub <https://github.com/synaptics-astra/sdk>`_ ::
+2. Clone the sources from `GitHub <https://github.com/synaptics-astra/sdk>`_ ::
 
     pokyuser@xyz:/path/to/workspace $ git clone -b v#release# --recurse-submodules \
                                                 https://github.com/synaptics-astra/sdk
 
-4. Setup the build tree::
+3. Setup the build tree::
 
     pokyuser@xyz:/path/to/workspace $ cd sdk
 
@@ -32,10 +32,10 @@ To build a image run the following commands:
 
     You selection: 1
 
-5. Modify the image configuration metadata as desired (e.g. by adding more packages to the image by
+4. Modify the image configuration metadata as desired (e.g. by adding more packages to the image by
    tweaking the ``conf/local.conf`` file). For more information on how to configure the image refer to :doc:`/yocto`
 
-6. Build the image::
+5. Build the image::
 
     pokyuser@xyz:/path/to/workspace/sdk/build-slXYZ $ bitbake astra-media
 
