@@ -103,6 +103,13 @@ Then to apply the changes in powershell run the command:
 
     PS C:\Users\username> wsl.exe --shutdown
 
+If you plan to use a directory in your windows filesystem (e.g. ``C:\astra``) to perform the build, make sure you
+enable case-sensitive file system as by running the following command in a PowerShell (admin):
+
+.. code-block:: ps1con
+
+    PS C:> fsutil.exe file SetCaseSensitiveInfo C:\astra
+
 You can find more information about WSL configuration `here <https://learn.microsoft.com/en-us/windows/wsl/wsl-config>`__.
 
 Once you setup the WSL2 environment you can start a terminal from the start menu by selecting
@@ -396,6 +403,25 @@ Docker commands fail with the error ``permission denied while trying to connect 
   To ensure your session logged in to the ``docker`` group use the following command::
 
     $ newgrp docker
+
+The build fails on WSL2 when building from ``/mnt/c``
+
+    The Yocto build requires a case-sensitive file system. By default WSL2 mounts of the ``C:`` drive found in ``/mnt/c`` is not. This leads to the following error::
+    
+        pokyuser@868531cb885f:/mnt/c/work/astra/sdk/build-sl1680$ bitbake astra-media
+        WARNING: You are running bitbake under WSLv2, this works properly but you should optimize your VHDX file eventually to avoid running out of storage space
+        ERROR:  OE-core's config sanity checker detected a potential misconfiguration.
+            Either fix the cause of this error or at your own risk disable the checker (see sanity.conf).
+            Following is the list of potential problems / advisories:
+        The TMPDIR (/mnt/c/work/astra/sdk/build-sl1680/tmp) can't be on a case-insensitive file system.
+
+    To solve this problem, either setup the build in the WSL2 home directory (i.e. ``cd ~``) or enable case-sensitive on the main Windows file system with the following command in an admin PowerShell:
+
+    .. code-block:: ps1con
+
+        PS C:> fsutil.exe file SetCaseSensitiveInfo C:\work\astra\sdk
+
+    Where ``C:\work\astra\sdk\`` is the directory containing the sdk repository clone.
 
 WSL2 is not working correctly on my Windows machine
 
