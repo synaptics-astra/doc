@@ -508,8 +508,9 @@ Enable wpa_supplicant on boot up::
 
     systemctl enable wpa_supplicant@wlan0.service
 
-iPerf commands for throughput test
-----------------------------------
+Performing throughput tests
+---------------------------
+
 The following section describes how to run throughput tests using iPerf commands in TCP and UDP modes.
 
 TCP traffic
@@ -517,22 +518,197 @@ TCP traffic
 
 Client Side::
 
-    iperf -c <IP address of iperf server> -i 1 -w 12M -t 60 -l 1470
+    $ iperf -c <IP address of iperf server> -i 1 -w 12M -t 60 -l 1470
 
 Server side::
 
-    iperf -s -i 1 -w 12M -l 1470
+    $ iperf -s -i 1 -w 12M -l 1470
 
 UDP traffic
 ^^^^^^^^^^^
 
 Client side::
 
-    iperf -c <IP address of iperf server> -i 1 -w 12M -u -b 1000M -t 60 -l 1470
+    $ iperf -c <IP address of iperf server> -i 1 -w 12M -u -b 1000M -t 60 -l 1470
 
 Server side::
 
-    iperf -s -i 1 -w 12M -l 1470
+    $ iperf -s -i 1 -w 12M -l 1470
+
+Using the Bluetooth A2DP source role
+------------------------------------
+
+Searching and connecting to the headset
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+First you need to enter the Bluetooth console using the following command::
+
+    root@sl1640:~# bluetoothctl
+    [bluetooth]#
+
+Once in the Bluetooth console you can run various commands to control the Bluetooth stack described in the following
+paragraphs.
+
+You can show information about the Bluetooth controller on the board with the ``show`` command::
+
+    [bluetooth]# show
+    Controller C0:F5:35:AA:7D:8F (public)
+            Name: sl1640
+            Alias: sl1640
+            Class: 0x00000000
+            Powered: no
+            Discoverable: no
+            DiscoverableTimeout: 0x000000b4
+            Pairable: yes
+            UUID: Audio Source              (0000110a-0000-1000-8000-00805f9b34fb)
+            UUID: Generic Attribute Profile (00001801-0000-1000-8000-00805f9b34fb)
+            UUID: Generic Access Profile    (00001800-0000-1000-8000-00805f9b34fb)
+            UUID: PnP Information           (00001200-0000-1000-8000-00805f9b34fb)
+            UUID: A/V Remote Control Target (0000110c-0000-1000-8000-00805f9b34fb)
+            UUID: A/V Remote Control        (0000110e-0000-1000-8000-00805f9b34fb)
+            UUID: Device Information        (0000180a-0000-1000-8000-00805f9b34fb)
+            Modalias: usb:v1D6Bp0246d0541
+            Discovering: no
+            Roles: central
+            Roles: peripheral
+    Advertising Features:
+            ActiveInstances: 0x00 (0)
+            SupportedInstances: 0x06 (6)
+            SupportedIncludes: tx-power
+            SupportedIncludes: appearance
+            SupportedIncludes: local-name
+            SupportedSecondaryChannels: 1M
+            SupportedSecondaryChannels: 2M
+            SupportedSecondaryChannels: Coded
+
+In order to connect to the headset you first need to power on the bluetooth controller::
+
+    [bluetooth]# power on
+    [CHG] Controller C0:F5:35:AA:7D:8F Class: 0x00080000
+    Changing power on succeeded
+    [CHG] Controller C0:F5:35:AA:7D:8F Powered: yes
+
+You then need to set the controller in pairable mode::
+
+    [bluetooth]# pairable on
+    Changing pairable on succeeded
+
+You can then search for the headset (make sure the headset is in discoverable mode)::
+
+    [bluetooth]# scan on
+    Discovery started
+    [CHG] Controller C0:F5:35:AA:7D:8F Discovering: yes
+    [NEW] Device 2D:9A:A9:4F:54:37 2D-9A-A9-4F-54-37
+    [NEW] Device 4E:E7:B0:20:2A:11 4E-E7-B0-20-2A-11
+    [NEW] Device 7F:84:A3:29:E9:E9 7F-84-A3-29-E9-E9
+    [NEW] Device 6A:B0:95:7E:58:79 6A-B0-95-7E-58-79
+    [NEW] Device 7E:4D:8F:C4:3B:6F 7E-4D-8F-C4-3B-6F
+    [NEW] Device 40:93:CE:4D:F1:8E 40-93-CE-4D-F1-8E
+    [NEW] Device 47:14:71:A3:79:A9 47-14-71-A3-79-A9
+    [NEW] Device 67:62:9C:4B:F9:7D 67-62-9C-4B-F9-7D
+    [NEW] Device 8C:F8:C5:BD:6F:1D DTKBTQ3
+    [NEW] Device 0A:73:76:09:55:C0 BT208
+
+This command returns the MAC address of all the devices that are currently discoverable. You need to identify the one
+of the headset you want to pair.
+
+Once you found the headset you can pair to it by using the ``pair`` command with the MAC address of the headset::
+
+    [bluetooth]# pair 0A:73:76:09:55:C0
+    Attempting to pair with 0A:73:76:09:55:C0
+    [CHG] Device 0A:73:76:09:55:C0 Connected: yes
+    [CHG] Device 0A:73:76:09:55:C0 Bonded: yes
+    [CHG] Device 0A:73:76:09:55:C0 UUIDs: 00001108-0000-1000-8000-00805f9b34fb
+    [CHG] Device 0A:73:76:09:55:C0 UUIDs: 0000110b-0000-1000-8000-00805f9b34fb
+    [CHG] Device 0A:73:76:09:55:C0 UUIDs: 0000110c-0000-1000-8000-00805f9b34fb
+    [CHG] Device 0A:73:76:09:55:C0 UUIDs: 0000110e-0000-1000-8000-00805f9b34fb
+    [CHG] Device 0A:73:76:09:55:C0 UUIDs: 0000111e-0000-1000-8000-00805f9b34fb
+    [CHG] Device 0A:73:76:09:55:C0 ServicesResolved: yes
+    [CHG] Device 0A:73:76:09:55:C0 Paired: yes
+    Pairing successful
+    [CHG] Device 0A:73:76:09:55:C0 ServicesResolved: no
+    [CHG] Device 0A:73:76:09:55:C0 Connected: no
+
+The next step is to mark the device as trusted::
+
+    [bluetooth]# trust 0A:73:76:09:55:C0
+    [CHG] Device 0A:73:76:09:55:C0 Trusted: yes
+    Changing 0A:73:76:09:55:C0 trust succeeded
+
+The last step is to setup the connection with the headset::
+
+    [bluetooth]# connect 0A:73:76:09:55:C0
+    Attempting to connect to 0A:73:76:09:55:C0
+    [CHG] Device 0A:73:76:09:55:C0 Connected: yes
+    [NEW] Endpoint /org/bluez/hci0/dev_0A_73_76_09_55_C0/sep1
+    [NEW] Transport /org/bluez/hci0/dev_0A_73_76_09_55_C0/sep1/fd0
+    Connection successful
+    [BT208]# [  286.922414] input: BT208 (AVRCP) as /devices/virtual/input/input1
+    [CHG] Transport /org/bluez/hci0/dev_0A_73_76_09_55_C0/sep1/fd0 Volume: 0x0060 (96)
+    [DEL] Device D4:D2:D6:4F:80:60 445HD_BT_60
+    [CHG] Device 0A:73:76:09:55:C0 ServicesResolved: ye
+    [BT208]#
+
+If we connection was successful the console prompt will show the name of device we connected to.
+
+We can now get the information about the device::
+
+    [BT208]# info
+    Device 0A:73:76:09:55:C0 (public)
+            Name: BT208
+            Alias: BT208
+            Class: 0x00240404
+            Icon: audio-headset
+            Paired: yes
+            Bonded: yes
+            Trusted: yes
+            Blocked: no
+            Connected: yes
+            LegacyPairing: no
+            UUID: Headset                   (00001108-0000-1000-8000-00805f9b34fb)
+            UUID: Audio Sink                (0000110b-0000-1000-8000-00805f9b34fb)
+            UUID: A/V Remote Control Target (0000110c-0000-1000-8000-00805f9b34fb)
+            UUID: A/V Remote Control        (0000110e-0000-1000-8000-00805f9b34fb)
+            UUID: Handsfree                 (0000111e-0000-1000-8000-00805f9b34fb)
+            RSSI: -69
+            TxPower: 4
+
+Playing music to the headset
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In order to test playback you need to upload a sound file (in ``.wav`` format)  to the board for instance using ``scp``.
+
+The file can be played to the A2DP sink using the ``aplay`` command. The takes as parameter the MAC address of the
+headeset (in the example below ``0A:73:76:09:55:C0``) and the name of wave file (in the example below
+``/home/root/example.wav``)::
+
+    root@sl1640:~# aplay --verbose -D  bluealsa:DEV=0A:73:76:09:55:C0 -t wav /home/root/example.wav
+    Playing WAVE '/home/root/example.wav' : Signed 16 bit Little Endian, Rate 48000 Hz, Stereo
+    Plug PCM: BlueALSA PCM: /org/bluealsa/hci0/dev_0A_73_76_09_55_C0/a2dpsrc/sink
+    BlueALSA BlueZ device: /org/bluez/hci0/dev_0A_73_76_09_55_C0
+    BlueALSA Bluetooth codec: SBC
+    Its setup is:
+      stream       : PLAYBACK
+      access       : RW_INTERLEAVED
+      format       : S16_LE
+      subformat    : STD
+      channels     : 2
+      rate         : 48000
+      exact rate   : 48000 (48000/1)
+      msbits       : 16
+      buffer_size  : 24000
+      period_size  : 6000
+      period_time  : 125000
+      tstamp_mode  : NONE
+      tstamp_type  : GETTIMEOFDAY
+      period_step  : 1
+      avail_min    : 6000
+      period_event : 0
+      start_threshold  : 24000
+      stop_threshold   : 24000
+      silence_threshold: 0
+      silence_size : 0
+      boundary     : 6755399441055744000
+
 
 The Linux Boot Process
 ======================
