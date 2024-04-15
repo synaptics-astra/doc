@@ -52,6 +52,14 @@ For more in-depth information, the following documents are available:
 
      This guide contains internal information for Synaptics engineers
 
+External Documentation
+======================
+
+`SyNAP Documentation <https://synaptics-synap.github.io/doc/>`__
+
+   This guide explains in depth how to use the SyNAP toolkit and the SyNAP runtime API.
+
+
 Download Documentation
 ======================
 
