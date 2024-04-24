@@ -333,7 +333,7 @@ System Memory configuration
 
 System memory configuration is performed by changing the variables ``CONFIG_PREBOOT_``
 in the configuration file pointed by ``SYNA_SDK_CONFIG_FILE`` variable. The available
-configurations can be found by inspecting http://github.com/synaptics-astra/preboot-prebuilts .
+configurations can be found by inspecting https://github.com/synaptics-astra/boot-preboot-prebuilts .
 
 .. _partitions_config:
 
@@ -341,7 +341,7 @@ Partition tables
 ----------------
 
 Partition tables are configured in the file ``emmc.pt`` found in the directory
-``product/${SYNA_SDK_CONFIG_NAME}/emmc.pt`` found at http://github.com/synaptics-astra/preboot-prebuilts .
+``product/${SYNA_SDK_CONFIG_NAME}/emmc.pt`` found at http://github.com/synaptics-astra/configs .
 The ``SYNA_SDK_CONFIG_NAME`` depends on the ``MACHINE`` and ``DISTRO_CONFIG`` variables.
 
 To customize this file you can override the recipe ``syna-config-native``.
