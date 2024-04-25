@@ -945,7 +945,7 @@ After running the ``run.bat`` a window will open showing the status of the flash
 On Mac, right click on the directory which contains the version of usb_boot which matches
 the Astra Machina variant which you are about to boot. From the drop down select ``Services -> New Terminal at Folder``.
 
-.. figure:: media/mac-open-terminal.png
+.. figure:: media/mac-open-terminal.jpg
 
     Opening a Terminal for USB Boot on Mac
 
