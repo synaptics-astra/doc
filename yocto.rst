@@ -149,7 +149,7 @@ Start the build environment
 .. warning::
 
     When using WSL2 build from ``/mnt/c`` and other host file system drives is not supported. Your build
-    folder must reside on the native WSL2 file system (e.g. ``/home/${USER}`)
+    folder must reside on the native WSL2 file system (e.g. ``/home/${USER}``)
 
 In order to ensure a correctly configured and clean environment, the build
 must be performed within a Docker container. To do so you need to start
