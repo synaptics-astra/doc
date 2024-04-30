@@ -103,13 +103,6 @@ Then to apply the changes in powershell run the command:
 
     PS C:\Users\username> wsl.exe --shutdown
 
-If you plan to use a directory in your windows filesystem (e.g. ``C:\astra``) to perform the build, make sure you
-enable case-sensitive file system as by running the following command in a PowerShell (admin):
-
-.. code-block:: ps1con
-
-    PS C:> fsutil.exe file SetCaseSensitiveInfo C:\astra
-
 You can find more information about WSL configuration `here <https://learn.microsoft.com/en-us/windows/wsl/wsl-config>`__.
 
 Once you setup the WSL2 environment you can start a terminal from the start menu by selecting
@@ -152,6 +145,11 @@ Start the build environment
 
     The following steps require an hosts with docker correctly installed,
     you can find more information on how to setup docker in :ref:`yocto_prerequisites`.
+
+.. warning::
+
+    When using WSL2 build from ``/mnt/c`` and other host file system drives is not supported. Your build
+    folder must reside on the native WSL2 file system (e.g. ``/home/${USER}`)
 
 In order to ensure a correctly configured and clean environment, the build
 must be performed within a Docker container. To do so you need to start
