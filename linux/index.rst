@@ -401,7 +401,7 @@ Run the example application using the following command::
 Machine Learning with SyNAP
 ===========================
 
-Astra Machina uses the SyNAP framework for execution of neural networks using the platforms hardware accelerators.
+Astra Machina uses the SyNAP framework for execution of neural networks using the platform's hardware accelerators.
 This framework allows users to run programs which take advantage of the Neural Processing Unit (NPU)
 and Graphics Processing Unit (GPU) to accelerate the execution of neural networks. (see the `SyNAP documentation <https://synaptics-synap.github.io/doc/v/3.0.0/>`__ for more details.)
 
