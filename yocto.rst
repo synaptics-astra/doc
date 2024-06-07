@@ -374,6 +374,13 @@ close file descriptor for child process`` on Ubuntu 20 or 18.
   on the host that runs docker or add the parameter ``--security-opt "seccomp=unconfined`` to
   the docker command line when creating the docker build environment.
 
+The build fails at package ``astra-media`` with the error ``path mismatch``.
+
+  This error can occur when adding a new package to the ``astra-media`` image. Preforming a clean on
+  the ``astra-media`` package and then rebuilding it will fix the issue::
+
+    bitbake -c clean astra-media
+
 Build of packages with out-of-trees modules (such as ``synasdk-synap-module``) fail with error
 ``Kernel configuration is invalid.``.
 

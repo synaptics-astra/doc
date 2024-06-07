@@ -51,7 +51,7 @@ on an external display. Additionally, Shell access is available through SSH, ADB
 The Graphical Desktop
 ---------------------
 
-Astra Machina's graphical desktop is enabled be default. It can be displayed on an external display connected
+Astra Machina's graphical desktop is enabled by default. It can be displayed on an external display connected
 to the HDMI port or a MIPI display. Input can be provided by connecting a standard HID USB keyboard and mouse. 
 
 .. figure:: media/wayland-desktop.jpg
@@ -120,8 +120,9 @@ during operation. The serial console is also needed during the firmware update p
 Setting up the Serial Console
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Astra Machina (Foundation) SL16xx Developer Kits come with a USB-TTL board and a flying-wire style cable.
-Use the cable to connect the USB-TTL board to Astra Machina's 40 pin GPIO header.
+The serial console on Astra Machina can be accessed by connecting a USB-TTL adaptor to
+the RX, TX, and GND pins of the 40 pin GPIO connector. USB-TTL adaptors can either be a board
+with jumper wires or an integrated USB cable with separated pins.
 
 =======    =============
 USB TTL    Astra Machina
@@ -133,7 +134,11 @@ TXD        10
 
 .. figure:: media/usb-ttl-board.png
 
-    USB TTL board provided in Developer Kit
+    Example USB TTL board
+
+.. figure:: media/usb-ttl-cable.png
+
+    Example USB TTL cable
 
 .. figure:: media/board-ports.png
 
@@ -143,16 +148,11 @@ TXD        10
 
     Astra Machina's 40 Pin GPIO Header pinout
 
-Windows and Mac hosts will require an additional driver to interface with the
-USB to UART chip on the USB-TTL board. Please download the appropriate driver for your
-host from `Silicon Labs CP210x USB to UART Bridge VCP
-Drivers <https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads>`__
-page. Linux hosts generally have support for this chip enabled by
-default.
+Some USB-TTL adaptors require installing a driver on Windows and Mac hosts. Please check with the
+adaptor's manufacturer for instructions on downloading and installing the driver.
 
-Once the driver is installed the serial console can be
-accessed using a terminal emulator program such as Putty, HyperTerminal,
-Tera Term, Screen, or Minicom.
+The serial console can be accessed using a terminal emulator program such as `Putty <https://www.putty.org/>`__, HyperTerminal,
+`Tera Term <https://teratermproject.github.io/index-en.html>`__, Screen, or Minicom.
 
 .. figure:: media/putty.png
 
@@ -195,17 +195,30 @@ The Astra Machina uses plugins to allow its hardware components to be used
 in a Gstreamer pipeline. The tables below list plugins which are used by
 the codecs supported by the Astra Machina.
 
-Video Codes
-^^^^^^^^^^^
+Video Codecs
+^^^^^^^^^^^^
+
+**SL1620**
+
+========= ================= ================== ==================
+Codec     Parser Plugin     Decoder Plugin     Encoder Plugin
+========= ================= ================== ==================
+H.264     h264parse         avdec_h264         N/A
+H.265     h265parse         avdec_h265         N/A
+VP8       N/A               avdec_vp8          N/A
+VP9       vp9parse          avdec_vp9          N/A
+========= ================= ================== ==================
+
+**SL1640 / SL1680**
 
 ========= ================= ================== ==================
 Codec     Parser Plugin     Decoder Plugin     Encoder Plugin
 ========= ================= ================== ==================
 H.264     h264parse         v4l2h264dec        v4l2h264enc
-H.265     h265parse         v4l2h265dec        None
+H.265     h265parse         v4l2h265dec        N/A
 VP8       N/A               v4l2vp8dec         v4l2vp8enc
-VP9       vp9parse          v4l2vp9dec         None
-AV1       av1parse          v4l2av1dec         None
+VP9       vp9parse          v4l2vp9dec         N/A
+AV1       av1parse          v4l2av1dec         N/A
 ========= ================= ================== ==================
 
 Audio Codecs
@@ -216,6 +229,10 @@ Codec     Parser Plugin     Decoder Plugin     Encoder Plugin
 ========= ================= ================== ==================
 AAC       aacparse          fdkaacdec          fdkaacenc
 Vorbis    N/A               vorbisdec          vorbisenc
+MPEG 2    mpegaudioparse    avdec_mp2float     avenc_mp2
+MPEG 3    mpegaudioparse    avdec_mp3          N/A
+AC3       N/A               avdec_ac3          avenc_ac3
+OPUS      N/A               avdec_opus         avenc_opus
 ========= ================= ================== ==================
 
 Gstreamer Examples
@@ -298,12 +315,17 @@ Finally, the decoded frames our output to the video sink::
     gst-launch-1.0 filesrc location=video_file ! demux ! queue ! parser ! decoder ! videosink
 
 The following example plays the main video stream of an MP4 file and
-displays the video using Wayland. In this example the video is encoded
-with H265::
+displays the video using Wayland.
+
+An example of a H265 encoded video file on SL1640 / SL1680::
 
     gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! v4l2h265dec ! waylandsink fullscreen=true
 
-A similar example, but with a file using AV1 encoding::
+An example of a H265 encoded video file on SL1620::
+
+    gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! avdec_h265 ! waylandsink fullscreen=true
+
+A similar example, but with a file using AV1 encoding on SL1640 / SL1680::
 
     gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! av1parse ! v4l2av1dec ! waylandsink fullscreen=true
 
@@ -313,9 +335,10 @@ Audio / Video File Playback
 Playing a file which contains both audio and video streams requires
 creating a pipeline which parses and decodes both streams::
 
-    gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! av1parse ! v4l2av1dec ! waylandsink fullscreen=true
+    gst-launch-1.0 filesrc location=video_file ! demux.video ! queue ! parser ! decoder ! videosink \
+        demux.audio ! queue ! parser ! decoder ! [ convert ] ! [ resample ] ! audiosink
 
-Play an MP4 file with a H265 encoded video stream and an AAC encoded
+Play an MP4 file on SL1640 / SL1680 with a H265 encoded video stream and an AAC encoded
 audio stream::
 
     gst-launch-1.0 filesrc location=test_file.mp4  ! qtdemux name=demux \
@@ -380,21 +403,156 @@ Using playbin the example in :ref:`audio_sinks` can be reduced to::
 GStreamer SyNAP Plugin
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Astra Machina provides a Gstreamer plugin which allows adding ML processing to Gstreamer pipelines.
-This plugin uses the SyNAP framework to interface with the hardware accelerators to improve the performance
+Astra Machina provides the Synaptics Gstreamer Plugins for AI (gstsynap) which allow adding ML processing to Gstreamer pipelines.
+These plugins use the SyNAP framework to interface with the hardware accelerators to improve the performance
 of ML processing. For information on SyNAP see :ref:`synap` below.
 
-The SyNAP plugin works as a Gstreamer appsrc and appsink. It takes samples from the pipeline and uses the SyNAP
-framework to perform classification or detection on the frame using a neural network. It then outputs the results
-as JSON formatted data.
+The Synaptics Gstreamer Plugins for AI consist of two plugins. The gstsynapinfer plugin, which uses SyNAP to handle AI inferencing
+and the gstsynapoverlay plugin which outputs the results from gstsynapinfer and overlays then on top of the source data.
 
-We provide a `sample application <https://github.com/synaptics-astra/application-gstreamer-plugins-syna/tree/v#release#/examples/gst-ai>`__
-which plays a video while simultaneously performing image classification on the video frames, and then overlaying labels of the
-results onto the video. A prebuilt version of the application is included in the Astra system image.
+The gstsynapinfer plugin can operate it two modes. The first mode outputs structured data which is then used by gstsynapoverlay. This
+supports common use cases such as drawing bounding boxes or overlaying text without having to write additional code. Here are several
+examples using gstsynapinfer to do the inferencing and gstsynapoverlay overlaying the results. These examples show inferencing running on
+a local file and an external USB camera.
+
+Example of Object Detection with YOLOv8 (USB Camera Source)::
+
+    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! videoconvert ! \
+        tee name=t_data t_data. ! queue ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json \
+        ! videoconvert ! waylandsink t_data. ! queue ! videoconvert ! videoscale ! video/x-raw,width=640,height=384,format=RGB  ! \
+        synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 \
+        ! overlay.inference_sink
+
+Example of Object Detection with YOLOv8 (Video)::
+
+    gst-launch-1.0 filesrc location=video_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! avdec_h264 ! videoconvert ! \
+        tee name=t_data t_data. ! queue ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json ! \
+        videoconvert ! waylandsink t_data. ! queue ! videoconvert ! videoscale ! video/x-raw,width=640,height=384,format=RGB  ! \
+        synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 \
+        ! overlay.inference_sink
+
+Example of Face Detection with YOLOv5 (USB Camera Source)::
+
+    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! videoconvert ! \
+        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! videoconvert ! waylandsink t_data. ! queue ! videoconvert ! \
+        videoscale ! video/x-raw,width=480,height=352,format=RGB  ! \
+        synapinfer model=/usr/share/synap/models/object_detection/face/model/yolov5s_face_640x480_onnx_mq/model.synap mode=detector \
+        frameinterval=3 ! overlay.inference_sink
+
+Example of Pose Estimation with YOLOv8 (USB Camera Source)::
+
+    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! videoconvert ! \
+        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! videoconvert ! waylandsink t_data. ! queue ! videoconvert \
+        ! videoscale ! video/x-raw,width=640,height=352,format=RGB  ! \
+        synapinfer model=/usr/share/synap/models/object_detection/body_pose/model/yolov8s-pose/model.synap mode=detector frameinterval=3 \
+        ! overlay.inference_sink
+
+Example of Pose Estimation with YOLOv8 (Video)::
+
+    gst-launch-1.0 filesrc location=fitness.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! avdec_h264 ! videoconvert ! \
+        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! videoconvert ! waylandsink t_data. ! queue ! videoconvert ! \
+        videoscale ! video/x-raw,width=640,height=352,format=RGB  ! \
+        synapinfer model=/usr/share/synap/models/object_detection/body_pose/model/yolov8s-pose/model.synap mode=detector frameinterval=3 \
+        ! overlay.inference_sink
+
+.. note::
+
+    Replace /dev/videoX with the device file associated with your external USB camera.
+
+In gstsynapinfer's second mode, inference results are output as a JSON string. This allows an application to handle the overlay directly
+or do additional processing on the results.
+
+We provide a `sample application <https://github.com/synaptics-astra/application-gstreamer-plugins-syna/tree/v#release#/tests/examples/gst-ai>`__
+which makes use of gstsynapinfer's second mode. The app plays a video while simultaneously performing image classification on the video frames,
+and then overlaying labels of the results onto the video. A prebuilt version of the application is included in the Astra system image.
 
 Run the example application using the following command::
 
     gst-ai --appmode=IC --input=test_file.mp4 --output=screen --paramfile=/usr/share/gst-ai/ic.json
+
+The gst-ai program uses a JSON parameter file to set additional configuration options. These options include decode mode, model, model meta-data,
+count, confidence threshold, and post processing mode. The Astra Machina image provides a default JSON file for image classification at
+/usr/share/gst-ai/ic.json. The supported decode modes (decmode) are ``ffmpeg`` and ``v4l2``. When set to ``ffmpeg`` the gst-ai program will use the
+`ffmpeg library <https://ffmpeg.org/>`__ to perform decoding of the video stream in software. When ``v4l2`` is set then gst-ai will use the V4L2 APIs
+to perform decoding of the video stream using hardware acceleration.
+
+.. note::
+
+    SL1620 requires decmode to be set to ffmpeg since it does not support V4L2 decoding.
+
+Multimedia Demo Applications
+----------------------------
+
+We also provide two `demo QT applications <https://github.com/synaptics-astra/application-videosdk/tree/v#release#/>`__ which demonstate the
+Multimedia and AI capabilities of Astra Machina. The Syna Video Player app demonstates decoding and playing up to four video streams. The Syna AI
+Player app demonstrates the AI capabilities of Astra Machina by performing object detection, face detection, and pose estimation examples.
+
+The apps require the following environment variable to be set::
+
+    export XDG_RUNTIME_DIR=/var/run/user/0
+    export WESTON_DISABLE_GBM_MODIFIERS=true
+    export WAYLAND_DISPLAY=wayland-1
+    export QT_QPA_PLATFORM=wayland
+
+.. _qml_customization:
+
+Multimedia Demo Customization
+"""""""""""""""""""""""""""""
+
+Both applications use `QML <https://doc.qt.io/qt-6/qmlreference.html>`__ files for their configuration. This allows users to customize the applications.
+Customizations include modifying what videos are used in the application. Since no sample video files are preinstalled on the Astra Machina image,
+users will need to add their own video files to the application's QML files. The default QML files are preinstalled in /home/root/demos/qmls.
+
+Syna Video Player
+^^^^^^^^^^^^^^^^^
+
+The Syna Video Player application demonstrates Astra Machina's ability to play and decode videos. It supports playing a single video, or playing up to four
+videos in a grid.
+
+.. figure:: media/syna-video-player.png
+
+    The main screen of Syna Video Player
+
+Run the Syna Video Player::
+
+    root@sl1680:~# syna-video-player --mach=sl1680 --mode=ffmpeg
+
+The Syna Video Player expects two paramaters, the machine type and the mode. The machine type is the version of Astra Machina which the application is running on.
+The valid options are ``sl1620``, ``sl1640`` and ``sl1680``. The mode specifies which mode of decoding should be used. The options are ``ffmpeg`` and ``v4l2``.
+When set to ``ffmpeg`` the Syna Video Player application will use the `ffmpeg library <https://ffmpeg.org/>`__ to perform decoding of the video stream in software.
+When ``v4l2`` is set then Syna Video Player will use the V4L2 APIs to perform decoding of the video stream using hardware acceleration.
+
+.. note::
+
+    SL1620 requires mode to be set to ffmpeg since it does not support V4L2 decoding.
+
+The information on the video files is defined in the QML files in /home/root/demos/qmls/. Please update the video names and path in these files so that Syna Video Player
+can locate the videos installed on your system. The video information is set in the file ``<mach>-<mode>.qml``. For example, to update the video files on SL1680 in ffmpeg mode,
+modify ``/home/root/demos/qmls/sl1680-ffmpeg.qml``.
+
+Syna AI Player
+^^^^^^^^^^^^^^
+
+The Syna AI Player application uses the above gstreamer pipelines to show object detection, face detection, and pose estimation. It also supports Multi AI view which
+does object detection, face detection, and pose estimation simultaniously while playing a video.
+
+.. figure:: media/syna-ai-player.png
+
+    The main screen of Syna AI Player
+
+Run the Syna AI Player::
+
+    root@sl1680:~# syna-ai-player --mach=sl1680
+
+The Syna AI Player expects the machine type parameter. The machine type is the version of Astra Machina which the app is running on.
+The valid options are ``sl1620``, ``sl1640`` and ``sl1680``.
+
+The information on the video file used in the Multi View window is defined in the QML files in /home/root/demos/qmls/. Please update the video name and path in this file so that Syna AI Player
+can locate the video installed on your system. The video information is set in the file ``/home/root/demos/qmls/panels/MultiAi.qml``.
+
+.. note::
+
+    Multi AI mode requires 3 seperate cameras. One of which needs to be a USB 3.0 device.
 
 .. _synap:
 
@@ -417,18 +575,18 @@ SL Processor Wireless Device Physical Interface    Software Information
                                                   
                              (M.2 PCIe / M.2 SDIO)
 ============ =============== ===================== ========================================================
-SL1620       SYNA 43456      M.2 SDIO              - wpa_supplicant v3.0 enterprise (excluding 192bit mode)
-                                                  
-                                                   - WIFI driver version:
-SL1620       SYNA 43711      M.2 SDIO              - wpa_supplicant v3.0 enterprise (excluding 192bit mode)
-                                                  
-                                                   - WIFI driver version:
-SL1640       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.10
-                                                  
+SL1620       SYNA 43456      M.2 SDIO              - wpa_supplicant v2.10
                                                    - WIFI driver version: v101.10.478
-SL1640       SYNA 43756E     M.2 PCIe             
-SL1680       SYNA 43752      M.2 PCIe             
-SL1680       SYNA 43756E     M.2 PCIe             
+SL1620       SYNA 43711      M.2 SDIO              - wpa_supplicant v2.10
+                                                   - WIFI driver version: v101.10.478
+SL1640       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.10
+                                                   - WIFI driver version: v101.10.478
+SL1640       SYNA 43756E     M.2 PCIe              - wpa_supplicant v2.10
+                                                   - WIFI driver version: v101.10.478
+SL1680       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.10
+                                                   - WIFI driver version: v101.10.478
+SL1680       SYNA 43756E     M.2 PCIe              - wpa_supplicant v2.10
+                                                   - WIFI driver version: v101.10.478
 ============ =============== ===================== ========================================================
 
 The Synaptics Astra Linux BSP contains all of the drivers and firmware required to use the 43xxx modules with both PCIe and SDIO interfaces.
@@ -648,7 +806,7 @@ The last step is to setup the connection with the headset::
     [CHG] Device 0A:73:76:09:55:C0 ServicesResolved: ye
     [BT208]#
 
-If we connection was successful the console prompt will show the name of device we connected to.
+If the connection was successful the console prompt will show the name of device we connected to.
 
 We can now get the information about the device::
 
@@ -677,7 +835,7 @@ Playing music to the headset
 
 In order to test playback you need to upload a sound file (in ``.wav`` format)  to the board for instance using ``scp``.
 
-The file can be played to the A2DP sink using the ``aplay`` command. The takes as parameter the MAC address of the
+The file can be played to the A2DP sink using the ``aplay`` command. The command takes as parameter the MAC address of the
 headeset (in the example below ``0A:73:76:09:55:C0``) and the name of wave file (in the example below
 ``/home/root/example.wav``)::
 
@@ -755,7 +913,7 @@ process described in the Astra Yocto User Guide.
 The Linux Kernel uses Device Tree data structures to describe the
 hardware components and their configurations on the system. The device
 tree source files are in the Linux Kernel source tree under that path
-``arch/arm64/boot/dts/synaptics/``. These files are maintained in the `Astra Linux Kernel Overlay repository <https://github.com/synaptics-astra/linux_5_15-overlay>`__
+``arch/arm64/boot/dts/synaptics/``. These files are maintained in the `Astra Linux Kernel Overlay repository <https://github.com/synaptics-astra/linux_5_15-overlay>`__.
 
 Root File System
 ^^^^^^^^^^^^^^^^
@@ -777,9 +935,9 @@ flash or recover a device.
 ========== ==========================================================
 image type image usage
 ========== ==========================================================
-SPI U-Boot burn eMMC image via TFTP server or USB host
-USB U-Boot burn eMMC image via TFTP server of USB disk
-SUBoot     burn eMMC image via TFTP server or USB disk, Booting Linux
+SPI U-Boot burn eMMC image via TFTP server or USB drive
+USB U-Boot burn eMMC image via TFTP server of USB host
+SUBoot     burn eMMC image via TFTP server or USB drive, Booting Linux
 ========== ==========================================================
 
 USB U-Boot and SPI U-Boot are used to boot a device which does not have
@@ -811,8 +969,18 @@ to boot from eMMC.
     Astra Machina Component Diagram with SD-Boot jumper highlighted
 
 Astra Machina's internal SPI flash comes preprogrammed with SPI U-Boot. When the
-SD-Boot jumper is connected the device will either boot from SPI flash or from an
-SD Card if one is inserted in the SD Card slot.
+SD-Boot jumper is connected the device will boot from the SD card inserted in the SD card slot.
+If no SD card is inserted the SPI U-Boot will boot to the U-Boot prompt "=>". The U-Boot prompt
+can be used to set variables, or flash the eMMC and internal SPI flash.
+
+U-Boot Prompt with SUBoot
+-------------------------
+
+When booting from the internal eMMC or from an SD card, SUBoot will automatically load the Linux kernel.
+However, this process can be interrupted by pressing any key in the serial console during the boot process.
+If U-Boot detects a keypress then it will stop at the U-Boot prompt "=>". The U-Boot prompt can be used to
+set variables, or flash the eMMC and internal SPI flash. By default the timeout in which U-Boot will wait
+for input is set to 0, so key presses need to be sent before U-Boot starts.
 
 .. _prepare_to_boot:
 
@@ -1087,13 +1255,19 @@ the U-Boot prompt.
 
 Initialize networking and request an IP address from a DHCP server on the local network::
 
-    => net_init; dhcp; setenv serverip 10.10.10.10;
+    => net_init; dhcp;
+    => setenv serverip 10.10.10.10;
     
 Write the image to eMMC from the TFTP server using the command::
 
     => tftp2emmc eMMCimg
 
 The parameter eMMCimg is the name of the image directory on the TFTP server.
+
+.. note::
+
+    SPI U-Boot initializes the network and requests an IP automatically.
+    The ``net_init`` and ``dhcp`` commands not needed when using SPI U-Boot.
 
 .. note::
 
@@ -1121,7 +1295,12 @@ file to the "images" directory in the usb_boot tool's directory.
 Then write the image to the SPI flash using the commands::
 
     => usbload spi_uboot_en.bin 0x10000000
-    => spinit; erase f0000000 f02fffff; cp.b 0x10000000 0xf0000000 0x300000;
+    => spinit;
+    => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
+
+An optional backup copy of the SPI flash firmware can be installed using the command::
+
+    => erase f0200000 f03fffff; cp.b 0x10000000 0xf0200000 0x200000;
 
 Flashing Image from an External USB Drive
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1132,7 +1311,12 @@ Details on the how to setup the USB drive are covered in :ref:`flashing_from_usb
 Write the image to SPI flash using the following commands::
 
     => usb start; fatload usb 0 0x10000000 spi_uboot_en.bin;
-    => spinit; erase f0000000 f02fffff; cp.b 0x10000000 0xf0000000 0x300000;
+    => spinit;
+    => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
+
+An optional backup copy of the SPI flash firmware can be installed using the command::
+
+    => erase f0200000 f03fffff; cp.b 0x10000000 0xf0200000 0x200000;
 
 Flashing Image from TFTP Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1142,9 +1326,20 @@ the TFTP server.
 
 Write the SPI image to the SPI flash from the TFTP server using the command::
 
-    => net_init; dhcp; setenv serverip 10.10.10.10;
+    => net_init; dhcp;
+    => setenv serverip 10.10.10.10;
     => tftpboot 0x10000000 spi_uboot_en.bin;
-    -> spinit; erase f0000000 f02fffff; cp.b 0x10000000 0xf0000000 0x300000;
+    => spinit;
+    => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
+
+An optional backup copy of the SPI flash firmware can be installed using the command::
+
+    => erase f0200000 f03fffff; cp.b 0x10000000 0xf0200000 0x200000;
+
+.. note::
+
+    SPI U-Boot initializes the network and requests an IP automatically.
+    The ``net_init`` and ``dhcp`` commands not needed when using SPI U-Boot.
 
 .. note::
 
