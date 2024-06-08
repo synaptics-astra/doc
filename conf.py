@@ -1,9 +1,9 @@
 import os
 
 project = 'Synaptics Astra SDK User Guide'
-copyright = '2023, Synaptics'
+copyright = '2023 - 2024, Synaptics'
 author = 'Synaptics'
-release = '0.9.0'
+release = '1.0.0'
 
 html_static_path = ['_static']
 
