@@ -1,0 +1,447 @@
+********************
+Release Notes v1.0.0
+********************
+
+.. highlight:: console
+
+Introduction
+============
+
+Astra™ is the new Synaptics' compute platform designed for the IoT market. It features a series of high-performance,
+AI-native, multi-modal SoCs optimized for consumer, enterprise, and industrial IoT workloads. These SoCs come equipped
+with hardware accelerators for edge inferencing, security, graphics, vision, and audio, and offer out-of-box
+functionality with Synaptics connectivity.
+
+Astra (v1.0.0) GA Release is a unified software development kit supporting the SL-Series of MPUs.
+
+The high-level components included in this SDK are described below:
+
+    * Upstream Linux Kernel and device tree.
+    * Low-level Linux device drivers (U-BOOT) for peripheral devices.
+    * Open source code for Multimedia and VOIP pipelines.
+    * Synaptics proprietary security approach.
+    * Related SDK Documents
+
+All of these items can be found through Synaptics’ and third parties open source Git repositories on GitHub.
+
+Yocto SDK
+---------
+
+The Yocto Project is an open-source collaboration project that provides templates, tools and
+methods for custom Linux-based systems for embedded and IoT products. By leveraging the power
+of the open-source development community, Synaptics hopes to provide its customers with a wider
+array of compatible software packages to build their products faster, with more features, while
+at the same time having the stability and support of a large open-source development project.
+Additionally, the SDK enables customers who already use a Yocto-based development environment
+to migrate to Synaptics class-leading silicon solutions for improved performance and additional
+functionality. The Yocto Project offers a vast number of software packages that provide many options.
+
+Reference Board Supported Scope
+-------------------------------
+
+Below table lists the supported ASTRA reference board (Machina) and supported scope.
+
+============================       =================================
+SOC / Reference Board              Test Validation and Support Scope
+============================       =================================
+SL1680 Core board + IO board       GA
+SL1640 Core board + IO board       GA
+SL1620 Core board + IO board       GA
+============================       =================================
+
+License
+-------
+
+Using the Astra Software Developer Kit and BSP requires complying with the :doc:`../EULA`.
+
+Synaptics Proprietary TAs
+-------------------------
+
+The following Trusted Applications (TAs) are Synaptics proprietary TAs which run in the OP-TEE Trusted Execution Environment.
+They are provided in binary format. Synaptics will migrate them into REE and open source the code to the public in a near future releases.
+
+========    =========================
+Package     Notes
+========    =========================
+MIPI-DSI    TA
+
+            SL1620
+Fastlogo    TA
+
+            SL1680 / SL1640
+
+SyNAP       TA
+
+            SL1680 / SL1640 / SL1620
+
+DHUB        TA
+
+            SL1680 / SL1640
+
+Vmeta       TA
+
+            SL1680 / SL1640 / SL1620
+
+========    =========================
+
+Where to get the SDK from GitHub
+--------------------------------
+
+Images and Toolchains
+^^^^^^^^^^^^^^^^^^^^^
+
+`<https://github.com/synaptics-astra/sdk/releases/>`__
+
+SDK
+^^^
+
+`<https://github.com/synaptics-astra/sdk/tree/v1.0.0>`__
+
+Documentation
+^^^^^^^^^^^^^
+
+:doc:`../quickstart/index`
+
+:doc:`../hw/index`
+
+:doc:`../yocto`
+
+:doc:`../linux/index`
+
+For other collaterals please refer to the `Synaptics Customer Portal <https://cp.synaptics.com/>`__.
+
+SoC Core Feature Summary
+========================
+
+This section summarizes the hardware features of Astra Machina SoCs.
+
+======================================    ==========================
+Feature                                   SoC
+======================================    ==========================
+2D and 3D Graphics with GPU               SL1620, SL1640, and SL1680
+DRM-KMS                                   SL1620, SL1640, and SL1680
+Multi-standard Video Encoding/Decoding    SL1640 and SL1680
+Cortex-M core boot                        SL1620, SL1640, and SL1680
+HIFI4 DSP                                 SL1640
+NPU                                       SL1640 and SL1680
+Security for CPU, BOOT, and DRM engine    SL1620, SL1640, and SL1680
+MIPI CSI & ISP                            SL1680
+======================================    ==========================
+
+Specific Modules and Features
+=============================
+
++--------------------+-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+| Feature Modules    | Feature Items                                       |  SL1620 | SL1640  | SL1680  | Comment                                              |
++====================+=====================================================+=========+=========+=========+======================================================+
+| GST Audio Pipeline |  GST Audio Pipeline                                 |    Y    |    Y    |    Y    |                                                      |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+ 
+|                    | BT A2DP Audio                                       |   N/A   |    Y    |    Y    |                                                      |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+|                    | PDM MIC Support                                     |    Y    |   N/A   |   N/A   |                                                      |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+|                    | SW Decoding Capability                              |    Y    |    Y    |    Y    | * Supported formats: AAC, MP2, MP3, Vobis, AC3, OPUS |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+|                    | File Playback                                       |    Y    |    Y    |    Y    | * Supported formats: TS, MP3, MP4, Webm              |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+|                    | GST Sample Rate Conversion & Mixing                 |    Y    |    Y    |    Y    | * Limitation on SL1620 audio mixing.                 |
+|                    |                                                     |         |         |         |   Sample Rate conversion is fine.                    |
++--------------------+-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+| GST Video Pipeline | Multi View                                          |   N/A   |   N/A   |    Y    | * MultiView: Camera + Video OR multi Video           |
+|                    +-----------------------------------------------------+---------+---------+---------+                                                      |
+|                    | Video Decode with 2K Wayland Sink                   |    Y    |    Y    |    Y    | * Dual display means the output simultaneously       |
+|                    +-----------------------------------------------------+---------+---------+---------+                                                      |
+|                    | FFMPEG Decode                                       |    Y    |    Y    |    Y    | * Dual display for SL1680 means HDMI-TX + MIPI-DSI   |
+|                    +-----------------------------------------------------+---------+---------+---------+                                                      |
+|                    | V4L2 Decode                                         |   N/A   |    Y    |    Y    | * Dual display for SL1620 means MIPI-DSI + RGB       |
+|                    +-----------------------------------------------------+---------+---------+---------+                                                      |
+|                    | Dual Display                                        |    Y    |   N/A   |    Y    |                                                      |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------|
+|                    | Video Decode with QT Applications                   |    Y    |    Y    |    Y    |                                                      |
++--------------------+-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+| GST AI             | Pose Estimation (with USB Camera)                   |    Y    |    Y    |    Y    |                                                      |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+|                    | Single View AI use case                             |    Y    |    Y    |    Y    |                                                      |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+|                    | Multi View AI user case - with multiple USB cameras |   N/A   |   N/A   |    Y    | * SL680 supports multi-view AI case                  |
+|                    |                                                     |         |         |         | * SL1640/1620 only supports single view AI case      |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+|                    | Multi View AI user case - with USB Camera + Video   |   N/A   |   N/A   |    Y    | * SL680 supports multi-view AI case                  |
+|                    |                                                     |         |         |         | * SL1640/1620 only supports single view AI case      |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+|                    | SyNAP                                               |    Y    |    Y    |    Y    | * supports SyNAP pre-process and sink                |
++--------------------+-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+| DRM-KMS            | Fastlogo with OP-TEE                                |   N/A   |    Y    |    Y    | Fastlogo for SL1680/SL1640                           |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+|                    | EDID parsing                                        |   N/A   |    Y    |    Y    |                                                      |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+|                    | MIPI, HDMI on Astra Machina boards                  |    Y    |    Y    |    Y    | * No HDMI for SL1620                                 |
+|                    |                                                     |         |         |         | * SL1640 supports either HDMI or MIPI output.        |
+|                    |                                                     |         |         |         |                                                      |
+|                    |                                                     |         |         |         |   Default is HDMI, can be changes to MIPI via DTS    |
+|                    |                                                     |         |         |         |                                                      |
++--------------------+-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+| V4L2 ISP           | Single Sensor V4L2 ISP Driver                       |   N/A   |   N/A   |    Y    | * ISP feature is only for SL1680                     |
+|                    +-----------------------------------------------------+---------+---------+---------+                                                      |
+|                    | Support for 4K input and output                     |   N/A   |   N/A   |    Y    | * Known limitation of Downscaling of inputs: YUV420  |
+|                    +-----------------------------------------------------+---------+---------+---------+                                                      |
+|                    | Support for downscaling of the inputs               |   N/A   |   N/A   |    Y    |   SP 10bit and RGB 888                               |
++--------------------+-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+| U-Boot             | General peripherals support                         |    Y    |    Y    |    Y    | * Supports USB2.0 devices                            |
+|                    |                                                     |         |         |         | * Supports USB3.0 host                               |
+|                    |                                                     |         |         |         | * Supports Ethernet                                  |
+|                    |                                                     |         |         |         | * Supports SPI Flash                                 |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+|                    | Boot mode:  from eMMC                               |    Y    |    Y    |    Y    |                                                      |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+|                    | Boot mode:  from SD-CARD                            |    Y    |    Y    |    Y    |                                                      |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+|                    | Image Upgrade                                       |    Y    |    Y    |    Y    | * Supports eMMC image upgrade with USB U-Boot,       |
+|                    |                                                     |         |         |         |                                                      |
+|                    |                                                     |         |         |         |   SPI U-Boot and SU-Boot                             |
+|                    |                                                     |         |         |         |                                                      |
+|                    |                                                     |         |         |         | * Supports SD card image upgrade with SPI U-Boot and |
+|                    |                                                     |         |         |         |                                                      |
+|                    |                                                     |         |         |         |   SU-Boot                                            |
+|                    |                                                     |         |         |         |                                                      |
+|                    |                                                     |         |         |         | * USB U-Boot: image via TFTP and USB target          |
+|                    |                                                     |         |         |         |                                                      |
+|                    |                                                     |         |         |         |   (connected to PC)                                  |
+|                    |                                                     |         |         |         |                                                      |
+|                    |                                                     |         |         |         | * SPI U-Boot: image via TFTP and USB Host            |
+|                    |                                                     |         |         |         |                                                      |
+|                    |                                                     |         |         |         |   (connected to USB Disk)                            |
+|                    |                                                     |         |         |         |                                                      |
+|                    |                                                     |         |         |         | * SU-Boot: image via TFTP and USB Host               |
+|                    |                                                     |         |         |         |                                                      |
+|                    |                                                     |         |         |         |   (connected to USB Disk)                            |
+|                    |                                                     |         |         |         |                                                      |
+|                    |                                                     |         |         |         | * Supports sparse image slices (Yocto will generate  |
+|                    |                                                     |         |         |         |                                                      |
+|                    |                                                     |         |         |         |   sparse image automatically).                       |
+|                    |                                                     |         |         |         |                                                      |
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+|                    | OP-TEE Support                                      |    Y    |    Y    |    Y    |                                                      |
++--------------------+-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+| OP-TEE             | OP-TEE enabled                                      |    Y    |    Y    |    Y    |                                                      |
++--------------------+-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+| WIFI               | WIFI 6 & WIFI 6E                                    |    Y    |    Y    |    Y    | wpa_supplicant 2.10                                  |
++--------------------+-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+| Bluetooth          | Supported                                           |    Y    |    Y    |    Y    |                                                      |
++--------------------+-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
+
+.. _general_modules:
+
+General Modules, Peripherals, and Interfaces Supported
+======================================================
+
++-------------------------------------------------------------------------------------------------------------+
+| General                                                                                                     |
++================================+============================================================================+
+| Kernel                         | Kernel Version 5.15.140                                                    |
++--------------------------------+----------------------------------------------------------------------------+
+| Yocto                          | Kirkstone: 4.0.9                                                           |
++--------------------------------+----------------------------------------------------------------------------+
+| U-Boot                         | SPI U-Boot version: 24.r1.0                                                |
++--------------------------------+----------------------------------------------------------------------------+
+| USB Tool                       | version: 1.0                                                               |
++--------------------------------+----------------------------------------------------------------------------+
+| OP-TEE                         | OP-TEE version: 4.0.0                                                      |
++--------------------------------+----------------------------------------------------------------------------+
+| Gstreamer (GST)                | GST version: 1.22.8                                                        |
++--------------------------------+----------------------------------------------------------------------------+
+
++-------------------------------------------------------------------------------------------------------------+
+| Memory                                                                                                      |
++================================+============================================================================+
+| Memory - DDR                   | SL1620: (16bit or 32bit 2133 Mbps) DDR3 / DDR4 → 1G/2G/4G                  |
+|                                |                                                                            |
+|                                | SL1640: (32bit 3200 Mbps) DDR4 → 2G/4G                                     |
+|                                |                                                                            |
+|                                | SL1680: (64bit or 32bit 3733 Mbps) LPDDR4 → 2G/4G                          |
+|                                |                                                                            |
++--------------------------------+----------------------------------------------------------------------------+
+| Memory - eMMC                  |                                                                            |
++--------------------------------+----------------------------------------------------------------------------+
+
++-------------------------------------------------------------------------------------------------------------+
+| General Peripherals                                                                                         |
++================================+============================================================================+
+| Interrupt                      | GIC                                                                        |
++--------------------------------+----------------------------------------------------------------------------+
+| Clock                          | Controls the system frequency and clock tree distribution                  |
++--------------------------------+----------------------------------------------------------------------------+
+| Timer                          |                                                                            |
++--------------------------------+----------------------------------------------------------------------------+
+| GPIO                           | GPIO is initialized in earlier phase according to hardware design          |
++--------------------------------+----------------------------------------------------------------------------+
+| SDMA                           | Conforms to the DMA engine framework                                       |
++--------------------------------+----------------------------------------------------------------------------+
+| UART                           |                                                                            |
++--------------------------------+----------------------------------------------------------------------------+
+| USB 2.0 (OTG)                  |                                                                            |
++--------------------------------+----------------------------------------------------------------------------+
+| USB 3.0 (Host)                 |                                                                            |
++--------------------------------+----------------------------------------------------------------------------+
+| I2C                            |                                                                            |
++--------------------------------+----------------------------------------------------------------------------+
+| SPI                            |                                                                            |
++--------------------------------+----------------------------------------------------------------------------+
+
++-------------------------------------------------------------------------------------------------------------+
+| Network                                                                                                     |
++================================+============================================================================+
+| Ethernet                       | SL1620: 10 / 100 Mbps                                                      |
+|                                |                                                                            |
+|                                | SL1640: 10 / 100 Mbps                                                      |
+|                                |                                                                            |
+|                                | SL1680: 10 /100 / 1000 Mbps                                                |
+|                                |                                                                            |
++--------------------------------+----------------------------------------------------------------------------+
+| Wireless Connectivity          | Supports  WIFI & BT                                                        |
++--------------------------------+----------------------------------------------------------------------------+
+
++-------------------------------------------------------------------------------------------------------------+
+| GPU and Display                                                                                             |
++================================+============================================================================+
+| GPU                            | * DDK 1.23.1@6404501                                                       |
+|                                |                                                                            |
+|                                | * OpenGL ES 3.2                                                            |
+|                                |                                                                            |
+|                                | * Mesa 22.3.5                                                              |
+|                                |                                                                            |
+|                                | * libdrm 2.4.110                                                           |
+|                                |                                                                            |
+|                                | * Weston 10.0.2                                                            |
+|                                |                                                                            |
++--------------------------------+----------------------------------------------------------------------------+
+| Direct Rendering Manager (DRM) |                                                                            |
+|                                |                                                                            |
+| Display                        |                                                                            |
++--------------------------------+----------------------------------------------------------------------------+
+| RGB Parallel Output            | Supported on SL1620                                                        |
++--------------------------------+----------------------------------------------------------------------------+
+| HDMI-TX                        | Supported on SL1640/SL1680                                                 |
++--------------------------------+----------------------------------------------------------------------------+
+| MIPI-DSI                       | SL1680/SL1640/SL1620. On SL1640 it needs to be enabled via DTS             |
++--------------------------------+----------------------------------------------------------------------------+
+
++-------------------------------------------------------------------------------------------------------------+
+| Camera                                                                                                      |
++================================+============================================================================+
+| MIPI-CSI                       | SL1680                                                                     |
++--------------------------------+----------------------------------------------------------------------------+
+| ISP                            | SL1680                                                                     |
++--------------------------------+----------------------------------------------------------------------------+
+
++-------------------------------------------------------------------------------------------------------------+
+| Audio Interfaces                                                                                            |
++================================+============================================================================+
+| PDM                            | SL1620                                                                     |
++--------------------------------+----------------------------------------------------------------------------+
+| SPDIF                          | None                                                                       |
++--------------------------------+----------------------------------------------------------------------------+
+| I2S                            | SL1680, SL1640, SL1620                                                     |
++--------------------------------+----------------------------------------------------------------------------+
+
+Known Issues and Limitations
+============================
+
+.. note::
+
+    Previous versions of U-Boot are not compatible with the v1.0.0 release. Please ensure that you are using `USB Tool v1.0 <https://github.com/synaptics-astra/usb-tool/releases/tag/v1.0.0>`__ or later when flashing using USB. Or U-Boot 24.r1.0 when updating with SPI. See :ref:`general_modules`
+
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SoC           |  Module             |  ID    | Summary                                                                 |
++===============+=====================+========+=========================================================================+
+| SL1640,SL1680 | Gstreamer Pipeline  | 30188  | Video freeze and process hangs when decoding VP9 stream with Gstreamer  |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1640,SL1680 | Linux Kernel        | 30193  | Failure to allocate memory when encoding 1024x768 (I420) with Gstreamer |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1640,SL1680 | Linux Kernel        | 28970  | Test pattern didn't appear when running "GFX video test"                |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1640,SL1680 | Gstreamer Pipeline  | 30090  | The video plays about 2 secs and then freeze when using "syna-ai-player"|
+|               |                     |        |                                                                         |
+|               | SyNAP Apps          |        | to run the AI test cases. Video decode mode is V4L2.                    |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1680        | Gstreamer Pipeline  | 29662  | Video freezes at about 5s and then console always print error info when |
+|               |                     |        |                                                                         |
+|               |                     |        | doing 4k V4L2 downscale to 1080p/720p/480p with zero copy mode using the|
+|               |                     |        |                                                                         |
+|               |                     |        | playbin command.                                                        |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1640,SL1680 | Linux Kernel        | 29839  | Video freezes after 1 second when decoding H264 stream                  |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1640,SL1680 | SyNAP Framework     | 30091  | Video freezes after 1 second when running AI Synapinfer + Synapoverlay  |
+|               |                     |        |                                                                         |
+|               |                     |        | case Object Detection with Yolo-v8 -->Video                             |
+|               |                     |        |                                                                         |
+|               |                     |        | (WeAreGoingOnBullrun.mp4) -- V4L2                                       |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1640,SL1680 | Linux Kernel        | 30037  | Always show 4 mounted USB devices in /media folder when insert any      |
+|               |                     |        |                                                                         |
+|               |                     |        | number of USB disks.                                                    |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1680        | Gstreamer Pipeline  | 30063  | V4L2 camera output is partially show on MIPI panel amd partially on HDMI|
+|               |                     |        |                                                                         |
+|               |                     |        | TV when using 4K camera (IMX258).                                       |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1640,SL1680 | Gstreamer Pipeline  | 28484  | Video Stutters when playing H264/H265 video with gstreamer on a Wayland |
+|               |                     |        | display.                                                                |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1640,SL1680 | WIFI                | 29036  | Failed to connect AP which used WPA3 security protocol                  |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1640,SL1680 | BT                  | 28984  | BT Remote control doesn't work normally after being paired              |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1680        | ISP                 | 30092  | Camera video flash continuously then goes to a black screen when testing|
+|               |                     |        |                                                                         |
+|               |                     |        | ISP camera(IMX258) in a dark environment.                               |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1680        | Display             | 29500  | Test tool "glesdualtest" does not work during gltest app during dual    |
+|               |                     |        |                                                                         |
+|               |                     |        | display testing.                                                        |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1680        | MIPI DSI            | 29498  | Missing test method for MIPI PIP Video Playback                         |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1680        | Display             | 29513  | Mipi display show abnormal video during run glmark2-es2-drm test        |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1680        | Gstreamer Pipeline  | 30019  | Video stutters seriously when play 4 views with                         |
+|               |                     |        |                                                                         |
+|               |                     |        | "Astra video playback demo" application V4L2 decoding                   |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1680        | Gstreamer Pipeline  | 30019  | Video freezes when doing V4L2 downscaler                                |
+|               |                     |        |                                                                         |
+|               |                     |        | (2K H264 file SRC -> V4L2 Scaler (480p) io_mmu_output_buffer=0 &        |
+|               |                     |        |                                                                         |
+|               |                     |        | io_mmu_capture_buffer=0) in three Instance at same time                 |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1640,SL1680 | Performance         | 29473  | Some cases failed during run Synap NNAPI offline_test with latest models|
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1640,SL1680 | Audio               | 29211  | Fail to play the stream which bit depth is 24 bits with aplay           |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| ALL           | Linux Kernel        | 30180  | The last frame is not getting flushed and stays on the display after    |
+|               |                     |        |                                                                         |
+|               |                     |        | running "glmark2-es2-drm"                                               |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1620        | Fastboot            | 30191  | Fastboot devices don't show Device Serial number                        |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1620        | Gstreamer Pipeline  | 29478  | elephant-dream.webm stream not playing                                  |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1620        | Display             | 29454  | Brightness adjustment in MIPI Panel and TFT panel is not working        |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1620        | Graphics ,MIPI DSI  | 30047  | different mipi connector id , need to change glesdualtest connector id  |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1620        | Audio               | 29228  | while using arecord to record DMIC input with 16 and 24 signed bits,    |
+|               |                     |        |                                                                         |
+|               |                     |        | it shows Sample format is non-available                                 |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1620        | Audio               | 30080  | In Audio Path (Gstreamer) , Audiomixer (multiple audio input mixing)    |
+|               |                     |        |                                                                         |
+|               |                     |        | shows error as " pipeline doesn't want to preroll"                      |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1620        | Display             | 29430  | No fast logo during boot up stage                                       |
++---------------+---------------------+--------+-------------------------------------------------------------------------+
+| SL1620        | Linux Kernel        | 29893  | Observed Horizontal Stride, whenever there is an object movement        |
+|               |                     |        |                                                                         |
+|               |                     |        | during USB Camera Test                                                  |
++---------------+---------------------+--------+-------------------------------------------------------------------------+

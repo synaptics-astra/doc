@@ -1088,14 +1088,21 @@ Driver for Synaptics Processors" when operating in USB Boot mode.
 Running the USB Boot Tool
 """""""""""""""""""""""""
 
-Also included in the Synaptics usb-tool package is the usb_boot user space
-tool. This is the tool which communicates with Astra Machina over USB.
+First download the ``usb_boot`` tool from `GitHub <https://github.com/synaptics-astra/usb-tool>`__
+if you have not done so previously.
+
+.. note::
+
+    Please check the release notes to confirm that you have a compatible version of ``usb_boot``.
+    :doc:`../release_notes/v#release#`
+
+The ``usb_boot`` tool communicates with Astra Machina over USB.
 Each Astra Machina variant will have its own usb_boot directory. Included in each
 directory will be a ``usb_boot`` binary and the ``run`` script used to run it.
 The directory will also contain an images directory which contains all of the
 image files needed to boot the board over USB. This include images which contain
 the USB U-Boot bootloader. 
- 
+
 On Windows, double click on the run.bat file to launch the tool. This
 script will execute the binary using the specific options required for
 Astra Machina variant being used.
@@ -1209,6 +1216,11 @@ Updating the Firmware from SPI
 As described in :ref:`spi_sd_boot`, Astra Machina has an internal SPI flash chip which contains
 the SPI U-Boot bootloader. This allows doing firmware updates without using a USB host system.
 Images can be loaded using an external USB drive or downloaded from a TFTP server on a local network.
+
+.. note::
+
+    Please check the release notes to confirm that you have a compatible version of SPI U-Boot installed
+    on the internal SPI flash. :doc:`../release_notes/v#release#`
 
 Setting up the SPI Boot Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
