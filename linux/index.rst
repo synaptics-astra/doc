@@ -40,7 +40,8 @@ This document covers the components which are used by the Linux OS. For
 instructions on setting up the build environment and creating a Yocto-based
 image for Astra Machina, please see the :doc:`/yocto`.
 
-Specific information about the Astra Machina hardware can be found on the :doc:`/hw/index` page.
+Specific information about the Astra Machina hardware can be found on the :doc:`/hw/index` page
+and source code repositories can be found on the `Synaptics Astra GitHub page <https://github.com/synaptics-astra>`__.
 
 Interfacing with Astra Machina
 ==============================
@@ -367,9 +368,12 @@ container and written to the file /tmp/alsasrc.ogg::
 Camera
 ^^^^^^
 
-Astra Machina supports USB (UVC) cameras with the V4L2 driver stack.
-This stack can be used with Gstreamer to construct pipelines using a
-camera.
+Astra Machina supports USB (UVC) and image sensor cameras using the V4L2 driver stack.
+This stack can be used with Gstreamer to construct pipelines using a camera.
+
+.. note::
+
+    Image sensor cameras are only supported on SL1680 using SL1680's ISP.
 
 To display video captured from a camera to output it to the video sink::
 
@@ -497,7 +501,7 @@ The apps require the following environment variable to be set::
 .. _qml_customization:
 
 Multimedia Demo Customization
-"""""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Both applications use `QML <https://doc.qt.io/qt-6/qmlreference.html>`__ files for their configuration. This allows users to customize the applications.
 Customizations include modifying what videos are used in the application. Since no sample video files are preinstalled on the Astra Machina image,
@@ -575,17 +579,11 @@ SL Processor Wireless Device Physical Interface    Software Information
                                                   
                              (M.2 PCIe / M.2 SDIO)
 ============ =============== ===================== ========================================================
-SL1620       SYNA 43456      M.2 SDIO              - wpa_supplicant v2.10
-                                                   - WIFI driver version: v101.10.478
 SL1620       SYNA 43711      M.2 SDIO              - wpa_supplicant v2.10
                                                    - WIFI driver version: v101.10.478
 SL1640       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.10
                                                    - WIFI driver version: v101.10.478
-SL1640       SYNA 43756E     M.2 PCIe              - wpa_supplicant v2.10
-                                                   - WIFI driver version: v101.10.478
 SL1680       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.10
-                                                   - WIFI driver version: v101.10.478
-SL1680       SYNA 43756E     M.2 PCIe              - wpa_supplicant v2.10
                                                    - WIFI driver version: v101.10.478
 ============ =============== ===================== ========================================================
 
@@ -954,6 +952,8 @@ SPI flash. The SPI flash may be located on the main board of Astra Machina or
 it may be a located on a SPI daughter card which is plugged into the device.
 Once SPI U-Boot is running on the board it can be used to write an image to the eMMC.
 
+`Synaptics U-Boot Source Code <https://github.com/synaptics-astra/boot-u-boot_2019_10/tree/v#release#>`__
+
 .. _spi_sd_boot:
 
 Booting from SPI and SD Cards
@@ -1287,10 +1287,13 @@ The parameter eMMCimg is the name of the image directory on the TFTP server.
     10.10.10.10. Please replace this IP with the IP address of the server
     hosting TFTP.
 
+.. _flash_internal_spi:
+
 Updating Internal SPI Flash Firmware
 ------------------------------------
 
 The internal SPI flash on Astra Machina can also be updated using the methods described above.
+You can find the latest versions of the SPI images on `GitHub <https://github.com/synaptics-astra/spi-u-boot>`__.
 
 Flashing Image from USB Boot
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1306,7 +1309,7 @@ file to the "images" directory in the usb_boot tool's directory.
 
 Then write the image to the SPI flash using the commands::
 
-    => usbload spi_uboot_en.bin 0x10000000
+    => usbload u-boot-astra-v1.0.0.sl1680.rdk.spi.bin 0x10000000
     => spinit;
     => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
 
@@ -1322,7 +1325,7 @@ Details on the how to setup the USB drive are covered in :ref:`flashing_from_usb
 
 Write the image to SPI flash using the following commands::
 
-    => usb start; fatload usb 0 0x10000000 spi_uboot_en.bin;
+    => usb start; fatload usb 0 0x10000000 u-boot-astra-v1.0.0.sl1680.rdk.spi.bin;
     => spinit;
     => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
 
@@ -1340,7 +1343,7 @@ Write the SPI image to the SPI flash from the TFTP server using the command::
 
     => net_init; dhcp;
     => setenv serverip 10.10.10.10;
-    => tftpboot 0x10000000 spi_uboot_en.bin;
+    => tftpboot 0x10000000 u-boot-astra-v1.0.0.sl1680.rdk.spi.bin;
     => spinit;
     => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
 

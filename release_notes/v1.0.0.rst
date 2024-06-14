@@ -156,7 +156,7 @@ Specific Modules and Features
 |                    | V4L2 Decode                                         |   N/A   |    Y    |    Y    | * Dual display for SL1620 means MIPI-DSI + RGB       |
 |                    +-----------------------------------------------------+---------+---------+---------+                                                      |
 |                    | Dual Display                                        |    Y    |   N/A   |    Y    |                                                      |
-|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------|
+|                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
 |                    | Video Decode with QT Applications                   |    Y    |    Y    |    Y    |                                                      |
 +--------------------+-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
 | GST AI             | Pose Estimation (with USB Camera)                   |    Y    |    Y    |    Y    |                                                      |
@@ -242,7 +242,7 @@ General Modules, Peripherals, and Interfaces Supported
 +--------------------------------+----------------------------------------------------------------------------+
 | Yocto                          | Kirkstone: 4.0.9                                                           |
 +--------------------------------+----------------------------------------------------------------------------+
-| U-Boot                         | SPI U-Boot version: 24.r1.0                                                |
+| U-Boot                         | SPI U-Boot version: v1.0.0                                                 |
 +--------------------------------+----------------------------------------------------------------------------+
 | USB Tool                       | version: 1.0                                                               |
 +--------------------------------+----------------------------------------------------------------------------+
@@ -349,7 +349,10 @@ Known Issues and Limitations
 
 .. note::
 
-    Previous versions of U-Boot are not compatible with the v1.0.0 release. Please ensure that you are using `USB Tool v1.0 <https://github.com/synaptics-astra/usb-tool/releases/tag/v1.0.0>`__ or later when flashing using USB. Or U-Boot 24.r1.0 when updating with SPI. See :ref:`general_modules`
+    Previous versions of U-Boot are not compatible with the v1.0.0 release. Please ensure that you are
+    using `USB Tool v1.0 <https://github.com/synaptics-astra/usb-tool/releases/tag/v1.0.0>`__ or later
+    when flashing using USB. Or U-Boot `v1.0.0 <https://github.com/synaptics-astra/spi-u-boot/releases/tag/v1.0.0>`__
+    when updating with internal SPI flash. See :ref:`flash_internal_spi` for instructions on updating the internal SPI flash.
 
 +---------------+---------------------+--------+-------------------------------------------------------------------------+
 | SoC           |  Module             |  ID    | Summary                                                                 |
