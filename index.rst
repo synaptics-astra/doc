@@ -8,6 +8,7 @@ Synaptics ASTRA SDK
    quickstart/index.rst
    linux/index.rst
    yocto.rst
+   subject/index.rst
    hw/index.rst
    release_notes.rst
    private/index*
