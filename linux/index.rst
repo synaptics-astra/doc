@@ -123,7 +123,7 @@ Setting up the Serial Console
 
 The serial console on Astra Machina can be accessed by connecting a USB-TTL adaptor to
 the RX, TX, and GND pins of the 40 pin GPIO connector. USB-TTL adaptors can either be a board
-with jumper wires or an integrated USB cable with separated pins.
+with jumper wires or an integrated USB cable with separated pins. 
 
 =======    =============
 USB TTL    Astra Machina
@@ -132,6 +132,41 @@ GND        6
 RXD        8
 TXD        10
 =======    =============
+
+The following USB-TTL adaptors are officially approved to work with Astra Machina:
+
+`Adafruit USB to UART Debug / Console Cable (CP2102 Driver IC) <https://www.adafruit.com/product/954#technical-details>`_
+
+    +----------------+---------------+-------------------------------------+------------------------------------+
+    | Pin Function   | Color Code    | Astra SL16x0 40-pin Connector       | Astra SL16x0 40-pin Function       |
+    +================+===============+=====================================+====================================+
+    | 5V-Out         | Red           | NC                                  | NC                                 |
+    +----------------+---------------+-------------------------------------+------------------------------------+
+    | TX-Out         | Green         | Pin-10                              | UART0_Rx-In                        |
+    +----------------+---------------+-------------------------------------+------------------------------------+
+    | RX-In          | White         | Pin-8                               | UART0_Tx-Out                       |
+    +----------------+---------------+-------------------------------------+------------------------------------+
+    | GND            | Black         | Pin-6                               | GND                                |
+    +----------------+---------------+-------------------------------------+------------------------------------+
+
+`CenryKay USB to UART Debug / Console Cable (CH340G Driver IC)`
+
+
+    +----------------+---------------+-------------------------------------+------------------------------------+
+    | Pin Function   | Color Code    | Astra SL16x0 40-pin Connector       | Astra SL16x0 40-pin Function       |
+    +================+===============+=====================================+====================================+
+    | 5V-Out         | Red           | NC                                  | NC                                 |
+    +----------------+---------------+-------------------------------------+------------------------------------+
+    | TX-Out         | Green         | Pin-10                              | UART0_Rx-In                        |
+    +----------------+---------------+-------------------------------------+------------------------------------+
+    | RX-In          | White         | Pin-8                               | UART0_Tx-Out                       |
+    +----------------+---------------+-------------------------------------+------------------------------------+
+    | GND            | Black         | Pin-6                               | GND                                |
+    +----------------+---------------+-------------------------------------+------------------------------------+
+
+.. note::
+
+    USB-TTL cables using PL2303 or FT232R driver ICs are not approved parts for use with Astra Machina.
 
 .. figure:: media/usb-ttl-board.png
 
@@ -973,6 +1008,57 @@ SD-Boot jumper is connected the device will boot from the SD card inserted in th
 If no SD card is inserted the SPI U-Boot will boot to the U-Boot prompt "=>". The U-Boot prompt
 can be used to set variables, or flash the eMMC and internal SPI flash.
 
+.. note::
+
+    Booting from SD cards is not supported on SL1620
+
+Generating Bootable SD Card Images
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creating a bootable SD card requires converting an existing image into a format suitable for writing
+to the SD card. You can convert either prebuilt release images or an image you built yourself.
+Run the ``gen_sd.sh`` script from within the image directory. You can find the ``gen_sd.sh`` script
+on `GitHub <https://github.com/synaptics-astra/build/blob/v#release#/tools/bin/gen_sd.sh>`__.
+Click the "Download Raw File" to download the script. The script runs in a Linux environment with the
+``mkfs.ext4``, ``gzip``, ``gdisk``, and ``sgdisk`` utilties installed.
+
+.. figure:: media/download_gen_sd.png
+
+    Downloading gen_sd.sh from GitHub
+
+.. figure:: media/start_gen_sd.png
+
+    Running gen_sd.sh from within the prebuilt V1.0.0 eMMCimg directory
+
+During the conversion ``gen_sd.sh`` will create the new file ``SD.img``. This is the new image file which
+will be written to the SD card.
+
+.. figure:: media/end_gen_sd.png
+
+    After gen_sd.sh completed
+
+Writing Bootable Images to the SD Card
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``SD.img`` file is written to the SD card using the `Balena Etcher <https://etcher.balena.io/>`__ tool.
+Begin by downloading and installing the tool. Then run the tool and follow the steps in the UI to select the image and target device.
+Finally, click the flash button to begin the process.
+
+..  figure:: media/balena_etcher.png
+
+    The start screen of Balena Etcher
+
+.. figure:: media/balena_etcher_flash.png
+
+    Balena Etcher after selecting the image file and target device
+
+After the flashing process completes, the SD card will now be ready to boot Astra Machina.
+
+.. figure:: media/balena_etcher_complete.png
+
+    Balena Etcher after successfully flashinge image to the SD card
+
+
 U-Boot Prompt with SUBoot
 -------------------------
 
@@ -990,7 +1076,7 @@ Updating the Firmware
 On power on, Astra Machina will read the firmware, bootloader, and the
 Linux Kernel from a boot device. The most common boot device is an eMMC
 device on the board. This section will discuss how to write a boot image
-to the eMMC.
+to the eMMC and internal SPI flash.
 
 The Astra System Image
 ----------------------
@@ -1072,6 +1158,11 @@ kernel drivers.
 After downloading and decompressing the USB Boot software package, right
 click on the ``SYNA_WinUSB.inf`` file in the ``Synaptics_WinUSB_Driver``
 directory. Select "Install" from the drop down menu.
+
+.. note::
+
+    Installing the Windows driver requires an account with administative privileges. Please contact
+    your System Administrator if you do not have sufficient privileges.
 
 .. figure:: media/install_driver_win.png
 
@@ -1321,7 +1412,7 @@ Flashing Image from an External USB Drive
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To update the internal SPI flash firmware using an external USB drive, simply copy the image to the drive.
-Details on the how to setup the USB drive are covered in :ref:`flashing_from_usb_drive`.
+The USB drive will need a partition with a Fat32 formatted file system.
 
 Write the image to SPI flash using the following commands::
 
