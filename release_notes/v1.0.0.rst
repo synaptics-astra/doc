@@ -110,6 +110,31 @@ Documentation
 
 For other collaterals please refer to the `Synaptics Customer Portal <https://cp.synaptics.com/>`__.
 
+New Features
+============
+
+===========================  ==========================  ==================================================================
+Feature                      SoC                         Description
+===========================  ==========================  ==================================================================
+OP-TEE                       SL1620, SL1640, and SL1680  All SoCs now use OP-TEE as their TrustZone operating environment.
+V4L2 ISP Support             SL1680                      Added V4L2 support for MIPI-CSI camera modules and the ISP.
+                                                         This feature includes 4K input and output and downscaling inputs.
+initramfs                    SL1620, SL1640, and SL1680  All SoCs now boot the Linux kernel from an initramfs.
+U-Boot Improvements          SL1620, SL1640, and SL1680  U-Boot added support for OP-TEE, flashing sparse images to avoid a
+                                                         limitation with large image files.
+SD Card Boot                 SL1640 and SL1680           Booting from SD Cards is now fully supported.
+Demo Applications            SL1640 and SL1680           New demo applications where added to demonstrate video
+                                                         playback and AI use cases.
+Gstreamer Audio Mixing       SL1620, SL1640, and SL1680  Added support for audio mixing ti gstreamer.
+Gstreamer MultiView          SL1680                      Support displaying video and camera streams.
+Wayland Overlay Plane        SL1620, SL1640, and SL1680  Add Wayland Overlay Plane to all SoCs.
+Gstreamer MultiView AI       SL1680                      Support AI inferencing on multiple streams. Including Video and
+                                                         Camera.
+New Gstreamer SyNAP Plugins  SL1620, SL1640, and SL1680  Add new SyNAP plugins for Gstreamer which and preprocessing
+                                                         support and overlay support.
+EDID Parsing                 SL1640 and SL1680           Add EDID parsing for SL1640 and SL1680
+===========================  ==========================  ==================================================================
+
 SoC Core Feature Summary
 ========================
 
