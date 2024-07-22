@@ -172,6 +172,11 @@ the container.
    command line above.
 
 .. note::
+  If your environment requires a proxy to connect to the internet, please follow these instructions
+  for `Configuring the Docker daemon <https://docs.docker.com/config/daemon/proxy/>`_
+  and `Configuring the Docker client <https://docs.docker.com/network/proxy/#configure-the-docker-client>`_ to use a proxy server.
+
+.. note::
   Synaptics provides a pre-built container at ``ghcr.io/synaptics-astra/crops``  that is automatically downloaded
   when you run the command above but you can also compile from the sources available
   `here <https://github.com/synaptics-astra/crops>`_.
