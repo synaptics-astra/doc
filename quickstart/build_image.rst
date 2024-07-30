@@ -11,7 +11,7 @@ To build a image run the following commands:
 
 1. Start a build environment container::
 
-    $ docker run --rm -it -v $(pwd):$(pwd) ghcr.io/synaptics-astra/crops:#release# --workdir=$(pwd)
+    $ docker run --rm -it -v $(pwd):$(pwd) ghcr.io/synaptics-astra/crops:1.0.0 --workdir=$(pwd)
 
 2. Clone the sources from `GitHub <https://github.com/synaptics-astra/sdk>`_ ::
 
