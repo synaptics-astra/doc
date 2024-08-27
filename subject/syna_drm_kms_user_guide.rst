@@ -379,7 +379,13 @@ MIPI-DSI panel configuration parameters
 
    34. *PIXEL_CLOCK* - Pixel clock frequency for Secondary display in KHz. Make it same as FREQ.
 
-   35. *COMMAND* = Command for initialization in Hex
+   35. *mipirst-gpio* - Reset Gpio for the MIPI.
+
+   36. *power-supply* - External power supply control.
+
+   37. *backlight* - External backlight control. 
+
+   38. *COMMAND* = Command for initialization in Hex
 
       *Format - <CMD> <Payloadlength-n> <BYTE1> <...> <BYTEn>*
 
@@ -561,6 +567,8 @@ Reference entry for the MIPI DSI panel
       *};*
 
    };
+
+Sample configuration for waveshare 7-inch DSI panel: :doc:`waveshare_7inch_dsi-configuration`
 
 TFT Display configuration 
 --------------------------
