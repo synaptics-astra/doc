@@ -171,7 +171,7 @@ Specific Modules and Features
 |                    +-----------------------------------------------------+---------+---------+---------+ * Dual display means the output simultaneously       |
 |                    | HDMI Rx Video Path to Display Sink                  |   N/A   |   N/A   |   N/A   | * Dual display for SL1680 means HDMI-TX + MIPI-DSI   |
 |                    +-----------------------------------------------------+---------+---------+---------+ * Dual display for SL1620 means MIPI-DSI + RGB       |
-|                    | RTSP stream with V4L2 playback                      |    Y    |    Y    |    Y    |                                                      |
+|                    | RTSP stream with V4L2 playback                      |   N/A   |    Y    |    Y    |                                                      |
 |                    +-----------------------------------------------------+---------+---------+---------+                                                      |
 |                    | Multiview RTSP Playback                             |   N/A   |   N/A   |    Y    |                                                      |
 |                    +-----------------------------------------------------+---------+---------+---------+                                                      |
