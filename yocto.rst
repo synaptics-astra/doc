@@ -210,6 +210,11 @@ To build an image execute the following commands::
 
 The resulting image can be found in ``build-${MACHINE}/tmp/deploy/images/${MACHINE}/SYNAIMG/``.
 
+To build an image without multimedia capabilities, build the astra-core image using the command ``bitbake astra-core``.
+
+.. note::
+  The astra-core image is included in v1.2.0 and later releases.
+
 The image can be flashed to an evaluation kit board as described in :ref:`prepare_to_boot`.
 
 After flashing the board, to log in to the board please refer to :ref:`linux_login`.

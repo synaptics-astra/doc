@@ -18,11 +18,11 @@ Connection
 
    **Refer the connection below:**
     
-.. figure:: SL16xx_waveshare_5v_connection.png
+.. figure:: media/SL16xx_waveshare_5v_connection.png
 
 2. Connect the 15-22 pin DSI cable as shown in the below connection.
 
-.. figure:: SL16xx_waveshare_dsi_cable_connection.png
+.. figure:: media/SL16xx_waveshare_dsi_cable_connection.png
 
 Software Configuration
 ======================

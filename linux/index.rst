@@ -290,7 +290,7 @@ plugins available on the system.
     You may need the --no-colors option to disable colors if your terminal does not support colors.
 
 Gstreamer Examples
-^^^^^^^^^^^^^^^^^^
+------------------
 
 The following examples use the gst-launch-1.0 command line program to
 construct a pipeline and begin playing it. The gst-launch-1.0 command
@@ -352,7 +352,7 @@ Wayland socket belonging to the user. The ``WAYLAND_DISPLAY`` variable
 specifies which Wayland compositor to connect to.
 
 KMS Sink
-************
+********
 
 The KMS sink supports displaying video without the need to run a windowing system like Wayland, since it can interface
 directly with Linux DRM devices. (see `GStreamer documentation <https://gstreamer.freedesktop.org/documentation/kms/index.html?gi-language=c>`__ for more details)
@@ -496,6 +496,7 @@ The device file number may vary depending on your configuration. You can use the
 ISP paths.
 
 .. figure:: media/isp-path-devices.png
+    :scale: 75%
 
     ``v4l2-ctl --list-devices`` output with the ISP Path devices highlighted
 
@@ -530,6 +531,99 @@ Multiple RTSP streams can be displayed simultaneously. This example will decode 
         rtspsrc location="rtsp://<user>:<password>@<ip>/stream2" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h265, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_1 \
         rtspsrc location="rtsp://<user>:<password>@<ip>/stream3" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h265, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_2 \
         rtspsrc location="rtsp://<user>:<password>@<ip>/stream4" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h265, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_3
+
+HDMI-RX
+^^^^^^^
+
+SL1680 supports HDMI input streams from external devices (HDMI-RX) using the micro HDMI port on core module. Gstreamer can use the V4L2 interface to process and display
+the video and audio streams received from the external HDMI device.
+
+.. figure:: media/sl1680-hdmi-rx.png
+
+    SL1680 with the HDMI-RX micro HDMI port outlined in red.
+
+HDMI-RX supports the following video formats typical of PC video sources and V4L2 video sources.
+
+Supported Formats
+"""""""""""""""""
+
+Typical PC Video Formats
+************************
+
+======   ================    ==========
+Format   Bits per Channel    Resolution
+======   ================    ==========
+RGB      8, 10, 12 bits      4K60
+YUV422   8, 10, 12 bits      4K60
+YUV444   8, 10, 12 bits      4K60
+======   ================    ==========
+
+V4L2 Video Formats
+******************
+
+======   ==========
+Format   Resolution
+======   ==========
+NV12     4K60
+UYVY     4K60
+======   ==========
+
+Audio Formats
+*************
+
+======== =========== =========
+Channels Sample Rate Bit Depth
+======== =========== =========
+2        48kHz       32 bit
+======== =========== =========
+
+The V4L2 device file number may vary depending on your configuration. You can use the ``v4l2-ctl`` command to find which device files are associated the HDMI-RX device.
+
+.. figure:: media/hdmi-rx-device.png
+    :scale: 75%
+
+    V4L2 HDMI-RX video device file
+
+Use the ``arecord`` command to determine which ALSA capture device is associated with HDMI-RX.
+
+.. figure:: media/hdmi-rx-audio-capture-device.png
+
+    ALSA HDMI-RX audio capture device
+
+Use the ``aplay`` command to determine which ALSA playback device to use to play the captured audio. The following examples will use the speakers associated with teh HDMI sink.
+
+.. figure:: media/sl1680-hdmi-output-device.png
+
+    HDMI audio output device
+
+This example displays a 2K30 stream from an external HDMI device using ``waylandsink``::
+
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=1920,height=1080,fps=30,format=NV12 ! waylandsink fullscreen=true
+
+This example displays a 4K30 stream from an external HDMI device using ``waylandsink``::
+
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,fps=30,format=NV12 ! waylandsink fullscreen=true
+
+This example displays a 4K30 stream from an external HDMI device using ``kmssink``::
+
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,fps=30,format=NV12 !  kmssink driver-name=synaptics plane-id=31
+
+This example displays a 4K30 stream with text overylay using ``waylandsink``::
+
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,fps=30,format=NV12 ! textoverlay text=”Sample Text” ! clockoverlay ! waylandsink fullscreen=true
+
+This example starts a 2K30 stream using ``waylandsink``, then creates a 48K, S32_LE, 2 Channel audio pipeline. The audio will be played on the speakers of the HDMI sink device::
+
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=1920,height=1080,fps=30,format=NV12 ! waylandsink fullscreen=true &
+    gst-launch-1.0 alsasrc device=hw:0,8 ! queue ! audio/x-raw,format=S32LE,rate=48000,channnels=2 ! alsasink device=hw:0,7 sync=false
+
+.. note::
+
+    FPS is set by the source device and should be configured on the source before starting the pipeline.
+
+.. note::
+
+    ``kmssink`` does not support 4K60 output.
 
 Gstreamer Playbin Plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -893,7 +987,7 @@ Client side::
 
 Server side::
 
-    $ iperf -s -i 1 -w 12M -l 1470
+    $ iperf -s -u -i 1 -w 12M -l 1470
 
 Using the Bluetooth A2DP source role
 ------------------------------------

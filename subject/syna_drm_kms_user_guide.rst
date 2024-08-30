@@ -92,26 +92,23 @@ dts configuration template for SL16XX given below:
 *dts* for SL1640 and SL1680
 ---------------------------
 
-   *&drm {*
+::
 
-      *Generic Display configuration*
-
-      *MIPI-DSI Panel configuration*
-
-      *HDMI TX configuration*
-
-   *}*
+   &drm {
+      Generic Display configuration
+      MIPI-DSI Panel configuration
+      HDMI TX configuration
+   }
 
 *dts* for SL1620
 ----------------
 
-   *&drm {*
+::
 
-      *MIPI-DSI Panel configuration*
-
-      *LCDC panel specific configuration*
-
-   *}*
+   &drm {
+      MIPI-DSI Panel configuration
+      LCDC panel specific configuration
+   }
 
 Generic Display Configuration
 -----------------------------
@@ -132,7 +129,7 @@ Generic Display Configuration
    More information on the timing and resolution id are available in
    below file.
 
-   *<linux>/drivers/soc/berlin/modules/avio/vpp/ca/include/vpp_defines.h*
+   ``<linux>/drivers/soc/berlin/modules/avio/vpp/ca/include/vpp_defines.h``
 
    -  **disp1-type:** Type of the Display1 whether it is HDMI or MIPI-DSI.
 
@@ -160,46 +157,38 @@ SL1640/SL1680 Single Display configuration
 
    **Single Display: HDMI Display Mode**
 
-   *&drm {*
+   ::
 
-      *disp-mode = <0>;*
-
-      *disp1-res-id = <24>;*
-
-      *disp1-type = <0>;*
-
-   *};*
+      &drm {
+         disp-mode = <0>;
+         disp1-res-id = <24>;
+         disp1-type = <0>;
+      };
 
    **Single Display mode: MIPI-DSI Display Mode**
 
-   *&drm {*
+   ::
 
-      *disp-mode = <1>;*
-
-      *disp1-res-id = <102>;*
-
-      *disp1-type = <3>;*
-
-   *};*
+      &drm {
+         disp-mode = <1>;
+         disp1-res-id = <102>;
+         disp1-type = <3>;
+      };
 
 SL1680 Dual Display configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
    **Dual Display Mode (HDMI as primary + DSI as secondary)**
 
-   *&drm {*
+   ::
 
-      *disp-mode = <2>;*
-
-      *disp1-res-id = <24>;*
-
-      *disp1-type = <0>;*
-
-      *disp2-res-id = <102>;*
-
-      *disp2-type = <3>;*
-
-   *};*
+      &drm {
+         disp-mode = <2>;
+         disp1-res-id = <24>;
+         disp1-type = <0>;
+         disp2-res-id = <102>;
+         disp2-type = <3>;
+      };
 
    Note:
 
@@ -241,11 +230,11 @@ HDMI configuration
    21 19 26 25 24 61 62 64>.*
 
    Refer below file for resolution indices in
-   *<linux>/drivers/soc/berlin/modules/avio/vpp/ca/include/vpp_defines.h*
+   ``<linux>/drivers/soc/berlin/modules/avio/vpp/ca/include/vpp_defines.h``
 
    If needed, this can be overridden using parameter
    “\ *hdmi_preferred_mode* “, by adding/modifying the same in
-   */etc/modprobe.d/syna_drm.conf*.
+   ``/etc/modprobe.d/syna_drm.conf``.
 
    Example: To override preferred modes as 1080p:
    *hdmi_preferred_mode=1920x1080*
@@ -441,132 +430,81 @@ Reference entry for the MIPI DSI panel
 
    Refer the parameters above for further information on the panel.
 
-   *&drm {*
+   ::
 
-      *…*
+      &drm {
 
-      *dsi_panel {*
+         … 
 
-         *status= "okay";*
+         dsi_panel {
+            status= "okay";
 
-         */\* Reset PIN configuration for the MIPI-DSI if available in the
-         platform \*/*
+            \* Reset PIN configuration for the MIPI-DSI if available in the
+            platform */
 
-         *mipirst-gpio = <&expander0 7 GPIO_ACTIVE_LOW>;*
+            mipirst-gpio = <&expander0 7 GPIO_ACTIVE_LOW>;
+            NO_OF_RESID = <1>;
+            DSI_RES = <102>;
+            ACTIVE_WIDTH = <800>;
+            HFP = <60>;
+            HSYNCWIDTH = <32>;
+            HBP = <60>;
+            ACTIVE_HEIGHT = <1280>;
+            VFP = <16>;
+            VSYNCWIDTH = <2>;
+            VBP = <14>;
+            TYPE = <1>;
+            SCAN = <0>;
+            FRAME_RATE = <9>;
+            FLAG_3D = <0>;
+            FREQ = <75000>;
+            PTS_PER_4 = <6000>;
 
-         *NO_OF_RESID = <1>;*
+            bits_per_pixel = <24>;
+            busformat = <0>;
 
-         *DSI_RES = <102>;*
+            HTOTAL = <952>;
+            Lanes = /bits/ 8 <4>;
+            Vid_mode = /bits/ 8 <2>;
+            virtual_chan = /bits/ 8 <0>;
+            Clk_Lane_Polarity = /bits/ 8 <0>;
+            Data_Lane_Polarity = /bits/ 8 <0>;
+            Recv_ack = /bits/ 8 <0>;
+            Loosely_18 = /bits/ 8 <0>;
+            H_polarity = /bits/ 8 <1>;
+            V_Polarity = /bits/ 8 <1>;
+            Data_Polarity = /bits/ 8 <1>;
+            Eotp_tx = /bits/ 8 <1>;
+            Eotp_rx = /bits/ 8 <0>;
+            non-Continuous_clk = /bits/ 8 <1>;
+            dpi_lp_cmd = /bits/ 8 <1>;
+            Color_coding = /bits/ 8 <5>;
+            Chunks = <0>;
+            Null_Pkt = <0>;
+            Byte_clk = <56250>;
 
-         *ACTIVE_WIDTH = <800>;*
+            VB_MIN = /bits/ 8 <6>;
+            HB_MIN = /bits/ 8 <30>;
+            V_OFF = /bits/ 8 <6>;
+            H_OFF = /bits/ 8 <20>;
+            HB_VOP_OFF = /bits/ 8 <8>;
+            VB_VOP_OFF = /bits/ 8 <3>;
+            HB_BE = /bits/ 8 <7>;
+            VB_BE = /bits/ 8 <2>;
+            VB_FP = /bits/ 8 <2>;
+            HB_FP = /bits/ 8 <10>;
+            PIXEL_CLOCK = <75000>;
 
-         *HFP = <60>;*
+            command = /bits/ 8 <0x39 0x04 0xFF 0x98 0x81 0x03
+                        0x15 0x02 0x01 0x00
+                        …..
+                        …..
+                        0xFF 0xC0 0xD4 0x01 0x00
+                        0x05 0x01 0x29
+                        0xFF 0x10 0x27 0x00 0x00>;
 
-         *HSYNCWIDTH = <32>;*
-
-         *HBP = <60>;*
-
-         *ACTIVE_HEIGHT = <1280>;*
-
-         *VFP = <16>;*
-
-         *VSYNCWIDTH = <2>;*
-
-         *VBP = <14>;*
-
-         *TYPE = <1>;*
-
-         *SCAN = <0>;*
-
-         *FRAME_RATE = <9>;*
-
-         *FLAG_3D = <0>;*
-
-         *FREQ = <75000>;*
-
-         *PTS_PER_4 = <6000>;*
-
-         *bits_per_pixel = <24>;*
-
-         *busformat = <0>;*
-
-         *HTOTAL = <952>;*
-
-         *Lanes = /bits/ 8 <4>;*
-
-         *Vid_mode = /bits/ 8 <2>;*
-
-         *virtual_chan = /bits/ 8 <0>;*
-
-         *Clk_Lane_Polarity = /bits/ 8 <0>;*
-
-         *Data_Lane_Polarity = /bits/ 8 <0>;*
-
-         *Recv_ack = /bits/ 8 <0>;*
-
-         *Loosely_18 = /bits/ 8 <0>;*
-
-         *H_polarity = /bits/ 8 <1>;*
-
-         *V_Polarity = /bits/ 8 <1>;*
-
-         *Data_Polarity = /bits/ 8 <1>;*
-
-         *Eotp_tx = /bits/ 8 <1>;*
-
-         *Eotp_rx = /bits/ 8 <0>;*
-
-         *non-Continuous_clk = /bits/ 8 <1>;*
-
-         *dpi_lp_cmd = /bits/ 8 <1>;*
-
-         *Color_coding = /bits/ 8 <5>;*
-
-         *Chunks = <0>;*
-
-         *Null_Pkt = <0>;*
-
-         *Byte_clk = <56250>;*
-
-         *VB_MIN = /bits/ 8 <6>;*
-
-         *HB_MIN = /bits/ 8 <30>;*
-
-         *V_OFF = /bits/ 8 <6>;*
-
-         *H_OFF = /bits/ 8 <20>;*
-
-         *HB_VOP_OFF = /bits/ 8 <8>;*
-
-         *VB_VOP_OFF = /bits/ 8 <3>;*
-
-         *HB_BE = /bits/ 8 <7>;*
-
-         *VB_BE = /bits/ 8 <2>;*
-
-         *VB_FP = /bits/ 8 <2>;*
-
-         *HB_FP = /bits/ 8 <10>;*
-
-         *PIXEL_CLOCK = <75000>;*
-
-         *command = /bits/ 8 <0x39 0x04 0xFF 0x98 0x81 0x03*
-
-                     *0x15 0x02 0x01 0x00*
-
-                     *…..*
-
-                     *…..*
-
-                     *0xFF 0xC0 0xD4 0x01 0x00*
-
-                     *0x05 0x01 0x29*
-
-                     *0xFF 0x10 0x27 0x00 0x00>;*
-
-      *};*
-
-   };
+         };
+      };
 
 Sample configuration for waveshare 7-inch DSI panel: :doc:`waveshare_7inch_dsi-configuration`
 
@@ -582,123 +520,111 @@ Panel Backlight Configuration
 
 Panel Backlight enable using Linux *defconfig* and *dts.*
 
-   1. External backlight driver-based Panel (Example: TI LP855x part of
-   Panel DC)
+1. External backlight driver-based Panel (Example: TI LP855x part of
+Panel DC)
 
-      i. Enable backlight driver in Linux kernel defconfig.
+   i. Enable backlight driver in Linux kernel defconfig.
 
-         *-CONFIG_BACKLIGHT_CLASS_DEVICE=m*
+   ::
 
-         *+CONFIG_BACKLIGHT_CLASS_DEVICE=y*
+      -CONFIG_BACKLIGHT_CLASS_DEVICE=m
+      +CONFIG_BACKLIGHT_CLASS_DEVICE=y
+      -# CONFIG_BACKLIGHT_LP855X is not set
 
-         *-# CONFIG_BACKLIGHT_LP855X is not set*
+      +CONFIG_BACKLIGHT_LP855X=y
 
-         *+CONFIG_BACKLIGHT_LP855X=y*
+   ii. Create the entry in dts file for backlight driver.
 
-      ii. Create the entry in dts file for backlight driver.
+   ::
 
-         *backlight@2c {*
+      backlight@2c {
+         compatible = "ti, lp8556";
+         reg = <0x2c>;
 
-            *compatible = "ti, lp8556";*
+         bl-name = "lcd-bl";
+         dev-ctrl = /bits/ 8 <0x05>;
+         init-brt = /bits/ 8 <0xFF>;
 
-            *reg = <0x2c>;*
+         pwm-period = /bits/ 8 <0x00>;
 
-            *bl-name = "lcd-bl";*
+         /* CFG2 */
 
-            *dev-ctrl = /bits/ 8 <0x05>;*
+         rom_A2h {
+            rom-addr = /bits/ 8 <0xA2>;
+            rom-val = /bits/ 8 <0x28>;
 
-            *init-brt = /bits/ 8 <0xFF>;*
+      };
 
-            *pwm-period = /bits/ 8 <0x00>;*
+2. Panel using SL16xx SOC PWM to control the backlight.
 
-            */\* CFG2 \*/*
+**Kernel dts:**
 
-            *rom_A2h {*
+Configure the pinmux to support the PWM Backlight configuration in
+the dts file. Below are the details for sample panel and SL1680
+platform.
 
-               *rom-addr = /bits/ 8 <0xA2>;*
+::
 
-               *rom-val = /bits/ 8 <0x28>;*
+   panel0-backlight {
+      compatible = "pwm-backlight";
+      pwms = <&pwm0 1 1000000 0>;
 
-         *};*
+      brightness-levels = <0 4 8 16 32 64 128 255>;
+      default-brightness-level = <6>;
+      enable-gpio = <&expander0 4 GPIO_ACTIVE_HIGH>;
+   };
 
-   2. Panel using SL16xx SOC PWM to control the backlight.
+   pwm1_pmux: pwm1-pmux {
+      groups = "SPI1_SS1n";
+      function = "pwm";
+   }
 
-      **Kernel dts:**
-
-      Configure the pinmux to support the PWM Backlight configuration in
-      the dts file. Below are the details for sample panel and SL1680
-      platform.
-
-      **panel0-backlight** *{*
-
-         *compatible = "pwm-backlight";*
-
-         *pwms = <&\ *\ **pwm0** *1 1000000 0>;*
-
-         *brightness-levels = <0 4 8 16 32 64 128 255>;*
-
-         *default-brightness-level = <6>;*
-
-         **enable-gpio** *=* *<&expander0 4 GPIO_ACTIVE_HIGH>;*
-
-      *};*
-
-      *pwm1_pmux: pwm1-pmux {*
-
-         *groups = "SPI1_SS1n";*
-
-         *function = "pwm";*
-
-      *}*
-
-      *&pwm0 {*
-
-         *pinctrl-names = "default";*
-
-         *pinctrl-0 = <&pwm1_pmux>;*
-
-         *status = "okay";*
-
-      *};*
+   &pwm0 {
+      pinctrl-names = "default";
+      pinctrl-0 = <&pwm1_pmux>;
+      status = "okay";
+   };
 
 SYNA DRM/KMS driver testing
 ===========================
 
-   Upon SL1XXX platform boot-up, display comes up with Weston desktop by
-   default.
+Upon SL1XXX platform boot-up, display comes up with Weston desktop by
+default.
 
-   To execute sample test application such as modetest, disable Weston
-   using below command.
+To execute sample test application such as ``modetest``, disable Weston
+using below command.
 
-   *systemctl stop Weston*
+::
 
-   *modetest* is a tool provided by *libdrm* library and is available as
-   part of the SDK release/image (*/usr/local/bin/modetest*)
+   systemctl stop Weston
 
-   Following are some of the tasks performed with *modetest*
+``modetest`` is a tool provided by ``libdrm`` library and is available as
+part of the SDK release/image (``/usr/local/bin/modetest``)
 
-   -  List all display capabilities: CRTCs, encoders & connectors (DP,
-      HDMI, DSI ...), planes, modes...
+Following are some of the tasks performed with ``modetest``
 
-   -  Perform basic tests: display a test pattern, display 2 layers,
-      perform a *vsync* test.
+-  List all display capabilities: CRTCs, encoders & connectors (DP,
+   HDMI, DSI ...), planes, modes...
 
-   -  Specify the video mode: resolution and *refreshrate*.
+-  Perform basic tests: display a test pattern, display 2 layers,
+   perform a *vsync* test.
 
-..
+-  Specify the video mode: resolution and *refreshrate*.
 
-   Below is the syntax.
+Below is the syntax.::
 
-   *modetest -M synaptics -s <connector_id> [,
-   <connector_id>][@<crtc_id>]:[#<mode index>]<mode>[-<vrefresh>][@<format>]*
+   modetest -M synaptics -s <connector_id> [,
+   <connector_id>][@<crtc_id>]:[#<mode index>]<mode>[-<vrefresh>][@<format>]
 
-   Above application with the syntax provides the frame to Primary
-   plane.
+Above application with the syntax provides the frame to Primary
+plane.
 
 To list the connector, CRTC and plane information for the platform,
 below command helps.
 
-   *modetest -M synaptics*
+::
+
+   modetest -M synaptics
 
 SL1680 Display
 ---------------
@@ -707,236 +633,153 @@ SL1680, default configuration provides Encoders – 2, connectors – 2,
 
 planes – 4 (MAIN, PIP, GFX1 and GFX2)
 
-   Sample output of command **modetest -M synaptics** is as below:
+Sample output of command ``modetest -M synaptics`` is as below:
+
+::
+
+   Encoders:
+   id      crtc    type    possible crtcs  possible clones
+   37      34      TMDS    0x00000001      0x00000001
+   39      35      DPI     0x00000002      0x00000002
+
+   Connectors:
+   id      encoder status          name            size (mm)       modes   encoders
+   36      37      connected       HDMI-A-1        1100x620                7       37
+   modes:
+         index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot
+   #0 1920x1080 60.00 1920 2008 2052 2200 1080 1084 1089 1125 148500 flags: phsync, pvsync; type: preferred, driver
+   #1 3840x2160 30.00 3840 4016 4104 4400 2160 2168 2178 2250 297000 flags: phsync, pvsync; type: driver
+   #2 1920x1080 50.00 1920 2448 2492 2640 1080 1084 1089 1125 148500 flags: phsync, pvsync; type: driver
+   #3 1920x1080 30.00 1920 2008 2052 2200 1080 1084 1089 1125 74250 flags: phsync, pvsync; type: driver
+   #4 1920x1080 25.00 1920 2448 2492 2640 1080 1084 1089 1125 74250 flags: phsync, pvsync; type: driver
+   #5 1920x1080 24.00 1920 2558 2602 2750 1080 1084 1089 1125 74250 flags: phsync, pvsync; type: driver
+   #6 1280x720 60.00 1280 1390 1430 1650 720 725 730 750 74250 flags: phsync, pvsync; type: driver
+   props:
+         1 EDID:
+                  flags: immutable blob
+                  blobs:
+
+                  value:
+                           00ffffffffffff00593a181001010101
+                           00190103806e3e782afe2dab4f47a627
+                           0f474a200000d1c00101010101010101
+                           01010101010104740030f2705a80b058
+                           8a0048684200001e023a801871382d40
+                           582c450048684200001e000000fc0050
+                           35302d43310a202020202020000000fd
+                           00174c0f8c26000a2020202020200173
+                           02034571535f645d625e631022201f21
+                           05041303021112013257060000000000
+                           0000000000090707150750830100006f
+                           030c005000383ca029290060010304e5
+                           0e616660650000000000000000000000
+                           00000000000000000000000000000000
+                           00000000000000000000000000000000
+                           00000000000000000000000000000027
+         2 DPMS:
+                  flags: enum
+                  enums: On=0 Standby=1 Suspend=2 Off=3
+                  value: 0
+         5 link-status:
+                  flags: enum
+                  enums: Good=0 Bad=1
+                  value: 0
+         6 non-desktop:
+                  flags: immutable range
+                  values: 0 1
+                  value: 0
+         4 TILE:
+                  flags: immutable blob
+                  blobs:
+
+                  value:
+   38      39      connected       DSI-1           0x0             1       39
+   modes:
+         index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot
+   #0 800x1280 60.05 800 860 892 952 1280 1296 1298 1312 75000 flags: ; type: preferred, driver
+   props:
+         1 EDID:
+                  flags: immutable blob
+                  blobs:
+
+                  value:
+         2 DPMS:
+                  flags: enum
+                  enums: On=0 Standby=1 Suspend=2 Off=3
+                  value: 0
+         5 link-status:
+                  flags: enum
+                  enums: Good=0 Bad=1
+                  value: 0
+         6 non-desktop:
+                  flags: immutable range
+                  values: 0 1
+                  value: 0
+         4 TILE:
+                  flags: immutable blob
+                  blobs:
+
+                  value:
+
+   CRTCs:
+   id      fb      pos     size
+   34      42      (0,0)   (1920x1080)
+   #0 1920x1080 60.00 1920 2008 2052 2200 1080 1084 1089 1125 148500 flags: phsync, pvsync; type: preferred, driver
+   props:
+         24 VRR_ENABLED:
+                  flags: range
+                  values: 0 1
+                  value: 0
+   35      43      (0,0)   (800x1280)
+   #0 800x1280 60.05 800 860 892 952 1280 1296 1298 1312 75000 flags: ; type: preferred, driver
+   props:
+         24 VRR_ENABLED:
+                  flags: range
+                  values: 0 1
+                  value: 0
+
+   Planes:
+   id      crtc    fb      CRTC x,y        x,y     gamma size      possible crtcs
+   31      0       0       0,0             0,0     0               0x00000001
+   formats: NV12 NV21 UYVY VYUY YUYV YVYU
+   props:
+         8 type:
+                  flags: immutable enum
+                  enums: Overlay=0 Primary=1 Cursor=2
+                  value: 0
+   32      35      43      0,0             0,0     0               0x00000002
+   formats: XR24 AR24 XB24 AB24 NV12 NV21
+   props:
+         8 type:
+                  flags: immutable enum
+                  enums: Overlay=0 Primary=1 Cursor=2
+                  value: 1
+   33      34      42      0,0             0,0     0               0x00000001
+   formats: XR24 AR24 XB24 AB24
+   props:
+         8 type:
+                  flags: immutable enum
+                  enums: Overlay=0 Primary=1 Cursor=2
+                  value: 1
+
+   Frame buffers:
+   id      size    pitch
 
-   **Encoders**\ *:*
-
-   *id crtc type possible crtcs possible clones*
-
-   *38 0 TMDS 0x00000001 0x00000001*
-
-   *40 0 DPI 0x00000002 0x00000002*
-
-   **Connectors**\ *:*
-
-   *id encoder status name size (mm) modes encoders*
-
-   *37 0 connected HDMI-A-1 0x0 2 38*
-
-      *modes:*
-
-         *index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot*
-
-      *#0 1920x1080 60.00 1920 2008 2052 2200 1080 1084 1089 1125 148500
-      flags: nhsync, nvsync; type: preferred, driver*
-
-      *#1 1280x720 60.00 1280 1390 1430 1650 720 725 730 750 74250 flags:
-      phsync, pvsync; type: driver*
-
-      *props:*
-
-         *1 EDID:*
-
-            *flags: immutable blob*
-
-            *blobs:*
-
-            *value:*
-
-         *2 DPMS:*
-
-            *flags: enum*
-
-            *enums: On=0 Standby=1 Suspend=2 Off=3*
-
-            *value: 3*
-
-      *5 link-status:*
-
-         *flags: enum*
-
-         *enums: Good=0 Bad=1*
-
-         *value: 0*
-
-      *6 non-desktop:*
-
-         *flags: immutable range*
-
-         *values: 0 1*
-
-         *value: 0*
-
-      *4 TILE:*
-
-         *flags: immutable blob*
-
-      *blobs:*
-
-      *value:*
-
-   *39 0 connected DSI-1 0x0 1 40*
-
-      *modes:*
-
-         *index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot*
-
-         *#0 800x1280 60.05 800 860 892 952 1280 1296 1298 1312 75000 flags: ;
-         type: preferred, driver*
-
-      *props:*
-
-         *1 EDID:*
-
-            *flags: immutable blob*
-
-            *blobs:*
-
-            *value:*
-
-         *2 DPMS:*
-
-            *flags: enum*
-
-            *enums: On=0 Standby=1 Suspend=2 Off=3*
-
-            *value: 3*
-
-         *5 link-status:*
-
-            *flags: enum*
-
-            *enums: Good=0 Bad=1*
-
-            *value: 0*
-
-         *6 non-desktop:*
-
-            *flags: immutable range*
-
-            *values: 0 1*
-
-            *value: 0*
-
-         *4 TILE:*
-
-            *flags: immutable blob*
-
-            *blobs:*
-
-            *value:*
-
-      **CRTCs**\ *:*
-
-      *id fb pos size*
-
-      *35 0 (0,0) (0x0)*
-
-      *#0 nan 0 0 0 0 0 0 0 0 0 flags: ; type:*
-
-      *props:*
-
-         *24 VRR_ENABLED:*
-
-            *flags: range*
-
-            *values: 0 1*
-
-            *value: 0*
-
-   *36 0 (0,0) (0x0)*
-
-      *#0 nan 0 0 0 0 0 0 0 0 0 flags: ; type:*
-
-      *props:*
-
-         *24 VRR_ENABLED:*
-
-            *flags: range*
-
-            *values: 0 1*
-
-            *value: 0*
-
-      *Planes:*
-
-      *id crtc fb CRTC x,y x,y gamma size possible crtcs*
-
-      *31 0 0 0,0 0,0 0 0x00000003*
-
-         *formats: NV12 NV21 UYVY VYUY YUYV YVYU*
-
-         *props:*
-
-            *8 type:*
-
-               *flags: immutable enum*
-
-               *enums: Overlay=0 Primary=1 Cursor=2*
-
-               *value: 0*
-
-      *32 0 0 0,0 0,0 0 0x00000003*
-
-         *formats: XR24 AR24 XB24 AB24 NV12 NV21*
-
-         *props:*
-
-            *8 type:*
-
-            *flags: immutable enum*
-
-            *enums: Overlay=0 Primary=1 Cursor=2*
-
-            *value: 1*
-
-      *33 0 0 0,0 0,0 0 0x00000003*
-
-         *formats: XR24 AR24 XB24 AB24*
-
-      *props:*
-
-         *8 type:*
-
-            *flags: immutable enum*
-
-            *enums: Overlay=0 Primary=1 Cursor=2*
-
-            *value: 1*
-
-      *34 0 0 0,0 0,0 0 0x00000003*
-
-         *formats: XR24 AR24 XB24 AB24*
-
-         *props:*
-
-            *8 type:*
-
-            *flags: immutable enum*
-
-            *enums: Overlay=0 Primary=1 Cursor=2*
-
-            *value: 0*
-
-      *Frame buffers:*
-
-         *id size pitch*
 
 Single Display Mode (HDMI only)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  Push frame to GFX1 plane using below modetest command.
 
-..
+   ::
 
-   *modetest -M synaptics -s 37@35:1920x1080@AR24*
+      modetest -M synaptics -s 37@35:1920x1080@AR24
 
 -  Push frame to both GFX1 and PIP plane using below modetest command.
 
-..
+   ::
 
-   *modetest -M synaptics -s 37@35:1920x1080@AR24 -P
-   32@37:1920x1080@AR24*
+      modetest -M synaptics -s 37@35:1920x1080@AR24 -P 32@37:1920x1080@AR24
 
 Dual Display Mode (HDMI + MIPI-DSI)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -944,16 +787,16 @@ Dual Display Mode (HDMI + MIPI-DSI)
 -  Push frame to GFX1 plane (Display on HDMI) using below modetest
    command.
 
-..
+   ::
 
-   *modetest -M synaptics -s 37@35:1920x1080@AR24*
+      modetest -M synaptics -s 37@35:1920x1080@AR24
 
 -  Push frame to PIP plane (Display on DSI) using below modetest
    command.
 
-..
+   ::
 
-   *modetest -M synaptics -s 39@36:800x1280@AR24*
+      modetest -M synaptics -s 39@36:800x1280@AR24
 
 SL1640 Display
 --------------
@@ -966,76 +809,64 @@ Single Display (HDMI only)
 
 -  Push frame to GFX1 plane using below modetest command.
 
-..
+   ::
 
-   *modetest -M synaptics -s 36@35:1920x1080@AR24*
+      modetest -M synaptics -s 36@35:1920x1080@AR24
 
 Single Display (MIPI-DSI only)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  Push frame to GFX1 plane using below modetest command.
 
-..
+   ::
 
-   *modetest -M synaptics -s 36@35:800x1280@AR24*
+      modetest -M synaptics -s 36@35:800x1280@AR24
 
 SL1620 Display
 ---------------
 
    Default list of connector/mode details in SL1620 is as below:
 
-   *Encoders:*
+::
 
-   *id crtc type possible crtcs possible clones*
+      Encoders:
+      id crtc type possible crtcs possible clones
+      35 0 DPI 0x00000001 0x00000001
+      37 0 DSI 0x00000002 0x00000002
 
-   *35 0 DPI 0x00000001 0x00000001*
+      Connectors:
+      id encoder status name size (mm) modes encoders
+      36 0 connected DPI-1 0x0 1 35
+      modes:
+         index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot
+      #0 800x480 59.72 800 1010 1012 1058 480 502 504 527 33300 flags: ;
+      type: preferred, driver
+      …
+      …
 
-   *37 0 DSI 0x00000002 0x00000002*
+      38 0 connected DPI-2 0x0 1 37
+      modes:
+         index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot
 
-   *Connectors:*
-
-   *id encoder status name size (mm) modes encoders*
-
-   *36 0 connected DPI-1 0x0 1 35*
-
-   *modes:*
-
-      *index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot*
-
-   *#0 800x480 59.72 800 1010 1012 1058 480 502 504 527 33300 flags: ;
-   type: preferred, driver*
-
-   *…*
-
-   *…*
-
-   *38 0 connected DPI-2 0x0 1 37*
-
-   *modes:*
-
-      *index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot*
-
-   *#0 800x1280 60.05 800 860 892 952 1280 1296 1298 1312 75000 flags: ;
-   type: preferred, driver*
-
-   *…*
-
-   *…*
+      #0 800x1280 60.05 800 860 892 952 1280 1296 1298 1312 75000 flags: ;
+      type: preferred, driver
+      …
+      …
 
 TFT Display
 ^^^^^^^^^^^
 
 -  Push frame to TFT display using below *modetest* command.
 
-..
+   ::
 
-   *modetest -M synaptics -s 36@33:800x480@AR24*
+      modetest -M synaptics -s 36@33:800x480@AR24
 
 MIPI-DSI Display
 ^^^^^^^^^^^^^^^^
 
 -  Push frame to MIPI-DSI display using below *modetest* command.
 
-..
+   ::
 
-   *modetest -M synaptics -s 38@34:800x1280@AR24*
+      modetest -M synaptics -s 38@34:800x1280@AR24
