@@ -1,5 +1,5 @@
 ********************
-Release Notes v1.2.0
+Release Notes v1.3.0
 ********************
 
 .. highlight:: console
@@ -12,7 +12,7 @@ AI-native, multi-modal SoCs optimized for consumer, enterprise, and industrial I
 equipped with hardware accelerators for edge inferencing, security, graphics, vision, and audio, and offer
 out-of-the-box functionality with Synaptics' connectivity solutions.
 
-Astra (v1.2.0) GA Release is a unified software development kit supporting the SL-Series of MPUs.
+Astra (v1.3.0) GA Release is a unified software development kit supporting the SL-Series of MPUs.
 
 The high-level components included in this SDK are described below:
 
@@ -95,7 +95,7 @@ Images and Toolchains
 SDK
 ^^^
 
-`<https://github.com/synaptics-astra/sdk/tree/v1.2.0>`__
+`<https://github.com/synaptics-astra/sdk/tree/v1.3.0>`__
 
 Documentation
 ^^^^^^^^^^^^^
@@ -119,26 +119,22 @@ Common New Features
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
 | Feature                     | SoC                      | Description                                                       |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
-| OpenCV                      | All                      | Added support for the OpenCV library                              |
+| Gstreamer GLVideoMixer      | All                      | Support using glvideomixer plugin to decode and display several   |
+|                             |                          | video streams at once.                                            |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Weston Default Display      | All                      | Supports setting the default display in which weston clients      |
-|                             |                          | appear at launch for dual display configurations                  |
+| Fastlogo with UI on MIPI    | All                      | Add support for displaying the Fastlogo UI on MIPI displays.      |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Gstreamer AI Overlay        | All                      | Optimize the drawing in the gstsynap overlay component            |
-| optimizations               |                          |                                                                   |
+| DSI to HDMI                 | All                      | Support converting DSI to HDMI. SL1640 / SL1680 / SL1620 Rev A    |
+|                             |                          |                                                                   |
+|                             |                          | require external adapter board. SL1620 Rev B / C requires a patch.|
+|                             |                          |                                                                   |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Support Multiple Memory     | All                      | Add multiple memory layouts for different DDR configurations      |
-| Layouts                     |                          | SL1620: 1GB,2GB,4GB SL1640/SL1680: 2GB,4GB                        |
+| Vulkan Support              | All                      | Add support for the Vulkan runtime.                               |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Increase System Memory      | All                      | Optimize the memory layouts to provide more system memory         |
+| Open OP-TEE source code     | All                      | OP-TEE and TA source code is now publicly available.              |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Auto resize of home         | All                      | The home partition will be resized on first boot to use any       |
-| partition on eMMC           |                          | remaining space on the eMMC                                       |
-+-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Add hostapd                 | All                      | Add hostapd to the astra-media image                              |
-+-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Support Waveshare MIPI DSI  | All                      | Add support for the using the Waveshare MIPI DSI Panel for RPi5   |
-| Panel                       |                          | with Astra Machina                                                |
+| DDR Memory Layout           | All                      | DDR memory layouts can now be customized.                         |
+| Customization               |                          |                                                                   |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
 
 SL1620 New Features
@@ -147,29 +143,15 @@ SL1620 New Features
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
 | Feature                     | SoC                      | Description                                                       |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
-| 1 GB DDR x16 Support        | SL1620                   | Added support for 1G DDR4 x 16 support                            |
-+-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Suspend to RAM              | SL1620                   | Support Suspend to RAM (S3) Power State                           |
+| Current Sensor Support      | SL1620                   | Adds support for the current sensor included with SL1620 RevD and |
+|                             |                          | newer boards.                                                     |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
 
 SL1640 New Features
 -------------------
 
-+-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Feature                     | SoC                      | Description                                                       |
-+-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Fastlogo with UI            | SL1640 and SL1680        | Support displaying a logo on boot                                 |
-+-----------------------------+--------------------------+-------------------------------------------------------------------+
-| VCORE DVFS Support          | SL1640                   | Add support for dynamic voltage and frequency scaling on VCORE    |
-+-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Framebuffer Console Support | SL1640 and SL1680        | Display console messages to Video output                          |
-+-----------------------------+--------------------------+-------------------------------------------------------------------+
-| HDMI Hot Plug Detect and    | SL1640 and SL1680        | Support HDMI Hot Plug Detect and support Dynamic Resolution Change|
-| Dynamic Resolution Change   |                          |                                                                   |
-+-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Current Sensor Support      | SL1640 and SL1680        | Adds support for the current sensor included with SL1640 RevB and |
-|                             |                          | SL1680 RevC and newer boards                                      |
-+-----------------------------+--------------------------+-------------------------------------------------------------------+
+*No SL1640 specific features were added in this release.*
+
 
 SL1680 New Features
 -------------------
@@ -177,35 +159,18 @@ SL1680 New Features
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
 | Feature                     | SoC                      | Description                                                       |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
-| HDMI-RX                     | SL1680                   | Add support for HDMI-RX                                           |
-|                             |                          +-------------------------------------------------------------------+
-|                             |                          | - 4K Support                                                      |
-|                             |                          | - Add OP-TEE based DHUB TA                                        |
-|                             |                          | - Support all HDMI-RX formats at 2K resolution                    |
-|                             |                          | - Add HDMI-RX driver which supports 2K resolution at 60 fps       |
-|                             |                          | - Add EDID Support for HDMI-RX                                    |
-|                             |                          | - Add support for VIP Scalar                                      |
-|                             |                          | - Support YUYV and NV12 formats with VIP output                   |
-|                             |                          | - Support RGB,YUV444/422/420 – 12/10/8 bit input                  |
-|                             |                          | - Support wayland and kms sinks with Gstreamer                    |
+| Gstreamer Dual Display      | SL1680                   | On dual display configurations gstreamer now supports displaying  |
+|                             |                          | to two sinks simultaneously.                                      |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Gstreamer HDMI-RX Video     | SL1680                   | Support outputting HDMI-RX video to display sink                  |
+| Gstreamer Multistream AI    | SL1680                   | Support 4x1080p multi stream decoding with AI inferencing         |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Gstreamer HDMI-RX Audio     | SL1680                   | Support Capturing Audio Through HDMI-RX with Gstreamer            |
+| ISP Tuning Tool             | SL1680                   | Add the tool used for ISP sensor tuning to the filesystem.        |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
-| ISP performance             | SL1680                   | Improve ISP performance in low light environments                 |
+| Support OV5647 Sensor       | SL1680                   | Add support for the OV5647 image sensor.                          |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
-| ISP Format Support          | SL1680                   | Add support for Bayer and RGB formats                             |
+| Improve ISP Format Support  | SL1680                   | Improve support for for Bayer and RGB formats.                    |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Fastlogo with UI            | SL1640 and SL1680        | Support displaying a logo on boot                                 |
-+-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Framebuffer Console Support | SL1640 and SL1680        | Display console messages to Video output                          |
-+-----------------------------+--------------------------+-------------------------------------------------------------------+
-| HDMI Hot Plug Detect and    | SL1640 and SL1680        | Support HDMI Hot Plug Detect and support Dynamic Resolution Change|
-| Dynamic Resolution Change   |                          |                                                                   |
-+-----------------------------+--------------------------+-------------------------------------------------------------------+
-| Current Sensor Support      | SL1640 and SL1680        | Adds support for the current sensor included with SL1640 RevB and |
-|                             |                          | SL1680 RevC and newer boards                                      |
+| Cropping in ISP Down Scaler | SL1680                   | Add support for cropping to the ISP Down Scalar.                  |
 +-----------------------------+--------------------------+-------------------------------------------------------------------+
 
 SoC Core Feature Summary
@@ -306,14 +271,15 @@ Specific Modules and Features
 |                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
 |                    | Gstreamer v4l2src pipeline to Display               |   N/A   |   N/A   |    Y    |                                                      |
 +--------------------+-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
-| DRM-KMS            | Fastlogo with OP-TEE                                |   N/A   |    Y    |    Y    | Fastlogo for SL1680/SL1640                           |
+| DRM-KMS            | Fastlogo with OP-TEE                                |    Y    |    Y    |    Y    | Supports both HDMI and MIPI                          |
 |                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
 |                    | HDMI Hot Plug Detect and Dynamic Resolution Change  |   N/A   |    Y    |    Y    |                                                      |
 |                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
 |                    | EDID parsing                                        |   N/A   |    Y    |    Y    |                                                      |
 |                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
-|                    | MIPI, HDMI on Astra Machina boards                  |    Y    |    Y    |    Y    | - No HDMI for SL1620                                 |
-|                    |                                                     |         |         |         | - SL1640 supports either HDMI or MIPI output.        |
+|                    | MIPI, HDMI on Astra Machina boards                  |    Y    |    Y    |    Y    | - SL1620 /SL1640 supports either HDMI or MIPI output.|
+|                    |                                                     |         |         |         |                                                      |
+|                    |                                                     |         |         |         | - SL1680 supports HDMI and MIPI simultaneously.      |
 |                    |                                                     |         |         |         |                                                      |
 |                    |                                                     |         |         |         |   Default is HDMI, can be changes to MIPI via DTS    |
 |                    |                                                     |         |         |         |                                                      |
@@ -324,13 +290,17 @@ Specific Modules and Features
 |                    +-----------------------------------------------------+---------+---------+---------+                                                      |
 |                    | Support for downscaling of the inputs               |   N/A   |   N/A   |    Y    |   SP 10bit and RGB 888                               |
 |                    +-----------------------------------------------------+---------+---------+---------+                                                      |
+|                    | Support cropping in ISP down scaler                 |   N/A   |   N/A   |    Y    |                                                      |
+|                    +-----------------------------------------------------+---------+---------+---------+                                                      |
 |                    | Supports Bayer and RGB formats                      |   N/A   |   N/A   |    Y    |                                                      |
 +--------------------+-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
 | U-Boot             | SL1620 EMMC HS400 support                           |    Y    |   N/A   |   N/A   |                                                      |
 |                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
 |                    | SL1620 1G DDR4 x 16 support                         |    Y    |   N/A   |   N/A   |                                                      |
 |                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
-|                    | VCPU DVFS Support                                   |    Y    |    Y    |    Y    |                                                      |
+|                    | DVFS Support                                        |    Y    |    Y    |    Y    | VCPU DVFS can be supported on SL1620/SL1640/SL1680   |
+|                    |                                                     |         |         |         |                                                      |
+|                    |                                                     |         |         |         | VCORE DVFS is only supported on SL1640               |
 |                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
 |                    | U-BOOT v1.1.0                                       |    Y    |    Y    |    Y    | Fastboot:                                            |
 |                    |                                                     |         |         |         |   - Add "oem run" to support all U-Boot commands     |
@@ -346,7 +316,7 @@ Specific Modules and Features
 |                    |                                                     |         |         |         | - Supports Ethernet                                  |
 |                    |                                                     |         |         |         | - Supports SPI Flash                                 |
 |                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
-|                    | Boot mode:  from eMMC                               |    Y    |    Y    |    Y    |                                                      |
+|                    | Boot mode:  from eMMC                               |    Y    |    Y    |    Y    | - Support eMMC HS400 mode                            |
 |                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
 |                    | Boot mode:  from SD-CARD                            |    Y    |    Y    |    Y    |                                                      |
 |                    +-----------------------------------------------------+---------+---------+---------+------------------------------------------------------+
@@ -398,7 +368,7 @@ General Modules, Peripherals, and Interfaces Supported
 +--------------------------------+----------------------------------------------------------------------------+
 | Yocto                          | Kirkstone: 4.0.17                                                          |
 +--------------------------------+----------------------------------------------------------------------------+
-| U-Boot                         | SPI U-Boot version: v1.1.0                                                 |
+| U-Boot                         | SPI U-Boot version: v1.1.1                                                 |
 +--------------------------------+----------------------------------------------------------------------------+
 | USB Tool                       | version: 1.1.0                                                             |
 +--------------------------------+----------------------------------------------------------------------------+
@@ -417,7 +387,7 @@ General Modules, Peripherals, and Interfaces Supported
 |                                | SL1680: (64bit or 32bit 3733 Mbps) LPDDR4 → 2G/4G                          |
 |                                |                                                                            |
 +--------------------------------+----------------------------------------------------------------------------+
-| Memory - eMMC                  |                                                                            |
+| Memory - eMMC                  | up to 32GB                                                                 |
 +--------------------------------+----------------------------------------------------------------------------+
 
 +-------------------------------------------------------------------------------------------------------------+
@@ -477,7 +447,7 @@ General Modules, Peripherals, and Interfaces Supported
 +--------------------------------+----------------------------------------------------------------------------+
 | RGB Parallel Output            | Supported on SL1620                                                        |
 +--------------------------------+----------------------------------------------------------------------------+
-| HDMI-TX                        | Supported on SL1640/SL1680                                                 |
+| HDMI-TX                        | Supported on SL1620/SL1640/SL1680                                          |
 +--------------------------------+----------------------------------------------------------------------------+
 | HDMI-RX                        | Supported on SL1680                                                        |
 +--------------------------------+----------------------------------------------------------------------------+
@@ -505,14 +475,14 @@ General Modules, Peripherals, and Interfaces Supported
 Supported Camera Modules
 ------------------------
 
-=======  =======================================================================================   ==========  ======================================= ================
-Sensor   Module                                                                                    Interface   Adapter Board                           Patches Required
-=======  =======================================================================================   ==========  ======================================= ================
+=======  =======================================================================================   ==========  ======================================= ===================
+Sensor   Module                                                                                    Interface   Adapter Board                           DTS Update Required
+=======  =======================================================================================   ==========  ======================================= ===================
 IMX258   Synaptics IMX258 Camera Module                                                            MIPI-CSI 0  Synaptics SL1680 MIPI CSI Adaptor Board No
 IMX415   Synaptics IMX415 Camera Module                                                            MIPI-CSI 0  Synaptics SL1680 MIPI CSI Adaptor Board No
 OV5647   `Arducam 5MP OV5647 Camera Module
          <https://www.arducam.com/product/arducam-ov5647-standard-raspberry-pi-camera-b0033/>`__   MIPI-CSI 0  None                                    Yes
-=======  =======================================================================================   ==========  ======================================= ================
+=======  =======================================================================================   ==========  ======================================= ===================
 
 Known Issues and Limitations
 ============================
@@ -530,133 +500,139 @@ Known Issues and Limitations
     U-Boot version v1.1.0 improves emmc flash times significantly. We recommend updating to U-Boot v1.1.0 to benefit from these
     improvements.
 
-Known Issues on SL1620
-----------------------
+.. note::
 
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SoC           |  Module             |  ID    | Summary                                                                                          |
-+===============+=====================+========+==================================================================================================+
-| SL1620        | Display             | 29430  | No fast logo during boot up stage.                                                               |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1620        | Gstreamer Pipeline  | 29478  | Streams requiring deinterlace plugin fail to play.                                               |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1620        | Gstreamer Pipeline  | 30587  | Sluggish output when displaying some VP9 streams.                                                |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1620        | Video Player Demo   | 30712  | Video Player Demo app is not properly sized for TFT panel.                                       |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1620        | Kernel              | 30925  | GPU crashes when waking up from low power standby.                                               |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1620        | Audio               | 29228  | arecord prints "Sample format is non-available" when recording DMIC input set to 16 and 24       |
-|               |                     |        |                                                                                                  |
-|               |                     |        | signed bits.                                                                                     |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1620        | Gstreamer Pipeline  | 30741  | Display window does not scale when moved from MIPI to TFT panel.                                 |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1620        | Linux Kernel        | 29893  | Observed Horizontal Stride, whenever there is an object movement                                 |
-|               |                     |        |                                                                                                  |
-|               |                     |        | during USB Camera Test                                                                           |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
+    SD Boot with release v1.3 and later requires updating to U-Boot `v1.1.1 <https://github.com/synaptics-astra/spi-u-boot/releases/>`__
+    or later. See :ref:`flash_internal_spi` for instructions on updating the internal SPI flash.
 
-Known Issues on SL1640
-----------------------
+.. note::
 
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SoC           |  Module             |  ID    | Summary                                                                                          |
-+===============+=====================+========+==================================================================================================+
-| SL1640,SL1680 | V4L2                | 31236  | V4L2 Encoder does not work.                                                                      |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Display             | 31218  | Setting resolution with modetest can result abnormal scaling results.                            |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Display             | 31217  | Switching resolution using modetest will randomly print errors or crash.                         |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Display             | 31215  | Display does not properly scale when connected to a 4K sink after bootup.                        |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | HDMI                | 31173  | Fails to connect to 2K sink after unplug from 4K sink.                                           |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Framebuffer Console | 30984  | Framebuffer console response is slow.                                                            |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Kernel              | 30858  | Suspend to RAM fails.                                                                            |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Display             | 30691  | Green flash occurs at the beginning of playback on some streams when using kmssink.              |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Display             | 30438  | Observed video shaking and horizontal lines during playback of some streams when using kmssink.  |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Gstreamer Pipeline  | 30429  | Video freeze observed when displaying some streams using kmssink.                                |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Gstreamer Pipeline  | 30421  | Video stutters randomly when decoding some H.264 and H.265 streams.                              |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Gstreamer Pipeline  | 30385  | Last frame is retained after playback stopped when using KMS sink.                               |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640        | Gstreamer RTSP      | 31247  | RTSP video stream pauses for about 5 seconds at the beginning of playback.                       |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640        | AI Player Demo      | 30700  | Object detection bounding boxes remain after stream finishes playing.                            |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | U-Boot              | 30036  | SPI U-Boot fails for flash image to SD card.                                                     |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
+    In Astra v1.3 SL1620 has the default display output set to HDMI using DSI to HDMI conversion. SL1620 Rev A core modules
+    require an external DSI to HDMI adapter board. Default output can be changed to MIPI using the instructions in the User
+    Guide.
 
-Known Issues on SL1680
-----------------------
+Known Issues
+------------
 
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SoC           |  Module             |  ID    | Summary                                                                                          |
-+===============+=====================+========+==================================================================================================+
-| SL1680        | AI Player Demo      | 31248  | Playback randomly hangs when displaying 4 1080p30 streams with V4L2 decoding and AI inferencing. |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | Gstreamer HDMI-RX   | 31250  | Using zero copy buffers with v4l2convert fails to get V4L2 buffers when using HDMI-RX.           |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | Gstreamer HDMI-RX   | 31245  | HDMI-RX video stutters when using Overlay with NV12 and UYVY video formats.                      |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | Gstreamer HDMI-RX   | 31242  | HDMI-RX video stutters when using kmssink for some video formats.                                |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | Gstreamer HDMI-RX   | 31254  | HDMI-RX video color is incorrect when switching resolution between 4K30 and 1080p30.             |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | Gstreamer HDMI-RX   | 31253  | Audio output will randomly stop after HDMI Hot Plug Detect (HPD) during HDMI-RX A/V playback.    |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | Gstreamer RTSP      | 31240  | Frame drops when playing back 4x1080p H.265 encoded RTSP streams.                                |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | AI Player Demo      | 31249  | Bottom right video output stutters during 4x1080p30 playback with AI inferencing.                |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | V4L2                | 31236  | V4L2 Encoder does not work.                                                                      |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | ISP                 | 31225  | Bayer raw dump for IMX sensor could not be verified.                                             |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | Gstreamer HDMI-RX   | 31223  | Audio has noise when playing back NV12/UYVY videos.                                              |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | Gstreamer HDMI-RX   | 31222  | HDMI-RX video is not smooth when playing back 4K60 RGB video on a 4K30 UYVY sink                 |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | Kernel (HDM-RX)     | 31219  | Kernel panic observed when displaying some formats of HDMI-RX video.                             |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Display             | 31218  | Setting resolution with modetest can result abnormal scaling results.                            |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Display             | 31217  | Switching resolution using modetest will randomly print errors or crash.                         |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Display             | 31215  | Display does not properly scale when connected to a 4K sink after bootup.                        |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | Gstreamer ISP       | 31209  | RGB24 output fails to be output directly.                                                        |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | HDMI                | 31173  | Fails to connect to 2K sink after unplug from 4K sink.                                           |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | ISP                 | 31068  | Frame drop occurs when displaying output from IMX415's main path while simultaneously displaying |
-|               |                     |        |                                                                                                  |
-|               |                     |        | 2160p output from a USB camera.                                                                  |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | ISP                 | 30985  | IMX415 sensor output shows a flicker in environment with direct sunlight.                        |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Framebuffer Console | 30984  | Framebuffer console response is slow.                                                            |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Kernel              | 30858  | Suspend to RAM fails.                                                                            |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Display             | 30691  | Green flash occurs at the beginning of playback on some streams when using kmssink.              |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Display             | 30438  | Observed video shaking and horizontal lines during playback of some streams when using kmssink.  |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1680        | Video Player Demo   | 30437  | Observed video shaking when playing back 4 streams with V4L2 decoding in syna-video-player.      |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Gstreamer Pipeline  | 30429  | Video freeze observed when displaying some streams using kmssink.                                |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Gstreamer Pipeline  | 30421  | Video stutters randomly when decoding some H.264 and H.265 streams.                              |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | Gstreamer Pipeline  | 30385  | Last frame is retained after playback stopped when using KMS sink.                               |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
-| SL1640,SL1680 | U-Boot              | 30036  | SPI U-Boot fails for flash image to SD card.                                                     |
-+---------------+---------------------+--------+--------------------------------------------------------------------------------------------------+
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+| SL1620  |  SL1640  |  SL1680  |  Module             |  ID    | Summary                                                                             |
++=========+==========+==========+=====================+========+=====================================================================================+
+|  N/A    |   N/A    |    Y     | Gstreamer HDMI-RX   | 31622  | Last frame retained after playback stops for some pipelines using kmssink.          |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | Chromium            | 31602  | Audio from mic is not continuous with WebRTC on Chromium.                           |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | QT Browser          | 31556  | WebRTC test case 'multiple-video-devices' fails with the error "User media          |
+|         |          |          |                     |        |                                                                                     |
+|         |          |          |                     |        | request denied with error:OverconstrainedError" with the QT Browser.                |
+|         |          |          |                     |        |                                                                                     |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | Gstreamer Pipeline  | 31539  | Unexpected video size when testing 9x and 16x decoding of 640x480 video stream.     |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | ISP PQ Tuning       | 31537  | Setting roiweight to max value results in blank output while doing AWB tuning.      |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | ISP PQ Tuning       | 31553  | 3A exposure statistics option 'View Color Matrix' does not work.                    |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | Gstreamer HDMI-RX   | 31254  | HDMI-RX video color is incorrect when switching resolution between 4K30 and 1080p30.|
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | Gstreamer AI        | 31554  | Video stutters when testing Multi AI example with 4x 1080p30.                       |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | AI Player Demo      | 31573  | Bottom right video freezed during Multi AI example with 4x 1080p30 and V4L2.        |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |    Y     | Gstreamer Pipeline  | 30385  | Last frame is retained after playback stopped when using KMS sink.                  |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |    Y     | Framebuffer Console | 30984  | Framebuffer console response is slow.                                               |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     |  Video Player Demo  | 30437  | Observed video shaking when playing back 4 streams with V4L2 decoding in            |
+|         |          |          |                     |        | syna-video-player.                                                                  |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | Gstreamer HDMI-RX   | 31576  | Video freezes or no video output when switching resolution from 4K60 RGB 8bit to    |
+|         |          |          |                     |        | 1080P60 8bit.                                                                       |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | U-Boot              | 30036  | SPI U-Boot fails for flash image to SD card.                                        |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | ISP PQ Tuning       | 31552  | Selecting manual mode view disables all available options in 3A exposure control.   |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | Fastlogo            | 31585  | Fastlogo not seen on Waveshare panel. (dual display setup)                          |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |    Y     | Gstreamer Pipeline  | 30429  | Video freeze observed when displaying some streams using kmssink.                   |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | HDMI                | 31521  | No signal and error printed when connecting with 4K TV then 2K TV then 4K TV again. |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |    Y     | Display             | 30691  | Green flash occurs at the beginning of playback on some streams when using kmssink. |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |    Y     | Kernel              | 30858  | Suspend to RAM fails.                                                               |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | AI Player Demo      | 31248  | Playback randomly hangs when displaying 4 1080p30 streams with V4L2 decoding and AI |
+|         |          |          |                     |        | inferencing.                                                                        |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | ISP                 | 31225  | Bayer raw dump for IMX sensor could not be verified.                                |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | Gstreamer HDMI-RX   | 31568  | Failed to display test source with 4K30 YUV422 8bit data.                           |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | ISP PQ Tuning       | 31536  | Deleted ROI points get re-enabled in certain scenarios during AWB tuning.           |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | Gstreamer HDMI-RX   | 31575  | Video stutter with 720p25 stream in both NV12 and UYVY modes and V4L2.              |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | ISP                 | 31355  | Incorrect color displayed when using videoconvert to display RGB output.            |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |    Y     | Display             | 30438  | Observed video shaking and horizontal lines during playback of some streams when    |
+|         |          |          |                     |        | using kmssink.                                                                      |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | AI Player Demo      | 31249  | Bottom right video freezes or app force stops during Multi AI example with 4x       |
+|         |          |          |                     |        | 1080p30 and V4L2.                                                                   |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | Gstreamer HDMI-RX   | 31577  | No audio output when testing HDMI-RX with laptop connected to a dock.               |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |   N/A    | Gstreamer Pipeline  | 31593  | Error "A lot of buffers are being dropped" and noise seen output when performing    |
+|         |          |          |                     |        | color conversion.                                                                   |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |    Y     | NNStreamer          | 31011  | Video freezes for 2 seconds during object detection using nnstreamer and an         |
+|         |          |          |                     |        | external USB camera.                                                                |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |   N/A    | Kernel              | 31566  | Suspend to RAM fails when a MIPI display is connected.                              |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |    Y     | HDMI                | 31173  | Fails to connect to 2K sink after unplug from 4K sink.                              |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |   N/A    | AI Player Demo      | 30700  | Object detection bounding boxes remain after stream finishes playing.               |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |   N/A    | Fastlogo            | 31585  | Fastlogo not seen on Waveshare panel. (MIPI display only setup)                     |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |   N/A    |   N/A    | Chromium            | 31605  | Chromium Web Browser window size and position on HDMI is no the same as TFT panel.  |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |   N/A    |   N/A    | QT Browser          | 31603  | QT Browser UI does not show loaded web page until set to fullscreen.                |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |   N/A    |   N/A    | Gstreamer Pipeline  | 31606  | Video playback is slightly slower when decoding multiple (2x) 640x480 streams.      |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |   N/A    |   N/A    | Gstreamer Pipeline  | 31607  | Video playback is slightly faster when decoding multiple (4x) 320x180 streams.      |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |   N/A    |   N/A    | HDMI                | 31612  | HDMI HDP feature is not working.                                                    |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |   N/A    |   N/A    | Gstreamer Pipeline  | 29478  | Streams requiring deinterlace plugin fail to play.                                  |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |   N/A    |   N/A    | Gstreamer Pipeline  | 30741  | Display window does not scale when moved from MIPI to TFT panel.                    |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |   N/A    |   N/A    | Audio               | 29228  | arecord prints "Sample format is non-available" when recording DMIC input set to    |
+|         |          |          |                     |        |                                                                                     |
+|         |          |          |                     |        | 16 and 24.                                                                          |
+|         |          |          |                     |        |                                                                                     |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |   N/A    |   N/A    | QT Browser          | 31560  | WebRTC test case 'multiple-video-devices' fails with the error "User media          |
+|         |          |          |                     |        |                                                                                     |
+|         |          |          |                     |        | request denied with error:OverconstrainedError" with the QT Browser.                |
+|         |          |          |                     |        |                                                                                     |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |    Y     |    Y     | Chromium            | 31540  | Only two USB cameras detected by Chromium when three connected to board.            |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |   N/A    |   N/A    | Gstreamer Pipeline  | 30587  | Sluggish output when displaying some VP9 streams.                                   |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |   N/A    |   N/A    | Video Player Demo   | 30712  | Video Player Demo app is not properly sized for TFT panel.                          |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |   N/A    |   N/A    |  Linux Kernel       | 29893  | Observed Horizontal Stride, whenever there is an object movement                    |
+|         |          |          |                     |        |                                                                                     |
+|         |          |          |                     |        | during USB Camera Test.                                                             |
+|         |          |          |                     |        |                                                                                     |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |   N/A    |   N/A    | Chromium            | 31549  | Microsoft Teams participant video is not visible when using the Chromium browser.   |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |    Y     |   N/A    | Display             | 30804  | Rotation not enabled for MIPI video playback.                                       |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
