@@ -65,10 +65,6 @@ Clicking on the icon in the top left corner will open a terminal.
 
     The Wayland Desktop with a terminal open
 
-.. note::
-
-    HDMI is not currently supported on SL1620
-
 The Shell with SSH
 ------------------
 
@@ -388,7 +384,7 @@ before sending it to the audio sink::
 This example plays an MP3 file using the speakers of the attached HDMI
 device::
 
-    gst-launch-1.0 filesrc location=audio_file.mp3 ! mpegaudioparse ! mpg123audiodec ! audioconvert ! audioresample ! alsasink device=hw:0,7
+    gst-launch-1.0 filesrc location=audio_file.mp3 ! mpegaudioparse ! avdec_mp3 ! audioconvert ! audioresample ! alsasink device=hw:0,7
 
 Video Playback
 ^^^^^^^^^^^^^^

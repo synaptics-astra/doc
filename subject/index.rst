@@ -6,20 +6,37 @@ Subject Specific User Guides
 
    syna_drm_kms_user_guide
    waveshare_7inch_dsi-configuration
+   haier_panel_configuration
    memory_layout_customization
+   emmc_layout_customization
+   dvfs_user_guide
    power_measurement
    weston_default_display
    isp_sensor_integration
+   updating_isp_sensor_configuration
+   gpios
 
 
 The following guides provide additional details on a specific subject or module.
 
 - :doc:`syna_drm_kms_user_guide`
 
+- :doc:`waveshare_7inch_dsi-configuration`
+
+- :doc:`haier_panel_configuration`
+
 - :doc:`memory_layout_customization`
+
+- :doc:`emmc_layout_customization`
+
+- :doc:`dvfs_user_guide`
 
 - :doc:`power_measurement`
 
 - :doc:`weston_default_display`
 
 - :doc:`isp_sensor_integration`
+
+- :doc:`updating_isp_sensor_configuration`
+
+- :doc:`gpios`

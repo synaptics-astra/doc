@@ -63,7 +63,7 @@ First boot
 
 .. _welcome_picture:
 
-.. figure:: ./media/welcome_screen.png
+.. figure:: ./media/welcome_screen.jpg
    :width: 3.71171in
    :height: 1.63295in
 

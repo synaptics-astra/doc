@@ -509,7 +509,7 @@ Known Issues and Limitations
 
     In Astra v1.3 SL1620 has the default display output set to HDMI using DSI to HDMI conversion. SL1620 Rev A core modules
     require an external DSI to HDMI adapter board. Default output can be changed to MIPI using the instructions in the User
-    Guide.
+    Guide. :doc:`../subject/haier_panel_configuration`
 
 Known Issues
 ------------

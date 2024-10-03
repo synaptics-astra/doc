@@ -15,11 +15,6 @@ Memory Layouts
 Astra Machina supports predefined memory layouts for various DDR configurations. The default configuration
 can be changed based on the amount of DDR in the system.
 
-.. note::
-
-    Modifying the size of the memory sections requires Synaptics to resign the preboot firmware and are not
-    user modifiable.
-
 ======== ============== ================
 Chip     Default Memory Supported Memory
 ======== ============== ================
@@ -116,8 +111,8 @@ modify the config file::
     devtool modify synasdk-config-native
 
 The ``devtool`` utility will create the ``build-sl1680/workspace/sources/synasdk-config-native/configs/product`` directory which will contain the source for
-the config package. This directory will contain a subdirectory containing a config file for each of the  platforms. Edit the config file for the platform which
-you are building for. Set the ``CONFIG_TZK_MEM_LAYOUT`` parameter to the layout which matches the about of DDR on your board. The supported memory layouts are listed
+the config package. In the product directory is a subdirectory containing a config file for each of the  platforms. Edit the config file for the platform which
+you are building for. Set the ``CONFIG_TZK_MEM_LAYOUT`` parameter to the layout which matches the DDR on your board. The supported memory layouts are listed
 below in the ``CONFIG_TZK_SUPPORTED_MEM_LAYOUT`` parameter.
 
 For example, to change the memory layout for SL1620, edit ``sl1620_poky_aarch64_rdk/sl1620_poky_aarch64_rdk_defconfig``.
@@ -131,4 +126,57 @@ For SL1640 ``sl1640_poky_aarch64_rdk/sl1640_poky_aarch64_rdk_defconfig`` and SL1
 Finally, build an image with the modified memory layout::
 
     devtool build synasdk-config-native
+    devtool build-image astra-media
+
+Modifying the Memory Layout
+---------------------------
+
+The memory sections within a memory layout can also be modified. The amount of memory reserved for secure memory and CMA can be optimized for
+specific use cases. The memory layout is defined in OP-TEE and can be modified by editing the ``synasdk-tee-bootparam-native`` package.
+
+.. note::
+
+    Memory layouts cannot be modified in previous releases. Before v1.3.0, OP-TEE required Synaptics to sign the OP-TEE image.
+    Release v1.3.0 and later, no longer require Synaptics to sign OP-TEE.
+
+To update the memory layout in the ``synasdk-tee-bootparam-native`` package::
+
+    devtool modify synasdk-tee-bootparam-native
+
+The ``devtool`` utility will create the ``build-sl1680/workspace/sources/synasdk-tee-bootparam-native/tee/tee/products/`` directory. This directory contains
+three directories for each of the platforms. These directories include dolphin (sl1680), platypus (sl1640), and myna2 (sl1620). Each platform specific directory
+contains directories for each of the supported DDR sizes.
+
+.. figure:: media/tee-products-dir.png
+
+    Chip Specific directories in synasdk-tee-bootparam-native
+
+.. figure:: media/tee-platypus-layouts.png
+
+    SL1640 layout directories
+
+.. figure:: media/tee-platypus-2gb-layout.png
+
+    SL1640 2GB memory layout files
+
+The memory layout directory contains two files which need to be updated in order to change the memory section size. The files ``tz_boot_param_value.c``and
+``tz_boot_param_value_recovery.c``. Macros define the sizes of the memory sections in the ``tz_boot_param_value*.c`` files. Update
+the values to change the size of the memory sections.
+
+.. note::
+
+    Memory section changes should be made to both ``tz_boot_param_value.c`` and ``tz_boot_param_value_recovery.c``.
+
+.. figure:: media/sl1680-boot-param.png
+
+
+Here is an example of resizing SL1680's CMA section to 1GB.
+
+.. figure:: media/sl1680-double-cma-memory.png
+
+    Modifications made to SL1680's 4GB memory layout to double the CMA section
+
+Finally, build an image with the modified memory sections::
+
+    devtool build synasdk-tee-bootparam-native
     devtool build-image astra-media

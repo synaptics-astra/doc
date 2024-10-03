@@ -4,12 +4,13 @@ ISP Sensor Integration Guide
 
 Introduction
 ============
-The document provides steps to add a new sensor driver to the SL1680. The sensor driver shall be implemented as per Application Programming Interface (API) of the Verisilicon ISP Independent Sensor Interface (ISI) framework. For more details, refer to ISI documentation.
+
+This document provides steps to add a new sensor driver to the SL1680. The sensor driver shall be implemented as per Application Programming Interface (API) of the Verisilicon ISP Independent Sensor Interface (ISI) framework. For more details, refer to ISI documentation.
 
 
 Configuration
 ======================
-Adding a new sensor includes creating necessary directories, adding source and header files, configuring CMake, and updating configuration files. This required modifying the
+Adding a new sensor includes creating necessary directories, adding source and header files, configuring CMake, and updating configuration files. This requires modifying the
 ``synasdk-v4l2isp-sensordrv`` and ``linux-syna`` packages using ``devtool``::
 
    devtool modify synasdk-v4l2isp-sensordrv
