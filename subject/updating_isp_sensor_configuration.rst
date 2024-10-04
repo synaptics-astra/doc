@@ -34,10 +34,10 @@ The current sensor configuration can be viewed by read from the ``/proc/vsi/isp_
 Configuring a New Module
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-To change the sensor write a string to ``/proc/vsi/isp_subdev0`` which contains the sensor name
-and XML configuration file::
+To change the sensor configuration, update the ``/usr/sbin/isp_media_server.sh`` script. Change the line which writes
+the sensor config to ``/proc/vsi/isp_subdev0``. Update the sensor name, xml, and json files for the new sensor.
 
-    echo "sensor=imx415 xml=/usr/share/IMX415.xml" > /proc/vsi/isp_subdev0
+.. figure:: media/isp_media_server_script.png
 
 Each camera sensor module contains one or more XML configuration files located in ``/usr/share``.
 
@@ -45,9 +45,19 @@ Each camera sensor module contains one or more XML configuration files located i
 
     List of sensor config files
 
+Then restart the isp_media_server service to apply the update.
 
-Updating Kernel DTS for the OV5647
-----------------------------------
+::
+
+    systemctl restart isp_media_server
+
+.. note::
+
+    To apply these changes to an image, modify the ``meta-synaptics/recipes-devtools/synasdk/files/isp_media_server.sh``
+    script as described below.
+
+Enabling the OV5647 Sensor
+--------------------------
 
 Using the OV5647 camera module also requires an update to the kernel's device tree. This requires modifying the
 ``linux-syna`` package using ``devtool``::
@@ -88,6 +98,26 @@ Modify the ``dolphin-rdk.dts`` file located in ``build-sl1680/workspace/sources/
     };
 
     &isp_vsi_video {
+
+Then update the ``isp_media_server.sh`` script to load the configuration for the OV5647 sensor. Apply the following change
+to ``meta-synaptics/recipes-devtools/synasdk/files/isp_media_server.sh``.
+
+::
+
+    diff --git a/recipes-devtools/synasdk/files/isp_media_server.sh b/recipes-devtools/synasdk/files/isp_media_server.sh
+    index 20cbc24..a7a683c 100644
+    --- a/recipes-devtools/synasdk/files/isp_media_server.sh
+    +++ b/recipes-devtools/synasdk/files/isp_media_server.sh
+    @@ -26,8 +26,7 @@ set -e
+    
+    case $1 in
+        start)
+    -        echo "sensor=imx258 xml=/usr/share/IMX258.xml manu_json=/usr/share/ISP_Manual_IMX258.json \
+    -        auto_json=/usr/share/ISP_Auto.json i2c_bus_id=3 mipi_id=0 mode=0" > /proc/vsi/isp_subdev0
+    +        echo "sensor=ov5647 xml=/usr/share/OV5647_480p.xml" > /proc/vsi/isp_subdev0
+            echo -n "Starting $DESC: "
+            start-stop-daemon --start $SSD_OPTIONS  > $LOGFILE &
+            echo "${DAEMON##*/}."
 
 Build the image with the updated device tree entries::
 
