@@ -5,6 +5,7 @@ Getting Started
    :hidden:
 
    hw_setup
+   oobe
    flash_image
    multimedia
    build_app
@@ -15,6 +16,7 @@ Getting Started
 To get started with the Synaptics Astra SDK, you can do the following things:
 
 - :doc:`hw_setup`
+- :doc:`oobe`
 - :doc:`flash_image`
 - :doc:`multimedia`
 - :doc:`build_app`
