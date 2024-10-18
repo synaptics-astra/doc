@@ -4,7 +4,7 @@ Setting the Weston Default Display for Applications
 
 In dual display setups, it can be useful to set which display new applications (Weston Clients) should open in.
 Astra Machina supports specifying which display should be the default. This is done by setting the
-default display name in a file and setting the ``SHELL_OVERRIDE_DISPLAY_WINDOW`` parameter in ``/etc/default/weston``,
+default display name in a file. Then setting the ``SHELL_OVERRIDE_DISPLAY_WINDOW`` parameter in ``/etc/default/weston``,
 to the path of that file.
 
 Identify then name of the display by looking at the 'Connectors' section using the command::
@@ -20,6 +20,8 @@ Create a file in any location on the board which holds the name of the display. 
 Set the ``SHELL_OVERRIDE_DISPLAY_WINDOW`` parameter in ``/etc/default/weston``::
 
      SHELL_OVERRIDE_DISPLAY_WINDOW=/home/root/def_disp
+
+.. figure:: media/add-shell-override-display-window.png
 
 Restart the Weston service to allow the change to take affect.
 ::

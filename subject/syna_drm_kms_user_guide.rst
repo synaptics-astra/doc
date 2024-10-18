@@ -626,6 +626,11 @@ below command helps.
 
    modetest -M synaptics
 
+.. note::
+
+   The connector ID and CRTC ID may change. Use the ``modetest -M synaptics`` command to
+   check te values of the connector ID and CRTC ID.
+
 SL1680 Display
 ---------------
 
