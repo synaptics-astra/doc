@@ -1077,29 +1077,99 @@ Enable hostapd and iptables on boot::
 Performing throughput tests
 ---------------------------
 
-The following section describes how to run throughput tests using iPerf commands in TCP and UDP modes.
+Astra Machina provides the `iPerf2 <https://iperf.fr/>`__ tool for measuring network throughput. iPerf is a widely used tool for network
+performance measurement and tuning. It uses a client / server model to measure the throughput between devices on a network. It supports
+both TCP and UDP protocols. Full documentation on iPerf2 can be found on the `iPerf website <https://iperf.fr/iperf-doc.php#doc>`__.
 
-TCP traffic
+TCP Traffic
 ^^^^^^^^^^^
+
+The following example runs a TCP throughput test between the client and server using the default options. 
+In this example the server has the IP address ``10.5.0.3``.
+
+.. note::
+
+    The server must be started before the client.
 
 Client Side::
 
-    $ iperf -c <IP address of iperf server> -i 1 -w 12M -t 60 -l 1470
+    $ iperf -c 10.5.0.3
+
+.. figure:: media/iperf-tcp-client.png
+
+    ``iperf`` client running on SL1620 in TCP mode
 
 Server side::
 
-    $ iperf -s -i 1 -w 12M -l 1470
+    $ iperf -s
 
-UDP traffic
+.. figure:: media/iperf-tcp-server.png
+
+    ``iperf`` server running on SL1620 in TCP mode
+
+    
+UDP Traffic
 ^^^^^^^^^^^
+
+The following example runs a UDP throughput test between the client and server using the default options. 
+In this example the server has the IP address ``10.5.0.3``.
+
+.. note::
+
+    The server must be started before the client.
 
 Client side::
 
-    $ iperf -c <IP address of iperf server> -i 1 -w 12M -u -b 1000M -t 60 -l 1470
+    $ iperf -c 10.5.0.3 -u
+
+.. figure:: media/iperf-udp-client.png
+
+    ``iperf`` client running on SL1620 in UDP mode
 
 Server side::
 
-    $ iperf -s -u -i 1 -w 12M -l 1470
+    $ iperf -s -u
+
+.. figure:: media/iperf-udp-server.png
+
+    ``iperf`` server running on SL1620 in UDP mode
+
+Common iPerf Options
+^^^^^^^^^^^^^^^^^^^^
+
+The following options are commonly used with the `iperf` command to customize its behavior:
+
+- ``-i``: Interval
+    Specifies the interval (in seconds) between periodic bandwidth reports. For example, ``-i 1`` will print a report every second.
+
+- ``-l``: Length
+    Sets the length of the buffer to read or write. For example, ``-l 128K`` sets the buffer length to 128 kilobytes.
+
+- ``-b``: Bandwidth
+    Specifies the target bandwidth for UDP tests. For example, ``-b 10M`` sets the target bandwidth to 10 megabits per second.
+
+- ``-w``: Window size
+    Sets the TCP window size. For example, ``-w 256K`` sets the TCP window size to 256 kilobytes.
+
+- ``-t``: Time
+    Specifies the time (in seconds) to transmit for. For example, ``-t 60`` will run the test for 60 seconds.
+
+This example is of a TCP throughput test with a 10 second interval between reports, a 128 kilobyte buffer, a 1000 megabit per
+second target bandwidth, a 256 kilobyte TCP window size, and a 60 second test duration::
+
+    $ iperf -c 10.5.0.3 -i 10 -l 128K -b 1000M -w 256K -t 60
+
+.. figure:: media/iperf-tcp-client-custom-options.png
+
+    ``iperf`` client running on SL1620 with custom options
+
+Server side::
+
+    $ iperf -s -i 10 -l 128K -b 1000M -w 256K -t 60
+
+.. figure:: media/iperf-tcp-server-custom-options.png
+
+    ``iperf`` server running on SL1620 with custom options
 
 Using the Bluetooth A2DP source role
 ------------------------------------
