@@ -9,6 +9,7 @@ Synaptics ASTRA SDK
    linux/index.rst
    yocto.rst
    subject/index.rst
+   appnotes/index.rst
    hw/index.rst
    release_notes.rst
    private/index*
@@ -36,6 +37,14 @@ For more in-depth information, the following documents are available:
   This guide provides detailed instructions on building custom images with Yocto, including
   code downloading and building, package management, image customization, and SDK package generation for development,
   serving as a comprehensive resource for users aiming to construct custom images.
+
+:doc:`subject/index`
+
+  This section contains guides provide details on specific subjects and modules.
+
+:doc:`appnotes/index`
+
+  This section provided application notes on specific components or use cases.
 
 :doc:`hw/index`
 
