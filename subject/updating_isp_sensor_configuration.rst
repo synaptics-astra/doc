@@ -105,19 +105,18 @@ to ``meta-synaptics/recipes-devtools/synasdk/files/isp_media_server.sh``.
 ::
 
     diff --git a/recipes-devtools/synasdk/files/isp_media_server.sh b/recipes-devtools/synasdk/files/isp_media_server.sh
-    index 20cbc24..a7a683c 100644
+    index 20cbc24..0ba2e04 100644
     --- a/recipes-devtools/synasdk/files/isp_media_server.sh
     +++ b/recipes-devtools/synasdk/files/isp_media_server.sh
-    @@ -26,8 +26,7 @@ set -e
-    
+    @@ -26,7 +26,7 @@ set -e
+
     case $1 in
         start)
     -        echo "sensor=imx258 xml=/usr/share/IMX258.xml manu_json=/usr/share/ISP_Manual_IMX258.json \
-    -        auto_json=/usr/share/ISP_Auto.json i2c_bus_id=3 mipi_id=0 mode=0" > /proc/vsi/isp_subdev0
-    +        echo "sensor=ov5647 xml=/usr/share/OV5647_480p.xml" > /proc/vsi/isp_subdev0
+    +        echo "sensor=ov5647 xml=/usr/share/OV5647_480p.xml manu_json=/usr/share/ISP_Manual_IMX258.json \
+            auto_json=/usr/share/ISP_Auto.json i2c_bus_id=3 mipi_id=0 mode=0" > /proc/vsi/isp_subdev0
             echo -n "Starting $DESC: "
             start-stop-daemon --start $SSD_OPTIONS  > $LOGFILE &
-            echo "${DAEMON##*/}."
 
 Build the image with the updated device tree entries::
 
