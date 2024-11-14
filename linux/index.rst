@@ -88,6 +88,8 @@ clients over the network. Login with the username ``root``. No password is requi
     In the examples above the Astra Machina's address is
     10.10.10.100. Please replace this IP with the IP address of your device.
 
+.. _adb_shell_guide:
+
 The Shell with ADB
 ------------------
 
@@ -1560,6 +1562,8 @@ devinfo            Device information (such as serial number, mac address ) requ
 misc               Boot control settings, required                                     Yes                Early boot (boot partition)
 home               Mounted in /home, can be customized                                 No                 Linux user space
 ================== =================================================================== ================== ===========================
+
+.. _firmware_update_usb:
 
 Updating the Firmware using USB
 -------------------------------

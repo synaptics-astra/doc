@@ -18,48 +18,37 @@ and applies to all SL-Series core modules: SL1680, SL1640, and SL1620.
 Included in the box
 -------------------
 
-a. Astra Machina Foundation Series system with core module, I/O board,
+a. The Astra Machina Foundation Series system with core module, I/O board,
    and daughter card for Wi-Fi/BT connectivity
 
-b. AC power adapter (USB Power Delivery)
+b. A 15V @ 1.8A AC power adapter (USB Power Delivery)
 
-c. USB-C cable (USB-C plugs on both ends)
+c. A USB-C cable (USB-C plugs on both ends)
 
-d. AC plug adapter (IEC Type A receptacle/Type C plug, used only if applicable)
+d. An AC plug adapter (IEC Type A receptacle/Type C plug, used only if applicable)
 
-Additional items needed
------------------------
 
-e. A display monitor with an HDMI port
+Booting the desktop environment
+-------------------------------
 
-f. An HDMI cable (standard HDMI Type A plugs on both ends)
+By connecting a monitor, keyboard, and mouse, you can run the desktop environment:
+
+1. Connect a display monitor to the board with an HDMI cable.
+
+2. Connect a USB Keyboard and/or Mouse to the board.
+
+3. Optionally, plug an Ethernet cable into the board's RJ45 port for Internet connectivity.
+
+4. Connect the AC adapter to the board using USB-C cable (IMPORTANT - ensure you use the USB-C port marked PWR-IN), and plug the AC adapter to the power outlet
+
 
 .. note::
-    Ethernet or network connection is not needed for the first boot.
 
-Making the connections
-----------------------
+   The green LED next to PWR_IN will be lit and solid when the board is powered correctly. A flashing green LED indicates insufficient power - please use the supplied 15V @ 1.8A power adapter.
 
-1. Plug AC adapter **[b]** to an AC outlet (with **[d]** if applicable).
 
-2. Connect display monitor **[e]** to the Astra Machina **[a]** with
-   HDMI cable **[f]**.
+Once powered on, the Astra Machina board will boot the Yocto Linux distribution preloaded on its eMMC storage, and display the Wayland Desktop. You can now explore sample media and AI applications, open a Linux terminal from Wayland Desktop, and use the built-in Chromium browser (with Internet connectivity):
 
-3. [Optional] Connect Ethernet cable **[h]** to Astra Machina board
-   **[a]**.
-
-4. [Optional] Connect USB Keyboard and/or Mouse **[g]** to Astra Machina
-   board **[a]**.
-
-5. Connect AC adapter **[b]** and Astra Machina board **[a]** using
-   USB-C cable **[c]**.
-
-First boot
-----------
-
--  Once powered on, the Astra Machina board will complete its first boot
-   to the Start-up screen as shown in :ref:`welcome_picture`. A green LED next to
-   PWR_IN will grow but not flicker.
 
 .. _welcome_picture:
 
@@ -67,26 +56,30 @@ First boot
    :width: 3.71171in
    :height: 1.63295in
 
-   Startup screen
 
-.. note::
+Running in headless mode
+------------------------
 
-    A Linux distribution built from Yocto by Synaptics is preloaded to
-    the on-board eMMC storage device.
+To connect to your Astra Machina Board from a development host PC via SSH:
 
-Network connectivity and applications
+1. Ensure your board is connected to Ethernet and can access the Local Area Network of the host.
+
+2. Open a terminal on the Wayland Desktop and use the following command to obtain the IP address::
+
+      ifconfig eth0 | grep "inet addr"
+
+3. Once you have the IP address of your Astra Machina Board , you can connect via ssh. For example::
+
+      ssh root@10.3.10.19
+
+You can also connect to your board using ADB Shell. Follow the instructions here: :ref:`adb_shell_guide`
+
+
+Update Firmware 
 -------------------------------------
 
--  Plug Ethernet cable **[h]** to the RJ45 port of the Astra Machina for
-   internet connection.
+It's recommended that you update your board to the latest firmware using this guide: :ref:`firmware_update_usb` 
 
--  Explore pre-loaded applications
-
--  Linux terminal from Wayland Desktop
-
--  Built-in Chromium browser
-
--  Media and AI sample applications
 
 Additional documentation and resources
 --------------------------------------
