@@ -246,24 +246,26 @@ a wide range of environments.
 
 To setup the toolchain you first uncompress it as follows::
 
-  $ ./poky-glibc-x86_64-astra-media-${CPUTYPE}-${MACHINE}-toolchain-4.0.9.sh
-  Poky (Yocto Project Reference Distro) SDK installer version 4.0.9
-  =================================================================
-  Enter target directory for SDK (default: /opt/poky/4.0.9): toolchain
+  $ chmod 755 poky-glibc-x86_64-astra-media-cortexa73-sl1680-toolchain-4.0.17.sh
+  $ ./poky-glibc-x86_64-astra-media-cortexa73-sl1680-toolchain-4.0.17.sh
+  Poky (Yocto Project Reference Distro) SDK installer version 4.0.17
+  ==================================================================
+  Enter target directory for SDK (default: /opt/poky/4.0.17): toolchain
   You are about to install the SDK to "/home/user/toolchain". Proceed [Y/n]?
   Extracting SDK.................................................................................................................................................................................................................................................................................................................................done
   Setting it up...done
   SDK has been successfully set up and is ready to be used.
   Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.
-    $ . /home/user/toolchain/environment-setup-armv7at2hf-neon-vfpv4-pokymllib32-linux-gnueabi
-    $ . /home/user/toolchain/environment-setup-cortexa73-poky-linux
+   $ . /home/user/toolchain/environment-setup-cortexa73-poky-linux
 
-The exact names of the toolchain environment files depend on the target board: ``CPUTYPE`` for ``sl1680`` is
-``cortexa73``, for ``sl1620`` and ``sl1640`` is ``cortexa55``
+.. note::
+
+  The exact names of the toolchain environment files depend on the target board: ``CPUTYPE`` for ``sl1680`` is
+  ``cortexa73``, for ``sl1620`` and ``sl1640`` is ``cortexa55``
 
 Then to configure the build environment you need to source a configuration script as follows::
 
-  $ . toolchain/environment-setup-${CPUTYPE}-poky-linux
+  $ . toolchain/environment-setup-cortexa73-poky-linux
 
 With the environment setup, you can use the provided cross-compiler to compile your applications. The
 toolchain also includes libraries and headers for the various components included in the image, so you can develop
