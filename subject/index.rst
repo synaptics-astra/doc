@@ -17,6 +17,7 @@ Subject Specific User Guides
    gpios
    fastlogo_image_generation
    uboot_fastlogo_configuration
+   swupdate_user_guide
 
 
 The following guides provide additional details on a specific subject or module.
@@ -46,3 +47,5 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`fastlogo_image_generation`
 
 - :doc:`uboot_fastlogo_configuration`
+
+- :doc:`swupdate_user_guide`
