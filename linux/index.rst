@@ -1039,7 +1039,7 @@ Configuring IP Forwarding Firewall Rules
 
 IP Forwarding and NAT need to be configured to forward traffic coming from be new wireless network.
 
-The following is an example of using iptables to configure NAT and save the new rules to /etc/iptables/iptables.rules
+The following is an example of using iptables to forward traffic over the ethernet inferface using NAT. Add the new rules to /etc/iptables/iptables.rules
 so that they can be loaded at boot::
 
     iptables –F
@@ -1062,6 +1062,10 @@ Run the following command to enable ip forwarding::
 
     sysctl -p /etc/sysctl.d/ip_forward.conf
 
+.. note::
+
+    Be sure to connect an ethernet cable to Astra Machina so that traffic can be forwarded to the ethernet interface.
+
 Enabling Services
 ^^^^^^^^^^^^^^^^^
 
@@ -1075,6 +1079,28 @@ Enable hostapd and iptables on boot::
     systemctl enable hostapd
     systemctl enable iptables
 
+Verify wlan0 Interface Configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After enabling hostapd and iptables, use the ``ifconfig`` command to verify that ``wlan0`` is enabled.
+
+.. figure:: media/hostapd-wlan0.png
+
+.. note::
+
+    If ``wlan0`` does not appear in the ``ifconfig`` output then you may need to run the ``sync`` command and reboot. This will make
+    sure that the configuration changes were applied.
+
+Disabling Services
+^^^^^^^^^^^^^^^^^^
+
+Use the following commands to stop using the Wifi interface as an access point and disable hostapd::
+
+    systemctl stop hostapd
+    systemctl stop iptables
+    systemctl disable hostapd
+    systemctl disable iptables
+    rm -rf /etc/systemd/network/10-wlan0.network
 
 Performing throughput tests
 ---------------------------
