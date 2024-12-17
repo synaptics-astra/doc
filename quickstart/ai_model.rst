@@ -43,6 +43,12 @@ To convert your own AI model and run it on an evaluation kit use the following s
    This command converts ``mymodel.tflite`` to ``converted/model.synap``, the model converted
    for execution on the evaluation kit.
 
+.. note::
+
+    As SL1620 has no NPU, please use GPU while converting the model, change yaml file for SL1620 and specify the delegate to be gpu like this.
+    ``delegate: gpu``
+    Refer more on yaml `here <https://synaptics-synap.github.io/doc/v/3.1.0/docs/manual/working_with_models.html#conversion-metafile>`_.
+
 7. Find the ip address of the board with the following command on the target::
 
     # ifconfig eth0 | grep "/inet addr/"
