@@ -112,7 +112,7 @@ GPIO   GPIO Number   GPIO Chip   Port
 28     508           0           A
 29     509           0           A
 30     510           0           A
-31     511           2           B
+31     511           0           A
 32     416           2           B
 33     417           2           B
 34     418           2           B
