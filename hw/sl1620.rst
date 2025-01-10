@@ -110,9 +110,9 @@ The SL1620 evaluation system includes the following components:
 
 -  40-pin header for additional functions
 
--  4-pin PoE+ daughter card to support an add-on voltage regulator
-   module for PoE+ Type2 (802.3at) power device; available power shall
-   be 25.5W (Class 4) at 5Vpins of 40-pin header to I/O board
+-  4-pin PoE+ connector, with a PoE hat board (purchased separately), it offers an 
+   add-on voltage regulator module for PoE+ Type2 (802.3at) power device.  Available 
+   power shall be 25.5W (Class 4) at 5Vpins of 40-pin header to I/O board
 
 -  4-pin connector for active Fan with PWM
 
