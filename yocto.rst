@@ -184,7 +184,7 @@ the container.
 Obtain the sources
 ------------------
 
-The sources of the Synaptics Yocto release can be downloaded by cloning a `top
+The sources of the Astra Yocto release can be downloaded by cloning a `top
 level git repo <https://github.com/synaptics-astra/sdk>`_. The repository contains
 all the required layers as submodules.
 
@@ -210,10 +210,18 @@ To build an image execute the following commands::
 
 The resulting image can be found in ``build-${MACHINE}/tmp/deploy/images/${MACHINE}/SYNAIMG/``.
 
-To build an image without multimedia capabilities, build the astra-core image using the command ``bitbake astra-core``.
-
 .. note::
-  The astra-core image is included in v1.2.0 and later releases.
+
+  This example builds the ``astra-media`` image. To build a different image replace ``astra-media`` with the image you want to build.
+  See :ref:`astra_images` for details on other images supported by Astra Yocto.
+
+To build the ``astra-media-oobe`` image exectute the following commands::
+
+  pokyuser@xyz:/path/to/workspace $ cd sdk
+
+  pokyuser@xyz:/path/to/workspace/sdk $ OOBE=enabled source meta-synaptics/setup/setup-environment
+
+  pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media-oobe
 
 The image can be flashed to an evaluation kit board as described in :ref:`prepare_to_boot`.
 
@@ -303,28 +311,88 @@ This BSP is compatible with these layers:
     * ``meta-python`` (required by ``meta-multimedia`` below)
     * ``meta-multimedia`` (optional - for gstreamer support)
 
-  * ``meta-qt`` [branch ``qt/upstream/kirkstone`` ] (optional)
+  * ``meta-qt5`` [branch ``qt/upstream/kirkstone`` ] (optional)
+  * ``meta-swupdate`` (optional - for OTA support)
+  * ``meta-browser``  (optional - for Chromium support)
+  * ``meta-clang`` (optional - for Chromium support)
+  * ``meta-ros`` (optional - for the Robot Operating System support)
+  * ``meta-virtualization`` (optional - for container support)
 
+.. _astra_images:
 
-Images
-======
+Astra Yocto Images
+==================
 
-``astra-media``
----------------
+The Astra Yocto release contains several images which provide different levels of functionality.
 
-The ``astra-media`` image, based on the ``poky`` distribution, provides a basic graphical
-system with ``weston`` and it is suitable to test ``sl1640`` and ``sl1680`` features.
+====================  ===================================================================================================  ==================
+Image                 Description                                                                                          Version Added
+====================  ===================================================================================================  ==================
+astra-tiny            Minimal packages used to build image suitable for booting from 32MB SPI NOR Flash.                   v1.5
+astra-core            Core system packages Intended for power management testing.                                          v1.2
+astra-media           Default image which contains core packages along with full packages supporting full multimedia       v0.9
+                      capabilities.
+astra-media-oobe      Contains all packages in astra-media, plus Chromium, Docker, development tools, and additional demo  v1.5
+                      applications.
+====================  ===================================================================================================  ==================
+
+The ``astra-media`` image can be used as a starting point when developing a custom distribution. It contains all of the packages needed
+to create a fully functional system. While ``astra-media-oobe`` contains additional packages used to showcase the capabilities of Astra
+Machina.
+
+The ``astra-media`` images, based on the ``poky`` distribution, provides a basic graphical
+system with ``weston`` and it is suitable to test ``sl1620``, ``sl1640`` and ``sl1680`` features.
 
 The image requires some specific configurations in ``conf/local.conf`` to work correctly. The
-``meta-synaptics/setup/setup-environment`` script can be used to correctly setup a ``astra-media`` build automatically.
+``meta-synaptics/setup/setup-environment`` script can be used to correctly setup an image to build automatically.
 
 For more details about these configurations please refer to the comments in the
 sample ``local.conf`` found in ``meta-synaptics/setup/conf/local.conf.sample``.
 
-In order to be able to run qt application on wayland the following package must also
-be added. This must be enable manually even when using ``setup/setup-environment``::
+.. note::
 
-  DISTRO_EXTRA_RDEPENDS:append = " qtwayland"
+    Building the ``astra-media-oobe`` image includes building the Chromium browser can add several hours to the build time and requires
+    additional storage.
+
+Distro Features
+===============
+
+Astra Yocto supports optional distribution features which can be enabled in the ``local.conf`` file or by passing variables to the
+``setup-environment`` script.
+
+X11 Display Server
+------------------
+
+On Astra Yocto, Wayland is the default display server. Using X11 instead of Wayland requires passing the ``DISPLAY_SERVER`` variable to the ``setup-environment`` script.
+
+::
+
+  pokyuser@xyz:/path/to/workspace/sdk $ DISPLAY_SERVER=x11 source meta-synaptics/setup/setup-environment
+
+  pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media
+
+
+.. note::
+
+  Support for using X11 was added to the v1.5 release. Older releases do not support X11.
+
+Virtualization for OOBE
+-----------------------
+
+Virtualization is used to enable container support and Docker on the OOBE image. Enabling virtualization
+and full OOBE support requires passing the ``OOBE`` variable to the ``setup-environment`` script.
+
+::
+
+  pokyuser@xyz:/path/to/workspace/sdk $ OOBE=enabled source meta-synaptics/setup/setup-environment
+
+  pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media-oobe
+
+
+.. note::
+
+  Support for building OOBE images and virtualization was added to the v1.5 release. Older releases do not support
+  building OOBE images or virtualization.
 
 Configuration
 =============
