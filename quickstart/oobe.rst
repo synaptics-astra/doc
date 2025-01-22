@@ -16,10 +16,6 @@ At the bottom is a quick access panel with icons which will launch the three app
 - Chromium Browser
 - SynaExplorer
 
-.. note::
-
-    The customized Weston desktop only supports one display at a time.
-
 Terminal
 --------
 
@@ -34,10 +30,6 @@ Chromium can be launched by clicking the Chromium icon in the quick access panel
 
 .. figure:: media/chromium.jpg
 
-.. note::
-
-    Chromium's state is not saved. Stored bookmarks and setting will be cleared on reboot.
-
 SynaExplorer
 ------------
 
@@ -51,7 +43,7 @@ Open the SynaExplorer app by clicking the icon with the four squares in the quic
     SynaExplorer icon highlighted in quick access panel
 
 The app opens to the landing page, with demo category buttons on the left and a "Getting Started" pane on the right.
-The pane displays a thumbnail of the Astra promo video, which plays when clicked. The app uses Gstreamer to handle
+The pane displays a thumbnail of the Astra intro video, which plays when clicked. The app uses Gstreamer to handle
 video and audio playback of the video file.
 
 .. figure:: media/syna-explorer-getting-started.jpg
@@ -93,7 +85,7 @@ Use the dropdown to the right of the "Video 1" label to select a source.
 
     Video Player on dropdown menu on SL1640
 
-Use the "Update RTSP Urls" windows to set the RTSP URL when using a RTSP camera as the source.
+Use the "Update RTSP Urls" windows to set the RTSP URL when using a RTSP camera as the source. After entering the RTSP URL, press OK button.
 
 .. figure:: media/syna-video-player-rtsp.jpg
 
@@ -162,7 +154,8 @@ Syna AI
 The fourth button on the left is the "AI" button, which opens the "AI" pane. This pane contains a button to launch the
 "AI Player" app, which includes object detection, pose estimation, and face detection examples. There is also an example
 which does object detection using a USB camera and encodes then streams the output over UDP. SL1680 supports Multi-AI
-which supports doing AI inferencing on four streams and outputting the result to the display.
+which supports doing AI inferencing on four streams and outputting the result to the display. SL1680 supports AI inferencing
+on muxed stream of 3x3 tiles composed from 4 USB camera streams and outputting the result to the display. 
 
 .. figure:: media/syna-explorer-ai-pane.jpg
 
@@ -207,9 +200,19 @@ The face detection example uses a YOLOv5 model to detect faces using a USB camer
 Multi-AI
 """"""""
 
-SL1680 supports AI inferencing of four camera streams and displaying the output. The streams can be from four USB cameras
-at 640x480 resolution or four RTSP camera at 1080p15. RTSP streams can be configured using the "Update RTSP Urls" window.
-In this example, person detection is performed on all four streams.
+SL1680 Multi-AI supports 3 different demos:
+
+1) USB Camera: 4 different AI inferencing of four camera streams and displaying the output. The streams
+can be from four USB cameras at 640x480 resolution.
+
+2) AI on Muxed 9x480p: Single AI inferencing of muxed stream of multiple cameras and displaying the output.
+The streams can be from four USB cameras at 640x480 resolution. In this example, total 9 streams of 640x480p 
+(some are duplicated) from 4 diferent USB cameras are tiles into single frame using GPU and object detection
+is performed on the muxed frame and then displayed with bounding box and label.
+
+3) RTSP Camera: AI inferencing of four RTSP camera streams and displaying the output. The streams are from four
+RTSP camera at 1080p15. RTSP streams can be configured using the "Update RTSP Urls" window. In this example, person
+detection is performed on all four streams.
 
 .. figure:: media/syna-ai-player-multi-ai.jpg
 
@@ -257,3 +260,87 @@ or, run this command on Linux::
 
     gst-launch-1.0 udpsrc port=8003 ! "application/x-rtp, media=video, clock-rate=90000,encodingname=H264, \
         payload=96" ! queue ! rtph264depay ! h264parse ! avdec_h264 ! autovideosink
+
+
+Capability Demo
+^^^^^^^^^^^^^^^
+
+The fifth button on the left is the "Capability Demo" button, which opens the "Capability Demos" pane. This pane contains a button to launch the
+"Best Case" app, which demonstrates the capability of the platform.
+
+.. figure:: media/syna-capability-demo-pane.jpg
+
+    Capability Demo pane on SL1640
+
+Best Case
+"""""""""
+
+The example demonstrates one of the best usecase which platfrom can support.
+
+.. note::
+
+    This example doesn't define the limit for individual IP block. Refer datasheet for checking complete capabilities of individual IP block.
+
+This Best Case demo app demonstrates the capability of platform running multiple things concurently as mentioned below:
+
+SL1680:
+1. Multiple decoding: 4 Streams of 1920x1080@25 & 4 streams of 1280x720@25
+2. USB camera streaming and preview of 640x480@30
+3. Mixing of streams mentioned in #1 & #2 and rendering to display
+4. HDMI-RX stream receiving from Laptop (upto 4K60) and rendering to display
+
+SL1640:
+1. Multiple decoding: 9 streams of 640x480@25
+2. Mixing of streams mentioned in #1 and rendering to display
+
+SL1620:
+1. Multiple decoding: 2 streams of 640x480@30 using FFMpeg SW
+2. Mixing of streams mentioned in #1 and rendering to display
+
+A window will open where selection of different H.264 video files can be made. Number of selection depends on platform capability.
+
+.. figure:: media/syna-best-case-sl1680.jpg
+
+    Best case on SL1680
+
+Click on left side buttons, to select a file. A file explorer will open which will allow to navigate and select a file.
+
+.. figure:: media/syna-best-case-file-select.jpg
+
+    Best case H.264 file selection
+
+Click on "SAVE SETTINGS" button to save selections. Click on "PLAY" button to start.
+
+
+
+Settings
+^^^^^^^^
+
+The sixth button on the left is the "Settings" button, which opens the "Settings" pane. This pane contains options to configure global
+settings for different SynaExplorer demo applications.
+
+.. note::
+
+    Defaults will be used if settings is not used to configure.
+
+.. figure:: media/settings-pane.jpg
+
+    Settings pane on SL1680
+
+First section is for configuring the priority for the USB camera format selection. Click on the right side highlighted buttons to raise or
+lower the priority of specific format. Once done click on "Save Priorities" button.
+
+.. figure:: media/settings-priorities-crop.jpg
+
+    USB camera format priority settings on SL1680
+
+Second section is for configuring the RTSP URLs. After entering the RTSP URLs, click on "Save URLs" button. RTSP URLs can be verified by
+clicking on "Validate URLs" button to check if they are alive and reachable. Also it shows streaming media information.
+
+.. figure:: media/settings-rtsp-urls-crop.jpg
+
+    RTSP URLs settings on SL1680
+
+.. figure:: media/settings-rtsp-urls-validate-crop.jpg
+
+    RTSP URLs Validation on SL1680
