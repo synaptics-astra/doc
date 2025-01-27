@@ -71,7 +71,7 @@ The SL1640-based evaluation system includes the following components:
 -  Main components on the core module:
 
 -  Synaptics SL1640 Quad-Core Arm Cortex-A55
-      Embedded IoT Processor, up to 1.9 GHz
+      Embedded IoT Processor, up to 2.0 GHz
 
 -  Storage: eMMC 5.1 (16 GB)
 
