@@ -2,20 +2,32 @@
 Updating the ISP Sensor Configuration
 =====================================
 
-SL1680 supports multiple camera sensors. By default, SL1680 is configured to use the IMX258 module. But, the software can be configured to use any of the
-supported sensor modules. 
+SL1680 supports multiple camera sensors. By default, SL1680 is configured to use the OV5647 module with port CSI0. But, the software can be configured to use any of the
+supported sensor modules. Some configurations require setting a device tree overlay to function correctly.
+
+.. note::
+
+    Starting with release v1.5, the default sensor is now the OV5647 module.
 
 Supported Camera Modules
 ------------------------
 
-=======  =======================================================================================   ==========  ======================================= ================
-Sensor   Module                                                                                    Interface   Adapter Board                           DTS Change
-=======  =======================================================================================   ==========  ======================================= ================
-IMX258   Synaptics IMX258 Camera Module                                                            MIPI-CSI 0  Synaptics SL1680 MIPI CSI Adaptor Board No
-IMX415   Synaptics IMX415 Camera Module                                                            MIPI-CSI 0  Synaptics SL1680 MIPI CSI Adaptor Board No
+=======  =======================================================================================   ============  ======================================= ======================================
+Sensor   Module                                                                                    Interface     Adapter Board                           Device Tree Overlay
+=======  =======================================================================================   ============  ======================================= ======================================
+IMX258   Synaptics IMX258 Camera Module                                                            MIPI-CSI 0    Synaptics SL1680 MIPI CSI Adaptor Board dolphin-csi0-with-expander.dtbo
+IMX415   Synaptics IMX415 Camera Module                                                            MIPI-CSI 0    Synaptics SL1680 MIPI CSI Adaptor Board dolphin-csi0-with-expander.dtbo
 OV5647   `Arducam 5MP OV5647 Camera Module
-         <https://www.arducam.com/product/arducam-ov5647-standard-raspberry-pi-camera-b0033/>`__   MIPI-CSI 0  None                                    Yes
-=======  =======================================================================================   ==========  ======================================= ================
+         <https://www.arducam.com/product/arducam-ov5647-standard-raspberry-pi-camera-b0033/>`__   MIPI-CSI 0    None                                    N/A
+
+                                                                                                   MIPI-CSI 1    None                                    dolphin-csi1-without-expander.dtbo
+
+                                                                                                   Dual CSI0/1   None                                    dolphin-bothcsi-without-expander.dtbo
+
+=======  =======================================================================================   ============  ======================================= ======================================
+
+
+ .. _changing_sensor_module:
 
 Changing the Camera Sensor Module
 ---------------------------------
@@ -56,12 +68,66 @@ Then restart the isp_media_server service to apply the update.
     To apply these changes to an image, modify the ``meta-synaptics/recipes-devtools/synasdk/files/isp_media_server.sh``
     script as described below.
 
-Enabling the OV5647 Sensor
---------------------------
+Updating Device Tree Overlay
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Astra Machina SL1680 supports using the OV5647 sensor on either the CSI0 (22-pin) or the CSI1 (15-pin) connector. Both configurations
-require modifying the kernel's device tree and the ISP initialization script. The configuration
-depends on which CSI connector is being used.
+Different sensors may require different settings in device tree. Astra supports device tree overlays for modifying the
+device tree settings for different sensors. Setting the device tree overlay requires booting into U-Boot and setting
+the ``dtbo`` variable to the required device tree overlay. See :ref:`uboot_prompt` for instructions on getting to the
+U-Boot prompt.
+
+Once at the U-Boot prompt run the following commands to enable the Device Tree Overlay.
+
+Set the ``dtbo`` variables::
+
+    => setenv dtbo dolphin-csi0-with-expander.dtbo
+
+Save the environment to the eMMC so that the new variable will persist across reboots.
+
+::
+
+    => saveenv
+    Saving Environment to MMC... Writing to redundant MMC(0)... OK
+
+Optionally, confirm that the variable was correctly set.
+
+::
+
+    => printenv
+    altbootcmd=if test ${boot_slot}  = 1; then bootslot set b; bootcount reset;bootcount reset; run bootcmd; else bootslot set a; bootcount reset; bootcount reset; run bootcmd;  fi
+    autoload=n
+    baudrate=115200
+    bootcmd=bootmmc
+    bootcount=1
+    bootdelay=0
+    bootlimit=3
+    dtbo=dolphin-csi0-with-expander.dtbo
+    fdtcontroladdr=2172e190
+    preboot=show_logo;
+    upgrade_available=0
+    ver=U-Boot 2019.10 (Nov 21 2024 - 14:01:42 +0000)
+    Environment size: 407/65531 bytesboo
+
+Finally, boot with the new overlay applied.
+
+::
+
+    => boot
+
+Supported device tree overlays are included in the `Linux Kernel Overlay Repository <https://github.com/synaptics-astra/linux_5_15-overlay/tree/v#release#/arch/arm64/boot/dts/synaptics>`__.
+If you are using a different sensor you may need to add a custom overlay.
+
+.. note::
+
+    Support for device tree overlays were added in release v1.5.
+
+Using the OV5647 Sensor
+-----------------------
+
+Astra Machina SL1680 supports using the OV5647 sensor on either the CSI0 (22-pin), or the CSI1 (15-pin) connector, or both simultaneously.
+Connecting a single OV5647 sensor to CSI0 is the default configuration. Connecting a single OV5647 sensor to CSI1 requires enabling the
+``dolphin-csi1-without-expander.dtbo`` overlay. Using two OV5647 sensors simultaneously requires enabling the ``dolphin-bothcsi-without-expander.dtbo``
+overlay.
 
 .. note::
 
@@ -69,190 +135,51 @@ depends on which CSI connector is being used.
 
 .. note::
 
-    Using CSI0 and CSI1 simultaneously is currently not support. But, will be supported in a future release.
+    Release v1.5 adds support for using CSI0 and CSI1 simultaneously with two OV5647 sensors.
 
-Using the OV5647 camera module also requires an update to the kernel's device tree. This requires modifying the
-``linux-syna`` package using ``devtool``::
+Enabling the IMX258 and IMX415 Sensors
+--------------------------------------
 
-    devtool modify linux-syna
+Astra Machina SL1680 supports the IMX258 and IMX415 sensors connected to CSI0. These sensors use a GPIO expander which requires the ``dolphin-csi0-with-expander.dtbo``
+overlay.
 
-Below are instruction on how to :ref:`ov5647_csi0` or :ref:`ov5647_csi1`.
+.. note::
 
-.. _ov5647_csi0:
+    Using the IMX258 and IMX415 on CSI1 is not supported on Synaptics Astra Machina boards since CSI1
+    is not compatible with the GPIO expander.
 
-Configure the OV5647 Sensor for CSI0
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In addition to enabling the ``dolphin-csi0-with-expander.dtbo``, the sensor configuration needs to be updated to use the new sensor. Apply the following changes
+to ``isp_media_server.sh`` as describe in the previous section: :ref:`changing_sensor_module`.
 
-Modify the ``dolphin-rdk.dts`` file located in ``build-sl1680/workspace/sources/linux-syna/arch/arm64/boot/dts/synaptics``.
-
-::
-
-    diff --git a/arch/arm64/boot/dts/synaptics/dolphin-rdk.dts b/arch/arm64/boot/dts/synaptics/dolphin-rdk.dts
-    index ee1fbb6..3bcdea7 100644
-    --- a/arch/arm64/boot/dts/synaptics/dolphin-rdk.dts
-    +++ b/arch/arm64/boot/dts/synaptics/dolphin-rdk.dts
-    @@ -158,14 +158,6 @@
-                                    #gpio-cells = <2>;
-                            };
-
-    -                       expander2: gpio@49 {
-    -                               compatible = "ti,pca9536";
-    -                               reg = <0x49>;
-    -                               gpio-controller;
-    -                               #gpio-cells = <2>;
-    -                               reset-gpios = <&expander1 4 GPIO_ACTIVE_LOW>;
-    -                       };
-    -
-                            rtc0: rtc@68 {
-                                    compatible = "dallas,ds1339";
-                                    wakeup-source;
-    @@ -540,8 +532,8 @@
-
-    &isp_vsi {
-            status = "okay";
-    -       enable-gpio = <&expander2 1 GPIO_ACTIVE_HIGH>;
-    -       reset-gpio = <&expander2 0 GPIO_ACTIVE_HIGH>;
-    +       enable-gpio = <&expander1 0 GPIO_ACTIVE_HIGH>;
-    +       reset-gpio = <&expander1 4 GPIO_ACTIVE_HIGH>;
-    };
-
-    &isp_vsi_video {
-
-Then update the ``isp_media_server.sh`` script to load the configuration for the OV5647 sensor. Apply the following change
-to ``meta-synaptics/recipes-devtools/synasdk/files/isp_media_server.sh``.
-
-::
+Configuration for IMX258::
 
     diff --git a/recipes-devtools/synasdk/files/isp_media_server.sh b/recipes-devtools/synasdk/files/isp_media_server.sh
-    index 20cbc24..0ba2e04 100644
+    index 4f603fb..c5cd9b1 100644
     --- a/recipes-devtools/synasdk/files/isp_media_server.sh
     +++ b/recipes-devtools/synasdk/files/isp_media_server.sh
     @@ -26,7 +26,7 @@ set -e
 
     case $1 in
         start)
-    -        echo "sensor=imx258 xml=/usr/share/IMX258.xml manu_json=/usr/share/ISP_Manual_IMX258.json \
-    +        echo "sensor=ov5647 xml=/usr/share/OV5647_480p.xml manu_json=/usr/share/ISP_Manual_IMX258.json \
+    -        echo "sensor=ov5647 xml=/usr/share/OV5647_480p.xml manu_json=/usr/share/ISP_Manual_IMX258.json \
+    +        echo "sensor=imx258 xml=/usr/share/IMX258.xml manu_json=/usr/share/ISP_Manual_IMX258.json \
             auto_json=/usr/share/ISP_Auto.json i2c_bus_id=3 mipi_id=0 mode=0" > /proc/vsi/isp_subdev0
-            echo -n "Starting $DESC: "
-            start-stop-daemon --start $SSD_OPTIONS  > $LOGFILE &
+            echo "1 sensor=ov5647 1 xml=/usr/share/OV5647_480p.xml 1 manu_json=/usr/share/ISP_Manual_IMX258.json \
+            1 auto_json=/usr/share/ISP_Auto.json 1 i2c_bus_id=0 1 mipi_id=1 1 mode=0" > /proc/vsi/isp_subdev0
 
-
-.. _ov5647_csi1:
-
-Configure the OV5647 Sensor for CSI1
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Modify the ``dolphin-rdk.dts`` file located in ``build-sl1680/workspace/sources/linux-syna/arch/arm64/boot/dts/synaptics``.
-
-``dolphin-rdk.dts``::
-
-    diff --git a/arch/arm64/boot/dts/synaptics/dolphin-rdk.dts b/arch/arm64/boot/dts/synaptics/dolphin-rdk.dts
-    index c4b7b24..06aa276 100644
-    --- a/arch/arm64/boot/dts/synaptics/dolphin-rdk.dts
-    +++ b/arch/arm64/boot/dts/synaptics/dolphin-rdk.dts
-    @@ -158,14 +158,6 @@
-                                    #gpio-cells = <2>;
-                            };
-
-    -                       expander2: gpio@49 {
-    -                               compatible = "ti,pca9536";
-    -                               reg = <0x49>;
-    -                               gpio-controller;
-    -                               #gpio-cells = <2>;
-    -                               reset-gpios = <&expander1 4 GPIO_ACTIVE_LOW>;
-    -                       };
-    -
-                            rtc0: rtc@68 {
-                                    compatible = "dallas,ds1339";
-                                    wakeup-source;
-    @@ -552,8 +544,8 @@
-
-    &isp_vsi {
-            status = "okay";
-    -       enable-gpio = <&expander2 1 GPIO_ACTIVE_HIGH>;
-    -       reset-gpio = <&expander2 0 GPIO_ACTIVE_HIGH>;
-    +       enable-gpio = <&expander1 7 GPIO_ACTIVE_HIGH>;
-    +       reset-gpio = <&expander1 6 GPIO_ACTIVE_HIGH>;
-    };
-
-``dolphin.dtsi``::
-
-    diff --git a/arch/arm64/boot/dts/synaptics/dolphin.dtsi b/arch/arm64/boot/dts/synaptics/dolphin.dtsi
-    index 8b8c5b3..2c51a11 100644
-    --- a/arch/arm64/boot/dts/synaptics/dolphin.dtsi
-    +++ b/arch/arm64/boot/dts/synaptics/dolphin.dtsi
-    @@ -1165,32 +1165,32 @@
-                            ports {
-                                    #address-cells = <1>;
-                                    #size-cells = <0>;
-    -                               port@1 {
-    -                                       reg = <1>;
-    +                               port@5 {
-    +                                       reg = <5>;
-                                            #address-cells = <1>;
-                                            #size-cells = <0>;
-    -                                       isp_vsi_subdev_ep0: endpoint@1 {
-    -                                               reg = <1>;
-    +                                       isp_vsi_subdev_ep0: endpoint@5 {
-    +                                               reg = <5>;
-                                                    remote-endpoint = <&isp_vsi_video_ep0>;
-                                            };
-                                    };
-
-    -                               port@2 {
-    -                                       reg = <2>;
-    +                               port@6 {
-    +                                       reg = <6>;
-                                            #address-cells = <1>;
-                                            #size-cells = <0>;
-    -                                       isp_vsi_subdev_ep1: endpoint@2 {
-    -                                               reg = <2>;
-    +                                       isp_vsi_subdev_ep1: endpoint@6 {
-    +                                               reg = <6>;
-                                                    remote-endpoint = <&isp_vsi_video_ep1>;
-                                            };
-                                    };
-
-    -                               port@3 {
-    -                                       reg = <3>;
-    +                               port@7 {
-    +                                       reg = <7>;
-                                            #address-cells = <1>;
-                                            #size-cells = <0>;
-    -                                       isp_vsi_subdev_ep2: endpoint@3 {
-    -                                               reg = <3>;
-    +                                       isp_vsi_subdev_ep2: endpoint@7 {
-    +                                               reg = <7>;
-                                                    remote-endpoint = <&isp_vsi_video_ep2>;
-                                            };
-                                    };
-
-Then update the ``isp_media_server.sh`` script to load the configuration for the OV5647 sensor. Apply the following change
-to ``meta-synaptics/recipes-devtools/synasdk/files/isp_media_server.sh``.
-
-::
+Configuration for IMX415::
 
     diff --git a/recipes-devtools/synasdk/files/isp_media_server.sh b/recipes-devtools/synasdk/files/isp_media_server.sh
-    index 20cbc24..b521d47 100644
+    index 4f603fb..c5cd9b1 100644
     --- a/recipes-devtools/synasdk/files/isp_media_server.sh
     +++ b/recipes-devtools/synasdk/files/isp_media_server.sh
-    @@ -26,8 +26,8 @@ set -e
+    @@ -26,7 +26,7 @@ set -e
 
     case $1 in
         start)
-    -        echo "sensor=imx258 xml=/usr/share/IMX258.xml manu_json=/usr/share/ISP_Manual_IMX258.json \
-    -        auto_json=/usr/share/ISP_Auto.json i2c_bus_id=3 mipi_id=0 mode=0" > /proc/vsi/isp_subdev0
-    +        echo "1 sensor=ov5647 xml=/usr/share/OV5647_480p.xml manu_json=/usr/share/ISP_Manual_IMX258.json \
-    +        auto_json=/usr/share/ISP_Auto.json i2c_bus_id=0 mipi_id=1 mode=0" > /proc/vsi/isp_subdev0
-            echo -n "Starting $DESC: "
-            start-stop-daemon --start $SSD_OPTIONS  > $LOGFILE &
-            echo "${DAEMON##*/}."
+    -        echo "sensor=ov5647 xml=/usr/share/OV5647_480p.xml manu_json=/usr/share/ISP_Manual_IMX258.json \
+    +        echo "sensor=imx415 xml=/usr/share/IMX415.xml manu_json=/usr/share/ISP_Manual_IMX415.json \
+            auto_json=/usr/share/ISP_Auto.json i2c_bus_id=3 mipi_id=0 mode=0" > /proc/vsi/isp_subdev0
+            echo "1 sensor=ov5647 1 xml=/usr/share/OV5647_480p.xml 1 manu_json=/usr/share/ISP_Manual_IMX258.json \
+            1 auto_json=/usr/share/ISP_Auto.json 1 i2c_bus_id=0 1 mipi_id=1 1 mode=0" > /proc/vsi/isp_subdev0
 
-Building the Updated Image
---------------------------
-
-Build the image with the updated device tree entries::
-
-   devtool build linux-syna
-   devtool build-image astra-media

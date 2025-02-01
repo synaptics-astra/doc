@@ -53,7 +53,9 @@ The Graphical Desktop
 ---------------------
 
 Astra Machina's graphical desktop is enabled by default. It can be displayed on an external display connected
-to the HDMI port or a MIPI display. Input can be provided by connecting a standard HID USB keyboard and mouse. 
+to the HDMI port or a MIPI display. Input can be provided by connecting a standard HID USB keyboard and mouse.
+The Wayland / Weston display server is used by default, but Astra Machina can be configured to use X11 instead
+when building a custom image. :doc:`/yocto`
 
 .. figure:: media/wayland-desktop.jpg
 
@@ -65,15 +67,60 @@ Clicking on the icon in the top left corner will open a terminal.
 
     The Wayland Desktop with a terminal open
 
+X11 Support
+^^^^^^^^^^^
+
+X11 supports two desktop environments. By default, SL1680 is configured to use `XFCE4 <https://www.xfce.org/>`__ and SL1620 / SL1640
+use `Matchbox <https://layers.openembedded.org/layerindex/recipe/300718/>`__.
+
+.. figure:: media/sl1680-xfce4-desktop.jpg
+
+    The XFCE4 Desktop Environment on SL1680
+
+.. figure:: media/sl1680-xfce4-windows.jpg
+
+    The XFCE4 Desktop Environment with a terminal and file manager on SL1680
+
+.. figure:: media/sl1640-matchbox.jpg
+
+    The Matchbox Desktop Environment on SL1640
+
+.. figure:: media/sl1640-matchbox-terminal.jpg
+
+    The Matchbox Desktop Environment with a terminal open on SL1640
+
+.. note::
+
+    On SL1620, the output mode has to be set explicitly to avoid scaling issues::
+
+        export DISPLAY=:0
+        xrandr -s 800x480
+
+
+.. note::
+
+    PulseAudio is not configured so X11 media players like ``Parole`` will not have
+    working audio.
+
 Dual Displays
 ^^^^^^^^^^^^^
 
-SL1620 and SL1680 support dual display configurations. SL1620 supports a TFT display plus a MIPI DSI / DSI to HDMI display. SL1680 supports
-a HDMI display plus a MIPI DSI. Both displays can be configured to run Weston, KMS, or a combination of Weston + KMS.
+SL1620 and SL1680 support dual display configurations. SL1620 supports a TFT display plus an HDMI display
+(via onboard DSI to MIPI converter on REV D boards). SL1620 can also be configured to use a MIPI panel instead
+of HDMI by enabling a device tree overlay. Astra Machina include device tree overlays for the Waveshare panel
+``myna2-ws-panel-overlay.dtbo`` and the Haier panel ``myna2-haier-panel-overlay.dtbo``.
+
+SL1680 supports an HDMI display plus a MIPI DSI. By default, the Waveshare panel is enabled as the secondary display.
+But, Astra Machina supports using the Haier panel by enabling the ``dolphin-haier-panel-overlay.dtbo`` device tree overlay.
+Both displays can be configured to run Weston, KMS, or a combination of Weston + KMS.
 
 .. note::
 
     Mirroring of display output is not supported.
+
+.. note::
+
+    Dual Display is not supported with X11.
 
 The Shell with SSH
 ------------------
@@ -344,9 +391,10 @@ Example /proc/asound/pcm output from SL1680::
 Video Sinks
 """""""""""
 
-Gstreamer on Astra Machina supports two video sinks. The main video sink is the ``waylandsink`` which uses
+Gstreamer on Astra Machina supports three video sinks. The main video sink is the ``waylandsink`` which uses
 the wayland protocol and compositor to display the video output. Astra Machina also supports the DRM KMS
-sink which displays video frames directly to a Linux DRM device using the ``kmssink``.
+sink which displays video frames directly to a Linux DRM device using the ``kmssink``. The ``xvimagesink``
+is supported when Astra Machina is running an image with the X11 based display server.
 
 Wayland Sink
 ************
@@ -390,9 +438,11 @@ Identify the plane id of the plane which supports ``formats: NV12 NV21 UYVY VYUY
 
     Example of ``modetest`` output of the planes section on SL1680.
 
-.. note::
+XvImageSink
+***********
 
-    Only SL1640 and SL1680 support ``kmssink``.
+The XvImage sink supports displaying video using the X11 backend. In the following examples, replacing ``waylandsink`` with
+``xvimagesink`` will allow the example to run on X (see `GStreamer documentation <https://gstreamer.freedesktop.org/documentation/xvimagesink/index.html?gi-language=c>`__ for more details).
 
 Audio Playback
 ^^^^^^^^^^^^^^
@@ -425,6 +475,10 @@ An example of a H265 encoded video file on SL1640 / SL1680::
 
     gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! v4l2h265dec ! waylandsink fullscreen=true
 
+An example of a H265 encoded video file on SL1640 / SL1680 using ``xvimagesink``::
+
+    gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! v4l2h265dec ! xvimagesink
+
 An example of a H265 encoded video file on SL1620::
 
     gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! avdec_h265 ! waylandsink fullscreen=true
@@ -452,6 +506,27 @@ audio stream::
     gst-launch-1.0 filesrc location=test_file.mp4  ! qtdemux name=demux \
         demux.video_0 ! queue ! h265parse ! v4l2h265dec ! queue ! waylandsink fullscreen=true \
         demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,7
+
+Play an MP4 file on SL1620 with a H265 encoded video stream and an AAC encoded
+audio stream::
+
+    gst-launch-1.0 filesrc location=little.mp4  ! qtdemux name=demux  \
+        demux.video_0 ! queue ! h265parse ! avdec_h265 ! queue ! waylandsink fullscreen=true \
+        demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,1
+
+Play an MP4 file on SL1640 / SL1680 with a H265 encoded video stream and an AAC encoded
+audio stream with ``xvimagesink``::
+
+    gst-launch-1.0 filesrc location=test_file.mp4  ! qtdemux name=demux \
+        demux.video_0 ! queue ! h265parse ! v4l2h265dec ! queue ! xvimagesink \
+        demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,7
+
+Play an MP4 file on SL1620 with a H265 encoded video stream and an AAC encoded
+audio stream with ``xvimagesink``::
+
+    gst-launch-1.0 filesrc location=little.mp4  ! qtdemux name=demux  \
+        demux.video_0 ! queue ! h265parse ! avdec_h265 ! queue ! xvimagesink \
+        demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,1
 
 Recording
 ^^^^^^^^^
@@ -504,17 +579,17 @@ SL1680 includes an integrated ISP and supports connecting image sensor camera mo
 cameras using the V4L2 interface. The ISP supports 3 output paths, the main path supports outputing 4K resolution (if the sensor supports 4K), and the Secondary Paths
 support 2K resolution. Each path has it's own video device file in /dev.
 
-To display video from the ISP's Main Path with 4K resolution::
+To display video from the ISP's Main Path::
 
-    gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)NV12, width=(int)3840, height=(int)2160, framerate=(fraction)30/1' ! waylandsink
+    gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink
 
 To display video from the ISP's Secondary Path 1::
 
-    gst-launch-1.0 v4l2src device=/dev/video1 ! 'video/x-raw, format=(string)NV12, width=(int)1920, height=(int)1080, framerate=(fraction)30/1' ! waylandsink
+    gst-launch-1.0 v4l2src device=/dev/video1 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink
 
 To display video from the ISP's Secondary Path 2::
 
-    gst-launch-1.0 v4l2src device=/dev/video2 ! 'video/x-raw, format=(string)NV12, width=(int)1920, height=(int)1080, framerate=(fraction)30/1' ! waylandsink
+    gst-launch-1.0 v4l2src device=/dev/video2 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink
 
 The device file number may vary depending on your configuration. You can use the ``v4l2-ctl`` command to find which device files are associated with each of the
 ISP paths.
@@ -523,6 +598,87 @@ ISP paths.
     :scale: 75%
 
     ``v4l2-ctl --list-devices`` output with the ISP Path devices highlighted
+
+An additional video device is created to support Bayer RGB capture. This is the 4th video instance which advertises itself as only supporting Bayer RGB.
+The other 3 video ports support NV12 / RGB only.
+
+Multi Stream Support
+********************
+
+SL1680 supports up to three video streams to be enabled simultaneously (excluding the Bayer RGB video port - vvcam-video.0.3). Up to three different GStreamer pipelines can be
+run at the same time to validate this feature. From the GStreamer command list below, any combination of up to 3 paths — Main, Self Path 1, and Self Path 2 can be run simultaneously.
+
+::
+
+    gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink
+
+    gst-launch-1.0 v4l2src device=/dev/video1 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink
+
+    gst-launch-1.0 v4l2src device=/dev/video2 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink
+
+.. note::
+
+    Although multiple streams may appear as independent devices, all streams originate from a single instance. Once all streams are playing, any change
+    made to an existing stream is treated as a new change. Hence, ensure that all sessions are closed one by one before starting the next set of multi
+    or single streaming.
+
+Dual Sensor Support
+*******************
+
+Sl1680 supports dual sensor configuration with the OV5647 sensor module. Dual sensor support required enabling the ``dolphin-bothcsi-without-expander.dtbo``
+overlay. (See :doc:`../subject/updating_isp_sensor_configuration`). Once the two sensors are connected and the overlay is enabled, ``v4l2-ctl`` will display a total of eight
+``vvcam-video`` devices. Three NV12 / RGB devices plus one Bayer RGB device per sensor.
+
+.. figure:: media/dual-sensor-isp-path-devices.png
+    :scale: 75%
+
+    ``v4l2-ctl --list-devices`` output with the dual sensor ISP Path devices highlighted
+
+Similar to multi stream support, multiple Gstreamer pipelines can be used with both sensors simultaniously.
+
+For example, these commands will display video from the main path of the sensor connected to CSI0 and video from the main path of the sensor connected to CSI1.
+
+::
+
+    gst-launch-1.0 v4l2src device=/dev/video3 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)30/1' ! waylandsink
+
+    gst-launch-1.0 v4l2src device=/dev/video7 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)30/1' ! waylandsink
+
+.. note::
+
+    IMX258 and IMX415 sensors are not supported with the dual sensor configuration on Astra Machina boards. Both sensors
+    require a GPIO expander whereas CSI1 is incompatible with the GPIO expander.
+
+MMU Support
+***********
+
+Currently V4l2 ISP supports MMU for NV12 formats in MP and SP2 path only. For RGB888 and Bayer RGB format, MMU support is not enabled yet.
+SP1 path doesn't have MMU support due to HW limitation. By default, MMU support is enabled for NV12 format for MP / SP2 paths, otherwise
+the MMU is automatically disabled if it is not supported. Users are not required to add any extra control commands for the MMU for the
+default behavior.
+
+The below table provides the default behavior whether MMU enable or disable depending upon the Camera Path and selected output format.
+
+=========  ==============   ===============      ==================
+Path       Format (NV12)    Format (BGB888)      Format (Bayer RGB)
+=========  ==============   ===============      ==================
+MP         Enabled          Disabled             Disabled
+SP1        Disabled         Disabled             Disabled
+SP2        Enabled          Disabled             Disabled
+=========  ==============   ===============      ==================
+
+To explicitly disable MMU support while using NV12 format, add the extra-controls option to the Gstreamer pipeline.
+
+::
+
+    gst-launch-1.0 v4l2src device=/dev/video2  extra-controls="c,mmu_enable=0" ! 'video/x-raw, \
+        format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink
+
+.. note::
+
+    When using ``filesink``, the user needs to disable the MMU for paths where the MMU is enabled by default. MMU mode
+    requires the stride value be correctlt aligned. Unfortunately, Gstreamers filesink element ignores this value. The only
+    workaround is for the user to disable MMU for paths where the MMU is enabled by default.
 
 RTSP Cameras
 """"""""""""
@@ -551,10 +707,10 @@ Multiple RTSP streams can be displayed simultaneously. This example will decode 
         sink_2::alpha=1 sink_2::xpos=0 sink_2::ypos=540 sink_2::width=960 sink_2::height=540 \
         sink_3::alpha=1 sink_3::xpos=960 sink_3::ypos=540 sink_3::width=960 sink_3::height=540 \
         ! queue2 ! videoconvert ! "video/x-raw, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1" ! waylandsink \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream1" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h265, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_0 \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream2" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h265, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_1 \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream3" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h265, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_2 \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream4" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h265, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_3
+        rtspsrc location="rtsp://<user>:<password>@<ip>/stream1" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_0 \
+        rtspsrc location="rtsp://<user>:<password>@<ip>/stream2" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_1 \
+        rtspsrc location="rtsp://<user>:<password>@<ip>/stream3" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_2 \
+        rtspsrc location="rtsp://<user>:<password>@<ip>/stream4" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_3
 
 HDMI-RX
 ^^^^^^^
@@ -614,7 +770,7 @@ Use the ``arecord`` command to determine which ALSA capture device is associated
 
     ALSA HDMI-RX audio capture device
 
-Use the ``aplay`` command to determine which ALSA playback device to use to play the captured audio. The following examples will use the speakers associated with teh HDMI sink.
+Use the ``aplay`` command to determine which ALSA playback device to use to play the captured audio. The following examples will use the speakers associated with the HDMI sink.
 
 .. figure:: media/sl1680-hdmi-output-device.png
 
@@ -809,13 +965,13 @@ Syna Video Player
 The Syna Video Player application demonstrates Astra Machina's ability to play and decode videos. It supports playing a single video, or playing up to four
 videos in a grid.
 
-.. figure:: media/syna-video-player.png
+.. figure:: media/sl1680-syna-video-player.jpg
 
     The main screen of Syna Video Player
 
 Run the Syna Video Player::
 
-    root@sl1680:~# syna-video-player --mach=sl1680 --mode=ffmpeg
+    root@sl1680:~# syna-video-player --mach sl1680 --mode ffmpeg
 
 The Syna Video Player expects two paramaters, the machine type and the mode. The machine type is the version of Astra Machina which the application is running on.
 The valid options are ``sl1620``, ``sl1640`` and ``sl1680``. The mode specifies which mode of decoding should be used. The options are ``ffmpeg`` and ``v4l2``.
@@ -836,13 +992,13 @@ Syna AI Player
 The Syna AI Player application uses the above gstreamer pipelines to show object detection, face detection, and pose estimation. It also supports Multi AI view which
 does object detection, face detection, and pose estimation simultaniously while playing a video.
 
-.. figure:: media/syna-ai-player.png
+.. figure:: media/syna-ai-player.jpg
 
     The main screen of Syna AI Player
 
 Run the Syna AI Player::
 
-    root@sl1680:~# syna-ai-player --mach=sl1680
+    root@sl1680:~# syna-ai-player --mach sl1680
 
 The Syna AI Player expects the machine type parameter. The machine type is the version of Astra Machina which the app is running on.
 The valid options are ``sl1620``, ``sl1640`` and ``sl1680``.
@@ -1071,13 +1227,13 @@ Enabling Services
 
 Start hostapd and iptables::
 
-    systemctl start hostapd
-    systemctl start iptables
+    systemctl start hostapd.service
+    systemctl start iptables.service
 
 Enable hostapd and iptables on boot::
 
-    systemctl enable hostapd
-    systemctl enable iptables
+    systemctl enable hostapd.service
+    systemctl enable iptables.service
 
 Verify wlan0 Interface Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1096,10 +1252,10 @@ Disabling Services
 
 Use the following commands to stop using the Wifi interface as an access point and disable hostapd::
 
-    systemctl stop hostapd
-    systemctl stop iptables
-    systemctl disable hostapd
-    systemctl disable iptables
+    systemctl stop hostapd.service
+    systemctl stop iptables.service
+    systemctl disable hostapd.service
+    systemctl disable iptables.service
     rm -rf /etc/systemd/network/10-wlan0.network
 
 Performing throughput tests
@@ -1275,6 +1431,14 @@ You can then search for the headset (make sure the headset is in discoverable mo
 This command returns the MAC address of all the devices that are currently discoverable. You need to identify the one
 of the headset you want to pair.
 
+After identifying the MAC address of the device you want to pair with, you can disable scanning.
+
+::
+
+    [bluetooth]# scan off
+    Discovery stopped
+    [CHG] Controller C0:F5:35:AA:7D:8F Discovering: no
+
 Once you found the headset you can pair to it by using the ``pair`` command with the MAC address of the headset::
 
     [bluetooth]# pair 0A:73:76:09:55:C0
@@ -1420,6 +1584,8 @@ The Linux Kernel uses Device Tree data structures to describe the
 hardware components and their configurations on the system. The device
 tree source files are in the Linux Kernel source tree under that path
 ``arch/arm64/boot/dts/synaptics/``. These files are maintained in the `Astra Linux Kernel Overlay repository <https://github.com/synaptics-astra/linux_5_15-overlay>`__.
+This directory also includes device tree overlays which can be used to
+modify the device tree without having to recompile the entire device tree.
 
 Root File System
 ^^^^^^^^^^^^^^^^
@@ -1532,6 +1698,8 @@ After the flashing process completes, the SD card will now be ready to boot Astr
     Balena Etcher after successfully flashinge image to the SD card
 
 
+.. _uboot_prompt:
+
 U-Boot Prompt with SUBoot
 -------------------------
 
@@ -1604,17 +1772,13 @@ Setting up the USB Boot Environment
 Booting from USB requires the usb_boot software tool to be the installed on
 a host system. Windows, Mac, and Linux hosts are supported. Windows systems
 also require the Synaptics WinUSB Driver. Mac and Linux systems do not require
-any additional drivers. USB Boot also requires setting up the serial console
-as described in the :ref:`setup_serial_console` section above. This section
-covers how to configure the host system and prepare for USB booting.
+any additional drivers. This section covers how to configure the host system
+and prepare for USB booting.
 
 Hardware Setup
 """"""""""""""
 
-To run usb_boot you will need to connect the USB-TTL board and cable to Astra
-Machina as described in the :ref:`setup_serial_console` section above.
-This will allow you to see console messages during the flashing process and input
-commands to the bootloader. You will also need to connect a USB cable from the host
+To run usb_boot you will also need to connect a USB cable from the host
 system to the USB Type-C USB 2.0 port on Astra Machina (next to the ethernet port).
 
 .. figure:: media/usb-c.png
@@ -1713,6 +1877,12 @@ requires additional permissions to interface with USB devices and access system 
 
     Output of the usb_boot tool on Linux
 
+.. note::
+
+    Some versions of Mac OS may be configured to block apps from "unverified developers". If you encounter
+    this error please go to System Preference -> Security & Privacy -> General to enable executing apps from
+    unverified developers.
+
 Booting using USB Boot
 """""""""""""""""""""""
 
@@ -1721,8 +1891,11 @@ running on the host system, Astra Machina will need to be placed into USB
 Boot mode. To do that press and hold the "USB_BOOT" button on the
 I/O board. Then press and release the "RESET" button. Be sure to hold
 the "USB_BOOT" button long enough so that the board can reset and detect
-that the "USB_BOOT" button is pressed. After booting into USB Boot mode the U-Boot
-prompt "=>" will be displayed in the serial console.
+that the "USB_BOOT" button is pressed. After booting into USB Boot mode, U-Boot
+will automatically flash the ``eMMCimg`` from the host onto Astra Machina. The
+board will automatically reboot when the update is complete.
+
+USB U-Boot will execute the commands specified in the ``uEnv.txt`` file located in ``images`` directory.
 
 .. figure:: media/usb-boot-and-reset.png
 
@@ -1730,51 +1903,58 @@ prompt "=>" will be displayed in the serial console.
 
 .. figure:: media/usb_boot_output_win.png
 
-    Output of the usb_boot tool and the serial console after successful boot
+    Output of the usb_boot tool after successful boot
 
-.. figure:: media/putty-usb-boot.png
+.. note::
 
-    Serial Console after booting using USB Boot
+    USB Boot v1.2 and later no longer require a USB-TTL board or cable to run commands at the U-Boot prompt.
 
 .. note::
 
     Astra Machina will not show up in the Window's Device Manager or be seen by the tool until putting the
     device into USB Boot Mode. Hold down the USB_BOOT and press the RESET button as described above.
 
-Flashing Firmware to eMMC using USB Boot
-""""""""""""""""""""""""""""""""""""""""
-
-.. figure:: media/emmc_flash_snapshot.png
-
-    Directory with files used to flash the eMMC image
-
-When booting from USB, the usb_boot tool allows transferring
-the eMMC image directly over the USB interface. To flash the eMMC image via USB, copy the image files
-to the 'images' folder in your Astra Machina variant's usb_boot tool directory.
-
-Write the image to the eMMC using the command::
-
-    => l2emmc eMMCimg
-
-The parameter eMMCimg is the name of the image directory under the usb_boot
-tool's images directory.
-
-Resetting
----------
-
-Astra Machina will boot into linux if a valid image has been written to the eMMC
-when the board is powered on. After writing an image to the eMMC, issue the reset
-command in U-Boot. Press the "RESET" button on the board, or power cycle the board
-to boot into Linux.
-
-U-Boot reset command::
-
-    => reset
-
 .. note::
 
     Make sure that the ``SD-Boot`` jumper is not attached when booting from eMMC. Otherwise,
     the device will boot from internal SPI flash or an SD Card. See :ref:`spi_sd_boot`.
+
+.. _usb_boot_telnet_console:
+
+USB Boot with Telnet Console (Advanced Option)
+""""""""""""""""""""""""""""""""""""""""""""""
+
+USB Boot v1.2 and later allow accessing the U-Boot console using telnet. Users who want to perform more
+complicated tasks can run the ``run-telnet-console.bat`` or ``run-telnet-console.sh`` scripts. This will
+create a telnet session for the console. On Windows, this will launch Putty (included in the USB Boot package)
+with the telnet session. On Mac and Linux, the user should run the ``telnet`` command line tool to connect to
+``localhost 8141``.
+
+.. note::
+
+    Delete the contents of ``images/uEnv.txt`` to access the U-Boot console. Otherwise, U-Boot will exeute the commands
+    in that file.
+
+.. figure:: media/usbtool_output_win_usbbconsole.png
+
+    USB Boot tool Output with Telnet Console Support
+
+.. figure:: media/telnet_output_usbconsole.png
+
+    U-Boot Console in Putty
+
+.. figure:: media/linux-usbboot-with-usbconsole.png 
+
+    USB Boot tool Output with Telnet Console Support on Linux
+
+.. figure:: media/linux-telnet-console.png
+
+    U-Boot Console in telnet on Linux
+
+.. note::
+
+    Recent versions of Mac OS and Linux do not preinstall ``telnet``. Please install telnet from a third party package
+    repository.
 
 Updating the Firmware from SPI
 ------------------------------
@@ -1864,7 +2044,8 @@ You can find the latest versions of the SPI images on `GitHub <https://github.co
 Flashing Image from USB Boot
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To update the internal SPI flash firmware using usb_boot you must first follow the steps in section :ref:`usb_boot_setup`.
+To update the internal SPI flash firmware using usb_boot you must first follow the steps in section :ref:`usb_boot_setup`
+and :ref:`usb_boot_telnet_console` to access the U-Boot console.
 
 .. figure:: media/spi_flash_snapshot.png
 
@@ -1875,7 +2056,7 @@ file to the "images" directory in the usb_boot tool's directory.
 
 Then write the image to the SPI flash using the commands::
 
-    => usbload u-boot-astra-v1.0.0.sl1680.rdk.spi.bin 0x10000000
+    => usbload u-boot-astra-v1.1.1.sl1680.rdk.spi.bin 0x10000000
     => spinit;
     => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
 
@@ -1891,7 +2072,7 @@ The USB drive will need a partition with a Fat32 formatted file system.
 
 Write the image to SPI flash using the following commands::
 
-    => usb start; fatload usb 0 0x10000000 u-boot-astra-v1.0.0.sl1680.rdk.spi.bin;
+    => usb start; fatload usb 0 0x10000000 u-boot-astra-v1.1.1.sl1680.rdk.spi.bin;
     => spinit;
     => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
 
@@ -1909,7 +2090,7 @@ Write the SPI image to the SPI flash from the TFTP server using the command::
 
     => net_init; dhcp;
     => setenv serverip 10.10.10.10;
-    => tftpboot 0x10000000 u-boot-astra-v1.0.0.sl1680.rdk.spi.bin;
+    => tftpboot 0x10000000 u-boot-astra-v1.1.1.sl1680.rdk.spi.bin;
     => spinit;
     => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
 

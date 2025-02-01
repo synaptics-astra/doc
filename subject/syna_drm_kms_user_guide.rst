@@ -596,7 +596,7 @@ using below command.
 
 ::
 
-   systemctl stop Weston
+   systemctl stop weston.service
 
 ``modetest`` is a tool provided by ``libdrm`` library and is available as
 part of the SDK release/image (``/usr/local/bin/modetest``)

@@ -26,7 +26,7 @@ Set the ``SHELL_OVERRIDE_DISPLAY_WINDOW`` parameter in ``/etc/default/weston``::
 Restart the Weston service to allow the change to take affect.
 ::
 
-    systemctl restart weston
+    systemctl restart weston.service
 
 New applications will now open in the display named in ``/home/root/def_disp``. To change the default display, simply update this
 file and restart Weston.
