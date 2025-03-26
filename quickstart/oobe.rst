@@ -15,6 +15,8 @@ At the bottom is a quick access panel with icons which will launch the three app
 - Terminal
 - Chromium Browser
 - SynaExplorer
+- Settings
+- About
 
 Terminal
 --------
@@ -275,19 +277,19 @@ The fifth button on the left is the "Capability Demo" button, which opens the "C
 Best Case
 """""""""
 
-The example demonstrates one of the best usecase which platfrom can support.
+The example demonstrates one of the best use case which the platform can support.
 
 .. note::
 
     This example doesn't define the limit for individual IP block. Refer datasheet for checking complete capabilities of individual IP block.
 
-This Best Case demo app demonstrates the capability of platform running multiple things concurently as mentioned below:
+This Best Case demo app demonstrates the capability of the platform running multiple things concurrently as mentioned below:
 
 SL1680:
 1. Multiple decoding: 4 Streams of 1920x1080@25 & 4 streams of 1280x720@25
 2. USB camera streaming and preview of 640x480@30
 3. Mixing of streams mentioned in #1 & #2 and rendering to display
-4. HDMI-RX stream receiving from Laptop (upto 4K60) and rendering to display
+4. HDMI-RX stream receiving from Laptop (up to 4K60) and rendering to display
 
 SL1640:
 1. Multiple decoding: 9 streams of 640x480@25
@@ -344,3 +346,38 @@ clicking on "Validate URLs" button to check if they are alive and reachable. Als
 .. figure:: media/settings-rtsp-urls-validate-crop.jpg
 
     RTSP URLs Validation on SL1680
+
+Settings
+--------
+
+Settings can be launched by clicking the Settings icon in the quick access panel. Settings app helps to configure different modules like Display.
+
+.. figure:: media/settings.jpg
+
+Display Config
+^^^^^^^^^^^^^^
+
+Display config allows to select MIPI panel for given platform. You can select a panel from auto filled dropdown menu and click on "Save Panel" button. It will popup a messege to reboot a board. On reboot your new panel will be configured.
+
+.. figure:: media/settings-popup.jpg
+
+"Reset to Default" button configures the default display. "Print Panel Info" button gives currently configured panel information.
+
+.. note::
+
+    Before clicking on "Save Panel" or "Reset to Default" button, ensure that the required display panel is connected.
+
+.. note::
+
+    Before running display settings, it is required to save uboot environment once to have persistent configuration for display.
+    Interrupt a boot process on start, to stop in uboot console (See :ref:`uboot_prompt`). Enter "saveenv" command to save uboot environment. Reboot a system.
+
+
+About
+-----
+
+About can be launched by clicking the About icon in the quick access panel. About helps to identify software version, hw revisions, linux build
+versions. It also provides some information on useful applications and internet links to resources.
+
+.. figure:: media/about.jpg
+
