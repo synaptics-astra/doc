@@ -169,7 +169,7 @@ Astra Machina provides a serial console which displays bootloader
 and OS messages to a terminal emulator running on the host system. These messages are
 useful for determining the status of Astra Machina early in the boot process
 or when a display is not connected. It can also provides useful information
-during operation. The serial console is also needed during the firmware update process.
+during operation. The serial console is also needed during the software update process.
 
 .. _setup_serial_console:
 
@@ -1567,8 +1567,8 @@ device.
 Bootloader
 ^^^^^^^^^^
 
-Astra Machina uses the Synaptics U-Boot (SUBoot) bootloader to do additional
-hardware initialization and to boot the Linux Kernel. SUBoot is based on the
+Astra Machina uses the Synaptics U-Boot (SU-Boot) bootloader to do additional
+hardware initialization and to boot the Linux Kernel. SU-Boot is based on the
 open source U-Boot project. (`U-Boot Documentation <https://docs.u-boot.org/en/latest/>`__)
 
 Linux Kernel and Device Tree
@@ -1601,49 +1601,53 @@ U-Boot
 
 As mentioned above, Astra Machina uses U-Boot as its bootloader. There
 are three types of U-Boot which are used with Astra Machina. In addition
-to SUBoot, there are SPI U-Boot and USB U-Boot variants which are used to
+to SU-Boot, there are SPI U-Boot and USB U-Boot variants which are used to
 flash or recover a device.
 
-========== ==========================================================
-image type image usage
-========== ==========================================================
-SPI U-Boot burn eMMC image via TFTP server or USB drive
-USB U-Boot burn eMMC image via TFTP server of USB host
-SUBoot     burn eMMC image via TFTP server or USB drive, Booting Linux
-========== ==========================================================
+=========== ===========================================================
+image type  image usage
+=========== ===========================================================
+SPI SU-Boot burn eMMC image via TFTP server or USB drive
+USB SU-Boot burn eMMC image via TFTP server of USB host
+SU-Boot     burn eMMC image via TFTP server or USB drive, Booting Linux
+=========== ===========================================================
 
-USB U-Boot and SPI U-Boot are used to boot a device which does not have
+USB SU-Boot and SPI SU-Boot are used to boot a device which does not have
 an image written to the eMMC or to do a update which overwrites all of
 the contents of the eMMC.
 
-USB U-Boot allows the board to receive a copy of the USB version of
-U-Boot over the USB interface. The host system runs the usb_boot tool
-to transfer the USB U-Boot image to the board and execute it. Once USB U-Boot
+USB SU-Boot allows the board to receive a copy of the USB version of
+SU-Boot over the USB interface. The host system runs the usb_boot tool
+to transfer the USB SU-Boot image to the board and execute it. Once USB SU-Boot
 is running on the board it can be used to write an image to the eMMC.
 
-SPI U-Boot is similar to USB U-Boot except that U-Boot runs from
+SPI SU-Boot is similar to USB SU-Boot except that SU-Boot runs from
 SPI flash. The SPI flash may be located on the main board of Astra Machina or
 it may be a located on a SPI daughter card which is plugged into the device.
 Once SPI U-Boot is running on the board it can be used to write an image to the eMMC.
 
 `Synaptics U-Boot Source Code <https://github.com/synaptics-astra/boot-u-boot_2019_10/tree/v#release#>`__
 
+.. note::
+
+    Release v1.6 and later use Synaptics U-Boot for eMMC, SPI, and USB versions of U-Boot.
+
 .. _spi_sd_boot:
 
 Booting from SPI and SD Cards
 -----------------------------
 
-Astra Machina's I/O board has a jumper labeled ``SD-Boot``. This jumper controls
+Astra Machina's I/O board has a jumper labeled ``SD_BOOT``. This jumper controls
 whether the device boots from the eMMC or the internal SPI flash. If the jumper
 is attached then the device will boot from the internal SPI flash. Remove the jumper
 to boot from eMMC.
 
 .. figure:: media/sd-boot-jumper.png
 
-    Astra Machina Component Diagram with SD-Boot jumper highlighted
+    Astra Machina Component Diagram with SD_BOOT-Boot jumper highlighted
 
 Astra Machina's internal SPI flash comes preprogrammed with SPI U-Boot. When the
-SD-Boot jumper is connected the device will boot from the SD card inserted in the SD card slot.
+SD_BOOT-Boot jumper is connected the device will boot from the SD card inserted in the SD card slot.
 If no SD card is inserted the SPI U-Boot will boot to the U-Boot prompt "=>". The U-Boot prompt
 can be used to set variables, or flash the eMMC and internal SPI flash.
 
@@ -1700,10 +1704,10 @@ After the flashing process completes, the SD card will now be ready to boot Astr
 
 .. _uboot_prompt:
 
-U-Boot Prompt with SUBoot
--------------------------
+U-Boot Prompt with SU-Boot
+--------------------------
 
-When booting from the internal eMMC or from an SD card, SUBoot will automatically load the Linux kernel.
+When booting from the internal eMMC or from an SD card, SU-Boot will automatically load the Linux kernel.
 However, this process can be interrupted by pressing any key in the serial console during the boot process.
 If U-Boot detects a keypress then it will stop at the U-Boot prompt "=>". The U-Boot prompt can be used to
 set variables, or flash the eMMC and internal SPI flash. By default the timeout in which U-Boot will wait
@@ -1711,8 +1715,8 @@ for input is set to 0, so key presses need to be sent before U-Boot starts.
 
 .. _prepare_to_boot:
 
-Updating the Firmware
-=====================
+Updating Astra Software
+=======================
 
 On power on, Astra Machina will read the firmware, bootloader, and the
 Linux Kernel from a boot device. The most common boot device is an eMMC
@@ -1759,17 +1763,17 @@ home               Mounted in /home, can be customized                          
 
 .. _firmware_update_usb:
 
-Updating the Firmware using USB
--------------------------------
+Updating Software Images using USB
+----------------------------------
 
-Astra Machina supports updating firmware using USB. 
+Astra Machina supports updating software images using USB.
 
 .. _usb_boot_setup:
 
 Setting up the USB Boot Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Booting from USB requires the usb_boot software tool to be the installed on
+Booting from USB requires the ``astra-update`` software tool to be the installed on
 a host system. Windows, Mac, and Linux hosts are supported. Windows systems
 also require the Synaptics WinUSB Driver. Mac and Linux systems do not require
 any additional drivers. This section covers how to configure the host system
@@ -1801,7 +1805,7 @@ directory. Select "Install" from the drop down menu.
 .. note::
 
     Installing the Windows driver requires an account with administative privileges. Please contact
-    your System Administrator if you do not have sufficient privileges.
+    your System Administrator if you do not have sufficient privileges. Or update using U-Boot :ref:`update_with_uboot`
 
 .. figure:: media/install_driver_win.png
 
@@ -1815,67 +1819,60 @@ Driver for Synaptics Processors" when operating in USB Boot mode.
 
     Devices listed by the operating system after installing the driver
 
-Running the USB Boot Tool
-"""""""""""""""""""""""""
+Running Astra Update
+""""""""""""""""""""
 
-First download the ``usb_boot`` tool from `GitHub <https://github.com/synaptics-astra/usb-tool>`__
-if you have not done so previously.
+Astra Update can be downloaded from `GitHub <https://github.com/synaptics-astra/usb-tool>`__.
+The tool is included in the same repository as the WinUSB driver. It replaces the ``usb_boot``
+tool and provides additional features such as using progress bars and support for updating
+multiple devices simultaneously.
 
 .. note::
 
-    Please check the release notes to confirm that you have a compatible version of ``usb_boot``.
+    Please check the release notes to confirm that you have a compatible version of ``astra-update``.
     :doc:`../release_notes/v#release#`
 
-The ``usb_boot`` tool communicates with Astra Machina over USB.
-Each Astra Machina variant will have its own usb_boot directory. Included in each
-directory will be a ``usb_boot`` binary and the ``run`` script used to run it.
-The directory will also contain an images directory which contains all of the
-image files needed to boot the board over USB. This include images which contain
-the USB U-Boot bootloader. 
+In addition to the WinUSB driver, the usb-tool directory contains convenience scripts for updating the
+eMMC and SPI images, a directory structure containing the astra-update binaries, and the USB U-Boot images
+for Astra Machina devices.
 
-On Windows, double click on the run.bat file to launch the tool. This
-script will execute the binary using the specific options required for
-Astra Machina variant being used.
+.. figure:: media/usb-tool-win.png
 
-.. figure:: media/usb_user_tool_win.png
+    usb-tool directory on Windows
 
-    Directory containing the USBBoot tool on Windows
+After running ``update_emmc.bat``, a window will open showing the status of the flash process.
 
-After running the ``run.bat`` a window will open showing the status of the flash process.
+.. figure:: media/astra-update-emmc.png
 
-.. figure:: media/usbtool_output_win.png
+    Output of the ``astra-update`` tool on Windows
 
-    Output of the usb_boot tool on Windows
+On Mac, right click on the usb-tool directory. From the drop down select ``Services -> New Terminal at Folder``.
 
-On Mac, right click on the directory which contains the version of usb_boot which matches
-the Astra Machina variant which you are about to boot. From the drop down select ``Services -> New Terminal at Folder``.
+.. figure:: media/mac-open-terminal.png
 
-.. figure:: media/mac-open-terminal.jpg
+    Opening a Terminal for ``astra-update`` on Mac
 
-    Opening a Terminal for USB Boot on Mac
-
-This will open a terminal inside of the selected usb_boot directory. From there run the ``run.sh`` script to
+This will open a terminal inside of the selected usb_boot directory. From there run the ``update_emmc.sh`` script to
 run the tool. You may be prompted for your password since the script internally calls sudo. The tool
 requires additional permissions to interface with USB devices and access system resources.
 
-.. figure:: media/mac-run-usbboot.png
+.. figure:: media/mac-run-astra-update.png
 
-    Output of the usb_boot tool on Mac
+    Output of ``astra-update`` on Mac
 
-On Linux, right click on the directory which contains the version of usb_boot which matches
-the Astra Machina variant which you are about to boot. From the drop down select  ``Open in Terminal``.
+On Linux, right click on the usb-tool directory. From the drop down select  ``Open in Terminal``.
 
 .. figure:: media/linux-open-terminal.png
 
-    Opening a Terminal for USB Boot on Linux
+    Opening a Terminal for ``astra-update`` on Linux
 
-This will open a terminal inside of the selected usb_boot directory. From there run the ``run.sh`` script to
+This will open a terminal inside of the usb-tool directory. From there run the ``update_emmc.sh`` script to
 run the tool. You may be prompted for your password since the script internally calls sudo. The tool
 requires additional permissions to interface with USB devices and access system resources.
 
-.. figure:: media/linux-run-usbboot.png
+.. figure:: media/linux-run-astra-update.png
 
-    Output of the usb_boot tool on Linux
+    Output of ``astra-update`` on Linux
 
 .. note::
 
@@ -1883,31 +1880,30 @@ requires additional permissions to interface with USB devices and access system 
     this error please go to System Preference -> Security & Privacy -> General to enable executing apps from
     unverified developers.
 
-Booting using USB Boot
+Updating the eMMC Image
 """""""""""""""""""""""
 
-Once the usb_boot environment has been setup and the usb_boot tool is
-running on the host system, Astra Machina will need to be placed into USB
-Boot mode. To do that press and hold the "USB_BOOT" button on the
-I/O board. Then press and release the "RESET" button. Be sure to hold
-the "USB_BOOT" button long enough so that the board can reset and detect
-that the "USB_BOOT" button is pressed. After booting into USB Boot mode, U-Boot
-will automatically flash the ``eMMCimg`` from the host onto Astra Machina. The
-board will automatically reboot when the update is complete.
+To update the eMMC, drag the eMMC image to the usb-tool directory. The prebuild eMMC image directory will
+be named ``eMMCimg`` while a custom built image will be named ``SYNAIMG``. Once the image is in the usb-tool
+directory, run the ``update_emmc`` script To start the process.
 
-USB U-Boot will execute the commands specified in the ``uEnv.txt`` file located in ``images`` directory.
+Once the ``astra-update`` tool is running on the host system, Astra Machina will need to be placed into USB
+Boot mode. To do that press and hold the "USB_BOOT" button on the I/O board. Then press and release the
+"RESET" button. Be sure to hold the "USB_BOOT" button long enough so that the board can reset and detect
+that the "USB_BOOT" button is pressed. After booting into USB Boot mode, U-Boot will automatically flash
+the eMMC image from the host onto Astra Machina. The board will automatically reboot when the update is complete.
 
 .. figure:: media/usb-boot-and-reset.png
 
     Astra Machina Component Diagram with USB_BOOT and RESET buttons highlighted
 
-.. figure:: media/usb_boot_output_win.png
+.. figure:: media/astra-update-emmc-complete.png
 
-    Output of the usb_boot tool after successful boot
+    Output of the ``astra-update`` tool after a successful update
 
 .. note::
 
-    USB Boot v1.2 and later no longer require a USB-TTL board or cable to run commands at the U-Boot prompt.
+    Astra Update no longer require a USB-TTL board or cable to run commands at the U-Boot prompt.
 
 .. note::
 
@@ -1916,76 +1912,81 @@ USB U-Boot will execute the commands specified in the ``uEnv.txt`` file located 
 
 .. note::
 
-    Make sure that the ``SD-Boot`` jumper is not attached when booting from eMMC. Otherwise,
+    Make sure that the ``SD_BOOT`` jumper is not attached when booting from eMMC. Otherwise,
     the device will boot from internal SPI flash or an SD Card. See :ref:`spi_sd_boot`.
 
-.. _usb_boot_telnet_console:
+Updating the internal SPI Flash
+"""""""""""""""""""""""""""""""
 
-USB Boot with Telnet Console (Advanced Option)
-""""""""""""""""""""""""""""""""""""""""""""""
+Astra Update can also update the internal SPI Flash image over USB. Start by Downloading the latest
+versions of the SPI images from `GitHub <https://github.com/synaptics-astra/spi-u-boot>`__. The spi-u-boot
+directory contains subdirectories for each Astra Machina variant. Copy the directory which matches your
+board to the usb-tool directory. Run the ``update_spi`` script to start the process.
 
-USB Boot v1.2 and later allow accessing the U-Boot console using telnet. Users who want to perform more
-complicated tasks can run the ``run-telnet-console.bat`` or ``run-telnet-console.sh`` scripts. This will
-create a telnet session for the console. On Windows, this will launch Putty (included in the USB Boot package)
-with the telnet session. On Mac and Linux, the user should run the ``telnet`` command line tool to connect to
-``localhost 8141``.
+Once the ``astra-update`` tool is running on the host system, Astra Machina will need to be placed into USB
+Boot mode. To do that press and hold the "USB_BOOT" button on the I/O board. Then press and release the
+"RESET" button. Be sure to hold the "USB_BOOT" button long enough so that the board can reset and detect
+that the "USB_BOOT" button is pressed. After booting into USB Boot mode, U-Boot will automatically flash
+the eMMC image from the host onto Astra Machina. The board will automatically reboot when the update is complete.
 
-.. note::
+.. figure:: media/astra-update-spi-start.png
 
-    Delete the contents of ``images/uEnv.txt`` to access the U-Boot console. Otherwise, U-Boot will exeute the commands
-    in that file.
+    Output of the ``astra-update`` tool preparing to update SPI Flash
 
-.. figure:: media/usbtool_output_win_usbbconsole.png
+.. _update_with_uboot:
 
-    USB Boot tool Output with Telnet Console Support
+Updating Images from U-Boot
+---------------------------
 
-.. figure:: media/telnet_output_usbconsole.png
-
-    U-Boot Console in Putty
-
-.. figure:: media/linux-usbboot-with-usbconsole.png 
-
-    USB Boot tool Output with Telnet Console Support on Linux
-
-.. figure:: media/linux-telnet-console.png
-
-    U-Boot Console in telnet on Linux
+In addition to updating Astra Machina using the USB interface, you can also update directly from U-Boot. Astra
+Machina contains a version of U-Boot written to the eMMC and to an internal SPI flash chip located on the core
+module. Both instances of U-Boot allows doing image updates without using a USB host system. However, they do
+require a USB-TTL cable to access the serial console. Images can be loaded using an external USB drive or
+downloaded from a TFTP server on a local network.
 
 .. note::
 
-    Recent versions of Mac OS and Linux do not preinstall ``telnet``. Please install telnet from a third party package
-    repository.
+    The version of U-Boot written to the eMMC is updated along with the system images when doing an eMMC update. The
+    version of U-Boot written to the internal SPI flash is independent of the eMMC image.
+    Please check the release notes to confirm that you have a compatible version of U-Boot installed
+    before updating the eMMC image. :doc:`../release_notes/v#release#`
 
-Updating the Firmware from SPI
-------------------------------
+Setting up the U-Boot Environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As described in :ref:`spi_sd_boot`, Astra Machina has an internal SPI flash chip which contains
-the SPI U-Boot bootloader. This allows doing firmware updates without using a USB host system.
-Images can be loaded using an external USB drive or downloaded from a TFTP server on a local network.
-
-.. note::
-
-    Please check the release notes to confirm that you have a compatible version of SPI U-Boot installed
-    on the internal SPI flash. :doc:`../release_notes/v#release#`
-
-Setting up the SPI Boot Environment
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Booting from the internal SPI flash does not require any additional software on the host
-besides the software for using the serial console as described in the :ref:`setup_serial_console` section above.
+Booting from U-Boot does not require any additional software on the host besides the software for using the
+serial console as described in the :ref:`setup_serial_console` section above.
 
 Hardware Setup
 """"""""""""""
-For SPI boot, you will need to connect the USB cable for the
+
+To access the U-Boot prompt, you will need to connect the USB cable for the
 serial port as described in the :ref:`setup_serial_console` section above.
-This will allow you to see console messages during the flashing process and input commands to the SPI U-Boot
-bootloader. You will also need a USB drive or Ethernet cable depending on where the eMMC image files are located.
+This will allow you to see console messages during the flashing process and input commands to the U-Boot
+prompt. You will also need a USB drive or Ethernet cable depending on where the eMMC or SPI image files are located.
 The USB drive can be inserted into any of the 4 USB Type-A USB 3.0 ports or the USB Type-C USB 2.0 port (may require
 USB Type-C to USB Type-A adaptor).
 
 .. figure:: media/usb-and-ethernet-ports.png
 
     Astra Machina Component Diagram with USB and Ethernet ports highlighted
+
+Loading U-Boot from the eMMC
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The eMMC version of U-Boot is used to boot the OS during the normal boot up process. To access the U-Boot prompt you
+will need to interrupt the standard boot process by typing keys into the serial console during boot. U-Boot will detect
+the key presses and stop at the U-Boot prompt. :ref:`uboot_prompt`
+
+Loading U-Boot from internal SPI flash
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To load U-Boot from the internal SPI flash, insert the the SD_BOOT jumper as described in :ref:`spi_sd_boot`.
+
+.. note::
+
+    Make sure that the ``SD_BOOT`` jumper is not attached when booting from eMMC. Otherwise,
+    the device will boot from internal SPI flash or an SD Card.
 
 .. _flashing_from_usb_drive:
 
@@ -2035,39 +2036,16 @@ The parameter eMMCimg is the name of the image directory on the TFTP server.
 
 .. _flash_internal_spi:
 
-Updating Internal SPI Flash Firmware
-------------------------------------
+Updating Internal SPI Flash Images using U-Boot
+-----------------------------------------------
 
 The internal SPI flash on Astra Machina can also be updated using the methods described above.
 You can find the latest versions of the SPI images on `GitHub <https://github.com/synaptics-astra/spi-u-boot>`__.
 
-Flashing Image from USB Boot
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To update the internal SPI flash firmware using usb_boot you must first follow the steps in section :ref:`usb_boot_setup`
-and :ref:`usb_boot_telnet_console` to access the U-Boot console.
-
-.. figure:: media/spi_flash_snapshot.png
-
-    Directory with files used to flash the SPI flash
-
-Once Astra Machina has booted U-Boot from USB, program the SPI flash by copying the SPI image
-file to the "images" directory in the usb_boot tool's directory.
-
-Then write the image to the SPI flash using the commands::
-
-    => usbload u-boot-astra-v1.1.1.sl1680.rdk.spi.bin 0x10000000
-    => spinit;
-    => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
-
-An optional backup copy of the SPI flash firmware can be installed using the command::
-
-    => erase f0200000 f03fffff; cp.b 0x10000000 0xf0200000 0x200000;
-
 Flashing Image from an External USB Drive
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To update the internal SPI flash firmware using an external USB drive, simply copy the image to the drive.
+To update the internal SPI flash image using an external USB drive, simply copy the image to the drive.
 The USB drive will need a partition with a Fat32 formatted file system.
 
 Write the image to SPI flash using the following commands::
@@ -2076,14 +2054,14 @@ Write the image to SPI flash using the following commands::
     => spinit;
     => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
 
-An optional backup copy of the SPI flash firmware can be installed using the command::
+An optional backup copy of the SPI flash image can be installed using the command::
 
     => erase f0200000 f03fffff; cp.b 0x10000000 0xf0200000 0x200000;
 
 Flashing Image from TFTP Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To update the internal SPI flash firmware by downloading it from a TFTP server, simply copy the image to
+To update the internal SPI flash image by downloading it from a TFTP server, simply copy the image to
 the TFTP server.
 
 Write the SPI image to the SPI flash from the TFTP server using the command::
@@ -2094,7 +2072,7 @@ Write the SPI image to the SPI flash from the TFTP server using the command::
     => spinit;
     => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
 
-An optional backup copy of the SPI flash firmware can be installed using the command::
+An optional backup copy of the SPI flash image can be installed using the command::
 
     => erase f0200000 f03fffff; cp.b 0x10000000 0xf0200000 0x200000;
 
@@ -2108,3 +2086,4 @@ An optional backup copy of the SPI flash firmware can be installed using the com
     In the examples above the TFTP server's address is
     10.10.10.10. Please replace this IP with the IP address of the server
     hosting TFTP.
+
