@@ -9,10 +9,6 @@ html_static_path = ['_static']
 
 exclude_patterns = ["README.rst", "org-docs/**"]
 
-# render private pages only when the private tag is set
-if not tags.tags.get('private', False):
-    exclude_patterns.append("private/**")
-
 html_logo = "images/logo_full_white.png"
 
 # -- General configuration ---------------------------------------------------
@@ -34,17 +30,7 @@ html_theme_options = {
   'style_nav_header_background': '#007dc3'
 }
 
-# enable edit links only on the internal builds
-if tags.tags.get('private', False):
-    html_context = {
-      'display_github': True,
-      'github_repo': 'syna-astra-dev/doc',
-      'github_version': 'master',
-      'conf_py_path': '/'
-    }
-
 html_copy_source = False
-
 
 # this code is used to substitute #xx# variables anywhere in the source, even
 # inside literal blocks and code blocks

@@ -55,13 +55,6 @@ For more in-depth information, the following documents are available:
   This guide contains a summary of new features, improvements, bug fixes, and known issues in the latest
   version of the Synaptics Astra SDK.
 
-
-.. only:: private
-
-  :doc:`private/index`
-
-     This guide contains internal information for Synaptics engineers
-
 External Documentation
 ======================
 
