@@ -932,9 +932,86 @@ count, confidence threshold, and post processing mode. The Astra Machina image p
 `ffmpeg library <https://ffmpeg.org/>`__ to perform decoding of the video stream in software. When ``v4l2`` is set then gst-ai will use the V4L2 APIs
 to perform decoding of the video stream using hardware acceleration.
 
+In release v1.6 image classification can also be run using the following command::
+
+    gst-launch-1.0 filesrc location=Animals.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! v4l2h264dec ! tee name=t_data t_data. ! queue \
+        ! synavideoconvertscale ! video/x-raw,width=224,height=224,format=RGB ! \
+        synapinfer model=/usr/share/synap/models/image_classification/imagenet/model/mobilenet_v2_1.0_224_quant/model.synap mode=classifier frameinterval=3 \
+        ! overlay.inference_sink t_data. ! queue ! synavideoconvertscale ! video/x-raw,format=BGRA ! \
+        synapoverlay name=overlay label=/usr/share/synap/models/image_classification/imagenet/info.json ! waylandsink
+
 .. note::
 
     SL1620 requires decmode to be set to ffmpeg since it does not support V4L2 decoding.
+
+Super Resolution
+""""""""""""""""
+
+Astra Machina SL1680 provides several Super Resolution models can be used to upscale video. SL1680 has models based on QDEO and FAST.
+The models are located in ``/usr/share/synap/models/image_processing/super_resolution/model``.
+
++--------------+---------------------------------+
+| QDEO         | sr_qdeo_y_uv_640x360_1920x1080  |
+|              +---------------------------------+
+|              | sr_qdeo_y_uv_960x540_3840x2160  |
+|              +---------------------------------+
+|              | sr_qdeo_y_uv_1280x720_3840x2160 |
+|              +---------------------------------+
+|              | sr_qdeo_y_uv_1920x1080_3840x2160|
++--------------+---------------------------------+
+| FAST         | sr_fast_y_uv_960x540_3840x2160  |
+|              +---------------------------------+
+|              | sr_fast_y_uv_1280x720_3840x2160 |
+|              +---------------------------------+
+|              | sr_fast_y_uv_1920x1080_3840x2160|
++--------------+---------------------------------+
+
+The following examples show how to upscale video using gstreamer and the Super Resolution models.
+
+QDEO
+****
+
+sr_qdeo_y_uv_640x360_1920x1080::
+
+    gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=640,height=360 !\
+        synapimageproc model=sr_qdeo_y_uv_640x360_1920x1080/model.synap ! waylandsink
+
+sr_qdeo_y_uv_1280x720_3840x2160::
+
+    gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1280,height=720 !\
+        synapimageproc model=sr_qdeo_y_uv_1280x720_3840x2160/model.synap ! waylandsink
+
+sr_qdeo_y_uv_1920x1080_3840x2160::
+
+    gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1920,height=1080 !\
+        synapimageproc model=sr_qdeo_y_uv_1920x1080_3840x2160/model.synap ! waylandsink
+
+FAST
+****
+
+sr_fast_y_uv_1280x720_3840x2160::
+
+    gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1280,height=720 !\
+        synapimageproc model=sr_fast_y_uv_1280x720_3840x2160/model.synap ! waylandsink
+
+sr_fast_y_uv_1920x1080_3840x2160::
+
+    gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1920,height=1080 !\
+        synapimageproc model=sr_fast_y_uv_1920x1080_3840x2160/model.synap !  waylandsink
+
+.. note::
+
+    When using an ISP camera, be sure to add ``extra-controls="c,mmu_enable=0"`` to disable MMU. ::
+
+        gst-launch-1.0 v4l2src device=/dev/video0 extra-controls="c,mmu_enable=0" ! 'video/x-raw, format=(string)NV12, \
+            width=(int)1920, height=(int)1080, framerate=(fraction)30/1' ! \
+            synapimageproc model=sr_fast_y_uv_1920x1080_3840x2160/model.synap ! waylandsink
+
+.. note::
+
+    By default, the UI is 2K. When upscaling 4K content to 4K you will need to set the UI to be 4K. Move the file
+    ``/etc/modprobe.d/syna_drm.conf`` out of ``/etc/modprobe.d`` to prevent it from setting the UI resolution.
+
 
 Multimedia Demo Applications
 ----------------------------
@@ -1057,17 +1134,22 @@ SL Processor Wireless Device Physical Interface    Software Information
                                                   
                              (M.2 PCIe / M.2 SDIO)
 ============ =============== ===================== ========================================================
-SL1620       SYNA 43711      M.2 SDIO              - wpa_supplicant v2.10
+SL1620       SYNA 43711      M.2 SDIO              - wpa_supplicant v2.11
                                                    - WIFI driver version: v101.10.478
-SL1640       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.10
+SL1640       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.11
                                                    - WIFI driver version: v101.10.478
-SL1680       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.10
+SL1680       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.11
                                                    - WIFI driver version: v101.10.478
 ============ =============== ===================== ========================================================
 
 The Synaptics Astra Linux BSP contains all of the drivers and firmware required to use the 43xxx modules with both PCIe and SDIO interfaces.
 Wireless network management is handled by the WPA Supplicant daemon which key negotiation with a WPA Authenticator. It supports WEP, WPA, WPA2, and WPA3
 authentication standards. ( See `wpa_supplicant <https://wiki.archlinux.org/title/wpa_supplicant>`__ for more details)
+
+.. note::
+
+    SL1640 and SL1680 can be configured to use the SYNA 43711 module with SDIO.
+    See :doc:`../subject/enable_sdio_wifi`
 
 Setting up Wifi with WPA Supplicant
 ------------------------------------

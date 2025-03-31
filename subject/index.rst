@@ -5,7 +5,7 @@ Subject Specific User Guides
    :hidden:
 
    syna_drm_kms_user_guide
-   waveshare_7inch_dsi-configuration
+   waveshare_dsi-configuration
    haier_panel_configuration
    memory_layout_customization
    emmc_layout_customization
@@ -19,13 +19,17 @@ Subject Specific User Guides
    fastlogo_image_generation
    uboot_fastlogo_configuration
    swupdate_user_guide
+   controlling_volume_with_gpios
+   thermal_protection
+   ubuntu_docker
+   enable_sdio_wifi
 
 
 The following guides provide additional details on a specific subject or module.
 
 - :doc:`syna_drm_kms_user_guide`
 
-- :doc:`waveshare_7inch_dsi-configuration`
+- :doc:`waveshare_dsi-configuration`
 
 - :doc:`haier_panel_configuration`
 
@@ -52,3 +56,11 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`uboot_fastlogo_configuration`
 
 - :doc:`swupdate_user_guide`
+
+- :doc:`controlling_volume_with_gpios`
+
+- :doc:`thermal_protection`
+
+- :doc:`ubuntu_docker`
+
+- :doc:`enable_sdio_wifi`

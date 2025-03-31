@@ -505,7 +505,7 @@ Known Issues and Limitations
     In Astra v1.3, the default display output for the SL1620 is set to HDMI via a DSI-to-HDMI conversion. Starting with Astra v1.4,
     the onboard DSI-to-HDMI converter for the SL1620 Rev D core module has been enabled. For older core modules, an external
     DSI-to-HDMI adapter board is required. The default display output can be switched to MIPI by following the instructions provided
-    in the User Guides. :doc:`../subject/haier_panel_configuration` and :doc:`../subject/waveshare_7inch_dsi-configuration`.
+    in the User Guides. :doc:`../subject/haier_panel_configuration` and :doc:`../subject/waveshare_dsi-configuration`.
 
 .. note::
 

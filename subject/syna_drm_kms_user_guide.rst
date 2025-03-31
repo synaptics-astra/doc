@@ -506,7 +506,7 @@ Reference entry for the MIPI DSI panel
          };
       };
 
-Sample configuration for waveshare 7-inch DSI panel: :doc:`waveshare_7inch_dsi-configuration`
+Sample configuration for waveshare 7-inch DSI panel:  `dolphin-ws-panel-overlay.dts <https://github.com/synaptics-astra/linux_5_15-overlay/blob/v#release#/arch/arm64/boot/dts/synaptics/dolphin-ws-panel-overlay.dts>`__.
 
 TFT Display configuration 
 --------------------------
