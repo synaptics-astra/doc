@@ -1872,7 +1872,7 @@ system to the USB Type-C USB 2.0 port on Astra Machina (next to the ethernet por
     Astra Machina Component Diagram with USB Type-C USB 2.0 port highlighted
 
 Installing the WinUSB Driver (Windows Only)
-"""""""""""""""""""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Windows requires a special USB kernel driver to communicate with
 Astra Machina over USB. Please download the driver from
@@ -1901,22 +1901,33 @@ Driver for Synaptics Processors" when operating in USB Boot mode.
 
     Devices listed by the operating system after installing the driver
 
+.. note::
+
+    Astra Machina will not show up in the Window's Device Manager or be seen by the tool until putting the
+    device into USB Boot Mode. Hold down the USB_BOOT and press the RESET button as described below.
+
 Running Astra Update
-""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^
 
 Astra Update can be downloaded from `GitHub <https://github.com/synaptics-astra/usb-tool>`__.
-The tool is included in the same repository as the WinUSB driver. It replaces the ``usb_boot``
-tool and provides additional features such as using progress bars and support for updating
-multiple devices simultaneously.
+The tool is included in the same repository as the WinUSB driver.
+
+Before running the tool, copy the image to the ``usb-tool`` directory.
+    * Pre-built eMMC images are available from the `Astra SDK Releases <https://github.com/synaptics-astra/sdk/releases>`__ page.
+    * SPI images can be downloaded from the `SPI U-Boot Releases <https://github.com/synaptics-astra/spi-u-boot/releases>`__ page.
+
+To update the eMMC:
+    1. Place the eMMC image in the ``usb-tool`` directory (named ``eMMCimg`` for pre-built or ``SYNAIMG`` for custom builds).
+    2. Run the ``update_emmc`` script to begin the update.
+
+To update internal SPI Flash:
+    1. Place the SPI image in the ``usb-tool`` directory (named ``sl1620`` / ``sl1640`` / ``sl1680`` depending on the device).
+    2. Run the ``update_spi`` script to begin the update.
 
 .. note::
 
     Please check the release notes to confirm that you have a compatible version of ``astra-update``.
     :doc:`../release_notes/v#release#`
-
-In addition to the WinUSB driver, the usb-tool directory contains convenience scripts for updating the
-eMMC and SPI images, a directory structure containing the astra-update binaries, and the USB U-Boot images
-for Astra Machina devices.
 
 .. figure:: media/usb-tool-win.png
 
@@ -1928,7 +1939,33 @@ After running ``update_emmc.bat``, a window will open showing the status of the 
 
     Output of the ``astra-update`` tool on Windows
 
-On Mac, right click on the usb-tool directory. From the drop down select ``Services -> New Terminal at Folder``.
+.. figure:: media/astra-update-spi-start.png
+
+    Output of the ``astra-update`` tool preparing to update SPI Flash
+
+Once the ``astra-update`` tool is running on the host system, Astra Machina will need to be placed into USB
+Boot mode. To do this, press and hold the "USB_BOOT" button on the I/O board. Then press and release the
+"RESET" button. Be sure to hold the "USB_BOOT" button long enough so that the board can reset and detect
+that the "USB_BOOT" button is pressed. After booting into USB Boot mode, U-Boot will automatically flash
+the eMMC image from the host onto Astra Machina. The board will automatically reboot when the update is complete.
+
+.. figure:: media/usb-boot-and-reset.png
+
+    Astra Machina Component Diagram with USB_BOOT and RESET buttons highlighted
+
+.. figure:: media/astra-update-emmc-complete.png
+
+    Output of the ``astra-update`` tool after a successful update
+
+.. note::
+
+    Make sure that the ``SD_BOOT`` jumper is not attached when booting from eMMC. Otherwise,
+    the device will boot from internal SPI flash or an SD Card. See :ref:`spi_sd_boot`.
+
+Running Astra Update on Mac OS and Linux
+""""""""""""""""""""""""""""""""""""""""
+
+On Mac OS, right click on the usb-tool directory. From the drop down select ``Services -> New Terminal at Folder``.
 
 .. figure:: media/mac-open-terminal.png
 
@@ -1941,6 +1978,12 @@ requires additional permissions to interface with USB devices and access system 
 .. figure:: media/mac-run-astra-update.png
 
     Output of ``astra-update`` on Mac
+
+.. note::
+
+    Some versions of Mac OS may be configured to block apps from "unverified developers". If you encounter
+    this error please go to System Preference -> Security & Privacy -> General to enable executing apps from
+    unverified developers.
 
 On Linux, right click on the usb-tool directory. From the drop down select  ``Open in Terminal``.
 
@@ -1958,62 +2001,7 @@ requires additional permissions to interface with USB devices and access system 
 
 .. note::
 
-    Some versions of Mac OS may be configured to block apps from "unverified developers". If you encounter
-    this error please go to System Preference -> Security & Privacy -> General to enable executing apps from
-    unverified developers.
-
-Updating the eMMC Image
-"""""""""""""""""""""""
-
-To update the eMMC, drag the eMMC image to the usb-tool directory. The prebuild eMMC image directory will
-be named ``eMMCimg`` while a custom built image will be named ``SYNAIMG``. Once the image is in the usb-tool
-directory, run the ``update_emmc`` script To start the process.
-
-Once the ``astra-update`` tool is running on the host system, Astra Machina will need to be placed into USB
-Boot mode. To do that press and hold the "USB_BOOT" button on the I/O board. Then press and release the
-"RESET" button. Be sure to hold the "USB_BOOT" button long enough so that the board can reset and detect
-that the "USB_BOOT" button is pressed. After booting into USB Boot mode, U-Boot will automatically flash
-the eMMC image from the host onto Astra Machina. The board will automatically reboot when the update is complete.
-
-.. figure:: media/usb-boot-and-reset.png
-
-    Astra Machina Component Diagram with USB_BOOT and RESET buttons highlighted
-
-.. figure:: media/astra-update-emmc-complete.png
-
-    Output of the ``astra-update`` tool after a successful update
-
-.. note::
-
-    Astra Update no longer require a USB-TTL board or cable to run commands at the U-Boot prompt.
-
-.. note::
-
-    Astra Machina will not show up in the Window's Device Manager or be seen by the tool until putting the
-    device into USB Boot Mode. Hold down the USB_BOOT and press the RESET button as described above.
-
-.. note::
-
-    Make sure that the ``SD_BOOT`` jumper is not attached when booting from eMMC. Otherwise,
-    the device will boot from internal SPI flash or an SD Card. See :ref:`spi_sd_boot`.
-
-Updating the internal SPI Flash
-"""""""""""""""""""""""""""""""
-
-Astra Update can also update the internal SPI Flash image over USB. Start by Downloading the latest
-versions of the SPI images from `GitHub <https://github.com/synaptics-astra/spi-u-boot>`__. The spi-u-boot
-directory contains subdirectories for each Astra Machina variant. Copy the directory which matches your
-board to the usb-tool directory. Run the ``update_spi`` script to start the process.
-
-Once the ``astra-update`` tool is running on the host system, Astra Machina will need to be placed into USB
-Boot mode. To do that press and hold the "USB_BOOT" button on the I/O board. Then press and release the
-"RESET" button. Be sure to hold the "USB_BOOT" button long enough so that the board can reset and detect
-that the "USB_BOOT" button is pressed. After booting into USB Boot mode, U-Boot will automatically flash
-the eMMC image from the host onto Astra Machina. The board will automatically reboot when the update is complete.
-
-.. figure:: media/astra-update-spi-start.png
-
-    Output of the ``astra-update`` tool preparing to update SPI Flash
+    Astra Update no longer requires a USB-TTL board or cable to run commands at the U-Boot prompt.
 
 .. _update_with_uboot:
 
