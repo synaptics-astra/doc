@@ -12,7 +12,6 @@ Synaptics ASTRA SDK
    appnotes/index.rst
    hw/index.rst
    release_notes.rst
-   private/index*
 
 
 Welcome to the Synaptics ASTRA SDK documentation.
