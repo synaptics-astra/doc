@@ -499,13 +499,13 @@ only, only images satisfying the following are allowed to boot:
 
 The trusted boot flow is established with the following key steps: 
 
-1.	**Hash-locking**: Confirm K0 in the flash and the K0 hash in the OTP matches
+1. **Hash-locking**: Confirm K0 in the flash and the K0 hash in the OTP matches
 
 2.	**Verify K1**: Ensure K1 was signed by K0
 
 3.	**Verify image header** signature with K1
 
-4.	**Sanity checks**:
+4. **Sanity checks**:
 
    -  Is Image ID correct?
 
