@@ -191,7 +191,7 @@ all the required layers as submodules.
 To clone the repository within the build environment started with the instructions in :ref:`start_build_env`
 use the following command::
 
-     pokyuser@xyz:/path/to/workspace $ git clone -b v#release# --recurse-submodules \
+     pokyuser@xyz:/path/to/workspace $ git clone -b #release# --recurse-submodules \
                                                  https://github.com/synaptics-astra/sdk
 
 The recipes contained in the ``meta-synaptics`` layer point to the relevant git repository and will be downloaded

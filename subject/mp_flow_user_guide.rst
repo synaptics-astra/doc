@@ -24,7 +24,7 @@ Definitions
 - usb_tool: It's a toolset designed for use on a PC, enabling booting of the Astra board via USB.
 - factory_tool: It's post-processing tool in syna-release SDK that using to generate secure keys, OTP layouts, production eMMCimg and resign "USB Boot Linux Image Pack" REE images. 
 
-Tools can be found in the `Factory repository <https://github.com/synaptics-astra/factory/tree/v#release#>`__ at
+Tools can be found in the `Factory repository <https://github.com/synaptics-astra/factory/tree/#release#>`__ at
 ``factory/scripts/[platypus/dolphin/myna2/]/factory``. ``platypus``: SL1640, ``dolphin``: SL1680, ``myna2``: SL1620.
 
 Pre-MP Preparation

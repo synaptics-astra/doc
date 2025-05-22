@@ -4,7 +4,7 @@ copyright = '2023 - 2025, Synaptics'
 author = 'Synaptics'
 
 # version of the software being documented
-release = '1.6.1'
+release = 'kirkstone_5.15_v1.7.0'
 
 extensions = [ 'synaptics_sphinx_theme' ]
 

@@ -167,11 +167,11 @@ For SL1640 ``sl1640_poky_aarch64_rdk/sl1640_poky_aarch64_rdk_defconfig`` and SL1
 
 .. figure:: media/sl1680-preboot-ddr-type.png
 
-`Supported DDR types for SL1620 <https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/v#release#/myna2/A0/generic/hwinit>`__
+`Supported DDR types for SL1620 <https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/#release#/myna2/A0/generic/hwinit>`__
 
-`Supported DDR types for SL1640 <https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/v#release#/platypus/A0/generic/hwinit>`__
+`Supported DDR types for SL1640 <https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/#release#/platypus/A0/generic/hwinit>`__
 
-`Supported DDR types for SL1680 <https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/v#release#/dolphin/A0/generic/hwinit>`__
+`Supported DDR types for SL1680 <https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/#release#/dolphin/A0/generic/hwinit>`__
 
 Finally, build an image with the modified memory layout::
 

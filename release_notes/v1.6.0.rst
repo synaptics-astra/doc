@@ -87,7 +87,7 @@ Vmeta       TA
 .. note::
 
     The Vmeta TV was open sourced in release v1.6. Source code can be found at
-    `<https://github.com/synaptics-astra/tee-optee_dev/tree/v#release#/ta/vpu>`__.
+    `<https://github.com/synaptics-astra/tee-optee_dev/tree/#release#/ta/vpu>`__.
 
 Where to get the SDK from GitHub
 --------------------------------

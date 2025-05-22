@@ -918,7 +918,7 @@ Example of Pose Estimation with YOLOv8 (RTSP Stream)::
 In gstsynapinfer's second mode, inference results are output as a JSON string. This allows an application to handle the overlay directly
 or do additional processing on the results.
 
-We provide a `sample application <https://github.com/synaptics-astra/application-gstreamer-plugins-syna/tree/v#release#/tests/examples/gst-ai>`__
+We provide a `sample application <https://github.com/synaptics-astra/application-gstreamer-plugins-syna/tree/#release#/tests/examples/gst-ai>`__
 which makes use of gstsynapinfer's second mode. The app plays a video while simultaneously performing image classification on the video frames,
 and then overlaying labels of the results onto the video. A prebuilt version of the application is included in the Astra system image.
 
@@ -1016,7 +1016,7 @@ sr_fast_y_uv_1920x1080_3840x2160::
 Multimedia Demo Applications
 ----------------------------
 
-We also provide two `demo QT applications <https://github.com/synaptics-astra/application-videosdk/tree/v#release#/>`__ which demonstate the
+We also provide two `demo QT applications <https://github.com/synaptics-astra/application-videosdk/tree/#release#/>`__ which demonstate the
 Multimedia and AI capabilities of Astra Machina. The Syna Video Player app demonstates decoding and playing up to four video streams. The Syna AI
 Player app demonstrates the AI capabilities of Astra Machina by performing object detection, face detection, and pose estimation examples.
 
@@ -1771,7 +1771,7 @@ SPI flash. The SPI flash may be located on the main board of Astra Machina or
 it may be a located on a SPI daughter card which is plugged into the device.
 Once SPI U-Boot is running on the board it can be used to write an image to the eMMC.
 
-`Synaptics U-Boot Source Code <https://github.com/synaptics-astra/boot-u-boot_2019_10/tree/v#release#>`__
+`Synaptics U-Boot Source Code <https://github.com/synaptics-astra/boot-u-boot_2019_10/tree/#release#>`__
 
 .. note::
 
@@ -1806,7 +1806,7 @@ Generating Bootable SD Card Images
 Creating a bootable SD card requires converting an existing image into a format suitable for writing
 to the SD card. You can convert either prebuilt release images or an image you built yourself.
 Run the ``gen_sd.sh`` script from within the image directory. You can find the ``gen_sd.sh`` script
-on `GitHub <https://github.com/synaptics-astra/build/blob/v#release#/tools/bin/gen_sd.sh>`__.
+on `GitHub <https://github.com/synaptics-astra/build/blob/#release#/tools/bin/gen_sd.sh>`__.
 Click the "Download Raw File" to download the script. The script runs in a Linux environment with the
 ``mkfs.ext4``, ``gzip``, ``gdisk``, and ``sgdisk`` utilties installed.
 
@@ -1990,7 +1990,7 @@ To update internal SPI Flash:
 .. note::
 
     Please check the release notes to confirm that you have a compatible version of ``astra-update``.
-    :doc:`../release_notes/v#release#`
+    :doc:`../release_notes/#release#`
 
 .. figure:: media/usb-tool-win.png
 
@@ -2082,7 +2082,7 @@ downloaded from a TFTP server on a local network.
     The version of U-Boot written to the eMMC is updated along with the system images when doing an eMMC update. The
     version of U-Boot written to the internal SPI flash is independent of the eMMC image.
     Please check the release notes to confirm that you have a compatible version of U-Boot installed
-    before updating the eMMC image. :doc:`../release_notes/v#release#`
+    before updating the eMMC image. :doc:`../release_notes/#release#`
 
 Setting up the U-Boot Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
