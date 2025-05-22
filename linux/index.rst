@@ -1653,8 +1653,10 @@ Astra Machina uses the Synaptics U-Boot (SU-Boot) bootloader to do additional
 hardware initialization and to boot the Linux Kernel. SU-Boot is based on the
 open source U-Boot project. (`U-Boot Documentation <https://docs.u-boot.org/en/latest/>`__)
 
-Linux Kernel and Device Tree
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. _linux_kernel_and_devicetree_overview:
+
+Linux Kernel and Devicetree
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Astra Machina primarily run OSes which use the Linux
 Kernel. The Linux Kernel provides the environment in which applications
@@ -1667,7 +1669,68 @@ hardware components and their configurations on the system. The device
 tree source files are in the Linux Kernel source tree under that path
 ``arch/arm64/boot/dts/synaptics/``. These files are maintained in the `Astra Linux Kernel Overlay repository <https://github.com/synaptics-astra/linux_5_15-overlay>`__.
 This directory also includes device tree overlays which can be used to
-modify the device tree without having to recompile the entire device tree.
+modify the device tree without having to recompile the entire devicetree.
+
+.. _devicetree_overlays:
+
+Devicetree Overlays
+"""""""""""""""""""
+
+Setting the devicetree overlay requires booting into U-Boot and setting
+the ``dtbo`` variable to the required devicetree overlay. See :ref:`uboot_prompt` for instructions on getting to the
+U-Boot prompt.
+
+Once at the U-Boot prompt run the following commands to enable the Devicetree Overlay.
+
+Set the ``dtbo`` variables::
+
+    => setenv dtbo dolphin-haier-panel-overlay.dtbo
+
+
+The ``dtbo`` variable also supports setting multiple overlays using a comma seperated list::
+
+    => setenv dtbo dolphin-bothcsi-without-expander.dtbo, dolphin-haier-panel-overlay.dtbo
+
+
+Save the environment to the eMMC so that the new variable will persist across reboots.
+
+::
+
+    => saveenv
+    Saving Environment to MMC... Writing to redundant MMC(0)... OK
+
+Optionally, confirm that the variable was correctly set.
+
+::
+
+    => printenv
+    altbootcmd=if test ${boot_slot}  = 1; then bootslot set b; bootcount reset;bootcount reset; run bootcmd; else bootslot set a; bootcount reset; bootcount reset; run bootcmd;  fi
+    autoload=n
+    baudrate=115200
+    bootcmd=bootmmc
+    bootcount=1
+    bootdelay=0
+    bootlimit=3
+    dtbo=dolphin-haier-panel-overlay.dtbo
+    fdtcontroladdr=2172e190
+    preboot=show_logo;
+    upgrade_available=0
+    ver=U-Boot 2019.10 (Nov 21 2024 - 14:01:42 +0000)
+    Environment size: 407/65531 bytesboo
+
+Finally, boot with the new overlay applied.
+
+::
+
+    => boot
+
+.. note::
+
+    Support for devicetree overlays was added in release v1.5.
+
+.. note::
+
+    Support for multiple devicetree overlays was added in release v1.7.
 
 Root File System
 ^^^^^^^^^^^^^^^^

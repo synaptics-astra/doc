@@ -71,55 +71,7 @@ Then restart the isp_media_server service to apply the update.
 Updating Device Tree Overlay
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Different sensors may require different settings in device tree. Astra supports device tree overlays for modifying the
-device tree settings for different sensors. Setting the device tree overlay requires booting into U-Boot and setting
-the ``dtbo`` variable to the required device tree overlay. See :ref:`uboot_prompt` for instructions on getting to the
-U-Boot prompt.
-
-Once at the U-Boot prompt run the following commands to enable the Device Tree Overlay.
-
-Set the ``dtbo`` variables::
-
-    => setenv dtbo dolphin-csi0-with-expander.dtbo
-
-Save the environment to the eMMC so that the new variable will persist across reboots.
-
-::
-
-    => saveenv
-    Saving Environment to MMC... Writing to redundant MMC(0)... OK
-
-Optionally, confirm that the variable was correctly set.
-
-::
-
-    => printenv
-    altbootcmd=if test ${boot_slot}  = 1; then bootslot set b; bootcount reset;bootcount reset; run bootcmd; else bootslot set a; bootcount reset; bootcount reset; run bootcmd;  fi
-    autoload=n
-    baudrate=115200
-    bootcmd=bootmmc
-    bootcount=1
-    bootdelay=0
-    bootlimit=3
-    dtbo=dolphin-csi0-with-expander.dtbo
-    fdtcontroladdr=2172e190
-    preboot=show_logo;
-    upgrade_available=0
-    ver=U-Boot 2019.10 (Nov 21 2024 - 14:01:42 +0000)
-    Environment size: 407/65531 bytesboo
-
-Finally, boot with the new overlay applied.
-
-::
-
-    => boot
-
-Supported device tree overlays are included in the `Linux Kernel Overlay Repository <https://github.com/synaptics-astra/linux_5_15-overlay/tree/v#release#/arch/arm64/boot/dts/synaptics>`__.
-If you are using a different sensor you may need to add a custom overlay.
-
-.. note::
-
-    Support for device tree overlays were added in release v1.5.
+See :ref:`devicetree_overlays` for details on how to enable the devicetree overlays.
 
 Using the OV5647 Sensor
 -----------------------
