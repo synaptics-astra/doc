@@ -1,0 +1,27 @@
+name: Process changes to documentation
+
+on:
+    workflow_dispatch:
+
+    release:
+        types: [published]
+
+    push:
+        branches:
+            - main
+
+    pull_request:
+        types: [ opened, synchronize, closed ]
+
+jobs:
+
+    process:
+        name: Process
+
+        permissions:
+            actions: write
+            contents: write
+            pages: write
+            id-token: write            
+
+        uses: syna-astra-dev/action-doc-publish/.github/workflows/process.yml@v2
