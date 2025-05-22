@@ -13,6 +13,7 @@ Synaptics ASTRA SDK
    hw/index.rst
    release_notes.rst
 
+This is a test.
 
 Welcome to the Synaptics ASTRA SDK documentation.
 
