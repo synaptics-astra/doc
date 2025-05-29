@@ -21,15 +21,27 @@ for the following machines, distributions and images:
 
 .. table:: Supported machines, distributions and images
 
-    +---------+--------------+-------------------+
-    | Machine | Distribution | Images            |
-    +=========+==============+===================+
-    | sl1620  | poky         | astra-media       |
-    +---------+--------------+-------------------+
-    | sl1640  | poky         | astra-media       |
-    +---------+--------------+-------------------+
-    | sl1680  | poky         | astra-media       |
-    +---------+--------------+-------------------+
+    +------------+--------------+-------------------------------------------------+
+    | Machine    | Distribution | Images                                          |
+    +============+==============+=================================================+
+    | sl1620     | poky         | astra-media, astra-media-oobe, astra-core       |
+    +------------+--------------+-------------------------------------------------+
+    | sl1640     | poky         | astra-media, astra-media-oobe, astra-core       |
+    +------------+--------------+-------------------------------------------------+
+    | sl1680     | poky         | astra-media, astra-media-oobe, astra-core       |
+    +------------+--------------+-------------------------------------------------+
+    | sl1620usb  | poky         | astra-media                                     |
+    +------------+--------------+-------------------------------------------------+
+    | sl1640usb  | poky         | astra-media                                     |
+    +------------+--------------+-------------------------------------------------+
+    | sl1680usb  | poky         | astra-media                                     |
+    +------------+--------------+-------------------------------------------------+
+    | sl1620spi  | poky         | astra-tiny                                      |
+    +------------+--------------+-------------------------------------------------+
+    | sl1640spi  | poky         | astra-tiny                                      |
+    +------------+--------------+-------------------------------------------------+
+    | sl1680spi  | poky         | astra-tiny                                      |
+    +------------+--------------+-------------------------------------------------+
 
 .. _yocto_prerequisites:
 
@@ -223,6 +235,9 @@ To build the ``astra-media-oobe`` image exectute the following commands::
 
   pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media-oobe
 
+The ``source meta-synaptics/setup/setup-environment`` will prompt the user to select a machine type. Information on machine
+types can be found in section :ref:`astra_machines`.
+
 The image can be flashed to an evaluation kit board as described in :ref:`prepare_to_boot`.
 
 After flashing the board, to log in to the board please refer to :ref:`linux_login`.
@@ -317,6 +332,41 @@ This BSP is compatible with these layers:
   * ``meta-clang`` (optional - for Chromium support)
   * ``meta-ros`` (optional - for the Robot Operating System support)
   * ``meta-virtualization`` (optional - for container support)
+
+.. _astra_machines:
+
+Astra Machine Types
+===================
+
+The Astra Yocto release defines three machine types per chip. ``sl1620``, ``sl1640``, and ``sl1680`` are the default machine types which are
+use for building images which boot from the internal eMMC. This is the most common machine type.
+
+The ``usb`` machine types are used to build images which boot using the USB interface. Typically, this machine type is used to build images
+used to update the eMMC image, but this image can also be used to boot a full linux environment. This machine type is used to build custom
+images for customer specific hardware.
+
+The ``spi`` machine types are used to build images which boot from SPI flash. Typically, this machine type is used to build images
+used to update the eMMC image, but this image can also be used to boot a full linux environment. This machine type is used to build custom
+images for customer specific hardware.
+
+====================  ===================================================================================================  ==================
+Image                 Description                                                                                          Version Added
+====================  ===================================================================================================  ==================
+sl1620                Default machine type for SL1620                                                                      v0.9
+sl1620usb             Machine type for booting SL1620 from USB                                                             v1.6
+sl1620spi             Machine type for booting SL1620 from SPI                                                             v1.7
+sl1640                Default machine type for SL1640                                                                      v0.9
+sl1640usb             Machine type for booting SL1640 from USB                                                             v1.6
+sl1640spi             Machine type for booting SL1640 from SPI                                                             v1.7
+sl1680                Default machine type for SL1680                                                                      v0.9
+sl1680usb             Machine type for booting SL1680 from USB                                                             v1.6
+sl1680spi             Machine type for booting SL1680 from SPI                                                             v1.7
+====================  ===================================================================================================  ==================
+
+.. note::
+
+  Images built using the ``spi`` machine type require 32MB of SPI flash. Astra Machina boards are not supported since they only contain
+  16MB of SPI flash.
 
 .. _astra_images:
 
