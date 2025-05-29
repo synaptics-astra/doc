@@ -23,6 +23,7 @@ Subject Specific User Guides
    thermal_protection
    ubuntu_docker
    enable_sdio_wifi
+   webrtc
 
 
 The following guides provide additional details on a specific subject or module.
@@ -64,3 +65,5 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`ubuntu_docker`
 
 - :doc:`enable_sdio_wifi`
+
+- :doc:`webrtc`
