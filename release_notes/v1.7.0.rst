@@ -63,9 +63,6 @@ They are provided in binary format. Synaptics will migrate them into REE and ope
 ========    =========================
 Package     Notes
 ========    =========================
-MIPI-DSI    TA
-
-            SL1620
 Fastlogo    TA
 
             SL1680 / SL1640
@@ -91,7 +88,7 @@ Vmeta       TA
 
 .. note::
 
-    MIPI-DSI, FastLogo, and DHUB TAs were open sourced in release v1.7.
+    FastLogo and DHUB TAs were open sourced in release v1.7.
 
 Where to get the SDK from GitHub
 --------------------------------
@@ -137,9 +134,8 @@ Common New Features
 |                             |                          | GStreamer pipeline.                                                |
 |                             |                          |                                                                    |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
-| Enable Gstreamer WebRTC     | All                      | Add Gstreamer WebRTC plugin and example website.                   |
-+-----------------------------+--------------------------+--------------------------------------------------------------------+
-| Seamless Fastlogo Transition| All                      | Add seamless Fastlogo transition from U-Boot to the Linux Kernel.  |
+| Enable Gstreamer WebRTC     | All                      | Add Gstreamer WebRTC plugin and example website                    |
+|                             |                          | (OOBE profiles Only)                                               |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
 
 SL1620 New Features
@@ -149,6 +145,8 @@ SL1620 New Features
 | Feature                     | SoC                      | Description                                                        |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
 | Support Bridged WET mode    | SL1620                   | Allow SL1620 to act as a WiFi bridge.                              |
++-----------------------------+--------------------------+--------------------------------------------------------------------+
+| Seamless Fastlogo Transition| All                      | Add seamless Fastlogo transition from U-Boot to the Linux Kernel.  |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
 
 SL1640 New Features
@@ -169,6 +167,7 @@ SL1680 New Features
 | OV5647 recalibration        | SL1680                   | Re-calibration and tuning for OV5647 sensor for 640x480 resolution.|
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
 | X11 Dual Display            | SL1680                   | Support Dual Displays on X11 based profiles.                       |
+|                             |                          | (X11 OOBE profile only)                                            |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
 | Face Recognition Demo       | SL1680                   | Add a QT Application for Real-Time Face Recognition.               |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
@@ -271,7 +270,9 @@ Specific Modules and Features
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 |                    | Face Recognition use case                           |   N/A   |   N/A   |    Y    |                                                                                |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Audio Classification AI use case                    |    Y    |    Y    |    Y    | Not included in image                                                          |
+|                    | SR Slideshow                                        |   N/A   |   N/A   |    Y    |                                                                                |
+|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
+|                    | Audio Classification AI use case                    |    Y    |    Y    |    Y    |                                                                                |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 |                    | SyNAP                                               |    Y    |    Y    |    Y    | - supports SyNAP pre-process and sink                                          |
 +--------------------+-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
@@ -323,6 +324,8 @@ Specific Modules and Features
 |                    | Supports Bayer and RGB formats                      |   N/A   |   N/A   |    Y    |                                                                                |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 |                    | Support Simultaneous Path Playback w/ Single Sensor |   N/A   |   N/A   |    Y    |                                                                                |
+|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
+|                    | Direct Sensor(MCM) output for ISP bypass            |   N/A   |   N/A   |    Y    |                                                                                |
 +--------------------+-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 | U-Boot             | EMMC HS400 support                                  |    Y    |    Y    |    Y    |                                                                                |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
@@ -620,6 +623,11 @@ Known Issues and Limitations
     expects the rootfs partition size to be the same. To perform OTA on a system with v1.4 installed, please build an image using `v1.4's partition
     sizes <https://github.com/synaptics-astra/configs/blob/v1.4.0/product/sl1680_poky_aarch64_rdk/emmc.pt>`__. (See :doc:`../subject/emmc_layout_customization`)
 
+.. note::
+
+    Network Manager can be supported in Astra 1.7, but it's disabled by default as there are some stability issues found.
+    If needed, Network Manager can be enabled. Please, contact the Synaptics Astra support team for more information.
+
 Known Issues
 ------------
 
@@ -692,4 +700,6 @@ Known Issues
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 |  N/A    |   N/A    |    Y     | ISP                 | 34536  | Video freezes at the begining when doing dual sensor multistreaming using OV5647    |
 |         |          |          |                     |        | (NV12 640x480).                                                                     |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |    Y     | Networking          | 34541  | Stability issues when using NetworkManager as the default network manager.          |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
