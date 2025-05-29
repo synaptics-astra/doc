@@ -24,6 +24,7 @@ Subject Specific User Guides
    ubuntu_docker
    enable_sdio_wifi
    webrtc
+   syna_composer
 
 
 The following guides provide additional details on a specific subject or module.
@@ -67,3 +68,5 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`enable_sdio_wifi`
 
 - :doc:`webrtc`
+
+- :doc:`syna_composer`
