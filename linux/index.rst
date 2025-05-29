@@ -971,33 +971,58 @@ The following examples show how to upscale video using gstreamer and the Super R
 QDEO
 ****
 
-sr_qdeo_y_uv_640x360_1920x1080::
+sr_qdeo_y_uv_640x360_1920x1080 (NV12)::
 
     gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=640,height=360 !\
         synapimageproc model=sr_qdeo_y_uv_640x360_1920x1080/model.synap ! waylandsink
 
-sr_qdeo_y_uv_1280x720_3840x2160::
+sr_qdeo_y_uv_640x360_1920x1080 (I420)::
+
+    gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=640,height=360 !\
+        jpegdec  ! synapimageproc model=sr_qdeo_y_uv_640x360_1920x1080/model.synap ! waylandsink
+
+sr_qdeo_y_uv_1280x720_3840x2160 (NV12)::
 
     gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1280,height=720 !\
         synapimageproc model=sr_qdeo_y_uv_1280x720_3840x2160/model.synap ! waylandsink
 
-sr_qdeo_y_uv_1920x1080_3840x2160::
+sr_qdeo_y_uv_1280x720_3840x2160 (I420)::
+
+    gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=1280,height=720 !\
+        jpegdec ! synapimageproc model=sr_qdeo_y_uv_1280x720_3840x2160/model.synap ! waylandsink
+
+sr_qdeo_y_uv_1920x1080_3840x2160 (NV12)::
 
     gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1920,height=1080 !\
         synapimageproc model=sr_qdeo_y_uv_1920x1080_3840x2160/model.synap ! waylandsink
 
+sr_qdeo_y_uv_1920x1080_3840x2160 (I420)::
+
+    gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=1920,height=1080 !\
+        jpegdec ! synapimageproc model=sr_qdeo_y_uv_1920x1080_3840x2160/model.synap ! waylandsink
+
 FAST
 ****
 
-sr_fast_y_uv_1280x720_3840x2160::
+sr_fast_y_uv_1280x720_3840x2160 (NV12)::
 
     gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1280,height=720 !\
         synapimageproc model=sr_fast_y_uv_1280x720_3840x2160/model.synap ! waylandsink
 
-sr_fast_y_uv_1920x1080_3840x2160::
+sr_fast_y_uv_1280x720_3840x2160 (I420)::
+
+    gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=1280,height=720 !\
+        jpegdec ! synapimageproc model=sr_fast_y_uv_1280x720_3840x2160/model.synap ! waylandsink
+
+sr_fast_y_uv_1920x1080_3840x2160 (NV12)::
 
     gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1920,height=1080 !\
         synapimageproc model=sr_fast_y_uv_1920x1080_3840x2160/model.synap !  waylandsink
+
+sr_fast_y_uv_1920x1080_3840x2160 (I420)::
+
+     gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=1920,height=1080 !\
+        jpegdec ! synapimageproc model=sr_fast_y_uv_1920x1080_3840x2160/model.synap !  waylandsink
 
 .. note::
 
