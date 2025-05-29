@@ -25,6 +25,7 @@ Subject Specific User Guides
    enable_sdio_wifi
    webrtc
    syna_composer
+   wet_bridge
 
 
 The following guides provide additional details on a specific subject or module.
@@ -70,3 +71,5 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`webrtc`
 
 - :doc:`syna_composer`
+
+- :doc:`wet_bridge`
