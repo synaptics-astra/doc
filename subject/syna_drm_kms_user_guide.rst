@@ -129,7 +129,7 @@ Generic Display Configuration
    More information on the timing and resolution id are available in
    below file.
 
-   ``<linux>/drivers/soc/berlin/modules/avio/vpp/ca/include/vpp_defines.h``
+   `vpp_defines.h <https://github.com/synaptics-astra/linux_5_15-overlay/blob/#release#/drivers/soc/berlin/modules/avio/vpp/ca/include/vpp_defines.h>`__
 
    -  **disp1-type:** Type of the Display1 whether it is HDMI or MIPI-DSI.
 
@@ -230,7 +230,7 @@ HDMI configuration
    21 19 26 25 24 61 62 64>.*
 
    Refer below file for resolution indices in
-   ``<linux>/drivers/soc/berlin/modules/avio/vpp/ca/include/vpp_defines.h``
+   `vpp_defines.h <https://github.com/synaptics-astra/linux_5_15-overlay/blob/#release#/drivers/soc/berlin/modules/avio/vpp/ca/include/vpp_defines.h>`__
 
    If needed, this can be overridden using parameter
    “\ *hdmi_preferred_mode* “, by adding/modifying the same in

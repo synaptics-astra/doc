@@ -26,6 +26,7 @@ Subject Specific User Guides
    webrtc
    syna_composer
    wet_bridge
+   setting_hdmi_resolution
 
 
 The following guides provide additional details on a specific subject or module.
@@ -73,3 +74,5 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`syna_composer`
 
 - :doc:`wet_bridge`
+
+- :doc:`setting_hdmi_resolution`
