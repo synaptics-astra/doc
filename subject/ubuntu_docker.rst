@@ -18,7 +18,7 @@ A prebuilt version of the Astra Dev Docker Image is hosted on GitHub. To get sta
 
 ::
 
-    curl -O https://raw.githubusercontent.com/aduggan-syna/astra_dev/refs/heads/v#release#/docker-compose.yaml
+    curl -O https://raw.githubusercontent.com/aduggan-syna/astra_dev/refs/heads/#release#/docker-compose.yaml
 
 Start the container using the ``docker-compose up`` command. This will download the image from GitHub and start a container using the parameters specified
 in the ``docker-compose.yaml`` file. This includes mapping the ``/home/syna`` directory into the container. It also maps hardware devices such as the NPU
@@ -84,7 +84,7 @@ When done with the container it can be shutdown with the done command.
 Building the Image
 ==================
 
-The prebuilt docker image was created using the scripts in https://github.com/aduggan-syna/astra_dev/tree/v#release#. The
+The prebuilt docker image was created using the scripts in https://github.com/aduggan-syna/astra_dev/tree/#release#. The
 ``build.sh`` copies files from the host rootfs so that they can be installed into the image, and accessed from inside of the
 container.
 

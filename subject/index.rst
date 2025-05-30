@@ -23,6 +23,10 @@ Subject Specific User Guides
    thermal_protection
    ubuntu_docker
    enable_sdio_wifi
+   webrtc
+   syna_composer
+   wet_bridge
+   setting_hdmi_resolution
 
 
 The following guides provide additional details on a specific subject or module.
@@ -64,3 +68,11 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`ubuntu_docker`
 
 - :doc:`enable_sdio_wifi`
+
+- :doc:`webrtc`
+
+- :doc:`syna_composer`
+
+- :doc:`wet_bridge`
+
+- :doc:`setting_hdmi_resolution`

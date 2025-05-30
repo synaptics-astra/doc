@@ -15,7 +15,7 @@ To build a image run the following commands:
 
 2. Clone the sources from `GitHub <https://github.com/synaptics-astra/sdk>`_ ::
 
-    pokyuser@xyz:/path/to/workspace $ git clone -b v#release# --recurse-submodules \
+    pokyuser@xyz:/path/to/workspace $ git clone -b #release# --recurse-submodules \
                                                 https://github.com/synaptics-astra/sdk
 
 3. Setup the build tree::

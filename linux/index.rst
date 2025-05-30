@@ -918,7 +918,7 @@ Example of Pose Estimation with YOLOv8 (RTSP Stream)::
 In gstsynapinfer's second mode, inference results are output as a JSON string. This allows an application to handle the overlay directly
 or do additional processing on the results.
 
-We provide a `sample application <https://github.com/synaptics-astra/application-gstreamer-plugins-syna/tree/v#release#/tests/examples/gst-ai>`__
+We provide a `sample application <https://github.com/synaptics-astra/application-gstreamer-plugins-syna/tree/#release#/tests/examples/gst-ai>`__
 which makes use of gstsynapinfer's second mode. The app plays a video while simultaneously performing image classification on the video frames,
 and then overlaying labels of the results onto the video. A prebuilt version of the application is included in the Astra system image.
 
@@ -971,33 +971,58 @@ The following examples show how to upscale video using gstreamer and the Super R
 QDEO
 ****
 
-sr_qdeo_y_uv_640x360_1920x1080::
+sr_qdeo_y_uv_640x360_1920x1080 (NV12)::
 
     gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=640,height=360 !\
         synapimageproc model=sr_qdeo_y_uv_640x360_1920x1080/model.synap ! waylandsink
 
-sr_qdeo_y_uv_1280x720_3840x2160::
+sr_qdeo_y_uv_640x360_1920x1080 (I420)::
+
+    gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=640,height=360 !\
+        jpegdec  ! synapimageproc model=sr_qdeo_y_uv_640x360_1920x1080/model.synap ! waylandsink
+
+sr_qdeo_y_uv_1280x720_3840x2160 (NV12)::
 
     gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1280,height=720 !\
         synapimageproc model=sr_qdeo_y_uv_1280x720_3840x2160/model.synap ! waylandsink
 
-sr_qdeo_y_uv_1920x1080_3840x2160::
+sr_qdeo_y_uv_1280x720_3840x2160 (I420)::
+
+    gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=1280,height=720 !\
+        jpegdec ! synapimageproc model=sr_qdeo_y_uv_1280x720_3840x2160/model.synap ! waylandsink
+
+sr_qdeo_y_uv_1920x1080_3840x2160 (NV12)::
 
     gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1920,height=1080 !\
         synapimageproc model=sr_qdeo_y_uv_1920x1080_3840x2160/model.synap ! waylandsink
 
+sr_qdeo_y_uv_1920x1080_3840x2160 (I420)::
+
+    gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=1920,height=1080 !\
+        jpegdec ! synapimageproc model=sr_qdeo_y_uv_1920x1080_3840x2160/model.synap ! waylandsink
+
 FAST
 ****
 
-sr_fast_y_uv_1280x720_3840x2160::
+sr_fast_y_uv_1280x720_3840x2160 (NV12)::
 
     gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1280,height=720 !\
         synapimageproc model=sr_fast_y_uv_1280x720_3840x2160/model.synap ! waylandsink
 
-sr_fast_y_uv_1920x1080_3840x2160::
+sr_fast_y_uv_1280x720_3840x2160 (I420)::
+
+    gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=1280,height=720 !\
+        jpegdec ! synapimageproc model=sr_fast_y_uv_1280x720_3840x2160/model.synap ! waylandsink
+
+sr_fast_y_uv_1920x1080_3840x2160 (NV12)::
 
     gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1920,height=1080 !\
         synapimageproc model=sr_fast_y_uv_1920x1080_3840x2160/model.synap !  waylandsink
+
+sr_fast_y_uv_1920x1080_3840x2160 (I420)::
+
+     gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=1920,height=1080 !\
+        jpegdec ! synapimageproc model=sr_fast_y_uv_1920x1080_3840x2160/model.synap !  waylandsink
 
 .. note::
 
@@ -1016,7 +1041,7 @@ sr_fast_y_uv_1920x1080_3840x2160::
 Multimedia Demo Applications
 ----------------------------
 
-We also provide two `demo QT applications <https://github.com/synaptics-astra/application-videosdk/tree/v#release#/>`__ which demonstate the
+We also provide two `demo QT applications <https://github.com/synaptics-astra/application-videosdk/tree/#release#/>`__ which demonstate the
 Multimedia and AI capabilities of Astra Machina. The Syna Video Player app demonstates decoding and playing up to four video streams. The Syna AI
 Player app demonstrates the AI capabilities of Astra Machina by performing object detection, face detection, and pose estimation examples.
 
@@ -1653,8 +1678,10 @@ Astra Machina uses the Synaptics U-Boot (SU-Boot) bootloader to do additional
 hardware initialization and to boot the Linux Kernel. SU-Boot is based on the
 open source U-Boot project. (`U-Boot Documentation <https://docs.u-boot.org/en/latest/>`__)
 
-Linux Kernel and Device Tree
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. _linux_kernel_and_devicetree_overview:
+
+Linux Kernel and Devicetree
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Astra Machina primarily run OSes which use the Linux
 Kernel. The Linux Kernel provides the environment in which applications
@@ -1667,7 +1694,68 @@ hardware components and their configurations on the system. The device
 tree source files are in the Linux Kernel source tree under that path
 ``arch/arm64/boot/dts/synaptics/``. These files are maintained in the `Astra Linux Kernel Overlay repository <https://github.com/synaptics-astra/linux_5_15-overlay>`__.
 This directory also includes device tree overlays which can be used to
-modify the device tree without having to recompile the entire device tree.
+modify the device tree without having to recompile the entire devicetree.
+
+.. _devicetree_overlays:
+
+Devicetree Overlays
+"""""""""""""""""""
+
+Setting the devicetree overlay requires booting into U-Boot and setting
+the ``dtbo`` variable to the required devicetree overlay. See :ref:`uboot_prompt` for instructions on getting to the
+U-Boot prompt.
+
+Once at the U-Boot prompt run the following commands to enable the Devicetree Overlay.
+
+Set the ``dtbo`` variables::
+
+    => setenv dtbo dolphin-haier-panel-overlay.dtbo
+
+
+The ``dtbo`` variable also supports setting multiple overlays using a comma seperated list::
+
+    => setenv dtbo dolphin-bothcsi-without-expander.dtbo, dolphin-haier-panel-overlay.dtbo
+
+
+Save the environment to the eMMC so that the new variable will persist across reboots.
+
+::
+
+    => saveenv
+    Saving Environment to MMC... Writing to redundant MMC(0)... OK
+
+Optionally, confirm that the variable was correctly set.
+
+::
+
+    => printenv
+    altbootcmd=if test ${boot_slot}  = 1; then bootslot set b; bootcount reset;bootcount reset; run bootcmd; else bootslot set a; bootcount reset; bootcount reset; run bootcmd;  fi
+    autoload=n
+    baudrate=115200
+    bootcmd=bootmmc
+    bootcount=1
+    bootdelay=0
+    bootlimit=3
+    dtbo=dolphin-haier-panel-overlay.dtbo
+    fdtcontroladdr=2172e190
+    preboot=show_logo;
+    upgrade_available=0
+    ver=U-Boot 2019.10 (Nov 21 2024 - 14:01:42 +0000)
+    Environment size: 407/65531 bytesboo
+
+Finally, boot with the new overlay applied.
+
+::
+
+    => boot
+
+.. note::
+
+    Support for devicetree overlays was added in release v1.5.
+
+.. note::
+
+    Support for multiple devicetree overlays was added in release v1.7.
 
 Root File System
 ^^^^^^^^^^^^^^^^
@@ -1708,7 +1796,7 @@ SPI flash. The SPI flash may be located on the main board of Astra Machina or
 it may be a located on a SPI daughter card which is plugged into the device.
 Once SPI U-Boot is running on the board it can be used to write an image to the eMMC.
 
-`Synaptics U-Boot Source Code <https://github.com/synaptics-astra/boot-u-boot_2019_10/tree/v#release#>`__
+`Synaptics U-Boot Source Code <https://github.com/synaptics-astra/boot-u-boot_2019_10/tree/#release#>`__
 
 .. note::
 
@@ -1743,7 +1831,7 @@ Generating Bootable SD Card Images
 Creating a bootable SD card requires converting an existing image into a format suitable for writing
 to the SD card. You can convert either prebuilt release images or an image you built yourself.
 Run the ``gen_sd.sh`` script from within the image directory. You can find the ``gen_sd.sh`` script
-on `GitHub <https://github.com/synaptics-astra/build/blob/v#release#/tools/bin/gen_sd.sh>`__.
+on `GitHub <https://github.com/synaptics-astra/build/blob/#release#/tools/bin/gen_sd.sh>`__.
 Click the "Download Raw File" to download the script. The script runs in a Linux environment with the
 ``mkfs.ext4``, ``gzip``, ``gdisk``, and ``sgdisk`` utilties installed.
 
@@ -1927,7 +2015,7 @@ To update internal SPI Flash:
 .. note::
 
     Please check the release notes to confirm that you have a compatible version of ``astra-update``.
-    :doc:`../release_notes/v#release#`
+    :doc:`../release_notes/#release#`
 
 .. figure:: media/usb-tool-win.png
 
@@ -2019,7 +2107,7 @@ downloaded from a TFTP server on a local network.
     The version of U-Boot written to the eMMC is updated along with the system images when doing an eMMC update. The
     version of U-Boot written to the internal SPI flash is independent of the eMMC image.
     Please check the release notes to confirm that you have a compatible version of U-Boot installed
-    before updating the eMMC image. :doc:`../release_notes/v#release#`
+    before updating the eMMC image. :doc:`../release_notes/#release#`
 
 Setting up the U-Boot Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
