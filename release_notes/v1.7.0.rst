@@ -146,7 +146,7 @@ SL1620 New Features
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
 | Support Bridged WET mode    | SL1620                   | Allow SL1620 to act as a WiFi bridge.                              |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
-| Seamless Fastlogo Transition| All                      | Add seamless Fastlogo transition from U-Boot to the Linux Kernel.  |
+| Seamless Fastlogo Transition| SL1620                   | Add seamless Fastlogo transition from U-Boot to the Linux Kernel.  |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
 
 SL1640 New Features
