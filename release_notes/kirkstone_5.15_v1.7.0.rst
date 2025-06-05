@@ -1,6 +1,6 @@
-********************
-Release Notes v1.6.0
-********************
+===================================
+Release Notes Kirkstone 5.15 v1.7.0
+===================================
 
 .. highlight:: console
 
@@ -12,7 +12,7 @@ AI-native, multi-modal SoCs optimized for consumer, enterprise, and industrial I
 equipped with hardware accelerators for edge inferencing, security, graphics, vision, and audio, and offer
 out-of-the-box functionality with Synaptics' connectivity solutions.
 
-Astra (v1.6.0) GA Release is a unified software development kit supporting the SL-Series of MPUs.
+Astra (v1.7.0) GA Release is a unified software development kit supporting the SL-Series of MPUs.
 
 The high-level components included in this SDK are described below:
 
@@ -63,9 +63,6 @@ They are provided in binary format. Synaptics will migrate them into REE and ope
 ========    =========================
 Package     Notes
 ========    =========================
-MIPI-DSI    TA
-
-            SL1620
 Fastlogo    TA
 
             SL1680 / SL1640
@@ -86,8 +83,12 @@ Vmeta       TA
 
 .. note::
 
-    The Vmeta TV was open sourced in release v1.6. Source code can be found at
-    `<https://github.com/synaptics-astra/tee-optee_dev/tree/#release#/ta/vpu>`__.
+    The Vmeta TA was open sourced in release v1.6. Source code can be found at
+    `<https://github.com/synaptics-astra/tee-optee_dev/tree/kirkstone_5.15_v1.7.0/ta/vpu>`__.
+
+.. note::
+
+    FastLogo and DHUB TAs were open sourced in release v1.7.
 
 Where to get the SDK from GitHub
 --------------------------------
@@ -100,7 +101,7 @@ Images and Toolchains
 SDK
 ^^^
 
-`<https://github.com/synaptics-astra/sdk/tree/v1.6.0>`__
+`<https://github.com/synaptics-astra/sdk/tree/kirkstone_5.15_v1.7.0>`__
 
 Documentation
 ^^^^^^^^^^^^^
@@ -124,45 +125,29 @@ Common New Features
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
 | Feature                     | SoC                      | Description                                                        |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
-| Upgrade HostAPD             | All                      | Upgraded HostAPD to v2.11                                          |
+| SU-Boot for SPI             | All                      | Support Synaptics U-Boot when booting from SPI.                    |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
-| Upgrade WPA Supplicant      | All                      | Upgraded WPA Supplicant to v2.11                                   |
+| Multiple DTOBs via U-Boot   | All                      | Support loading multiple devicetree overlays.                      |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
-| Upgrade Chromium            | All                      | Upgraded Chromium to v131.0.6778.139  (OOBE only)                  |
-+-----------------------------+--------------------------+--------------------------------------------------------------------+
-| Waveshare 13.3" Panel       | All                      | Added support for the Waveshare 13.3" Panel                        |
-+-----------------------------+--------------------------+--------------------------------------------------------------------+
-| SU-Boot for USB and SPI     | All                      | Suppport Synaptics U-Boot when booting from SPI and USB            |
-+-----------------------------+--------------------------+--------------------------------------------------------------------+
-| Volume control for USB      | All                      | Added GPIO Key support for adjusting volume using GPIOs and added  |
+| Syna Compositor             | All                      | Adds capabilities for compositing multiple video streams in a      |
 |                             |                          |                                                                    |
-| audio device                |                          | a user guide.                                                      |
+|                             |                          | GStreamer pipeline.                                                |
 |                             |                          |                                                                    |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
-| Display Settings UI         | All                      | Added a UI for configuring display settings (OOBE images only)     |
-+-----------------------------+--------------------------+--------------------------------------------------------------------+
-| Wifi Setting UI             | All                      | Added a UI for connecting to WiFi networks (OOBE images only)      |
-+-----------------------------+--------------------------+--------------------------------------------------------------------+
-| CPU Thermal Protection      | All                      | Enabled thermal protection to reduce CPU Freq or power down when   |
-|                             |                          |                                                                    |
-|                             |                          | certain temperature thresholds are hit.                            |
-|                             |                          |                                                                    |
-+-----------------------------+--------------------------+--------------------------------------------------------------------+
-| Save GST inference results  | All                      | Added support for saving GST inference results to a files for      |
-|                             |                          |                                                                    |
-| to file                     |                          | further processing.                                                |
-|                             |                          |                                                                    |
-+-----------------------------+--------------------------+--------------------------------------------------------------------+
-| GST Image Classification    | All                      | Support image classification on the command line. Previously, it   |
-|                             |                          |                                                                    |
-| on the command line         |                          | required a custom app.                                             |
-|                             |                          |                                                                    |
+| Enable Gstreamer WebRTC     | All                      | Add Gstreamer WebRTC plugin and example website                    |
+|                             |                          | (OOBE profiles Only)                                               |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
 
 SL1620 New Features
 -------------------
 
-*No SL1620 specific features were added in this release.*
++-----------------------------+--------------------------+--------------------------------------------------------------------+
+| Feature                     | SoC                      | Description                                                        |
++-----------------------------+--------------------------+--------------------------------------------------------------------+
+| Support Bridged WET mode    | SL1620                   | Allow SL1620 to act as a WiFi bridge.                              |
++-----------------------------+--------------------------+--------------------------------------------------------------------+
+| Seamless Fastlogo Transition| SL1620                   | Add seamless Fastlogo transition from U-Boot to the Linux Kernel.  |
++-----------------------------+--------------------------+--------------------------------------------------------------------+
 
 SL1640 New Features
 -------------------
@@ -170,7 +155,7 @@ SL1640 New Features
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
 | Feature                     | SoC                      | Description                                                        |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
-| 3GB LPDDR4 Support          | SL1640                   | Added support for  3GB LPDDR4                                      |
+| Optimized Power Consumption | SL1640                   | Optimize power consumption when suspended.                         |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
 
 SL1680 New Features
@@ -179,15 +164,27 @@ SL1680 New Features
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
 | Feature                     | SoC                      | Description                                                        |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
-| ISP Kernel Modularization   | SL1680                   | Support ISP Kernel Drivers as modules                              |
+| OV5647 recalibration        | SL1680                   | Re-calibration and tuning for OV5647 sensor for 640x480 resolution.|
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
-| Upgrade ISP PQ Tool         | SL1680                   | Upgrade the ISP PQ Tuning Tool to v6.5.1                           |
+| X11 Dual Display            | SL1680                   | Support Dual Displays on X11 based profiles.                       |
+|                             |                          | (X11 OOBE profile only)                                            |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
-| ISP Camera App              | SL1680                   | Add a built-in ISP camera app which supports streaming, capturing  |
-|                             |                          | images, and recording video. (OOBE only)                           |
+| Face Recognition Demo       | SL1680                   | Add a QT Application for Real-Time Face Recognition.               |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
-| Ubuntu Docker Development   | SL1680                   | Add a Ubuntu based docker container for general purpose development|
+| Audio Support for Synap     | SL1680                   | Add synap audio support and demo application (demos app OOBE only) |
 +-----------------------------+--------------------------+--------------------------------------------------------------------+
+| I420 Format for Super-res   | SL1680                   | Add I420 color format support for Super Resolution.                |
++-----------------------------+--------------------------+--------------------------------------------------------------------+
+| IMX477                      | SL1680                   | Add support for the IMX477 Image Sensor.                           |
++-----------------------------+--------------------------+--------------------------------------------------------------------+
+| Direct Sensor Output        | SL1680                   | Add support for accessing RAW MCM Buffers to bypass ISP.           |
++-----------------------------+--------------------------+--------------------------------------------------------------------+
+| IOMMU for MCM               | SL1680                   | Default support for IOMMU with MCM (for dual image sensors).       |
++-----------------------------+--------------------------+--------------------------------------------------------------------+
+| V4L2 ISP Test Application   | SL1680                   | Add test application for testing features not available with       |
+|                             |                          | Gstreamer.                                                         |
++-----------------------------+--------------------------+--------------------------------------------------------------------+
+
 
 SoC Core Feature Summary
 ========================
@@ -271,7 +268,11 @@ Specific Modules and Features
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 |                    | Super Resolution AI use case                        |   N/A   |   N/A   |    Y    |                                                                                |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Audio Classification AI use case                    |    Y    |    Y    |    Y    | Not included in image                                                          |
+|                    | Face Recognition use case                           |   N/A   |   N/A   |    Y    |                                                                                |
+|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
+|                    | SR Slideshow                                        |   N/A   |   N/A   |    Y    |                                                                                |
+|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
+|                    | Audio Classification AI use case                    |    Y    |    Y    |    Y    |                                                                                |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 |                    | SyNAP                                               |    Y    |    Y    |    Y    | - supports SyNAP pre-process and sink                                          |
 +--------------------+-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
@@ -323,6 +324,8 @@ Specific Modules and Features
 |                    | Supports Bayer and RGB formats                      |   N/A   |   N/A   |    Y    |                                                                                |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 |                    | Support Simultaneous Path Playback w/ Single Sensor |   N/A   |   N/A   |    Y    |                                                                                |
+|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
+|                    | Direct Sensor(MCM) output for ISP bypass            |   N/A   |   N/A   |    Y    |                                                                                |
 +--------------------+-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 | U-Boot             | EMMC HS400 support                                  |    Y    |    Y    |    Y    |                                                                                |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
@@ -395,10 +398,10 @@ General Modules, Peripherals, and Interfaces Supported
 +--------------------------------+----------------------------------------------------------------------------+
 | U-Boot                         | SPI U-Boot version: v1.1.1                                                 |
 |                                |                                                                            |
-|                                | USB SU-Boot version: v1.6                                                  |
+|                                | USB SU-Boot version: v1.7                                                  |
 |                                |                                                                            |
 +--------------------------------+----------------------------------------------------------------------------+
-| USB Tool                       | astra-update: 1.0.0                                                        |
+| USB Tool                       | astra-update: 1.0.2                                                        |
 +--------------------------------+----------------------------------------------------------------------------+
 | OP-TEE                         | OP-TEE version: 4.0.0                                                      |
 +--------------------------------+----------------------------------------------------------------------------+
@@ -548,18 +551,34 @@ General Modules, Peripherals, and Interfaces Supported
 Supported Camera Modules
 ------------------------
 
-=======  =======================================================================================   ============  ======================================= ============================
-Sensor   Module                                                                                    Interface     Adapter Board                           Device Tree Overlay Required
-=======  =======================================================================================   ============  ======================================= ============================
-IMX258   Synaptics IMX258 Camera Module                                                            MIPI-CSI 0    Synaptics SL1680 MIPI CSI Adaptor Board Yes
-IMX415   Synaptics IMX415 Camera Module                                                            MIPI-CSI 0    Synaptics SL1680 MIPI CSI Adaptor Board Yes
-OV5647   `Arducam 5MP OV5647 Camera Module
-         <https://www.arducam.com/product/arducam-ov5647-standard-raspberry-pi-camera-b0033/>`__   MIPI-CSI 0/1  None                                    CSI0 - No
-
-                                                                                                                                                         CSI1 -Yes
-
-                                                                                                                                                         CSI0/CSI1 - Yes
-=======  =======================================================================================   ============  ======================================= ============================
++--------+------------------------------------------------------------------------------------------+-----------------+------------------------------------------------------+----------------------------------------------------+
+| Sensor | Module                                                                                   | Resolution      | Interface (Device Tree Overlay if Required)          | Notes                                              |
++========+==========================================================================================+=================+======================================================+====================================================+
+| IMX258 | Synaptics IMX258 Camera Module                                                           | 3840x2160 30fps | MIPI-CSI 0 w/ dolphin-csi0-with-expander.dtbo        | Synaptics SL1680 MIPI CSI Adaptor Board Required   |
+|        |                                                                                          | (mode 0)        |                                                      |                                                    |
+|        |                                                                                          |                 |                                                      |                                                    |
+|        |                                                                                          | 1920x1080 30fps |                                                      |                                                    |
+|        |                                                                                          | (mode 1)        |                                                      |                                                    |
+|        |                                                                                          |                 |                                                      |                                                    |
++--------+------------------------------------------------------------------------------------------+-----------------+------------------------------------------------------+----------------------------------------------------+
+| IMX415 | Synaptics IMX415 Camera Module                                                           | 3840x2160 30fps | MIPI-CSI 0 w/ dolphin-csi0-with-expander.dtbo        | Synaptics SL1680 MIPI CSI Adaptor Board Required   |
+|        |                                                                                          | (mode 0)        |                                                      |                                                    |
+|        |                                                                                          |                 |                                                      |                                                    |
+|        |                                                                                          | 1920x1080 30fps |                                                      |                                                    |
+|        |                                                                                          | (mode 1)        |                                                      |                                                    |
+|        |                                                                                          |                 |                                                      |                                                    |
++--------+------------------------------------------------------------------------------------------+-----------------+------------------------------------------------------+----------------------------------------------------+
+| OV5647 | `Arducam 5MP OV5647 Camera Module                                                        | 640x480 60fps   | MIPI-CSI0                                            | 1920x1080 30fps output is non-calibrated           |
+|        | <https://www.arducam.com/product/arducam-ov5647-standard-raspberry-pi-camera-b0033/>`__  | (mode 0)        |                                                      |                                                    |
+|        |                                                                                          |                 +------------------------------------------------------+                                                    |
+|        |                                                                                          | 1920x1080 30fps | MIPI-CSI 1 w/ dolphin-csi1-without-expander.dtbo     |                                                    |
+|        |                                                                                          | (mode 1)        +------------------------------------------------------+                                                    |
+|        |                                                                                          |                 | Dual CSI0/1 w/ dolphin-bothcsi-without-expander.dtbo |                                                    |
++--------+------------------------------------------------------------------------------------------+-----------------+------------------------------------------------------+----------------------------------------------------+
+| IMX477 | `Raspberry Pi High Quality Camera                                                        | 3840x2160 30fps | MIPI-CSI0                                            | Single Sensor Support Only                         |
+|        | <https://www.raspberrypi.com/products/raspberry-pi-high-quality-camera/>`__              | (mode 0)        +------------------------------------------------------+                                                    |
+|        |                                                                                          |                 |  MIPI-CSI 1 w/ dolphin-csi1-without-expander.dtbo    | 3840x2160 30fps output is non-calibrated           |
++--------+------------------------------------------------------------------------------------------+-----------------+------------------------------------------------------+----------------------------------------------------+
 
 Known Issues and Limitations
 ============================
@@ -600,9 +619,14 @@ Known Issues and Limitations
 
 .. note::
 
-    In Astra v1.5, the rootfs parition sizes increased to accommodate the extra packages in the OOBE images. This interferes with OTA since SWUpdate
+    In Astra v1.5, the rootfs partition sizes increased to accommodate the extra packages in the OOBE images. This interferes with OTA since SWUpdate
     expects the rootfs partition size to be the same. To perform OTA on a system with v1.4 installed, please build an image using `v1.4's partition
     sizes <https://github.com/synaptics-astra/configs/blob/v1.4.0/product/sl1680_poky_aarch64_rdk/emmc.pt>`__. (See :doc:`../subject/emmc_layout_customization`)
+
+.. note::
+
+    Network Manager can be supported in Astra 1.7, but it's disabled by default as there are some stability issues found.
+    If needed, Network Manager can be enabled. Please, contact the Synaptics Astra support team for more information.
 
 Known Issues
 ------------
@@ -610,29 +634,15 @@ Known Issues
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 | SL1620  |  SL1640  |  SL1680  |  Module             |  ID    | Summary                                                                             |
 +=========+==========+==========+=====================+========+=====================================================================================+
-|    Y    |   N/A    |   N/A    | Display             | 34039  | TFT output gets muted if MIPI panel is not connected.                               |
+|    Y    |   N/A    |   N/A    | Display             | 34549  | Waveshare 7" panel randomly does not show UI                                        |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|    Y    |   N/A    |   N/A    | Linux Kernel        | 29893  | Observed Horizontal Stride, whenever there is an object movement                    |
-|         |          |          |                     |        |                                                                                     |
-|         |          |          |                     |        | during USB Camera Test.                                                             |
-|         |          |          |                     |        |                                                                                     |
+|    Y    |   N/A    |   N/A    | Audio               | 29306  | Recorded audio is at 0.75x speed when recording from DMIC input at 44.1KHz with     |
+|         |          |          |                     |        | signed 32 bit.                                                                      |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|    Y    |   N/A    |   N/A    | Chromium            | 31605  | Chromium Web Browser window size and position on HDMI is no the same as TFT panel.  |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|    Y    |   N/A    |   N/A    | Audio               | 32156  | Observed corrupted file when recording from DMIC with 32bit pcm for AAC and         |
-|         |          |          |                     |        |                                                                                     |
-|         |          |          |                     |        | ffmpeg-mp2 formats.                                                                 |
-|         |          |          |                     |        |                                                                                     |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|    Y    |   N/A    |   N/A    | Display             | 32400  | Observed garbage on HDMI Output during suspend and resume.                          |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|    Y    |   N/A    |    N/A   | USB U-Boot          | 32904  | Not able to flash image with USB U-Boot using TFTP.                                 |
+|    Y    |   N/A    |   N/A    | Audio               | 32139  | 24bit and 32bit are not available for all sample rates when recording using USB     |
+|         |          |          |                     |        | headphones and cameras.                                                             |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 |    Y    |   N/A    |   N/A    | Graphics            | 33037  | GFX Demo app UI goes to background when opened (OOBE image only).                   |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|    Y    |   N/A    |   N/A    | Chromium            | 33038  | Observed colored dots while playing any content on HDMI.                            |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|    Y    |   N/A    |    N/A   | OOBE Demo           | 33048  | FingerPaint GFX Demo is not working (OOBE image only).                              |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 |    Y    |   N/A    |    N/A   | Gstreamer Pipeline  | 33062  | Video playback output is not scaled on TFT panel when using ``vximagesink``         |
 |         |          |          |                     |        | (X11 image only).                                                                   |
@@ -641,124 +651,55 @@ Known Issues
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 |    Y    |    Y     |     Y    | Display (X11)       | 33671  | Fail to run color conversion test cases after set Color Conver to BGRA & RGB.       |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|    Y    |   N/A    |   N/A    | Gstreamer Pipeline  | 33728  | Observed Stutter while testing Multiple Decode testcase 9x320x180                   |
-|         |          |          |                     |        | [Video file is 640x360@25]                                                          |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|    Y    |   N/A    |    Y     |  QT Browser         | 33750  | Video freezes when running WebRTC_audio-and-video Test with QT Browser.             |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|    Y    |   N/A    |   N/A    | Gstreamer Pipeline  | 33728  | Observed Stutter while testing Multiple Decode testcase 2x1280x720                  |
-|         |          |          |                     |        | [Video file is 720p30]                                                              |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 |    Y    |   N/A    |   N/A    | OOBE                | 33998  | No Wi-fi observed during browse to Wifi and Turn on Wifi search for SynaExplorer.   |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|    Y    |    Y     |     Y    | OOBE                | 34015  | There is no "13.3 Waveshare Panel" option under "Display Config" dropdown in the    |
-|         |          |          |                     |        | OOBE profile.                                                                       |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|   N/A   |    Y     |   N/A    | OOBE                | 34030  | Video Mixer layout does not use the entire screen.                                  |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|   N/A   |    Y     |    Y     | Gstreamer Pipeline  | 34026  | Error reported when testing FFMPEG using v4l2 codecs decode h265 stream to yuv420p. |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|   N/A   |    Y     |   N/A    | Gstreamer Pipeline  | 34034  | Video playback stutters when running Face Detection case                            |
-|         |          |          |                     |        | "Video-fitness.mp4 -- V4L2 -- Dump to file"                                         |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|   N/A   |    Y     |   N/A    | OOBE                | 34032  | No network with assigned IP when testing WiFi UI in OOBE                            |
-|         |          |          |                     |        | (WiFi protocol: WPA2 & IPv6)                                                        |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|   N/A   |    Y     |   N/A    | OOBE                | 34033  | WiFi UI always shows "Password is incorrect" when connecting to WPA3 AP.            |
+|    Y    |   N/A    |   N/A    | OOBE                | 34348  | QR code on the Desktop Backgroud is out of date.                                    |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 |  N/A    |    Y     |    Y     | Gstreamer Pipeline  | 30385  | Last frame is retained after playback stopped when using KMS sink.                  |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |    Y     |    Y     | Display             | 30438  | Observed video shaking and horizontal lines during playback of some streams when    |
-|         |          |          |                     |        |                                                                                     |
-|         |          |          |                     |        | using kmssink.                                                                      |
-|         |          |          |                     |        |                                                                                     |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |    Y     |    Y     | Display             | 30691  | Green flash occurs at the beginning of playback on some streams when using kmssink. |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |    Y     |    Y     | NNStreamer          | 31011  | Video freezes for 2 seconds during object detection using nnstreamer and an         |
-|         |          |          |                     |        |                                                                                     |
-|         |          |          |                     |        | external USB camera.                                                                |
-|         |          |          |                     |        |                                                                                     |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |    Y     |   N/A    | OOBE                | 32928  | OOBE image failed to enter standby when running ``echo mem > /sys/power/state``.    |
+|  N/A    |    Y     |    Y     | Linux Kernel        | 32944  | Suspend to RAM fails to work.                                                       |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 |   Y     |    Y     |    Y     | NNStreamer          | 33030  | Failed to run NNStreamer Object Detection GPU test (X11 based images only).         |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|   Y     |    Y     |   N/A    | Fastlogo            | 33042  | Fastlogo not seen on Waveshare panel when switching DTBO.                           |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 |  N/A    |    Y     |   N/A    | Display (X11)       | 33603  | White rectangle observed around cursor during video playback.                       |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 |  N/A    |    Y     |   N/A    | Display (X11)       | 33605  | Observed screen tearing during video playback and camera streaming.                 |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |    Y     |   N/A    | SynAP               | 33745  | SyNAP NNAPI offline testcase failed with latest models.                             |
+|   N/A   |    Y     |   N/A    | OOBE                | 34030  | Video Mixer layout does not use the entire screen.                                  |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |    Y     |    Y     | WiFi                | 33951  | Failed to connect to WAP3 AP when running the WiFi test.                            |
+|   N/A   |    Y     |   N/A    | OOBE                | 34482  | Bluetooth UI does not show "Connected" after connecting to a device.                |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | OOBE                | 34032  | No network with assigned IP when testing WiFi UI in OOBE                            |
-|         |          |          |                     |        | (WiFi protocol: WPA2 & IPv4)                                                        |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | OOBE                | 34027  | Captured video plays fast when doing test ISP camera application.                   |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | OOBE                | 34029  | Reset button in ISP Camera application does not work.                               |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | Video Player Demo   | 30437  | Observed video shaking when playing back 4 streams with V4L2 decoding in            |
-|         |          |          |                     |        |                                                                                     |
-|         |          |          |                     |        | syna-video-player.                                                                  |
-|         |          |          |                     |        |                                                                                     |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |    Y     |    Y     | Display             | 31173  | No signal after hotplug from 4K TV to 2K monitor.                                   |
+|   N/A   |    Y     |   N/A    | OOBE                | 34535  | WiFi UI fails to connect to previously connected AP.                                |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 |  N/A    |   N/A    |    Y     | HDMI-RX             | 31254  | Video color is much darker when switching resolution 4K30 to 1080P30.               |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | Gstreamer Pipeline  | 31554  | Video Stutter when testing Multi-AI configuration 4x1080p30 / 3x1080p30 + x1080p15  |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | HDMI-RX             | 31576  | HDMI-RX Video freezes or reports no output when switching resolution 4K60 RGB 8bit  |
-|         |          |          |                     |        | to 1080P60 RGB 8bit.                                                                |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | HDMI-RX             | 31622  | Last frame retained after playback is stopped when running 4K60 RGB -> 4K60 NV12 -> |
-|         |          |          |                     |        |                                                                                     |
-|         |          |          |                     |        | V4L2 Scaler -> 2K60 NV12 -> V4L2 H264 Encoder -> V4L2 H264 Decoder                  |
-|         |          |          |                     |        |                                                                                     |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | Gstreamer Pipeline  | 32532  | Video Stutters when testing RTSP Server.                                            |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | Gstreamer Pipeline  | 32544  | Video stutter observed when playing 4x 1080P RTSP IP camera streams.                |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | ISP                 | 32959  | OV5647 image contains color imbalance (too much green).                             |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | ISP                 | 32960  | Excessive noise is visible on screen when testing OV5647 with ports CSI-0 and CSI-1.|
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |    Y     |    Y     | Display             | 33034  | Frame pushed to MAIN(stripes) only displayed on one quarter of the screen during    |
-|         |          |          |                     |        | mode test with a 4K TV.                                                             |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|   Y     |    Y     |   N/A    | Fastlogo            | 33042  | Fastlogo not seen on Waveshare panel when switching DTBO.                           |
+|  N/A    |   N/A    |    Y     | HDMI-RX             | 31574  | Adnormal UI shown when switching between 4k30 RGB 8bit to 1080P30 RGB 8bit.         |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 |  N/A    |   N/A    |    Y     | HDMI-RX             | 33066  | Observed video tearing when playing YouTube stream with HDMI-RX using X11.          |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | Gstreamer Pipeline  | 33076  | Camera stream is not smooth when streaming ISP camera on X11.                       |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 |  N/A    |   N/A    |    Y     | Gstreamer Pipeline  | 33077  | AI pipelines cannot run on X11 due to missing extension.                            |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | Display (X11)       | 33083  | Video tearing occurred when playing a local file stream with USB camera(720p/1080p).|
-|         |          |          |                     |        |                                                                                     |
-|         |          |          |                     |        | (X11 image only).                                                                   |
-|         |          |          |                     |        |                                                                                     |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | HDMI                | 33085  | HDMI output audio channel mapping is incorrect when using QD980 as input set to     |
-|         |          |          |                     |        |                                                                                     |
-|         |          |          |                     |        | 5.1/7.1ch 48khz.                                                                    |
-|         |          |          |                     |        |                                                                                     |
-+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | Linux Kernel        | 33325  | Reboot command fails and console reports                                            |
-|         |          |          |                     |        | "fxl6408_i2c_read_le8 i2c read failed from addr 43"                                 |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 |  N/A    |   N/A    |    Y     | OOBE                | 33670  | Getting Started Video Stream won't finish unless you move mouse after clicking      |
 |         |          |          |                     |        | close.                                                                              |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |    Y     |    Y     | Suspend / Resume    | 33696  | SL1680 uses more power in low power standby then SL1640.                            |
+|  N/A    |   N/A    |    Y     | Display (X11)       | 34424  | Waveshare 7" panel in portrait mode when using Dual Display with X11.               |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | Display (X11)       | 33792  | Video freezes for 2 seconds when testing NNStreamer with NPU USB Camera stream.     |
+|  N/A    |   N/A    |    Y     | ISP                 | 34475  | IMX477 output has a blue tint.                                                      |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | Gstreamer Pipeline  | 33994  | Video stutters when doing multiple decodes (4x1920x1080 [Video file is 1080p60]).   |
+|  N/A    |   N/A    |    Y     | ISP                 | 34476  | Video flashes when testing IMX477 sensor.                                           |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
-|  N/A    |   N/A    |    Y     | HDMI-RX             | 34008  | Audio glitch observed during testcase 4k30 RGB->1080p30Hz UYVY &                    |
-|         |          |          |                     |        | audio_48k_S16_LE_2 channel_alsasink.                                                |
+|  N/A    |   N/A    |    Y     | ISP                 | 34477  | IMX477 output has a purple tint in low light environments.                          |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | HDMI-RX             | 34499  | Output shows a green screen when testing HDMI-RX with kmssink.                      |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |    Y     | OOBE                | 34526  | Ping reports "Network is unreachable" when connected to IPv6 AP.                    |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | OOBE                | 34533  | Changing the display using the "Display Config" UI causes crash after rebooting.    |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |   N/A    |    Y     | ISP                 | 34536  | Video freezes at the begining when doing dual sensor multistreaming using OV5647    |
+|         |          |          |                     |        | (NV12 640x480).                                                                     |
++---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
+|  N/A    |    Y     |    Y     | Networking          | 34541  | Stability issues when using NetworkManager as the default network manager.          |
 +---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
