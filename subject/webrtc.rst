@@ -43,7 +43,7 @@ chmod +x syna-webrtc.sh and then execute it.
 
    #!/bin/bash
 
-   FOLDER="/home/root/demos/SynaWebRTC"
+   FOLDER="/home/root/demos/webrtc"
 
    ip_addr=$(ifconfig eth0 | grep 'inet addr:' | awk -F: '{print $2}' | awk '{print $1}')
    echo "Copy this address and paste it into your web browser: http://$ip_addr:8000"
