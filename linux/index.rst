@@ -23,7 +23,7 @@ The following Reference Kits and platforms are covered by this guide:
 References
 ----------
 
--  `SyNAP User Guide <https://synaptics-synap.github.io/doc/v/3.0.0/>`__
+-  `SyNAP User Guide <https://synaptics-synap.github.io/doc/v/latest/>`__
 
 
 Introduction
@@ -1142,7 +1142,7 @@ Machine Learning with SyNAP
 
 Astra Machina uses the SyNAP framework for execution of neural networks using the platform's hardware accelerators.
 This framework allows users to run programs which take advantage of the Neural Processing Unit (NPU)
-and Graphics Processing Unit (GPU) to accelerate the execution of neural networks. (see the `SyNAP documentation <https://synaptics-synap.github.io/doc/v/3.0.0/>`__ for more details.)
+and Graphics Processing Unit (GPU) to accelerate the execution of neural networks. (see the `SyNAP documentation <https://synaptics-synap.github.io/doc/v/latest/>`__ for more details.)
 
 Connectivity
 ============
