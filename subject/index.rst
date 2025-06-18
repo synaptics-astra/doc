@@ -19,7 +19,6 @@ Subject Specific User Guides
    fastlogo_image_generation
    uboot_fastlogo_configuration
    swupdate_user_guide
-   controlling_volume_with_gpios
    thermal_protection
    enable_sdio_wifi
    syna_composer
@@ -57,8 +56,6 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`uboot_fastlogo_configuration`
 
 - :doc:`swupdate_user_guide`
-
-- :doc:`controlling_volume_with_gpios`
 
 - :doc:`thermal_protection`
 
