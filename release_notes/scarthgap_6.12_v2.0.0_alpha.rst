@@ -81,9 +81,6 @@ Vmeta       TA
             SL1680 / SL1640 / SL1620
 
 ========    =========================
-.. note::
-
-    FastLogo and DHUB TAs were open sourced in release v1.7.
 
 Where to get the SDK from GitHub
 --------------------------------
@@ -96,7 +93,7 @@ Images and Toolchains
 SDK
 ^^^
 
-`<https://github.com/synaptics-astra/sdk/tree/scarthgap_6.12_v2.0.0>`__
+`<https://github.com/synaptics-astra/sdk/tree/scarthgap_6.12_v2.0.0_alpha>`__
 
 Documentation
 ^^^^^^^^^^^^^

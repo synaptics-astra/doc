@@ -20,12 +20,6 @@ The following Reference Kits and platforms are covered by this guide:
 
 -  Astra Machina (Foundation) SL1680
 
-References
-----------
-
--  `SyNAP User Guide <https://synaptics-synap.github.io/doc/v/3.0.0/>`__
-
-
 Introduction
 ============
 
@@ -353,8 +347,7 @@ Video Sinks
 
 Gstreamer on Astra Machina supports three video sinks. The main video sink is the ``waylandsink`` which uses
 the wayland protocol and compositor to display the video output. Astra Machina also supports the DRM KMS
-sink which displays video frames directly to a Linux DRM device using the ``kmssink``. The ``xvimagesink``
-is supported when Astra Machina is running an image with the X11 based display server.
+sink which displays video frames directly to a Linux DRM device using the ``kmssink``.
 
 Wayland Sink
 ************
@@ -458,20 +451,6 @@ audio stream::
 
     gst-launch-1.0 filesrc location=little.mp4  ! qtdemux name=demux  \
         demux.video_0 ! queue ! h265parse ! avdec_h265 ! queue ! waylandsink fullscreen=true \
-        demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,1
-
-Play an MP4 file on SL1640 / SL1680 with a H265 encoded video stream and an AAC encoded
-audio stream with ``xvimagesink``::
-
-    gst-launch-1.0 filesrc location=test_file.mp4  ! qtdemux name=demux \
-        demux.video_0 ! queue ! h265parse ! v4l2h265dec ! queue ! xvimagesink \
-        demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,7
-
-Play an MP4 file on SL1620 with a H265 encoded video stream and an AAC encoded
-audio stream with ``xvimagesink``::
-
-    gst-launch-1.0 filesrc location=little.mp4  ! qtdemux name=demux  \
-        demux.video_0 ! queue ! h265parse ! avdec_h265 ! queue ! xvimagesink \
         demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,1
 
 Recording
@@ -1288,7 +1267,7 @@ process described in the Astra Yocto User Guide.
 The Linux Kernel uses Device Tree data structures to describe the
 hardware components and their configurations on the system. The device
 tree source files are in the Linux Kernel source tree under that path
-``arch/arm64/boot/dts/synaptics/``. These files are maintained in the `Astra Linux Kernel Overlay repository <https://github.com/synaptics-astra/linux_5_15-overlay>`__.
+``arch/arm64/boot/dts/synaptics/``. These files are maintained in the `Astra Linux Kernel Overlay repository <https://github.com/synaptics-astra/linux_6_12-main>`__.
 This directory also includes device tree overlays which can be used to
 modify the device tree without having to recompile the entire devicetree.
 
@@ -1325,19 +1304,20 @@ Optionally, confirm that the variable was correctly set.
 ::
 
     => printenv
-    altbootcmd=if test ${boot_slot}  = 1; then bootslot set b; bootcount reset;bootcount reset; run bootcmd; else bootslot set a; bootcount reset; bootcount reset; run bootcmd;  fi
-    autoload=n
+    altbootcmd=if test ${boot_slot} = 1; then bootslot set b; bootcount reset;bootcount reset; run bootcmd; else bootslot set a; bootcount reset; bootcount reset; run boiautoload=0
     baudrate=115200
     bootcmd=bootmmc
     bootcount=1
     bootdelay=0
     bootlimit=3
     dtbo=dolphin-haier-panel-overlay.dtbo
-    fdtcontroladdr=2172e190
-    preboot=show_logo;
+    fdtcontroladdr=21723790
+    loadaddr=0xcf00000
+    preboot=printenv bootcmd
     upgrade_available=0
-    ver=U-Boot 2019.10 (Nov 21 2024 - 14:01:42 +0000)
-    Environment size: 407/65531 bytesboo
+    ver=U-Boot 2025.01-rc6.202506172205_202506180202-g9aa54c5fd2a0 (Jun 11 2025 - 19:39:54 +0000)
+
+    Environment size: 480/65531 bytes
 
 Finally, boot with the new overlay applied.
 
@@ -1392,7 +1372,7 @@ SPI flash. The SPI flash may be located on the main board of Astra Machina or
 it may be a located on a SPI daughter card which is plugged into the device.
 Once SPI U-Boot is running on the board it can be used to write an image to the eMMC.
 
-`Synaptics U-Boot Source Code <https://github.com/synaptics-astra/boot-u-boot_2019_10/tree/#release#>`__
+`Synaptics U-Boot Source Code <https://github.com/synaptics-astra/boot-u-boot/tree/#release#>`__
 
 .. note::
 
