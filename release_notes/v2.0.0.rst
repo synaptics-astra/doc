@@ -17,7 +17,7 @@ AI-native, multi-modal SoCs optimized for consumer, enterprise, and industrial I
 equipped with hardware accelerators for edge inferencing, security, graphics, vision, and audio, and offer
 out-of-the-box functionality with Synaptics' connectivity solutions.
 
-Astra (v1.7.0) GA Release is a unified software development kit supporting the SL-Series of MPUs.
+Astra (v2.0.0 Alpha) Release is a unified software development kit supporting the SL-Series of MPUs.
 
 The high-level components included in this SDK are described below:
 
@@ -59,11 +59,11 @@ License
 
 Using the Astra Software Developer Kit and BSP requires complying with the :doc:`../EULA`.
 
-Synaptics Proprietary TAs
--------------------------
+Synaptics TAs
+-------------
 
-The following Trusted Applications (TAs) are Synaptics proprietary TAs which run in the OP-TEE Trusted Execution Environment.
-They are provided in binary format. Synaptics will migrate them into REE and open source the code to the public in a near future releases.
+The following Trusted Applications (TAs) are Synaptics TAs which run in the OP-TEE Trusted Execution Environment.
+These TAs are open source and can be found at `<https://github.com/synaptics-astra/tee-optee_dev/tree/scarthgap_6.12_v2.0.0_alpha/ta>`__.
 
 ========    =========================
 Package     Notes
@@ -71,10 +71,6 @@ Package     Notes
 Fastlogo    TA
 
             SL1680 / SL1640
-
-SyNAP       TA
-
-            SL1680 / SL1640 / SL1620
 
 DHUB        TA
 
@@ -85,12 +81,6 @@ Vmeta       TA
             SL1680 / SL1640 / SL1620
 
 ========    =========================
-
-.. note::
-
-    The Vmeta TA was open sourced in release v1.6. Source code can be found at
-    `<https://github.com/synaptics-astra/tee-optee_dev/tree/scarthgap_6.12_v2.0.0/ta/vpu>`__.
-
 .. note::
 
     FastLogo and DHUB TAs were open sourced in release v1.7.
@@ -191,8 +181,6 @@ Specific Modules and Features
 |                    |                                                     |         |         |         |   Sample Rate conversion is fine.                                              |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 |                    | HDMI-RX (Audio)                                     |   N/A   |   N/A   |    Y    |                                                                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Volume Control for USB audio devices                |    Y    |    Y    |    Y    | Supports volume control of USB audio devices using GPIOs                       |
 +--------------------+-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 | GST Video Pipeline | KMS SINK with IOMMU                                 |   N/A   |    Y    |    Y    | - MultiView: Camera + Video OR multi Video                                     |
 |                    +-----------------------------------------------------+---------+---------+---------+ - Dual display means the output simultaneously                                 |
@@ -213,27 +201,6 @@ Specific Modules and Features
 |                    | V4L2 Decode                                         |   N/A   |    Y    |    Y    |                                                                                |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 |                    | Dual Display                                        |    Y    |   N/A   |    Y    |                                                                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Video Decode with QT Applications                   |    Y    |    Y    |    Y    | Multi-playback only on SL1680                                                  |
-+--------------------+-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-| GST AI             | OpenCV Support                                      |    Y    |    Y    |    Y    |                                                                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Multistream AI with RTSP                            |   N/A   |   N/A   |    Y    |                                                                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | AI support for ISP Camera                           |   N/A   |   N/A   |    Y    |                                                                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | GST AI Support for GPU models                       |    Y    |   N/A   |   N/A   |                                                                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Pose Estimation                                     |    Y    |    Y    |    Y    |                                                                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Image Classification                                |    Y    |    Y    |    Y    |                                                                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Single View AI use case                             |    Y    |    Y    |    Y    |                                                                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Multi View AI user case                             |   N/A   |   N/A   |    Y    | - SL680 supports multi-view AI case                                            |
-|                    |                                                     |         |         |         | - SL1640/1620 only supports single view AI case                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | SyNAP                                               |    Y    |    Y    |    Y    | - supports SyNAP pre-process and sink                                          |
 +--------------------+-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 | HDMI-RX            | HDMI-RX 4K                                          |   N/A   |   N/A   |    Y    |                                                                                |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
@@ -279,10 +246,6 @@ Specific Modules and Features
 |                    | Support cropping in ISP down scaler                 |   N/A   |   N/A   |    Y    |                                                                                |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 |                    | Supports Bayer and RGB formats                      |   N/A   |   N/A   |    Y    |                                                                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Support Simultaneous Path Playback w/ Single Sensor |   N/A   |   N/A   |    Y    |                                                                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Direct Sensor(MCM) output for ISP bypass            |   N/A   |   N/A   |    Y    |                                                                                |
 +--------------------+-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 | U-Boot             | EMMC HS400 support                                  |    Y    |    Y    |    Y    |                                                                                |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
@@ -303,23 +266,11 @@ Specific Modules and Features
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 |                    | Boot mode:  from eMMC                               |    Y    |    Y    |    Y    | - Support eMMC HS400 mode                                                      |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Boot mode:  from SD-CARD                            |    Y    |    Y    |    Y    |                                                                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Image Upgrade                                       |    Y    |    Y    |    Y    | - Supports eMMC image upgrade with USB U-Boot,                                 |
-|                    |                                                     |         |         |         |                                                                                |
-|                    |                                                     |         |         |         |   SPI U-Boot and SU-Boot                                                       |
-|                    |                                                     |         |         |         |                                                                                |
-|                    |                                                     |         |         |         | - Supports SD card image upgrade with SPI U-Boot and                           |
-|                    |                                                     |         |         |         |                                                                                |
-|                    |                                                     |         |         |         |   SU-Boot                                                                      |
-|                    |                                                     |         |         |         |                                                                                |
+|                    | Image Upgrade                                       |    Y    |    Y    |    Y    | - Supports eMMC image upgrade with USB U-Boot and SU-Boot                      |
+|                    |                                                     |         |         |         |                                                                                |                                                                                |
 |                    |                                                     |         |         |         | - USB U-Boot: image via TFTP and USB target                                    |
 |                    |                                                     |         |         |         |                                                                                |
 |                    |                                                     |         |         |         |   (connected to PC)                                                            |
-|                    |                                                     |         |         |         |                                                                                |
-|                    |                                                     |         |         |         | - SPI U-Boot: image via TFTP and USB Host                                      |
-|                    |                                                     |         |         |         |                                                                                |
-|                    |                                                     |         |         |         |   (connected to USB Disk)                                                      |
 |                    |                                                     |         |         |         |                                                                                |
 |                    |                                                     |         |         |         | - SU-Boot: image via TFTP and USB Host                                         |
 |                    |                                                     |         |         |         |                                                                                |
@@ -329,10 +280,6 @@ Specific Modules and Features
 |                    |                                                     |         |         |         |                                                                                |
 |                    |                                                     |         |         |         |   sparse image automatically).                                                 |
 |                    |                                                     |         |         |         |                                                                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Suspend to RAM (S3) Power State                     |    Y    |   N/A   |   N/A   |                                                                                |
-|                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
-|                    | Low Power Standby                                   |   N/A   |    Y    |    Y    |                                                                                |
 +--------------------+-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 | OP-TEE             | OP-TEE enabled                                      |    Y    |    Y    |    Y    |                                                                                |
 +--------------------+-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
@@ -531,8 +478,7 @@ Supported Camera Modules
 |        | <https://www.arducam.com/product/arducam-ov5647-standard-raspberry-pi-camera-b0033/>`__  | (mode 0)        |                                                      |                                                    |
 |        |                                                                                          |                 +------------------------------------------------------+                                                    |
 |        |                                                                                          | 1920x1080 30fps | MIPI-CSI 1 w/ dolphin-csi1-without-expander.dtbo     |                                                    |
-|        |                                                                                          | (mode 1)        +------------------------------------------------------+                                                    |
-|        |                                                                                          |                 | Dual CSI0/1 w/ dolphin-bothcsi-without-expander.dtbo |                                                    |
+|        |                                                                                          | (mode 1)        |                                                      |                                                    |
 +--------+------------------------------------------------------------------------------------------+-----------------+------------------------------------------------------+----------------------------------------------------+
 | IMX477 | `Raspberry Pi High Quality Camera                                                        | 3840x2160 30fps | MIPI-CSI0                                            | Single Sensor Support Only                         |
 |        | <https://www.raspberrypi.com/products/raspberry-pi-high-quality-camera/>`__              | (mode 0)        +------------------------------------------------------+                                                    |

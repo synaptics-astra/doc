@@ -83,10 +83,6 @@ Both displays can be configured to run Weston, KMS, or a combination of Weston +
 
     Mirroring of display output is not supported.
 
-.. note::
-
-    Dual Display is not supported with X11.
-
 The Shell with SSH
 ------------------
 
@@ -278,7 +274,6 @@ H.264     h264parse         v4l2h264dec        v4l2h264enc
 H.265     h265parse         v4l2h265dec        N/A
 VP8       N/A               v4l2vp8dec         v4l2vp8enc
 VP9       vp9parse          v4l2vp9dec         N/A
-AV1       av1parse          v4l2av1dec         N/A
 ========= ================= ================== ==================
 
 Audio Codecs
@@ -434,17 +429,9 @@ An example of a H265 encoded video file on SL1640 / SL1680::
 
     gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! v4l2h265dec ! waylandsink fullscreen=true
 
-An example of a H265 encoded video file on SL1640 / SL1680 using ``xvimagesink``::
-
-    gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! v4l2h265dec ! xvimagesink
-
 An example of a H265 encoded video file on SL1620::
 
     gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! avdec_h265 ! waylandsink fullscreen=true
-
-A similar example, but with a file using AV1 encoding on SL1640 / SL1680::
-
-    gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! av1parse ! v4l2av1dec ! waylandsink fullscreen=true
 
 An example of a H265 encoded video file on SL1640 / SL1680 using kmssink::
 
@@ -755,135 +742,6 @@ audio sinks will be used instead::
 Using playbin the example in :ref:`audio_sinks` can be reduced to::
 
     gst-launch-1.0 playbin uri=file:///path/to/file video-sink="waylandsink fullscreen=true" audio-sink="alsasink device=hw:0,7"
-
-GStreamer SyNAP Plugin
-^^^^^^^^^^^^^^^^^^^^^^
-
-Astra Machina provides the Synaptics Gstreamer Plugins for AI (gstsynap) which allow adding ML processing to Gstreamer pipelines.
-These plugins use the SyNAP framework to interface with the hardware accelerators to improve the performance
-of ML processing. For information on SyNAP see :ref:`synap` below.
-
-The Synaptics Gstreamer Plugins for AI consist of two plugins. The gstsynapinfer plugin, which uses SyNAP to handle AI inferencing
-and the gstsynapoverlay plugin which outputs the results from gstsynapinfer and overlays then on top of the source data.
-
-The gstsynapinfer plugin can operate it two modes. The first mode outputs structured data which is then used by gstsynapoverlay. This
-supports common use cases such as drawing bounding boxes or overlaying text without having to write additional code. Here are several
-examples using gstsynapinfer to do the inferencing and gstsynapoverlay overlaying the results. These examples show inferencing running on
-a local file and an external USB camera.
-
-Example of Object Detection with YOLOv8 (USB Camera Source)::
-
-    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! videoconvert ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json \
-        ! videoconvert ! waylandsink t_data. ! queue ! videoconvert ! videoscale ! video/x-raw,width=640,height=384,format=RGB  ! \
-        synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 \
-        ! overlay.inference_sink
-
-Example of Object Detection with YOLOv8 (Video)::
-
-    gst-launch-1.0 filesrc location=video_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! avdec_h264 ! videoconvert ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json ! \
-        videoconvert ! waylandsink t_data. ! queue ! videoconvert ! videoscale ! video/x-raw,width=640,height=384,format=RGB  ! \
-        synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 \
-        ! overlay.inference_sink
-
-Example of Object Detection with YOLOv8 (RTSP Stream)::
-
-    gst-launch-1.0 rtspsrc location="rtsp://<user>:<password>@<ip>/stream" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! \
-        video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! videoconvert ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json ! \
-        videoconvert ! waylandsink t_data. ! queue ! videoconvert ! videoscale ! video/x-raw,width=640,height=384,format=RGB  ! \
-        synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 \
-        ! overlay.inference_sink
-
-Example of Face Detection with YOLOv5 (USB Camera Source)::
-
-    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! videoconvert ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! videoconvert ! waylandsink t_data. ! queue ! videoconvert ! \
-        videoscale ! video/x-raw,width=480,height=352,format=RGB  ! \
-        synapinfer model=/usr/share/synap/models/object_detection/face/model/yolov5s_face_640x480_onnx_mq/model.synap mode=detector \
-        frameinterval=3 ! overlay.inference_sink
-
-Example of Face Detection with YOLOv5 (RTSP Stream)::
-
-    gst-launch-1.0 rtspsrc location="rtsp://<user>:<password>@<ip>/stream" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! \
-        video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! videoconvert ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! videoconvert ! waylandsink t_data. ! queue ! videoconvert ! \
-        videoscale ! video/x-raw,width=480,height=352,format=RGB  ! \
-        synapinfer model=/usr/share/synap/models/object_detection/face/model/yolov5s_face_640x480_onnx_mq/model.synap mode=detector \
-        frameinterval=3 ! overlay.inference_sink
-
-Example of Pose Estimation with YOLOv8 (USB Camera Source)::
-
-    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! videoconvert ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! videoconvert ! waylandsink t_data. ! queue ! videoconvert \
-        ! videoscale ! video/x-raw,width=640,height=352,format=RGB  ! \
-        synapinfer model=/usr/share/synap/models/object_detection/body_pose/model/yolov8s-pose/model.synap mode=detector frameinterval=3 \
-        ! overlay.inference_sink
-
-Example of Pose Estimation with YOLOv8 (Video)::
-
-    gst-launch-1.0 filesrc location=fitness.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! avdec_h264 ! videoconvert ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! videoconvert ! waylandsink t_data. ! queue ! videoconvert ! \
-        videoscale ! video/x-raw,width=640,height=352,format=RGB  ! \
-        synapinfer model=/usr/share/synap/models/object_detection/body_pose/model/yolov8s-pose/model.synap mode=detector frameinterval=3 \
-        ! overlay.inference_sink
-
-Example of Pose Estimation with YOLOv8 (RTSP Stream)::
-
-    gst-launch-1.0 rtspsrc location="rtsp://<user>:<password>@<ip>/stream" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! \
-        video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! videoconvert ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! videoconvert ! waylandsink t_data. ! queue ! videoconvert ! \
-        videoscale ! video/x-raw,width=640,height=352,format=RGB  ! \
-        synapinfer model=/usr/share/synap/models/object_detection/body_pose/model/yolov8s-pose/model.synap mode=detector frameinterval=3 \
-        ! overlay.inference_sink
-
-.. note::
-
-    Replace /dev/videoX with the device file associated with your external USB camera.
-
-.. note::
-
-    The above examples use software decoding to decode video files and RTSP streams. SL1640 and SL1680 also support
-    hardware decoding which can be enabled by changing the avdec_h264 element to v4l2h264dec.
-
-In gstsynapinfer's second mode, inference results are output as a JSON string. This allows an application to handle the overlay directly
-or do additional processing on the results.
-
-We provide a `sample application <https://github.com/synaptics-astra/application-gstreamer-plugins-syna/tree/#release#/tests/examples/gst-ai>`__
-which makes use of gstsynapinfer's second mode. The app plays a video while simultaneously performing image classification on the video frames,
-and then overlaying labels of the results onto the video. A prebuilt version of the application is included in the Astra system image.
-
-Run the example application using the following command::
-
-    gst-ai --appmode=IC --input=test_file.mp4 --output=screen --paramfile=/usr/share/gst-ai/ic.json
-
-The gst-ai program uses a JSON parameter file to set additional configuration options. These options include decode mode, model, model meta-data,
-count, confidence threshold, and post processing mode. The Astra Machina image provides a default JSON file for image classification at
-/usr/share/gst-ai/ic.json. The supported decode modes (decmode) are ``ffmpeg`` and ``v4l2``. When set to ``ffmpeg`` the gst-ai program will use the
-`ffmpeg library <https://ffmpeg.org/>`__ to perform decoding of the video stream in software. When ``v4l2`` is set then gst-ai will use the V4L2 APIs
-to perform decoding of the video stream using hardware acceleration.
-
-In release v1.6 image classification can also be run using the following command::
-
-    gst-launch-1.0 filesrc location=Animals.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! v4l2h264dec ! tee name=t_data t_data. ! queue \
-        ! synavideoconvertscale ! video/x-raw,width=224,height=224,format=RGB ! \
-        synapinfer model=/usr/share/synap/models/image_classification/imagenet/model/mobilenet_v2_1.0_224_quant/model.synap mode=classifier frameinterval=3 \
-        ! overlay.inference_sink t_data. ! queue ! synavideoconvertscale ! video/x-raw,format=BGRA ! \
-        synapoverlay name=overlay label=/usr/share/synap/models/image_classification/imagenet/info.json ! waylandsink
-
-.. note::
-
-    SL1620 requires decmode to be set to ffmpeg since it does not support V4L2 decoding.
-
-.. _synap:
-
-Machine Learning with SyNAP
-===========================
-
-Astra Machina uses the SyNAP framework for execution of neural networks using the platform's hardware accelerators.
-This framework allows users to run programs which take advantage of the Neural Processing Unit (NPU)
-and Graphics Processing Unit (GPU) to accelerate the execution of neural networks. (see the `SyNAP documentation <https://synaptics-synap.github.io/doc/v/3.0.0/>`__ for more details.)
 
 Connectivity
 ============
