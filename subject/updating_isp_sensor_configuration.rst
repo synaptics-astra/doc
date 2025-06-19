@@ -33,8 +33,7 @@ Supported Camera Modules
 |        | <https://www.arducam.com/product/arducam-ov5647-standard-raspberry-pi-camera-b0033/>`__  | (mode 0)        |                                                      |                                                    |
 |        |                                                                                          |                 +------------------------------------------------------+                                                    |
 |        |                                                                                          | 1920x1080 30fps | MIPI-CSI 1 w/ dolphin-csi1-without-expander.dtbo     |                                                    |
-|        |                                                                                          | (mode 1)        +------------------------------------------------------+                                                    |
-|        |                                                                                          |                 | Dual CSI0/1 w/ dolphin-bothcsi-without-expander.dtbo |                                                    |
+|        |                                                                                          | (mode 1)        |                                                      |                                                    |
 +--------+------------------------------------------------------------------------------------------+-----------------+------------------------------------------------------+----------------------------------------------------+
 | IMX477 | `Raspberry Pi High Quality Camera                                                        | 3840x2160 30fps | MIPI-CSI0                                            | Single Sensor Support Only                         |
 |        | <https://www.raspberrypi.com/products/raspberry-pi-high-quality-camera/>`__              | (mode 0)        +------------------------------------------------------+                                                    |
@@ -171,7 +170,7 @@ Using the OV5647 and IMX477 Sensors
 
 Astra Machina SL1680 supports using the OV5647 and IMX477 sensors on either the CSI0 (22-pin), or the CSI1 (15-pin) connector, or both simultaneously (OV5647 only).
 Connecting a single sensor to CSI0 is the default configuration. Connecting a single sensor to CSI1 requires enabling the
-``dolphin-csi1-without-expander.dtbo`` overlay. Using two OV5647 sensors simultaneously requires enabling the ``dolphin-bothcsi-without-expander.dtbo``
+``dolphin-csi1-without-expander.dtbo`` overlay.
 overlay.
 
 .. note::
@@ -180,7 +179,7 @@ overlay.
 
 .. note::
 
-    Release v1.5 adds support for using CSI0 and CSI1 simultaneously with two OV5647 sensors.
+    Dual sensor support has not been implemented yet for Scarthgap v2.0 Alpha.
 
 .. note::
 
@@ -196,131 +195,6 @@ overlay.
 
     Using the IMX258 and IMX415 on CSI1 is not supported on Synaptics Astra Machina boards since CSI1
     is not compatible with the GPIO expander.
-
-Dual Sensor Support
-===================
-
-In Dual sensor mode, MCM (Multi Contexts Management) Module handles switching between sensor configurations and reading data
-from CSI. This is as opposed to Single Camera mode where the ISP will read directly from CSI. MCM Buffers are allocated internally
-which will use IOMMU Memory. The ``isp_video_test`` tool supports dumping these raw MCM Buffer. See :ref:`isp_video_test`.
-
-Dual sensor mode has the following requirements:
-
-* Use RPI camera sensors (OV5647 , IMX477(future) for dual sensor playback 
-* Both camera sensors must of same type and configured with similar settings.
-* With this feature, both CSI0 and CSI1 video pipelines can run simultaneously. 
-* Currently, only the dual sensor configuration without an expander (OV5647) is supported.
-
-Dual sensor mode also requires the ``dolphin-bothcsi-without-expander.dtbo`` devicetree overlay to be loaded. 
-
-Once the system is configured and both sensors are connected, run the following command to verify the configuration. The Following
-shows both sensors are configured.
-
-::
-
-    root@sl1680:~# cat /proc/vsi/isp_subdev0
-    /******sensor configuration******/
-    isp0 port0:
-    sensor   : ov5647
-    mode     : 0
-    xml      : /usr/share/OV5647_480p.xml
-    manu_json: /usr/share/ISP_Manual_IMX258.json
-    auto_json: /usr/share/ISP_Auto.json
-    i2c_bus_id: 3
-    mipi_id   : 0
-    *********************************
-    isp0 port1:
-    sensor   : ov5647
-    mode     : 0
-    xml      : /usr/share/OV5647_480p.xml
-    manu_json: /usr/share/ISP_Manual_IMX258.json
-    auto_json: /usr/share/ISP_Auto.json
-    i2c_bus_id: 0
-    mipi_id   : 1
-    *********************************
-
-Next, iterate through the /dev/videoX device to find out the exact video device for CSI0 and CSI1 MP/SP1/SP2.
-Find CSI0-MP device with the name : vvcam-video.0.0. In the below example, /dev/video3 is CSI0-MP path.
-
-::
-
-    root@sl1680:~# v4l2-ctl -d 3 --info
-    Driver Info:
-            Driver name      : vvcam-video.0.0
-            Card type        : vvcam-video.0.0
-            Bus info         : platform:vvcam-video.0.0
-            Driver version   : 5.15.140
-            Capabilities     : 0x84201000
-                    Video Capture Multiplanar
-                    Streaming
-                    Extended Pix Format
-                    Device Capabilities
-            Device Caps      : 0x04201000
-                    Video Capture Multiplanar
-                    Streaming
-                    Extended Pix Format
-    Media Driver Info:
-            Driver name      : vvcam-video
-            Model            : verisilicon_media
-            Serial           :
-            Bus info         :
-            Media version    : 5.15.140
-            Hardware revision: 0x00000000 (0)
-            Driver version   : 5.15.140
-    Interface Info:
-            ID               : 0x03000003
-            Type             : V4L Video
-    Entity Info:
-            ID               : 0x00000001 (1)
-            Name             : vvcam-video.0.0
-            Function         : V4L2 I/O
-            Pad 0x01000002   : 0: Sink
-
-Find CSI1-MP device with the name : vvcam-video.0.4. In the below example, /dev/video7 is CSI1-MP path.
-
-::
-
-    root@sl1680:~# v4l2-ctl -d 7 --info
-    Driver Info:
-            Driver name      : vvcam-video.0.4
-            Card type        : vvcam-video.0.4
-            Bus info         : platform:vvcam-video.0.4
-            Driver version   : 5.15.140
-            Capabilities     : 0x84201000
-                    Video Capture Multiplanar
-                    Streaming
-                    Extended Pix Format
-                    Device Capabilities
-            Device Caps      : 0x04201000
-                    Video Capture Multiplanar
-                    Streaming
-                    Extended Pix Format
-    Media Driver Info:
-            Driver name      : vvcam-video
-            Model            : verisilicon_media
-            Serial           :
-            Bus info         :
-            Media version    : 5.15.140
-            Hardware revision: 0x00000000 (0)
-            Driver version   : 5.15.140
-    Interface Info:
-            ID               : 0x03000013
-            Type             : V4L Video
-    Entity Info:
-            ID               : 0x00000011 (17)
-            Name             : vvcam-video.0.4
-            Function         : V4L2 I/O
-            Pad 0x01000012   : 0: Sink
-
-You can now run two independent GStreamer pipelines from two separate terminals, one for each path. This will enable two video streams to run simultaneously on Wayland.
-
-Terminal 1::
-
-    gst-launch-1.0 v4l2src device=/dev/video3 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)30/1' ! waylandsink
-
-Terminal 2::
-
-    gst-launch-1.0 v4l2src device=/dev/video7 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)30/1' ! waylandsink
 
 .. _isp_video_test::
 
@@ -424,8 +298,7 @@ RGB24:::
 RAW
 """
 
-Currently, there is no IOMMU support for ISP’s RAW/Bayer output. However, if Dual sensor mode is enabled, sensor RAW output can be
-directly dumped using the -r option. Below Example 1 and 2 show the commands for dumping ISP’s RAW output.
+Currently, there is no IOMMU support for ISP’s RAW/Bayer output. Below Example 1 and 2 show the commands for dumping ISP’s RAW output.
 
 ::
 
@@ -579,68 +452,6 @@ To confirm it supports only Bayer RGB below command will help::
             [6]: 'BG12' (12-bit Bayer BGBG/GRGR)
             [7]: 'BA12' (12-bit Bayer GRGR/BGBG)
 
-Non-Bayer Inputs Support
-========================
-
-On SL1680, the ISP can handle the capture of non-Bayer inputs. Either from a sensor or HDMI2CSI. Using the HDMI2CSI configuration requires an HDMI-to-CSI interface board.
-
-The setup captures video from a laptop display (1920x1080) and processes it through a custom HDMI-to-CSI interface and ISP for display or file storage.
-
-1. HDMI2CSI Input:
-    * The laptop sends video via HDMI at a resolution of 1920x1080.
-    * The *HDMI2CSI custom board* converts this input to YUV422 format over CSI .
-
-2. CSI & IPI Processing:
-    * The *CSI2 receiver* captures the YUV422 data and forwards it to the MCM block.
-    * While transferring to MCM, expands the YUV422 into YUV444 format, resulting in a frame resolution of 5760x1080 (since each pixel now contains separate Y, U, and V components: 1920 × 3 = 5760). Same for RGB888 input as well.
-
-3. MCM Interface Handling:
-    * MCM captures the non bayer frames to memory. 
-    * Each YUV pixel component (Y, U, V) is treated as a RAW8 pixel (8-bit raw data), and the full YUV444 frame is passed through MCM as RAW8 format with resolution 5760x1080.
-    * This enables the system to transfer YUV444 data through an unsupported path by disguising it as raw data.
-
-4. Application Layer:
-    * The application reads the RAW8 stream assuming it represents YUV444 interleaved data.
-    * The data is then either displayed using Waylandsink (using GST pipeline) or written to a file (using “isp_video_test” application) in YUV24 (24-bit YUV 4:4:4) format.
-
-Configuration Summary
----------------------
-
-* HDMI2CSI Board:
-    * Input: HDMI
-    * CSI Output Format: YUV422
-
-* MCM Configuration:
-    * Format: RAW8
-    * Width: width x 3 = 5760
-    * Size: width × height × 3 = 5760 × 1080
-
-Application:
-    * Reads RAW8 as YUV444 interleaved
-    * Outputs to display or file
-
-
-Running in HDMI2CSI mode
-------------------------
-
-1. Switch the DTBO to ``dolphin-csi0-with-expander-csi1-without-expander.dtbo``. See :ref:`devicetree_overlays` for details on how to enable the devicetree overlays.
-
-2. Switch to the HDMI2CSI driver using the command line. Or update ``isp_media_server.sh`` with the values below.
-
-::
-
-    echo "sensor=dummysensor xml=/usr/share/IMX258_2K.xml" > /proc/vsi/isp_subdev0
-    echo "manu_json=/usr/share/ISP_Manual_IMX258.json" > /proc/vsi/isp_subdev0
-    echo "auto_json=/usr/share/ISP_Auto.json" > /proc/vsi/isp_subdev0
-    echo "mode=0" > /proc/vsi/isp_subdev0
-    cat /proc/vsi/isp_subdev0
-
-3. Now run the Gstreamer command:
-
-::
-
-    gst-launch-1.0 v4l2src device=/dev/video7 extra-controls="c,sensor_out_enable=1" ! 'video/x-raw, format=(string)v308, width=(int)1920, height=(int)1080' ! videoconvert ! waylandsink
-
-..note::
+.. note::
 
     Ensure to use RAW path (vvcam-video.0.3) for the test.

@@ -16,7 +16,7 @@ with Yocto concepts. For introductory material about Yocto and general
 Yocto reference guides, please refer to the official
 `Yocto Documentation <https://docs.yoctoproject.org/>`_.
 
-This BSP works with the Yocto Kirkstone release and provides support
+This BSP works with the Yocto Scarthgap release and provides support
 for the following machines, distributions and images:
 
 .. table:: Supported machines, distributions and images
@@ -29,18 +29,6 @@ for the following machines, distributions and images:
     | sl1640     | poky         | astra-media, astra-media-oobe, astra-core       |
     +------------+--------------+-------------------------------------------------+
     | sl1680     | poky         | astra-media, astra-media-oobe, astra-core       |
-    +------------+--------------+-------------------------------------------------+
-    | sl1620usb  | poky         | astra-media                                     |
-    +------------+--------------+-------------------------------------------------+
-    | sl1640usb  | poky         | astra-media                                     |
-    +------------+--------------+-------------------------------------------------+
-    | sl1680usb  | poky         | astra-media                                     |
-    +------------+--------------+-------------------------------------------------+
-    | sl1620spi  | poky         | astra-tiny                                      |
-    +------------+--------------+-------------------------------------------------+
-    | sl1640spi  | poky         | astra-tiny                                      |
-    +------------+--------------+-------------------------------------------------+
-    | sl1680spi  | poky         | astra-tiny                                      |
     +------------+--------------+-------------------------------------------------+
 
 .. _yocto_prerequisites:
@@ -222,19 +210,6 @@ To build an image execute the following commands::
 
 The resulting image can be found in ``build-${MACHINE}/tmp/deploy/images/${MACHINE}/SYNAIMG/``.
 
-.. note::
-
-  This example builds the ``astra-media`` image. To build a different image replace ``astra-media`` with the image you want to build.
-  See :ref:`astra_images` for details on other images supported by Astra Yocto.
-
-To build the ``astra-media-oobe`` image exectute the following commands::
-
-  pokyuser@xyz:/path/to/workspace $ cd sdk
-
-  pokyuser@xyz:/path/to/workspace/sdk $ OOBE=enabled source meta-synaptics/setup/setup-environment
-
-  pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media-oobe
-
 The ``source meta-synaptics/setup/setup-environment`` will prompt the user to select a machine type. Information on machine
 types can be found in section :ref:`astra_machines`.
 
@@ -318,15 +293,15 @@ Compatible Layers
 
 This BSP is compatible with these layers:
 
-  * ``poky`` [branch: ``kirkstone``]
+  * ``poky`` [branch: ``scarthgap``]
 
-  * ``meta-openembedded`` [branch: ``kirkstone``]
+  * ``meta-openembedded`` [branch: ``scarthgap``]
 
     * ``meta-oe`` (required by ``meta-python`` below)
     * ``meta-python`` (required by ``meta-multimedia`` below)
     * ``meta-multimedia`` (optional - for gstreamer support)
 
-  * ``meta-qt5`` [branch ``qt/upstream/kirkstone`` ] (optional)
+  * ``meta-qt5`` [branch ``qt/upstream/scarthgap`` ] (optional)
   * ``meta-swupdate`` (optional - for OTA support)
   * ``meta-browser``  (optional - for Chromium support)
   * ``meta-clang`` (optional - for Chromium support)
@@ -341,32 +316,13 @@ Astra Machine Types
 The Astra Yocto release defines three machine types per chip. ``sl1620``, ``sl1640``, and ``sl1680`` are the default machine types which are
 use for building images which boot from the internal eMMC. This is the most common machine type.
 
-The ``usb`` machine types are used to build images which boot using the USB interface. Typically, this machine type is used to build images
-used to update the eMMC image, but this image can also be used to boot a full linux environment. This machine type is used to build custom
-images for customer specific hardware.
-
-The ``spi`` machine types are used to build images which boot from SPI flash. Typically, this machine type is used to build images
-used to update the eMMC image, but this image can also be used to boot a full linux environment. This machine type is used to build custom
-images for customer specific hardware.
-
 ====================  ===================================================================================================  ==================
 Image                 Description                                                                                          Version Added
 ====================  ===================================================================================================  ==================
 sl1620                Default machine type for SL1620                                                                      v0.9
-sl1620usb             Machine type for booting SL1620 from USB                                                             v1.6
-sl1620spi             Machine type for booting SL1620 from SPI                                                             v1.7
 sl1640                Default machine type for SL1640                                                                      v0.9
-sl1640usb             Machine type for booting SL1640 from USB                                                             v1.6
-sl1640spi             Machine type for booting SL1640 from SPI                                                             v1.7
 sl1680                Default machine type for SL1680                                                                      v0.9
-sl1680usb             Machine type for booting SL1680 from USB                                                             v1.6
-sl1680spi             Machine type for booting SL1680 from SPI                                                             v1.7
 ====================  ===================================================================================================  ==================
-
-.. note::
-
-  Images built using the ``spi`` machine type require 32MB of SPI flash. Astra Machina boards are not supported since they only contain
-  16MB of SPI flash.
 
 .. _astra_images:
 
@@ -378,17 +334,12 @@ The Astra Yocto release contains several images which provide different levels o
 ====================  ===================================================================================================  ==================
 Image                 Description                                                                                          Version Added
 ====================  ===================================================================================================  ==================
-astra-tiny            Minimal packages used to build image suitable for booting from 32MB SPI NOR Flash.                   v1.5
-astra-core            Core system packages Intended for power management testing.                                          v1.2
 astra-media           Default image which contains core packages along with full packages supporting full multimedia       v0.9
                       capabilities.
-astra-media-oobe      Contains all packages in astra-media, plus Chromium, Docker, development tools, and additional demo  v1.5
-                      applications.
 ====================  ===================================================================================================  ==================
 
 The ``astra-media`` image can be used as a starting point when developing a custom distribution. It contains all of the packages needed
-to create a fully functional system. While ``astra-media-oobe`` contains additional packages used to showcase the capabilities of Astra
-Machina.
+to create a fully functional system.
 
 The ``astra-media`` images, based on the ``poky`` distribution, provides a basic graphical
 system with ``weston`` and it is suitable to test ``sl1620``, ``sl1640`` and ``sl1680`` features.
@@ -398,51 +349,6 @@ The image requires some specific configurations in ``conf/local.conf`` to work c
 
 For more details about these configurations please refer to the comments in the
 sample ``local.conf`` found in ``meta-synaptics/setup/conf/local.conf.sample``.
-
-.. note::
-
-    Building the ``astra-media-oobe`` image includes building the Chromium browser can add several hours to the build time and requires
-    additional storage.
-
-Distro Features
-===============
-
-Astra Yocto supports optional distribution features which can be enabled in the ``local.conf`` file or by passing variables to the
-``setup-environment`` script.
-
-X11 Display Server
-------------------
-
-On Astra Yocto, Wayland is the default display server. Using X11 instead of Wayland requires passing the ``DISPLAY_SERVER`` variable to the ``setup-environment`` script.
-
-::
-
-  pokyuser@xyz:/path/to/workspace/sdk $ DISPLAY_SERVER=x11 source meta-synaptics/setup/setup-environment
-
-  pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media
-
-
-.. note::
-
-  Support for using X11 was added to the v1.5 release. Older releases do not support X11.
-
-Virtualization for OOBE
------------------------
-
-Virtualization is used to enable container support and Docker on the OOBE image. Enabling virtualization
-and full OOBE support requires passing the ``OOBE`` variable to the ``setup-environment`` script.
-
-::
-
-  pokyuser@xyz:/path/to/workspace/sdk $ OOBE=enabled source meta-synaptics/setup/setup-environment
-
-  pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media-oobe
-
-
-.. note::
-
-  Support for building OOBE images and virtualization was added to the v1.5 release. Older releases do not support
-  building OOBE images or virtualization.
 
 Configuration
 =============
