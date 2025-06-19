@@ -301,7 +301,7 @@ General Modules, Peripherals, and Interfaces Supported
 |                                |                                                                            |
 |                                | USB SU-Boot version: v1.7                                                  |
 |                                |                                                                            |
-|                                | * Synaptics U-Boot based on U-Boot 2025.01 *                               |
+|                                | *Synaptics U-Boot based on U-Boot 2025.01                                  |
 |                                |                                                                            |
 +--------------------------------+----------------------------------------------------------------------------+
 | USB Tool                       | astra-update: 1.0.2                                                        |
@@ -529,6 +529,10 @@ Known Issues and Limitations
 
     Network Manager can be supported in Astra 1.7, but it's disabled by default as there are some stability issues found.
     If needed, Network Manager can be enabled. Please, contact the Synaptics Astra support team for more information.
+
+.. note::
+
+    SyNAP AI features are NOT currently available in the Astra Scarthgap v2.0.0 Alpha release. SyNAP will be included in a future release.
 
 Known Issues
 ------------
