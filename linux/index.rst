@@ -23,7 +23,7 @@ The following Reference Kits and platforms are covered by this guide:
 References
 ----------
 
--  `SyNAP User Guide <https://synaptics-synap.github.io/doc/v/3.0.0/>`__
+-  `SyNAP User Guide <https://synaptics-synap.github.io/doc/v/latest/>`__
 
 
 Introduction
