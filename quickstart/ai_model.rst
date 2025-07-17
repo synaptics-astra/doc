@@ -19,12 +19,12 @@ To convert your own AI model and run it on an evaluation kit use the following s
 
 4. Download the docker image of the SyNAP toolkit on the host::
 
-    $ docker pull ghcr.io/synaptics-synap/toolkit:3.0.0
+    $ docker pull ghcr.io/synaptics-synap/toolkit:3.1.0
 
 5. Install an alias in the shell of the host to run the SyNAP Toolkit container::
 
     $ alias synap='docker run -i --rm -u $(id -u):$(id -g) -v ${MOUNTPATH}:${MOUNTPATH} \
-                   -w $(pwd) ghcr.io/synaptics-synap/toolkit:3.0.0'
+                   -w $(pwd) ghcr.io/synaptics-synap/toolkit:3.1.0'
 
    where ``${MOUNTPATH}`` is the absolute path of the directory of the host to mount inside the container.
    This command can be executed in any directory and will be valid for the current session.
@@ -47,7 +47,7 @@ To convert your own AI model and run it on an evaluation kit use the following s
 
     As SL1620 has no NPU, please use GPU while converting the model, change yaml file for SL1620 and specify the delegate to be gpu like this.
     ``delegate: gpu``
-    Refer more on yaml `here <https://synaptics-synap.github.io/doc/v/3.1.0/docs/manual/working_with_models.html#conversion-metafile>`_.
+    Refer more on yaml `here <https://synaptics-synap.github.io/doc/v/latest/docs/manual/working_with_models.html#conversion-metafile>`_.
 
 7. Find the ip address of the board with the following command on the target::
 
