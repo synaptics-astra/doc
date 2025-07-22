@@ -170,7 +170,7 @@ on the Astra Machina.
    firmware is plugged into SD-slot on Core Module in :ref:`sl1620_core_bottom`.
 
 -  **USB boot:** Connect USB-C usb2.0 port to the host PC, then follow
-   the procedure in section 2.4.
+   the procedure in :ref:`hardware_manual_button_settings`.
 
 LEDs
 ----
@@ -291,6 +291,8 @@ SoC Pinstrap and Bootup Settings
     \                                      0             —                 0: Boot from SD_Card when SD_Boot header is on while system reset de-assertion.
     \                                      1\*           —                 1: Boot from the device select by boot_src[1] when SD_Boot Header is off.
     =========================== ========== ============= ================= =================================================================================
+
+.. _hardware_manual_button_settings:
 
 Hardware Manual Button Settings
 -------------------------------
