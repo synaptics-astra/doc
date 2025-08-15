@@ -27,6 +27,7 @@ Subject Specific User Guides
    syna_composer
    wet_bridge
    setting_hdmi_resolution
+   usb_boot_user_guide
 
 
 The following guides provide additional details on a specific subject or module.
@@ -76,3 +77,5 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`wet_bridge`
 
 - :doc:`setting_hdmi_resolution`
+
+- :doc:`usb_boot_user_guide`
