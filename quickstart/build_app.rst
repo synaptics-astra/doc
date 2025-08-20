@@ -42,7 +42,7 @@ To build an application follows these steps:
 
 6. Find the ip address of the board with the following command on the target::
 
-    # ifconfig eth0 | grep "/inet addr/"
+    # ifconfig eth0 | grep "inet addr"
               inet addr:192.168.1.110  Bcast:192.168.1.255  Mask:255.255.255.0
 
 7. Upload application to the board by running the following command on the host::

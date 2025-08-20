@@ -790,7 +790,7 @@ This example displays a 4K30 stream from an external HDMI device using ``kmssink
 
 This example displays a 4K30 stream with text overylay using ``waylandsink``::
 
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,fps=30,format=NV12 ! textoverlay text=”Sample Text” ! clockoverlay ! waylandsink fullscreen=true
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,fps=30,format=NV12 ! textoverlay text="Sample Text" ! clockoverlay ! waylandsink fullscreen=true
 
 This example starts a 2K30 stream using ``waylandsink``, then creates a 48K, S32_LE, 2 Channel audio pipeline. The audio will be played on the speakers of the HDMI sink device::
 
