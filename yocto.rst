@@ -216,7 +216,7 @@ To build an image execute the following commands::
 
   pokyuser@xyz:/path/to/workspace $ cd sdk
 
-  pokyuser@xyz:/path/to/workspace/sdk $ source meta-synaptics/setup/setup-environment
+  pokyuser@xyz:/path/to/workspace/sdk $ . meta-synaptics/setup/setup-environment
 
   pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media
 
@@ -231,11 +231,11 @@ To build the ``astra-media-oobe`` image exectute the following commands::
 
   pokyuser@xyz:/path/to/workspace $ cd sdk
 
-  pokyuser@xyz:/path/to/workspace/sdk $ OOBE=enabled source meta-synaptics/setup/setup-environment
+  pokyuser@xyz:/path/to/workspace/sdk $ OOBE=enabled . meta-synaptics/setup/setup-environment
 
   pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media-oobe
 
-The ``source meta-synaptics/setup/setup-environment`` will prompt the user to select a machine type. Information on machine
+The ``. meta-synaptics/setup/setup-environment`` will prompt the user to select a machine type. Information on machine
 types can be found in section :ref:`astra_machines`.
 
 The image can be flashed to an evaluation kit board as described in :ref:`prepare_to_boot`.
@@ -306,7 +306,7 @@ by running the following command::
 
   pokyuser@xyz:/path/to/workspace $ cd sdk
 
-  pokyuser@xyz:/path/to/workspace/sdk $ source meta-synaptics/setup/setup-environment
+  pokyuser@xyz:/path/to/workspace/sdk $ . meta-synaptics/setup/setup-environment
 
   pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media -c do_populate_sdk
 
@@ -417,7 +417,7 @@ On Astra Yocto, Wayland is the default display server. Using X11 instead of Wayl
 
 ::
 
-  pokyuser@xyz:/path/to/workspace/sdk $ DISPLAY_SERVER=x11 source meta-synaptics/setup/setup-environment
+  pokyuser@xyz:/path/to/workspace/sdk $ DISPLAY_SERVER=x11 . meta-synaptics/setup/setup-environment
 
   pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media
 
@@ -434,7 +434,7 @@ and full OOBE support requires passing the ``OOBE`` variable to the ``setup-envi
 
 ::
 
-  pokyuser@xyz:/path/to/workspace/sdk $ OOBE=enabled source meta-synaptics/setup/setup-environment
+  pokyuser@xyz:/path/to/workspace/sdk $ OOBE=enabled . meta-synaptics/setup/setup-environment
 
   pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media-oobe
 

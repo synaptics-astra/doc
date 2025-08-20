@@ -22,7 +22,7 @@ To build a image run the following commands:
 
     pokyuser@xyz:/path/to/workspace $ cd sdk
 
-    pokyuser@xyz:/path/to/workspace/sdk $ source meta-synaptics/setup/setup-environment
+    pokyuser@xyz:/path/to/workspace/sdk $ . meta-synaptics/setup/setup-environment
 
     Select the MACHINE you want to build:
 
