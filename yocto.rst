@@ -171,7 +171,7 @@ later to rebuild with the same command.
 
 To start the container use the following command line::
 
-    $ docker run --rm -it -v $(pwd):$(pwd) ghcr.io/synaptics-astra/crops:1.0.0 --workdir=$(pwd)
+    $ docker run --rm -it -v $(pwd):$(pwd) ghcr.io/synaptics-astra/crops:1.1.0 --workdir=$(pwd)
 
 This will spawn a shell inside the container. The current directory of the host
 is mounted inside the container so that the workspace is available within
