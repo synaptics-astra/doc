@@ -12,34 +12,34 @@ supported sensor modules. Some configurations require setting a device tree over
 Supported Camera Modules
 ========================
 
-+--------+------------------------------------------------------------------------------------------+-----------------+------------------------------------------------------+----------------------------------------------------+
-| Sensor | Module                                                                                   | Resolution      | Interface (Device Tree Overlay if Required)          | Notes                                              |
-+========+==========================================================================================+=================+======================================================+====================================================+
-| IMX258 | Synaptics IMX258 Camera Module                                                           | 3840x2160 30fps | MIPI-CSI 0 w/ dolphin-csi0-with-expander.dtbo        | Synaptics SL1680 MIPI CSI Adaptor Board Required   |
-|        |                                                                                          | (mode 0)        |                                                      |                                                    |
-|        |                                                                                          |                 |                                                      |                                                    |
-|        |                                                                                          | 1920x1080 30fps |                                                      |                                                    |
-|        |                                                                                          | (mode 1)        |                                                      |                                                    |
-|        |                                                                                          |                 |                                                      |                                                    |
-+--------+------------------------------------------------------------------------------------------+-----------------+------------------------------------------------------+----------------------------------------------------+
-| IMX415 | Synaptics IMX415 Camera Module                                                           | 3840x2160 30fps | MIPI-CSI 0 w/ dolphin-csi0-with-expander.dtbo        | Synaptics SL1680 MIPI CSI Adaptor Board Required   |
-|        |                                                                                          | (mode 0)        |                                                      |                                                    |
-|        |                                                                                          |                 |                                                      |                                                    |
-|        |                                                                                          | 1920x1080 30fps |                                                      |                                                    |
-|        |                                                                                          | (mode 1)        |                                                      |                                                    |
-|        |                                                                                          |                 |                                                      |                                                    |
-+--------+------------------------------------------------------------------------------------------+-----------------+------------------------------------------------------+----------------------------------------------------+
-| OV5647 | `Arducam 5MP OV5647 Camera Module                                                        | 640x480 60fps   | MIPI-CSI0                                            | 1920x1080 30fps output is non-calibrated           |
-|        | <https://www.arducam.com/product/arducam-ov5647-standard-raspberry-pi-camera-b0033/>`__  | (mode 0)        |                                                      |                                                    |
-|        |                                                                                          |                 +------------------------------------------------------+                                                    |
-|        |                                                                                          | 1920x1080 30fps | MIPI-CSI 1 w/ dolphin-csi1-without-expander.dtbo     |                                                    |
-|        |                                                                                          | (mode 1)        +------------------------------------------------------+                                                    |
-|        |                                                                                          |                 | Dual CSI0/1 w/ dolphin-bothcsi-without-expander.dtbo |                                                    |
-+--------+------------------------------------------------------------------------------------------+-----------------+------------------------------------------------------+----------------------------------------------------+
-| IMX477 | `Raspberry Pi High Quality Camera                                                        | 3840x2160 30fps | MIPI-CSI0                                            | Single Sensor Support Only                         |
-|        | <https://www.raspberrypi.com/products/raspberry-pi-high-quality-camera/>`__              | (mode 0)        +------------------------------------------------------+                                                    |
-|        |                                                                                          |                 |  MIPI-CSI 1 w/ dolphin-csi1-without-expander.dtbo    | 3840x2160 30fps output is non-calibrated           |
-+--------+------------------------------------------------------------------------------------------+-----------------+------------------------------------------------------+----------------------------------------------------+
++--------+------------------------------------------------------------------------------------------+-----------------+----------------------------------------------------------+----------------------------------------------------+
+| Sensor | Module                                                                                   | Resolution      | Interface (Device Tree Overlay if Required)              | Notes                                              |
++========+==========================================================================================+=================+==========================================================+====================================================+
+| IMX258 | Synaptics IMX258 Camera Module                                                           | 3840x2160 30fps | MIPI-CSI 0 w/ dolphin-csi0-with-expander.dtbo            | Synaptics SL1680 MIPI CSI Adaptor Board Required   |
+|        |                                                                                          | (mode 0)        |                                                          |                                                    |
+|        |                                                                                          |                 | Dewarp w/ dolphin-csi0-with-expander-dewarp-imx258.dtb   |                                                    |                                                    |
+|        |                                                                                          | 1920x1080 30fps |                                                          |                                                    |
+|        |                                                                                          | (mode 1)        |                                                          |                                                    |
+|        |                                                                                          |                 |                                                          |                                                    |
++--------+------------------------------------------------------------------------------------------+-----------------+----------------------------------------------------------+----------------------------------------------------+
+| IMX415 | Synaptics IMX415 Camera Module                                                           | 3840x2160 30fps | MIPI-CSI 0 w/ dolphin-csi0-with-expander.dtbo            | Synaptics SL1680 MIPI CSI Adaptor Board Required   |
+|        |                                                                                          | (mode 0)        |                                                          |                                                    |
+|        |                                                                                          |                 | Dewarp w/ dolphin-csi0-with-expander-dewarp-imx415.dtbo  |                                                    |                                                    |
+|        |                                                                                          | 1920x1080 30fps |                                                          |                                                    |
+|        |                                                                                          | (mode 1)        |                                                          |                                                    |
+|        |                                                                                          |                 |                                                          |                                                    |
++--------+------------------------------------------------------------------------------------------+-----------------+----------------------------------------------------------+----------------------------------------------------+
+| OV5647 | `Arducam 5MP OV5647 Camera Module                                                        | 640x480 60fps   | MIPI-CSI0                                                | 1920x1080 30fps output is non-calibrated           |
+|        | <https://www.arducam.com/product/arducam-ov5647-standard-raspberry-pi-camera-b0033/>`__  | (mode 0)        |                                                          |                                                    |
+|        |                                                                                          |                 +----------------------------------------------------------+                                                    |
+|        |                                                                                          | 1920x1080 30fps | MIPI-CSI 1 w/ dolphin-csi1-without-expander.dtbo         |                                                    |
+|        |                                                                                          | (mode 1)        +----------------------------------------------------------+                                                    |
+|        |                                                                                          |                 | Dual CSI0/1 w/ dolphin-bothcsi-without-expander.dtbo     |                                                    |
++--------+------------------------------------------------------------------------------------------+-----------------+----------------------------------------------------------+----------------------------------------------------+
+| IMX477 | `Raspberry Pi High Quality Camera                                                        | 3840x2160 30fps | MIPI-CSI0                                                | Single Sensor Support Only                         |
+|        | <https://www.raspberrypi.com/products/raspberry-pi-high-quality-camera/>`__              | (mode 0)        +----------------------------------------------------------+                                                    |
+|        |                                                                                          |                 |  MIPI-CSI 1 w/ dolphin-csi1-without-expander.dtbo        | 3840x2160 30fps output is non-calibrated           |
++--------+------------------------------------------------------------------------------------------+-----------------+----------------------------------------------------------+----------------------------------------------------+
 
  .. _changing_sensor_module:
 
@@ -196,6 +196,14 @@ overlay.
 
     Using the IMX258 and IMX415 on CSI1 is not supported on Synaptics Astra Machina boards since CSI1
     is not compatible with the GPIO expander.
+
+.. _enable_dewarp_dtbo::
+
+Enabling Dewarp with the IMX258 and IMX415 Sensors
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Astra Machina SL1680 supports using Dewarp lens distortion correction on the IMX258 and IMX415 sensors. Enabling dewarp requires using the ``dolphin-csi0-with-expander-dewarp-imx258.dtb``
+and ``dolphin-csi0-with-expander-dewarp-imx415.dtb`` overlays instead of ``dolphin-csi0-with-expander.dtbo``.
 
 Dual Sensor Support
 ===================
