@@ -1763,6 +1763,8 @@ configuration files. The prebuilt images use Yocto to build the rootfs.
 Instructions on how to build and configure a rootfs using Yocto can be
 found in the :doc:`/yocto`.
 
+.. _uboot:
+
 U-Boot
 ------
 
