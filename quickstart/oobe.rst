@@ -52,12 +52,26 @@ video and audio playback of the video file.
 
     Getting Started pane on SL1640
 
-The video will play continuously until the "Close" button in the lower right hand corner is clicked. This will return the user
-to the main page.
+The video will play continuously until the "Close" button in the lower right hand corner of footer is clicked. This will return the user to the main page.
 
 .. figure:: media/getting-started-video-close-button-crop.jpg
 
     Highlighted Close button during video playback
+
+This footer also have an option to display real-time resource usage information such as CPU, GPU, NPU, and Memory consumption during runtime. To enable this, you can click on the "Show stats" button on the lower right hand corner.
+
+.. figure:: media/getting-started-video-stats-button-crop.jpg
+
+    Highlighted Show Stats button during video playback
+
+It appears as a horizontal panel at the bottom of the screen, occupying approximately 8–10% of the total display area. It remains persistently visible unless manually hidden or disabled for all the demos.
+
+.. figure:: media/show-stats.jpg
+
+	System Load Status on Footer
+
+.. note::
+	The CPU stats shown in %CPU is the CPU used at the current moment by the entire usecase as a % of the current CPU freq which is configured as schedutil mode (which is dynamic in nature) by default. To see accurate %CPU usage, CPUfreq should be kept in performance (or fixed userdefined) mode.
 
 Video
 ^^^^^
@@ -150,6 +164,8 @@ environment. These demos are `Textures <https://doc.qt.io/qt-5/qtopengl-textures
 
     The FingerPaint application is intended to be used with displays with a touch panel.
 
+.. _SynaAI-label:
+
 Syna AI
 ^^^^^^^
 
@@ -158,6 +174,8 @@ The fourth button on the left is the "AI" button, which opens the "AI" pane. Thi
 .. figure:: media/syna-explorer-ai-pane.jpg
 
     AI pane on SL1680
+
+.. _VideoUsecases-label:
 
 Video Usecases
 """"""""""""""
@@ -301,7 +319,11 @@ The goal of SR is to generate a high-resolution (HR) image or video from one or 
 
     Super Resolution slideshow pane on SL1680
 
-This application uses a set of images to run super-resolution. It displays both normal and super-res enhanced image.
+.. figure:: media/syna-ai-player-super-resolution-slideshow-mainmenu.jpg
+
+    Super Resolution slideshow main menu on SL1680
+
+It displays both normal and super-res enhanced image.User can choose either a set of files or camera as a source.
 
 .. figure:: media/syna-ai-player-super-resolution-slideshow-example.jpg
 
@@ -313,6 +335,15 @@ After selecting the desired files, click on "Play User Files" to begin playback 
 
 In the center, you will find the Play button, which will simply start the application with the default files.
 
+USB camera capture support allows users to capture images using a USB camera that records at 720p and superscales the output to 4K.
+
+To utilize this feature, users must connect the camera and click the Launch Camera Button, which opens the camera interface. Upon clicking the capture image button, a confirmation dialog appears, allowing users to view the captured 720p image on the left and the 4K image on the right, with an option to stop playback. Additionally, users can exit the camera preview by clicking the Exit Camera Button.
+
+.. figure:: media/syna-ai-player-super-resolution-slideshow-camera-example.jpg
+
+    Super Resolution slideshow camera example
+
+
 Face Recognition
 ****************
 This application is for real time face recognition and identification. 
@@ -321,11 +352,19 @@ This application is for real time face recognition and identification.
 
     Face Recognition pane on SL1680
 
-Upon initiation of the camera feed via the Play function, the system will detect new faces. For each new detection, a preview image will be displayed, prompting the user to provide a name. This name is then saved to the local database. For faces already present in the database, the corresponding name will be automatically displayed above the bounding box. All face identification data is stored locally in the face_id_data.yml file, located at /home/root/demo/configs.
+Upon initiation of the camera feed via the Play function, the system will detect new faces. By using the Preview button, toggle the visibility of the preview panel. This panel displays detected faces. 
 
-.. note::
+.. figure:: media/syna-ai-player-face-recognition-main-page.jpg
 
-	The current application iteration processes only the largest detected face within the frame for recognition purposes.
+    Face Recognition Main Page on SL1680
+
+Users can confirm desired faces by clicking the Yes button on Preview panel, and enter names in the provided text boxes, then finalize the process with the Ok button. To avoid displaying unwanted faces, click the Cancel button. 
+
+.. figure:: media/syna-ai-player-face-recognition-example.jpg
+
+    Face Recognition Example on SL1680
+
+For faces already present in the database, the corresponding name will be automatically displayed above the bounding box. All face identification data is stored locally in the face_id_data.yml file, located at /home/root/demo/configs.
 
 Audio Usecases
 ^^^^^^^^^^^^^^^
@@ -388,41 +427,113 @@ Click on left side buttons, to select a file. A file explorer will open which wi
 Click on "SAVE SETTINGS" button to save selections. Click on "PLAY" button to start.
 
 
+Real Time Streaming
+^^^^^^^^^^^^^^^^^^^
+The sixth button on the left is the "Real Time Streaming" button. This pane contains syna players. One is Syna Gst WebRTC, Seamless Real-Time Communication with GStreamer's WebRTC Sink and the other one is Syna Dash Player, Adaptive MPD Player with Smooth Resolution Switching.
 
-Camera Config
-^^^^^^^^^^^^^
+.. figure:: media/real_time_streaming_pane.jpg
 
-The sixth button on the left is the "Camera Config" button. This pane contains options to configure camera settings for different SynaExplorer demo applications.
+	Real Time Streaming Pane
+
+Syna Gst WebRTC
+"""""""""""""""
+Astra transforms real-time communication by utilizing GStreamer's WebRTC sink for fast audio and video streaming. Built on the GStreamer framework, Astra provides developers with a seamless, scalable solution for modern communication needs
+
+The WebRTC GStreamer plugin (webrtcsink) enables real-time peer-to-peer media streaming using WebRTC technology. This plugin allows GStreamer applications to transmit and receive audio and video streams over WebRTC, including essential features like built-in signaling, ICE (Interactive Connectivity Establishment), STUN/TURN, and data channels.
+
+When users click on the “Streaming on Web” section, they will see the UI shown below, from the drop-down menu, user can choose Camera, FileSrc or AI Demos as Input.
+
+.. figure:: media/streaming_on_web.jpg
+
+	UI for streaming on web
+
+Steps for using Camera as an Input
+**********************************
+a.	Ensure a camera device is connected to the board before using this feature.
+b.	Click the “Start” button after selecting the source. A message will appear, displaying the IP address and port number to watch the stream in any local browser. See the example image below:
+
+.. figure:: media/streaming_on_web_camera.jpg
+
+	Streaming on web with camera
+
+c.	The stream will stop when the user clicks the “Stop” button or exits the app.
+d.	After opening the IP address with the port number in a browser, a link will appear in the top left corner of the webpage. Click on that link to view the stream. Below is an example of how the user will see the stream in their local browser:
+
+.. figure:: media/streaming_on_web_user_streaming.jpg
+
+	User streaming on the local browser
+
+Steps for using FileSrc as an Input
+***********************************
+a.	This option lets users stream local video files present on the system.
+b.	Selecting this option opens a file explorer for users to choose a video file, as shown in the image below:
+
+.. figure:: media/streaming_on_web_filesrc.jpg
+
+	Streaming on web with FileSrc
+
+c.	After selecting a file, users must click the “Start” button to begin streaming.
+d.	Streaming stops when users click the “Stop” button, end the stream, or exit the app.
+ 
+Steps for using AI Demos as an Input
+************************************
+With this option, users can view AI-related demos that showcase Astra’s capabilities in processing complex tasks and multitasking. The demos include object detection, pose estimation, and face detection, as shown in the image below. For more details, please check the :ref:`VideoUsecases-label` from :ref:`SynaAI-label`.
+
+.. figure:: media/streaming_on_web_ai_examples.jpg
+
+	AI Demos on GST WebRTC
+
+Syna Dash Player
+""""""""""""""""
+This is a modern DASH player built to stream .mpd files with high efficiency. It supports real-time adaptive bitrate streaming using MPEG-DASH standards. The player automatically adjusts video resolution based on current network conditions. It ensures minimal buffering and seamless playback across all bandwidth levels. Ideal for testing, development, or deploying scalable streaming solutions.
+
+When users click on the “Syna Dash Player” section, they will see the UI shown below. The user must first select the source using the input config button. Input can be FileSrc or URL. Once a source is selected, click the “Save” button. This action will open the explorer based on the input selection.
+
+.. figure:: media/syna_dash_player.jpg
+
+	Syna Dash Player input config menu on sl1680
+
+Steps for Using Input as Filesrc
+********************************
+
+a.	This option allows users to stream local video files on the system.
+b.	Selecting this option opens a file explorer for users to choose a video file to stream.
+c.	After selecting the file, click the “Play” icon at the center bottom of the app to start streaming, as shown in the image below:
+
+.. figure:: media/syna_dash_player_filesrc_example.jpg
+
+	Syna Dash Player Example with FileSrc
+
+d.	The video will loop until the user clicks the “stop” icon, or exits the app.
+e.	To change the stream, select the input configuration again. Click the “stop” button to halt the current stream, then click “play” to start the newly selected stream.
+
+Steps for Using Input as URL
+****************************
+
+a.	Users can enter any URL containing mpd files to stream.
+b.	Two sample URLs are provided to the user.
+c.	Ensure an internet connection before using this feature.
+d.	The video will pause when it reaches the end of stream (eos) or if the user clicks the “stop” icon, or exits the app. The image below shows how a .mpd file operates on the player.
+
+.. figure:: media/syna_dash_player_URL_example.jpg
+
+	Syna Dash Player Example with URL
+
+e.	To change the stream, select the input configuration again. Click the “stop” button to halt the current stream, then click “play” to start the newly selected stream.
+
+Current parameters (resolution and frames per second) will be displayed in the top right corner. These parameters will update in real-time according to the video being played. The display of these parameters plays a vital role that users might not notice changes in resolution because of the seamless transitions in the video that demonstrates our efficient hardware and software working in harmony. Consequently, displaying these parameters emphasizes the feature and its functionality.
 
 .. note::
-
-    Defaults will be used if settings is not used to configure.
-
-.. figure:: media/camera-config-pane.jpg
-
-    Camera Config pane on SL1680
-
-First section is for configuring the priority for the USB camera format selection. Click on the right side highlighted buttons to raise or
-lower the priority of specific format. Once done click on "Save Priorities" button.
-
-.. figure:: media/settings-priorities-crop.jpg
-
-    USB camera format priority settings on SL1680
-
-Second section is for configuring the RTSP URLs. After entering the RTSP URLs, click on "Save URLs" button. RTSP URLs can be verified by
-clicking on "Validate URLs" button to check if they are alive and reachable. Also it shows streaming media information.
-
-.. figure:: media/settings-rtsp-urls-crop.jpg
-
-    RTSP URLs settings on SL1680
-
-.. figure:: media/settings-rtsp-urls-validate-crop.jpg
-
-    RTSP URLs Validation on SL1680
-
+	The filesrc videos will play in a continuous loop, whereas the MPD files will stop the playback upon reaching the end of the stream (EOS).
+.. note::
+	The URL option in the input config won't work without an internet connection.
+.. note::
+	Max supported resolution is 720p.
+ 
 ISP Camera
 ^^^^^^^^^^
 The last pane on Applications is ISP Camera.
+
 .. note::
 
     ISP camera is available only in sl1680.
@@ -439,8 +550,8 @@ Settings can be launched by clicking the Settings icon in the quick access panel
 
 .. figure:: media/settings.jpg
 
-Display Config
-^^^^^^^^^^^^^^
+Display
+^^^^^^^
 
 Display config allows to select MIPI panel for given platform. You can select a panel from auto filled dropdown menu and click on "Save Panel" button. It will popup a messege to reboot a board. On reboot your new panel will be configured.
 
@@ -465,6 +576,25 @@ Display config allows to select MIPI panel for given platform. You can select a 
     Before running display settings, it is required to save uboot environment once to have persistent configuration for display.
     Interrupt a boot process on start, to stop in uboot console (See :ref:`uboot_prompt`). Enter "saveenv" command to save uboot environment. Reboot a system.
 
+USB Camera
+^^^^^^^^^^
+This section is for configuring the priority for the USB camera format selection. Click on the right side highlighted buttons to raise or lower the priority of specific format. Once done click on "Save Priorities" button.
+
+.. figure:: media/settings-priorities-crop.jpg
+
+    USB camera format priority settings on SL1680
+
+RTSP Camera
+^^^^^^^^^^^
+This section is for configuring the RTSP URLs. After entering the RTSP URLs, click on "Save URLs" button. RTSP URLs can be verified by clicking on "Validate URLs" button to check if they are alive and reachable. Also it shows streaming media information.
+
+.. figure:: media/settings-rtsp-urls-crop.jpg
+
+    RTSP URLs settings on SL1680
+
+.. figure:: media/settings-rtsp-urls-validate-crop.jpg
+
+    RTSP URLs Validation on SL1680
 
 WiFi
 ^^^^
