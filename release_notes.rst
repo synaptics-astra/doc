@@ -3,6 +3,7 @@ SDK Release Notes
 *****************
 
 .. toctree::
+    release_notes/v1.8.0
     release_notes/v1.7.0
     release_notes/v1.6.0
     release_notes/v1.5.0
