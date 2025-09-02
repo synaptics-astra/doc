@@ -117,13 +117,13 @@ Calculate GPIO[46]:
 
 .. math::
 
-    \text{GPIO[46]} = 448 + (46 - 32) = 462
+    \text{GPIO[46]} = 480 + (46 - 32) = 494
 
 Calculate GPIO[80]:
 
 .. math::
 
-    \text{GPIO[80]} = 480 + (80 - 64) = 496
+    \text{GPIO[80]} = 448 + (80 - 64) = 464
 
 SL1620
 ------
@@ -147,3 +147,8 @@ gpio\@2400          f7e82400   0 to 31
 gpio\@0800          f7e80800   32 to 63
 gpio\@0c00          f7e80c00   64 to 95
 =================   ========   ========
+
+.. note::
+
+    Mappings may change if based on modifications to devicetree. The tables above are for reference only
+    and my not be accurate for all configurations.
