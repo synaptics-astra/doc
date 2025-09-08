@@ -736,18 +736,22 @@ This example uses software decoding and works on SL1620, SL1640, and SL1680::
     gst-launch-1.0 rtspsrc location="rtsp://<user>:<password>@<ip>/stream" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! \
         video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! videoscale ! video/x-raw,width=1920,height=1080 ! waylandsink
 
-Multiple RTSP streams can be displayed simultaneously. This example will decode and display 4 1080p RTSP streams using the glvideomixer element::
+Multiple RTSP streams can be displayed simultaneously. This example will decode and display 4 1080p RTSP streams using the glvideomixerelement element::
 
-    gst-launch-1.0 glvideomixer name=comp \
+    gst-launch-1.0 glvideomixerelement name=comp \
         sink_0::alpha=1 sink_0::xpos=0 sink_0::ypos=0 sink_0::width=960 sink_0::height=540 \
         sink_1::alpha=1 sink_1::xpos=960 sink_1::ypos=0 sink_1::width=960 sink_1::height=540 \
         sink_2::alpha=1 sink_2::xpos=0 sink_2::ypos=540 sink_2::width=960 sink_2::height=540 \
         sink_3::alpha=1 sink_3::xpos=960 sink_3::ypos=540 sink_3::width=960 sink_3::height=540 \
-        ! queue2 ! videoconvert ! "video/x-raw, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1" ! waylandsink \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream1" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_0 \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream2" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_1 \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream3" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_2 \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream4" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_3
+        ! video/x-raw\(memory:GLMemory\),width=1920,height=1080 ! glcolorconvert ! video/x-raw\(memory:GLMemory\),format=BGRA ! gldownload ! waylandsink \
+        rtspsrc location="rtsp://<user>:<password>@<ip>/stream1" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 \
+        ! h264parse ! v4l2h264dec ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGBA ! comp.sink_0 \
+        rtspsrc location="rtsp://<user>:<password>@<ip>/stream2" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 \
+        ! h264parse ! v4l2h264dec ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGBA ! comp.sink_1 \
+        rtspsrc location="rtsp://<user>:<password>@<ip>/stream3" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 \
+        ! h264parse ! v4l2h264dec ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGBA ! comp.sink_2 \
+        rtspsrc location="rtsp://<user>:<password>@<ip>/stream4" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 \
+        ! h264parse ! v4l2h264dec ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGBA ! comp.sink_3
 
 HDMI-RX
 ^^^^^^^
