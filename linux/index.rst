@@ -815,28 +815,28 @@ Use the ``aplay`` command to determine which ALSA playback device to use to play
 
 This example displays a 2K30 stream from an external HDMI device using ``waylandsink``::
 
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=1920,height=1080,fps=30,format=NV12 ! waylandsink fullscreen=true
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=1920,height=1080,framerate=30/1,format=NV12 ! waylandsink fullscreen=true
 
 This example displays a 4K30 stream from an external HDMI device using ``waylandsink``::
 
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,fps=30,format=NV12 ! waylandsink fullscreen=true
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,framerate=30/1,format=NV12 ! waylandsink fullscreen=true
 
 This example displays a 4K30 stream from an external HDMI device using ``kmssink``::
 
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,fps=30,format=NV12 !  kmssink driver-name=synaptics plane-id=31
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,framerate=30/1,format=NV12 !  kmssink driver-name=synaptics plane-id=31
 
 This example displays a 4K30 stream with text overylay using ``waylandsink``::
 
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,fps=30,format=NV12 ! textoverlay text="Sample Text" ! clockoverlay ! waylandsink fullscreen=true
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,framerate=30/1,format=NV12 ! textoverlay text="Sample Text" ! clockoverlay ! waylandsink fullscreen=true
 
 This example starts a 2K30 stream using ``waylandsink``, then creates a 48K, S32_LE, 2 Channel audio pipeline. The audio will be played on the speakers of the HDMI sink device::
 
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=1920,height=1080,fps=30,format=NV12 ! waylandsink fullscreen=true &
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=1920,height=1080,framerate=30/1,format=NV12 ! waylandsink fullscreen=true &
     gst-launch-1.0 alsasrc device=hw:0,8 ! queue ! audio/x-raw,format=S32LE,rate=48000,channels=2 ! alsasink device=hw:0,7 sync=false
 
 .. note::
 
-    FPS is set by the source device and should be configured on the source before starting the pipeline.
+    Frame rate is set by the source device and should be configured on the source before starting the pipeline.
 
 .. note::
 
