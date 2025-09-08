@@ -878,43 +878,43 @@ a local file and an external USB camera.
 
 Example of Object Detection with YOLOv8 (USB Camera Source)::
 
-    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! videoconvert ! \
+    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! synavideoconvertscale ! \
         tee name=t_data t_data. ! queue ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json \
-        ! videoconvert ! waylandsink t_data. ! queue ! videoconvert ! videoscale ! video/x-raw,width=640,height=384,format=RGB  ! \
+        ! synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! video/x-raw,width=640,height=384,format=RGB  ! \
         synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 \
         ! overlay.inference_sink
 
 Example of Object Detection with YOLOv8 (Video)::
 
-    gst-launch-1.0 filesrc location=video_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! avdec_h264 ! videoconvert ! \
+    gst-launch-1.0 filesrc location=video_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! avdec_h264 ! synavideoconvertscale ! \
         tee name=t_data t_data. ! queue ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json ! \
-        videoconvert ! waylandsink t_data. ! queue ! videoconvert ! videoscale ! video/x-raw,width=640,height=384,format=RGB  ! \
+        synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! video/x-raw,width=640,height=384,format=RGB  ! \
         synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 \
         ! overlay.inference_sink
 
 Example of Object Detection with YOLOv8 (RTSP Stream)::
 
     gst-launch-1.0 rtspsrc location="rtsp://<user>:<password>@<ip>/stream" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! \
-        video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! videoconvert ! \
+        video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! synavideoconvertscale ! \
         tee name=t_data t_data. ! queue ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json ! \
-        videoconvert ! waylandsink t_data. ! queue ! videoconvert ! videoscale ! video/x-raw,width=640,height=384,format=RGB  ! \
+        synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! video/x-raw,width=640,height=384,format=RGB  ! \
         synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 \
         ! overlay.inference_sink
 
 Example of Face Detection with YOLOv5 (USB Camera Source)::
 
-    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! videoconvert ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! videoconvert ! waylandsink t_data. ! queue ! videoconvert ! \
-        videoscale ! video/x-raw,width=480,height=352,format=RGB  ! \
+    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! synavideoconvertscale ! \
+        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! \
+        video/x-raw,width=480,height=352,format=RGB  ! \
         synapinfer model=/usr/share/synap/models/object_detection/face/model/yolov5s_face_640x480_onnx_mq/model.synap mode=detector \
         frameinterval=3 ! overlay.inference_sink
 
 Example of Face Detection with YOLOv5 (RTSP Stream)::
 
     gst-launch-1.0 rtspsrc location="rtsp://<user>:<password>@<ip>/stream" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! \
-        video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! videoconvert ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! videoconvert ! waylandsink t_data. ! queue ! videoconvert ! \
-        videoscale ! video/x-raw,width=480,height=352,format=RGB  ! \
+        video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! synavideoconvertscale ! \
+        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! \
+        video/x-raw,width=480,height=352,format=RGB  ! \
         synapinfer model=/usr/share/synap/models/object_detection/face/model/yolov5s_face_640x480_onnx_mq/model.synap mode=detector \
         frameinterval=3 ! overlay.inference_sink
 
