@@ -45,6 +45,40 @@ Enabling Rescue Mode in the Yocto
 -  Flash the SDK onto the device using the same procedure as for the
    normal SDK.
 
+Adding Packages and Files to Rescue Initramfs Image (if required)
+-----------------------------------------------------------------
+
+- If additional packages need to be included in the rescue initramfs image, this
+can be done by adding the corresponding recipe to the IMAGE_INSTALL variable in the
+file ``recipes-rescue/astra-rescue/swupdate-image.bbappend``, located in the ``meta-synaptics`` directory.
+
+- If a package named ``new-recipe`` needs to be added, follow the example below
+
+::
+
+   IMAGE_INSTALL += "kernel-module-stmmac \
+      kernel-module-stmmac-platform \
+      kernel-module-dwmac-generic \
+      kernel-module-libphy \
+      kernel-module-of-mdio \
+      kernel-module-phylink \
+      kernel-modules \
+      openssh \
+      openssh-sshd \
+      openssh-scp \
+      util-linux-lsblk \
+      util-linux \
+      udev \
+      udev-extraconf \
+      swupdate-progress \
+      libubootenv \
+      libubootenv-bin \
+      chrony \
+      rescue-support \
+      new-recipe \  <- new package should be added here.
+   "
+
+
 Booting to Rescue Mode
 ======================
 
@@ -137,6 +171,10 @@ To start the SWUpdate, execute the following command::
 .. note::
 
    Place the single copy ``sl1640_single_copy.swu`` package and its corresponding cert/key in the local space (``/home/root/``).
+
+   **According to the customer’s requirement, the device in Rescue mode will support only Ethernet (no USB or SPI),
+   and therefore ADB will not be available. The OTA SWU package must be copied to the root directory over Ethernet
+   using the scp command.**
 
 For example: If the ``sl1640_single_copy.swu`` file and ``mycert.cert.pem`` are
 placed on ``/home/root`` on the device, run the command::

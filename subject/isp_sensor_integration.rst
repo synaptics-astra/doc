@@ -22,19 +22,19 @@ Create the new sensor directory with folder structure as shown below. Implementa
 .. figure:: media/sensor_integration_1.png
 
 **Step 2: Add new sensor to list**
-In ``build-sl1680/workspace/sources/synasdk-v4l2isp-sensordrv/sensor_drv.c``, include the extern declaration for the new sensor and add the sensor to the driver list.
+In ``build-sl1680/workspace/sources/synasdk-v4l2isp-sensordrv/application/v4l2isp/sensor_drv/sensor_drv.c``, include the extern declaration for the new sensor and add the sensor to the driver list.
 
 .. figure:: media/sensor_integration_2.png
 
 .. figure:: media/sensor_integration_3.png
 
 **Step 3: Add new sensor to compilation**
-Append the new sensor to ‘SENSOR_DRV_LIST’ in ``build-sl1680/workspace/sources/synasdk-v4l2isp-sensordrv/sensor_drv_config.cmake``
+Append the new sensor to ‘SENSOR_DRV_LIST’ in ``build-sl1680/workspace/sources/synasdk-v4l2isp-sensordrv/application/v4l2isp/sensor_drv/sensor_drv_config.cmake``
 
 .. figure:: media/sensor_integration_4.png
 
 **Step 4: Edit kernel DTS file**
-Edit ``build-sl1680/workspace/sources/linux-syna/arch/arm64/boot/dts/synaptics/dolphin-rdk.dts`` to configure sensor related enable/reset GPIOs.
+Edit ``build-sl1680/workspace/sources/linux-syna/arch/arm64/boot/dts/synaptics/dolphin-rdk.dts`` or sensor specific device tree overlay, to configure sensor related enable/reset GPIOs.
 
 .. figure:: media/sensor_integration_5.png
 

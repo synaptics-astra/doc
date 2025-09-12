@@ -65,9 +65,9 @@ Here is the ``volume_update.sh`` script::
     adjust_volume() {
         case "$1" in
             KEY_VOLUMEUP)
-                amixer -c $SOUND_CARD set $MIXER_CONTROL 5%+ ;;
+                amixer -c $SOUND_CARD set "$MIXER_CONTROL" 5%+ ;;
             KEY_VOLUMEDOWN)
-                amixer -c $SOUND_CARD set $MIXER_CONTROL 5%- ;;
+                amixer -c $SOUND_CARD set "$MIXER_CONTROL" 5%- ;;
         esac
     }
     # Check if evtest is installed

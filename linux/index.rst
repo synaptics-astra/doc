@@ -736,18 +736,22 @@ This example uses software decoding and works on SL1620, SL1640, and SL1680::
     gst-launch-1.0 rtspsrc location="rtsp://<user>:<password>@<ip>/stream" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! \
         video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! videoscale ! video/x-raw,width=1920,height=1080 ! waylandsink
 
-Multiple RTSP streams can be displayed simultaneously. This example will decode and display 4 1080p RTSP streams using the glvideomixer element::
+Multiple RTSP streams can be displayed simultaneously. This example will decode and display 4 1080p RTSP streams using the glvideomixerelement element::
 
-    gst-launch-1.0 glvideomixer name=comp \
+    gst-launch-1.0 glvideomixerelement name=comp \
         sink_0::alpha=1 sink_0::xpos=0 sink_0::ypos=0 sink_0::width=960 sink_0::height=540 \
         sink_1::alpha=1 sink_1::xpos=960 sink_1::ypos=0 sink_1::width=960 sink_1::height=540 \
         sink_2::alpha=1 sink_2::xpos=0 sink_2::ypos=540 sink_2::width=960 sink_2::height=540 \
         sink_3::alpha=1 sink_3::xpos=960 sink_3::ypos=540 sink_3::width=960 sink_3::height=540 \
-        ! queue2 ! videoconvert ! "video/x-raw, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1" ! waylandsink \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream1" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_0 \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream2" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_1 \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream3" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_2 \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream4" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 !  h264parse ! v4l2h264dec ! comp.sink_3
+        ! video/x-raw\(memory:GLMemory\),width=1920,height=1080 ! glcolorconvert ! video/x-raw\(memory:GLMemory\),format=BGRA ! gldownload ! waylandsink \
+        rtspsrc location="rtsp://<user>:<password>@<ip>/stream1" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 \
+        ! h264parse ! v4l2h264dec ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGBA ! comp.sink_0 \
+        rtspsrc location="rtsp://<user>:<password>@<ip>/stream2" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 \
+        ! h264parse ! v4l2h264dec ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGBA ! comp.sink_1 \
+        rtspsrc location="rtsp://<user>:<password>@<ip>/stream3" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 \
+        ! h264parse ! v4l2h264dec ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGBA ! comp.sink_2 \
+        rtspsrc location="rtsp://<user>:<password>@<ip>/stream4" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 \
+        ! h264parse ! v4l2h264dec ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGBA ! comp.sink_3
 
 HDMI-RX
 ^^^^^^^
@@ -815,28 +819,28 @@ Use the ``aplay`` command to determine which ALSA playback device to use to play
 
 This example displays a 2K30 stream from an external HDMI device using ``waylandsink``::
 
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=1920,height=1080,fps=30,format=NV12 ! waylandsink fullscreen=true
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=1920,height=1080,framerate=30/1,format=NV12 ! waylandsink fullscreen=true
 
 This example displays a 4K30 stream from an external HDMI device using ``waylandsink``::
 
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,fps=30,format=NV12 ! waylandsink fullscreen=true
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,framerate=30/1,format=NV12 ! waylandsink fullscreen=true
 
 This example displays a 4K30 stream from an external HDMI device using ``kmssink``::
 
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,fps=30,format=NV12 !  kmssink driver-name=synaptics plane-id=31
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,framerate=30/1,format=NV12 !  kmssink driver-name=synaptics plane-id=31
 
 This example displays a 4K30 stream with text overylay using ``waylandsink``::
 
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,fps=30,format=NV12 ! textoverlay text="Sample Text" ! clockoverlay ! waylandsink fullscreen=true
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,framerate=30/1,format=NV12 ! textoverlay text="Sample Text" ! clockoverlay ! waylandsink fullscreen=true
 
 This example starts a 2K30 stream using ``waylandsink``, then creates a 48K, S32_LE, 2 Channel audio pipeline. The audio will be played on the speakers of the HDMI sink device::
 
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=1920,height=1080,fps=30,format=NV12 ! waylandsink fullscreen=true &
+    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=1920,height=1080,framerate=30/1,format=NV12 ! waylandsink fullscreen=true &
     gst-launch-1.0 alsasrc device=hw:0,8 ! queue ! audio/x-raw,format=S32LE,rate=48000,channels=2 ! alsasink device=hw:0,7 sync=false
 
 .. note::
 
-    FPS is set by the source device and should be configured on the source before starting the pipeline.
+    Frame rate is set by the source device and should be configured on the source before starting the pipeline.
 
 .. note::
 
@@ -878,43 +882,43 @@ a local file and an external USB camera.
 
 Example of Object Detection with YOLOv8 (USB Camera Source)::
 
-    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! videoconvert ! \
+    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! synavideoconvertscale ! \
         tee name=t_data t_data. ! queue ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json \
-        ! videoconvert ! waylandsink t_data. ! queue ! videoconvert ! videoscale ! video/x-raw,width=640,height=384,format=RGB  ! \
+        ! synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! video/x-raw,width=640,height=384,format=RGB  ! \
         synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 \
         ! overlay.inference_sink
 
 Example of Object Detection with YOLOv8 (Video)::
 
-    gst-launch-1.0 filesrc location=video_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! avdec_h264 ! videoconvert ! \
+    gst-launch-1.0 filesrc location=video_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! avdec_h264 ! synavideoconvertscale ! \
         tee name=t_data t_data. ! queue ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json ! \
-        videoconvert ! waylandsink t_data. ! queue ! videoconvert ! videoscale ! video/x-raw,width=640,height=384,format=RGB  ! \
+        synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! video/x-raw,width=640,height=384,format=RGB  ! \
         synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 \
         ! overlay.inference_sink
 
 Example of Object Detection with YOLOv8 (RTSP Stream)::
 
     gst-launch-1.0 rtspsrc location="rtsp://<user>:<password>@<ip>/stream" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! \
-        video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! videoconvert ! \
+        video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! synavideoconvertscale ! \
         tee name=t_data t_data. ! queue ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json ! \
-        videoconvert ! waylandsink t_data. ! queue ! videoconvert ! videoscale ! video/x-raw,width=640,height=384,format=RGB  ! \
+        synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! video/x-raw,width=640,height=384,format=RGB  ! \
         synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 \
         ! overlay.inference_sink
 
 Example of Face Detection with YOLOv5 (USB Camera Source)::
 
-    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! videoconvert ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! videoconvert ! waylandsink t_data. ! queue ! videoconvert ! \
-        videoscale ! video/x-raw,width=480,height=352,format=RGB  ! \
+    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! synavideoconvertscale ! \
+        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! \
+        video/x-raw,width=480,height=352,format=RGB  ! \
         synapinfer model=/usr/share/synap/models/object_detection/face/model/yolov5s_face_640x480_onnx_mq/model.synap mode=detector \
         frameinterval=3 ! overlay.inference_sink
 
 Example of Face Detection with YOLOv5 (RTSP Stream)::
 
     gst-launch-1.0 rtspsrc location="rtsp://<user>:<password>@<ip>/stream" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! \
-        video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! videoconvert ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! videoconvert ! waylandsink t_data. ! queue ! videoconvert ! \
-        videoscale ! video/x-raw,width=480,height=352,format=RGB  ! \
+        video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! synavideoconvertscale ! \
+        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! \
+        video/x-raw,width=480,height=352,format=RGB  ! \
         synapinfer model=/usr/share/synap/models/object_detection/face/model/yolov5s_face_640x480_onnx_mq/model.synap mode=detector \
         frameinterval=3 ! overlay.inference_sink
 
@@ -1139,34 +1143,9 @@ Run the Syna AI Player::
 The Syna AI Player expects the machine type parameter. The machine type is the version of Astra Machina which the app is running on.
 The valid options are ``sl1620``, ``sl1640`` and ``sl1680``.
 
-The information on the video file used in the Multi View window is defined in the QML files in /home/root/demos/qmls/. Please update the video name and path in this file so that Syna AI Player
-can locate the video installed on your system. The video information is set in the file ``/home/root/demos/qmls/panels/MultiAi.qml``.
-
 .. note::
 
     Multi AI mode by default, requires 3 seperate cameras. One of which needs to be a USB 3.0 device.
-
-Multiview Customization
-"""""""""""""""""""""""
-
-Modifying the QML files also allows running custom Gstreamer pipelines. Changing the command paramters in the GridItem section will change the pipelines displayed in the MulitAI panels.
-The following example will display 4 RTSP streams running 3 separate AI models::
-
-    GridLayout {
-        width: ma.width * 0.9
-        anchors.top: header.bottom
-        anchors.centerIn: parent
-
-        GridItem {
-            type: 2
-            image: "qrc:/res/images/multiicon.png"
-            title:  qsTr("Multi-AI")
-            command1: "rtspsrc location=\"rtsp://<user>:<password>@<ip>/stream1\" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080  ! h264parse ! v4l2h264dec ! tee name=t_data t_data. ! queue ! v4l2convert extra-controls=\"c,io_mmu_capture_buffer=0,io_mmu_output_buffer=0\" ! video/x-raw, width=640, height=384, format=NV12  ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGB ! gldownload ! synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 ! overlay.inference_sink t_data. ! queue ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=BGRA ! gldownload ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json ! waylandsink"
-            command2: "rtspsrc location=\"rtsp://<user>:<password>@<ip>/stream2\" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080  ! h264parse ! v4l2h264dec ! tee name=t_data t_data. ! queue ! v4l2convert extra-controls=\"c,io_mmu_capture_buffer=0,io_mmu_output_buffer=0\" ! video/x-raw, width=480, height=352, format=NV12 ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGB ! gldownload ! synapinfer model=/usr/share/synap/models/object_detection/face/model/yolov5s_face_640x480_onnx_mq/model.synap mode=detector frameinterval=3 ! overlay.inference_sink t_data. ! queue ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=BGRA ! gldownload ! synapoverlay name=overlay ! waylandsink"
-            command3: "rtspsrc location=\"rtsp://<user>:<password>@<ip>/stream3\" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080  ! h264parse ! v4l2h264dec ! tee name=t_data t_data. ! queue ! v4l2convert extra-controls=\"c,io_mmu_capture_buffer=0,io_mmu_output_buffer=0\" ! video/x-raw, width=640, height=352, format=NV12 ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGB ! gldownload ! synapinfer model=/usr/share/synap/models/object_detection/body_pose/model/yolov8s-pose/model.synap mode=detector frameinterval=3 ! overlay.inference_sink t_data. ! queue ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=BGRA ! gldownload ! synapoverlay name=overlay ! waylandsink"
-            command4: "rtspsrc location=\"rtsp://<user>:<password>@<ip>/stream4\" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080  ! h264parse ! v4l2h264dec ! tee name=t_data t_data. ! queue ! v4l2convert extra-controls=\"c,io_mmu_capture_buffer=0,io_mmu_output_buffer=0\" ! video/x-raw, width=640, height=384, format=NV12 ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGB ! gldownload ! synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 ! overlay.inference_sink t_data. ! queue ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=BGRA ! gldownload ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json ! waylandsink"
-        }
-    }
 
 .. note::
 
