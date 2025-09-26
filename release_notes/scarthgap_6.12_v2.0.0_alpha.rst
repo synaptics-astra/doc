@@ -7,7 +7,7 @@ Release Notes Scarthgap 6.12 v2.0.0 Alpha
 .. note::
 
     Release v2.0.0 is an Alpha release based on Yocto Scarthgap and version v6.12 of the Linux Kernel.
-    Functionality is currently limited. The latest feature complete release is :doc:`v1.7.0`.
+    Functionality is currently limited. The latest feature complete release is :doc:`kirkstone_5.15_v1.7.0`.
 
 Introduction
 ============
@@ -301,7 +301,7 @@ General Modules, Peripherals, and Interfaces Supported
 |                                |                                                                            |
 |                                | USB SU-Boot version: v1.7                                                  |
 |                                |                                                                            |
-|                                | *Synaptics U-Boot based on U-Boot 2025.01                                  |
+|                                | \*Synaptics U-Boot based on U-Boot 2025.01                                 |
 |                                |                                                                            |
 +--------------------------------+----------------------------------------------------------------------------+
 | USB Tool                       | astra-update: 1.0.2                                                        |

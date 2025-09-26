@@ -369,7 +369,7 @@ General Modules, Peripherals, and Interfaces Supported
 |                                |                                                                            |
 |                                | USB SU-Boot version: v1.7                                                  |
 |                                |                                                                            |
-|                                | *Synaptics U-Boot based on U-Boot 2025.01                                  |
+|                                | \*Synaptics U-Boot based on U-Boot 2025.01                                 |
 |                                |                                                                            |
 +--------------------------------+----------------------------------------------------------------------------+
 | USB Tool                       | astra-update: 1.0.5                                                        |
