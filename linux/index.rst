@@ -1,6 +1,6 @@
-****************************
+============================
 Astra Yocto Linux User Guide
-****************************
+============================
 
 Overview
 ========
@@ -54,9 +54,7 @@ The Graphical Desktop
 
 Astra Machina's graphical desktop is enabled by default. It can be displayed on an external display connected
 to the HDMI port or a MIPI display. Input can be provided by connecting a standard HID USB keyboard and mouse.
-The Wayland / Weston display server is used by default, but Astra Machina can be configured to use X11 instead
-when building a custom image. :doc:`/yocto`
-
+The Wayland / Weston display server is used by default. Scarthgap releases do not currently support X11.
 .. figure:: media/wayland-desktop.jpg
 
     The Wayland Desktop on Astra Machina
@@ -66,41 +64,6 @@ Clicking on the icon in the top left corner will open a terminal.
 .. figure:: media/wayland-terminal.jpg
 
     The Wayland Desktop with a terminal open
-
-X11 Support
-^^^^^^^^^^^
-
-X11 supports two desktop environments. By default, SL1680 is configured to use `XFCE4 <https://www.xfce.org/>`__ and SL1620 / SL1640
-use `Matchbox <https://layers.openembedded.org/layerindex/recipe/300718/>`__.
-
-.. figure:: media/sl1680-xfce4-desktop.jpg
-
-    The XFCE4 Desktop Environment on SL1680
-
-.. figure:: media/sl1680-xfce4-windows.jpg
-
-    The XFCE4 Desktop Environment with a terminal and file manager on SL1680
-
-.. figure:: media/sl1640-matchbox.jpg
-
-    The Matchbox Desktop Environment on SL1640
-
-.. figure:: media/sl1640-matchbox-terminal.jpg
-
-    The Matchbox Desktop Environment with a terminal open on SL1640
-
-.. note::
-
-    On SL1620, the output mode has to be set explicitly to avoid scaling issues::
-
-        export DISPLAY=:0
-        xrandr -s 800x480
-
-
-.. note::
-
-    PulseAudio is not configured so X11 media players like ``Parole`` will not have
-    working audio.
 
 Dual Displays
 ^^^^^^^^^^^^^
@@ -112,15 +75,11 @@ of HDMI by enabling a device tree overlay. Astra Machina include device tree ove
 
 SL1680 supports an HDMI display plus a MIPI DSI. By default, the Waveshare panel is enabled as the secondary display.
 But, Astra Machina supports using the Haier panel by enabling the ``dolphin-haier-panel-overlay.dtbo`` device tree overlay.
-Both displays can be configured to run Weston, KMS, or a combination of Weston + KMS.
+Both displays can be configured to run Weston.
 
 .. note::
 
-    Mirroring of display output is not supported, except on SL1620 with X11 and the Matchbox Windows Manager.
-
-.. note::
-
-    Dual Display is supported with X11 with SL1620 (screen replication) and SL1680.
+    Mirroring of display output is not supported.
 
 The Shell with SSH
 ------------------
@@ -392,9 +351,11 @@ Video Sinks
 """""""""""
 
 Gstreamer on Astra Machina supports three video sinks. The main video sink is the ``waylandsink`` which uses
-the wayland protocol and compositor to display the video output. Astra Machina also supports the DRM KMS
-sink which displays video frames directly to a Linux DRM device using the ``kmssink``. The ``xvimagesink``
-is supported when Astra Machina is running an image with the X11 based display server.
+the wayland protocol and compositor to display the video output.
+
+.. note::
+
+    ``kmssink`` and ``xvimagesink`` are not currently support on Scarthgap releases.
 
 Wayland Sink
 ************
@@ -417,32 +378,6 @@ specifies which Wayland compositor to connect to.
 
     The Wayland sink window can be moved using a mouse. On dual display configurations the
     window can be moved to either display. This feature was added in v1.1.0.
-
-KMS Sink
-********
-
-The KMS sink supports displaying video without the need to run a windowing system like Wayland, since it can interface
-directly with Linux DRM devices. (see `GStreamer documentation <https://gstreamer.freedesktop.org/documentation/kms/index.html?gi-language=c>`__ for more details)
-
-Before using ``kmssink`` be sure to disable the Wayland service if it is running::
-
-    systemctl stop weston.service
-
-You will also need to identify the plane id for the main plane and provide this id to the ``kmssink`` element. You can identify the plane id using the ``modetest`` command::
-
-    modetest -M synaptics
-
-Identify the plane id of the plane which supports ``formats: NV12 NV21 UYVY VYUY YUYV YVYU``.
-
-.. figure:: media/modetest-ouput.png
-
-    Example of ``modetest`` output of the planes section on SL1680.
-
-XvImageSink
-***********
-
-The XvImage sink supports displaying video using the X11 backend. In the following examples, replacing ``waylandsink`` with
-``xvimagesink`` will allow the example to run on X (see `GStreamer documentation <https://gstreamer.freedesktop.org/documentation/xvimagesink/index.html?gi-language=c>`__ for more details).
 
 Audio Playback
 ^^^^^^^^^^^^^^
@@ -475,10 +410,6 @@ An example of a H265 encoded video file on SL1640 / SL1680::
 
     gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! v4l2h265dec ! waylandsink fullscreen=true
 
-An example of a H265 encoded video file on SL1640 / SL1680 using ``xvimagesink``::
-
-    gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! v4l2h265dec ! xvimagesink
-
 An example of a H265 encoded video file on SL1620::
 
     gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! avdec_h265 ! waylandsink fullscreen=true
@@ -486,10 +417,6 @@ An example of a H265 encoded video file on SL1620::
 A similar example, but with a file using AV1 encoding on SL1640 / SL1680::
 
     gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! av1parse ! v4l2av1dec ! waylandsink fullscreen=true
-
-An example of a H265 encoded video file on SL1640 / SL1680 using kmssink::
-
-    gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! v4l2h265dec ! kmssink driver-name=synaptics plane-id=31
 
 Audio / Video File Playback
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -512,20 +439,6 @@ audio stream::
 
     gst-launch-1.0 filesrc location=little.mp4  ! qtdemux name=demux  \
         demux.video_0 ! queue ! h265parse ! avdec_h265 ! queue ! waylandsink fullscreen=true \
-        demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,1
-
-Play an MP4 file on SL1640 / SL1680 with a H265 encoded video stream and an AAC encoded
-audio stream with ``xvimagesink``::
-
-    gst-launch-1.0 filesrc location=test_file.mp4  ! qtdemux name=demux \
-        demux.video_0 ! queue ! h265parse ! v4l2h265dec ! queue ! xvimagesink \
-        demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,7
-
-Play an MP4 file on SL1620 with a H265 encoded video stream and an AAC encoded
-audio stream with ``xvimagesink``::
-
-    gst-launch-1.0 filesrc location=little.mp4  ! qtdemux name=demux  \
-        demux.video_0 ! queue ! h265parse ! avdec_h265 ! queue ! xvimagesink \
         demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,1
 
 Recording
@@ -825,10 +738,6 @@ This example displays a 4K30 stream from an external HDMI device using ``wayland
 
     gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,framerate=30/1,format=NV12 ! waylandsink fullscreen=true
 
-This example displays a 4K30 stream from an external HDMI device using ``kmssink``::
-
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,framerate=30/1,format=NV12 !  kmssink driver-name=synaptics plane-id=31
-
 This example displays a 4K30 stream with text overylay using ``waylandsink``::
 
     gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,framerate=30/1,format=NV12 ! textoverlay text="Sample Text" ! clockoverlay ! waylandsink fullscreen=true
@@ -841,10 +750,6 @@ This example starts a 2K30 stream using ``waylandsink``, then creates a 48K, S32
 .. note::
 
     Frame rate is set by the source device and should be configured on the source before starting the pipeline.
-
-.. note::
-
-    ``kmssink`` does not support 4K60 output.
 
 Gstreamer Playbin Plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^

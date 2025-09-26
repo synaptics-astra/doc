@@ -264,7 +264,7 @@ Specific Modules and Features
 |                    | Boot mode:  from eMMC                               |    Y    |    Y    |    Y    | - Support eMMC HS400 mode                                                      |
 |                    +-----------------------------------------------------+---------+---------+---------+--------------------------------------------------------------------------------+
 |                    | Image Upgrade                                       |    Y    |    Y    |    Y    | - Supports eMMC image upgrade with USB U-Boot and SU-Boot                      |
-|                    |                                                     |         |         |         |                                                                                |                                                                                |
+|                    |                                                     |         |         |         |                                                                                |
 |                    |                                                     |         |         |         | - USB U-Boot: image via TFTP and USB target                                    |
 |                    |                                                     |         |         |         |                                                                                |
 |                    |                                                     |         |         |         |   (connected to PC)                                                            |
