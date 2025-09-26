@@ -47,7 +47,7 @@ Interfacing with Astra Machina
 ==============================
 
 Several methods exist for interfacing with Astra Machina, including using a graphical desktop
-on an external display. Additionally, Shell access is available through SSH, ADB, and the serial console.
+on an external display. Additionally, shell access is available through SSH, ADB, and the serial console.
 
 The Graphical Desktop
 ---------------------
@@ -1610,7 +1610,7 @@ process described in the Astra Yocto User Guide.
 The Linux Kernel uses Device Tree data structures to describe the
 hardware components and their configurations on the system. The device
 tree source files are in the Linux Kernel source tree under that path
-``arch/arm64/boot/dts/synaptics/``. These files are maintained in the `Astra Linux Kernel Overlay repository <https://github.com/synaptics-astra/linux_5_15-overlay>`__.
+``arch/arm64/boot/dts/synaptics/``. These files are maintained in the `Astra Linux Kernel Main repository <https://github.com/synaptics-astra/linux_6_12-main>`__.
 This directory also includes device tree overlays which can be used to
 modify the device tree without having to recompile the entire devicetree.
 
