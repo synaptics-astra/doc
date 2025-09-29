@@ -1,5 +1,6 @@
+=================
 SL1680 User Guide
-*****************
+=================
 
 Introduction
 ============
@@ -172,7 +173,7 @@ select a boot interface before powering up, as follows: -
    firmware is plugged into SD-slot on core module in :ref:`sl1680_core_bottom_side`.
 
 -  **USB boot:** Connect USB-C usb2.0 port to the host PC, then follow
-   the procedure in the :ref:`hardware_manual_button_settings` section.
+   the procedure in the :ref:`hardware_manual_button_settings_sl1680` section.
 
 LEDs
 ----
@@ -299,7 +300,7 @@ SoC PinStrap and Boot-up Settings
     \                                      1\*           —                 1: Boot from the device select by boot_src[1] when SD_Boot Header is off.
     =========================== ========== ============= ================= =================================================================================
 
-.. _hardware_manual_button_settings:
+.. _hardware_manual_button_settings_sl1680:
 
 Hardware Manual Button Settings
 -------------------------------

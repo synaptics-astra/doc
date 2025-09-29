@@ -40,7 +40,7 @@ Build the image with the updated device tree entries::
    devtool build-image astra-media
 
 Updating ``syna_drm.conf``
-=========================
+==========================
 
 The file ``/etc/modprobe.d/syna_drm.conf`` can override the setting in devicetree. Be sure to update ``syna_drm.conf`` to match the resolution set
 in devicetree by setting the ``syna_drm hdmi_preferred_mode`` option.

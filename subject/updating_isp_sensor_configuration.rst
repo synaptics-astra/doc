@@ -17,14 +17,14 @@ Supported Camera Modules
 +========+==========================================================================================+=================+==========================================================+====================================================+
 | IMX258 | Synaptics IMX258 Camera Module                                                           | 3840x2160 30fps | MIPI-CSI 0 w/ dolphin-csi0-with-expander.dtbo            | Synaptics SL1680 MIPI CSI Adaptor Board Required   |
 |        |                                                                                          | (mode 0)        |                                                          |                                                    |
-|        |                                                                                          |                 | Dewarp w/ dolphin-csi0-with-expander-dewarp-imx258.dtb   |                                                    |                                                    |
+|        |                                                                                          |                 | Dewarp w/ dolphin-csi0-with-expander-dewarp-imx258.dtb   |                                                    |
 |        |                                                                                          | 1920x1080 30fps |                                                          |                                                    |
 |        |                                                                                          | (mode 1)        |                                                          |                                                    |
 |        |                                                                                          |                 |                                                          |                                                    |
 +--------+------------------------------------------------------------------------------------------+-----------------+----------------------------------------------------------+----------------------------------------------------+
 | IMX415 | Synaptics IMX415 Camera Module                                                           | 3840x2160 30fps | MIPI-CSI 0 w/ dolphin-csi0-with-expander.dtbo            | Synaptics SL1680 MIPI CSI Adaptor Board Required   |
 |        |                                                                                          | (mode 0)        |                                                          |                                                    |
-|        |                                                                                          |                 | Dewarp w/ dolphin-csi0-with-expander-dewarp-imx415.dtbo  |                                                    |                                                    |
+|        |                                                                                          |                 | Dewarp w/ dolphin-csi0-with-expander-dewarp-imx415.dtbo  |                                                    |
 |        |                                                                                          | 1920x1080 30fps |                                                          |                                                    |
 |        |                                                                                          | (mode 1)        |                                                          |                                                    |
 |        |                                                                                          |                 |                                                          |                                                    |
@@ -197,7 +197,7 @@ overlay.
     Using the IMX258 and IMX415 on CSI1 is not supported on Synaptics Astra Machina boards since CSI1
     is not compatible with the GPIO expander.
 
-.. _enable_dewarp_dtbo::
+.. _enable_dewarp_dtbo:
 
 Enabling Dewarp with the IMX258 and IMX415 Sensors
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -330,7 +330,7 @@ Terminal 2::
 
     gst-launch-1.0 v4l2src device=/dev/video7 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)30/1' ! waylandsink
 
-.. _isp_video_test::
+.. _isp_video_test:
 
 ISP Video Test Tool
 ===================
@@ -376,7 +376,7 @@ Supported Video types
 | Display Type    | NV12                                            | RGB                                      | Bayer                                        |
 +=================+========================+========================+================+=========================+======================+=======================+
 |                 | IOMMU                  | non-IOMMU              | IOMMU          | non-IOMMU               | IOMMU                | non-IOMMU             |
-|-----------------+------------------------+------------------------+----------------+-------------------------+----------------------+-----------------------+
++-----------------+------------------------+------------------------+----------------+-------------------------+----------------------+-----------------------+
 | File            | ``-f NM12 -t 2 -u 1``  | ``-f NV12 -t 2 -u 0``  | Not Supported  | ``-f BGR24 -t 2 -u 0``  |  ``-f RAW-t 2 -u 1`` | ``-f RAW-t 2 -u 0``   |
 |                 |                        |                        |                |                         |                      |                       |
 |                 |                        |                        |                | ``-f RGB24 -t 2 -u 0``  |                      |                       |
@@ -609,7 +609,7 @@ The setup captures video from a laptop display (1920x1080) and processes it thro
 
 4. Application Layer:
     * The application reads the RAW8 stream assuming it represents YUV444 interleaved data.
-    * The data is then either displayed using Waylandsink (using GST pipeline) or written to a file (using “isp_video_test” application) in YUV24 (24-bit YUV 4:4:4) format.
+    * The data is then either displayed using Waylandsink (using GST pipeline) or written to a file (using ``isp_video_test`` application) in YUV24 (24-bit YUV 4:4:4) format.
 
 Configuration Summary
 ---------------------

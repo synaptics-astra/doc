@@ -1,5 +1,6 @@
+=================
 SL1620 User Guide
-*****************
+=================
 
 Introduction
 ============
@@ -170,7 +171,7 @@ on the Astra Machina.
    firmware is plugged into SD-slot on Core Module in :ref:`sl1620_core_bottom`.
 
 -  **USB boot:** Connect USB-C usb2.0 port to the host PC, then follow
-   the procedure in the :ref:`hardware_manual_button_settings` section.
+   the procedure in the :ref:`hardware_manual_button_settings_sl1620` section.
 
 LEDs
 ----
@@ -292,7 +293,7 @@ SoC Pinstrap and Bootup Settings
     \                                      1\*           —                 1: Boot from the device select by boot_src[1] when SD_Boot Header is off.
     =========================== ========== ============= ================= =================================================================================
 
-.. _hardware_manual_button_settings:
+.. _hardware_manual_button_settings_sl1620:
 
 Hardware Manual Button Settings
 -------------------------------

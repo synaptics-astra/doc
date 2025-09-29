@@ -1,6 +1,6 @@
-*********************************
+=================================
 Astra Yocto Linux Developer Guide
-*********************************
+=================================
 
 .. highlight:: console
 
@@ -35,12 +35,6 @@ for the following machines, distributions and images:
     | sl1640usb  | poky         | astra-media                                     |
     +------------+--------------+-------------------------------------------------+
     | sl1680usb  | poky         | astra-media                                     |
-    +------------+--------------+-------------------------------------------------+
-    | sl1620spi  | poky         | astra-tiny                                      |
-    +------------+--------------+-------------------------------------------------+
-    | sl1640spi  | poky         | astra-tiny                                      |
-    +------------+--------------+-------------------------------------------------+
-    | sl1680spi  | poky         | astra-tiny                                      |
     +------------+--------------+-------------------------------------------------+
 
 .. _yocto_prerequisites:
@@ -345,28 +339,20 @@ The ``usb`` machine types are used to build images which boot using the USB inte
 used to update the eMMC image, but this image can also be used to boot a full linux environment. This machine type is used to build custom
 images for customer specific hardware.
 
-The ``spi`` machine types are used to build images which boot from SPI flash. Typically, this machine type is used to build images
-used to update the eMMC image, but this image can also be used to boot a full linux environment. This machine type is used to build custom
-images for customer specific hardware.
+.. note::
+
+    The ``spi`` machine types are not currently supported with Scarthgap releases.
 
 ====================  ===================================================================================================  ==================
 Image                 Description                                                                                          Version Added
 ====================  ===================================================================================================  ==================
 sl1620                Default machine type for SL1620                                                                      v0.9
 sl1620usb             Machine type for booting SL1620 from USB                                                             v1.6
-sl1620spi             Machine type for booting SL1620 from SPI                                                             v1.7
 sl1640                Default machine type for SL1640                                                                      v0.9
 sl1640usb             Machine type for booting SL1640 from USB                                                             v1.6
-sl1640spi             Machine type for booting SL1640 from SPI                                                             v1.7
 sl1680                Default machine type for SL1680                                                                      v0.9
 sl1680usb             Machine type for booting SL1680 from USB                                                             v1.6
-sl1680spi             Machine type for booting SL1680 from SPI                                                             v1.7
 ====================  ===================================================================================================  ==================
-
-.. note::
-
-  Images built using the ``spi`` machine type require 32MB of SPI flash. Astra Machina boards are not supported since they only contain
-  16MB of SPI flash.
 
 .. _astra_images:
 
@@ -378,7 +364,6 @@ The Astra Yocto release contains several images which provide different levels o
 ====================  ===================================================================================================  ==================
 Image                 Description                                                                                          Version Added
 ====================  ===================================================================================================  ==================
-astra-tiny            Minimal packages used to build image suitable for booting from 32MB SPI NOR Flash.                   v1.5
 astra-core            Core system packages Intended for power management testing.                                          v1.2
 astra-media           Default image which contains core packages along with full packages supporting full multimedia       v0.9
                       capabilities.
@@ -409,22 +394,6 @@ Distro Features
 
 Astra Yocto supports optional distribution features which can be enabled in the ``local.conf`` file or by passing variables to the
 ``setup-environment`` script.
-
-X11 Display Server
-------------------
-
-On Astra Yocto, Wayland is the default display server. Using X11 instead of Wayland requires passing the ``DISPLAY_SERVER`` variable to the ``setup-environment`` script.
-
-::
-
-  pokyuser@xyz:/path/to/workspace/sdk $ DISPLAY_SERVER=x11 . meta-synaptics/setup/setup-environment
-
-  pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media
-
-
-.. note::
-
-  Support for using X11 was added to the v1.5 release. Older releases do not support X11.
 
 Virtualization for OOBE
 -----------------------

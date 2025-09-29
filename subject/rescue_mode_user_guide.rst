@@ -49,8 +49,8 @@ Adding Packages and Files to Rescue Initramfs Image (if required)
 -----------------------------------------------------------------
 
 - If additional packages need to be included in the rescue initramfs image, this
-can be done by adding the corresponding recipe to the IMAGE_INSTALL variable in the
-file ``recipes-rescue/astra-rescue/swupdate-image.bbappend``, located in the ``meta-synaptics`` directory.
+  can be done by adding the corresponding recipe to the IMAGE_INSTALL variable in the
+  file ``recipes-rescue/astra-rescue/swupdate-image.bbappend``, located in the ``meta-synaptics`` directory.
 
 - If a package named ``new-recipe`` needs to be added, follow the example below
 
