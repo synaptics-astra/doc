@@ -24,4 +24,4 @@ jobs:
             pages: write
             id-token: write            
 
-        uses: syna-astra-dev/action-doc-publish/.github/workflows/process.yml@v2
+        uses: syna-astra-dev/action-doc-publish/.github/workflows/process.yml@v3
