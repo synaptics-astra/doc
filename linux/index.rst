@@ -2,6 +2,11 @@
 Astra Yocto Linux User Guide
 ============================
 
+.. note::
+
+    Release v2.0.1 only supports SL2619. The latest feature complete release for SL1620, SL1640,
+    and SL1680 is :doc:`../release_notes/scarthgap_6.12_v2.0.0`. Future releases will support all four platforms.
+
 Overview
 ========
 
@@ -14,11 +19,7 @@ Supported Hardware
 
 The following Reference Kits and platforms are covered by this guide:
 
--  Astra Machina (Foundation) SL1620
-
--  Astra Machina (Foundation) SL1640
-
--  Astra Machina (Foundation) SL1680
+-  Astra Machina (Foundation) SL2619
 
 References
 ----------
@@ -64,22 +65,6 @@ Clicking on the icon in the top left corner will open a terminal.
 .. figure:: media/wayland-terminal.jpg
 
     The Wayland Desktop with a terminal open
-
-Dual Displays
-^^^^^^^^^^^^^
-
-SL1620 and SL1680 support dual display configurations. SL1620 supports a TFT display plus an HDMI display
-(via onboard DSI to MIPI converter on REV D boards). SL1620 can also be configured to use a MIPI panel instead
-of HDMI by enabling a device tree overlay. Astra Machina include device tree overlays for the Waveshare panel
-``myna2-ws-panel-overlay.dtbo`` and the Haier panel ``myna2-haier-panel-overlay.dtbo``.
-
-SL1680 supports an HDMI display plus a MIPI DSI. By default, the Waveshare panel is enabled as the secondary display.
-But, Astra Machina supports using the Haier panel by enabling the ``dolphin-haier-panel-overlay.dtbo`` device tree overlay.
-Both displays can be configured to run Weston.
-
-.. note::
-
-    Mirroring of display output is not supported.
 
 The Shell with SSH
 ------------------
@@ -144,8 +129,12 @@ USB TTL    Astra Machina
 =======    =============
 GND        GND (Pin 6)
 RXD        TX  (Pin 8)
-TXD        RX  (Pin 10)
+TXD        RX  (Pin 28)
 =======    =============
+
+.. note::
+
+    SL2619 uses pin 28 for RX instead of pin 10 which is uses on SL1620, SL1640, and SL1680.
 
 .. note::
 
@@ -156,11 +145,11 @@ The following USB-TTL adaptors are officially approved to work with Astra Machin
 `Adafruit USB to UART Debug / Console Cable (CP2102 Driver IC) <https://www.adafruit.com/product/954#technical-details>`_
 
     +----------------+---------------+-------------------------------------+------------------------------------+
-    | Pin Function   | Color Code    | Astra SL16x0 40-pin Connector       | Astra SL16x0 40-pin Function       |
+    | Pin Function   | Color Code    | Astra SL261x 40-pin Connector       | Astra SL261x 40-pin Function       |
     +================+===============+=====================================+====================================+
     | 5V-Out         | Red           | NC                                  | NC                                 |
     +----------------+---------------+-------------------------------------+------------------------------------+
-    | TX-Out         | Green         | Pin-10                              | UART0_Rx-In                        |
+    | TX-Out         | Green         | Pin-28                              | UART0_Rx-In                        |
     +----------------+---------------+-------------------------------------+------------------------------------+
     | RX-In          | White         | Pin-8                               | UART0_Tx-Out                       |
     +----------------+---------------+-------------------------------------+------------------------------------+
@@ -171,11 +160,11 @@ The following USB-TTL adaptors are officially approved to work with Astra Machin
 
 
     +----------------+---------------+-------------------------------------+------------------------------------+
-    | Pin Function   | Color Code    | Astra SL16x0 40-pin Connector       | Astra SL16x0 40-pin Function       |
+    | Pin Function   | Color Code    | Astra SL261x 40-pin Connector       | Astra SL261x 40-pin Function       |
     +================+===============+=====================================+====================================+
     | 5V-Out         | Red           | NC                                  | NC                                 |
     +----------------+---------------+-------------------------------------+------------------------------------+
-    | TX-Out         | Green         | Pin-10                              | UART0_Rx-In                        |
+    | TX-Out         | Green         | Pin-28                              | UART0_Rx-In                        |
     +----------------+---------------+-------------------------------------+------------------------------------+
     | RX-In          | White         | Pin-8                               | UART0_Tx-Out                       |
     +----------------+---------------+-------------------------------------+------------------------------------+
@@ -194,13 +183,9 @@ The following USB-TTL adaptors are officially approved to work with Astra Machin
 
     Example USB TTL cable
 
-.. figure:: media/board-ports.png
+.. figure:: media/sl2619_uart.jpg
 
-    Astra Machina with 40 GPIO Header labeled
-
-.. figure:: media/40-pin-connector.png
-
-    Astra Machina's 40 Pin GPIO Header pinout
+    UART pins on SL2619
 
 Some USB-TTL adaptors require installing a driver on Windows and Mac hosts. Please check with the
 adaptor's manufacturer for instructions on downloading and installing the driver.
@@ -252,7 +237,7 @@ the codecs supported by the Astra Machina.
 Video Codecs
 ^^^^^^^^^^^^
 
-**SL1620**
+**SL2619**
 
 ========= ================= ================== ==================
 Codec     Parser Plugin     Decoder Plugin     Encoder Plugin
@@ -261,18 +246,6 @@ H.264     h264parse         avdec_h264         N/A
 H.265     h265parse         avdec_h265         N/A
 VP8       N/A               avdec_vp8          N/A
 VP9       vp9parse          avdec_vp9          N/A
-========= ================= ================== ==================
-
-**SL1640 / SL1680**
-
-========= ================= ================== ==================
-Codec     Parser Plugin     Decoder Plugin     Encoder Plugin
-========= ================= ================== ==================
-H.264     h264parse         v4l2h264dec        v4l2h264enc
-H.265     h265parse         v4l2h265dec        N/A
-VP8       N/A               v4l2vp8dec         v4l2vp8enc
-VP9       vp9parse          v4l2vp9dec         N/A
-AV1       av1parse          v4l2av1dec         N/A
 ========= ================= ================== ==================
 
 Audio Codecs
@@ -323,29 +296,14 @@ Audio Sinks
 
 The following examples use the ALSA audio sink to output audio using the ALSA
 audio API (for more details refer to the `Gstreamer documentation <https://gstreamer.freedesktop.org/documentation/alsa/alsasink.html?gi-language=c#alsasink>`__ for more details).
-The examples use the device hw:0,7 which corresponds to
-the HDMI output device on SL1680. Hardware devices can be found in the file
-/proc/asound/pcm. Below is an example of the pcm devices on SL1680.
-Device 0-7 corresponds to the HDMI device and will be used in the
-examples below.
+Hardware devices can be found in the file /proc/asound/pcm. Below is an example of the pcm devices on SL2619.
 
-Example /proc/asound/pcm output from SL1680::
+Example /proc/asound/pcm output from SL2619::
 
-    root@sl1680:~# cat /proc/asound/pcm
-    00-00: soc-i2so1 snd-soc-dummy-dai-0 :  : playback 1
-    00-01: soc-i2so3 snd-soc-dummy-dai-1 :  : playback 1
-    00-02: soc-dmic snd-soc-dummy-dai-2 :  : capture 1
-    00-03: soc-i2si2 snd-soc-dummy-dai-3 :  : capture 1
-    00-04: btsco-in snd-soc-dummy-dai-4 :  : capture 1
-    00-05: soc-i2s-pri-lpbk snd-soc-dummy-dai-5 :  : capture 1
-    00-06: soc-i2s-hdmi-lpbk snd-soc-dummy-dai-6 :  : capture 1
-    00-07: soc-hdmio snd-soc-dummy-dai-7 :  : playback 1
-    00-08: soc-hdmii snd-soc-dummy-dai-8 :  : capture 1
-
-.. note::
-
-    Only SL1620 has an onboard DMIC. SL1640 and SL1680 show an entry for ``soc-dmic``,
-    but there is no physical hardware on these modules.
+    root@sl2619:~# cat /proc/asound/pcm
+    00-00: asoc-i2s1 snd-soc-dummy-dai-0 :  : playback 1 : capture 1
+    00-01: asoc-i2s2 snd-soc-dummy-dai-1 :  : playback 1 : capture 1
+    00-02: asoc-i2s3 snd-soc-dummy-dai-2 :  : playback 1 : capture 1
 
 Video Sinks
 """""""""""
@@ -376,8 +334,7 @@ specifies which Wayland compositor to connect to.
 
 .. note::
 
-    The Wayland sink window can be moved using a mouse. On dual display configurations the
-    window can be moved to either display. This feature was added in v1.1.0.
+    The Wayland sink window can be moved using a mouse.
 
 Audio Playback
 ^^^^^^^^^^^^^^
@@ -406,17 +363,9 @@ Finally, the decoded frames our output to the video sink::
 The following example plays the main video stream of an MP4 file and
 displays the video using Wayland.
 
-An example of a H265 encoded video file on SL1640 / SL1680::
+An example of a H265 encoded video file on SL2619::
 
-    gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! v4l2h265dec ! waylandsink fullscreen=true
-
-An example of a H265 encoded video file on SL1620::
-
-    gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! avdec_h265 ! waylandsink fullscreen=true
-
-A similar example, but with a file using AV1 encoding on SL1640 / SL1680::
-
-    gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! av1parse ! v4l2av1dec ! waylandsink fullscreen=true
+    gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! avdec_h264 ! waylandsink fullscreen=true
 
 Audio / Video File Playback
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -427,18 +376,11 @@ creating a pipeline which parses and decodes both streams::
     gst-launch-1.0 filesrc location=video_file ! demux.video ! queue ! parser ! decoder ! videosink \
         demux.audio ! queue ! parser ! decoder ! [ convert ] ! [ resample ] ! audiosink
 
-Play an MP4 file on SL1640 / SL1680 with a H265 encoded video stream and an AAC encoded
-audio stream::
-
-    gst-launch-1.0 filesrc location=test_file.mp4  ! qtdemux name=demux \
-        demux.video_0 ! queue ! h265parse ! v4l2h265dec ! queue ! waylandsink fullscreen=true \
-        demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,7
-
-Play an MP4 file on SL1620 with a H265 encoded video stream and an AAC encoded
+Play an MP4 file on SL2619 with a H26 encoded video stream and an AAC encoded
 audio stream::
 
     gst-launch-1.0 filesrc location=little.mp4  ! qtdemux name=demux  \
-        demux.video_0 ! queue ! h265parse ! avdec_h265 ! queue ! waylandsink fullscreen=true \
+        demux.video_0 ! queue ! h264parse ! avdec_h264 ! queue ! waylandsink fullscreen=true \
         demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,1
 
 Recording
@@ -459,11 +401,6 @@ codec by the encoder. Once the data is encoded, it is then multiplexed into an O
 container and written to the file /tmp/alsasrc.ogg::
 
     gst-launch-1.0 alsasrc device=hw:1,0 ! queue ! audioconvert ! vorbisenc ! oggmux ! filesink location=/tmp/alsasrc.ogg
-
-SL1620's core module has a built-in microphone (DMIC) which is typically enumerated as hw:0,3. This command records from the build-in mic::
-
-    gst-launch-1.0 alsasrc device=hw:0,3 ! audio/x-raw,format=S32LE,rate=48000,channels=2 ! queue \
-        ! audioconvert ! vorbisenc ! oggmux ! filesink location=/tmp/vorbis_audio.ogg
 
 Cameras
 ^^^^^^^
@@ -488,268 +425,142 @@ output to the wayland sink::
 Image Sensor Cameras
 """"""""""""""""""""
 
-SL1680 includes an integrated ISP and supports connecting image sensor camera modules using the MIPI-CSI connectors. Gstreamer can use these
-cameras using the V4L2 interface. The ISP supports 3 output paths, the main path supports outputing 4K resolution (if the sensor supports 4K), and the Secondary Paths
-support 2K resolution. Each path has it's own video device file in /dev.
+The SL261x platform supports a mini ISP which provides basic image processing capabilities such as debayering, color conversion, downscaling, cropping, and white balance.
 
-To display video from the ISP's Main Path::
+Currently, there is no support for 3A functions — Auto Exposure (AE), Auto White Balance (AWB), or Auto Focus (AF). Users must manually configure exposure settings for each
+sensor based on the testing environment. Without proper exposure configuration, the output image may appear dark.
 
-    gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink
+The default white balance parameters are tuned for typical indoor (room) lighting conditions and may need adjustment depending on the current test environment.
+These ISP settings are applicable only for specific supported sensors.
 
-To display video from the ISP's Secondary Path 1::
-
-    gst-launch-1.0 v4l2src device=/dev/video1 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink
-
-To display video from the ISP's Secondary Path 2::
-
-    gst-launch-1.0 v4l2src device=/dev/video2 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink
+The mini ISP on SL261x is primarily designed to support AI use cases such as object detection and face detection. Therefore, the display output quality will not be
+identical to the SL1680's full-featured ISP, which offers full image enhancement capabilities.
 
 The device file number may vary depending on your configuration. You can use the ``v4l2-ctl`` command to find which device files are associated with each of the
 ISP paths.
 
-.. figure:: media/isp-path-devices.png
+.. figure:: media/sl2619-isp-path-devices.png
     :scale: 75%
 
     ``v4l2-ctl --list-devices`` output with the ISP Path devices highlighted
 
-An additional video device is created to support Bayer RGB capture. This is the 4th video instance which advertises itself as only supporting Bayer RGB.
-The other 3 video ports support NV12 / RGB only.
+The device name will be ``camera-video``. If an additional USB camera is connected, the device indices may change; otherwise, they default to ``video0`` and ``video1``.
 
-Multi Stream Support
-********************
-
-SL1680 supports up to three video streams to be enabled simultaneously (excluding the Bayer RGB video port - vvcam-video.0.3). Up to three different GStreamer pipelines can be
-run at the same time to validate this feature. From the GStreamer command list below, any combination of up to 3 paths — Main, Self Path 1, and Self Path 2 can be run simultaneously.
-
-::
-
-    gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink
-
-    gst-launch-1.0 v4l2src device=/dev/video1 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink
-
-    gst-launch-1.0 v4l2src device=/dev/video2 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink
-
-.. note::
-
-    Although multiple streams may appear as independent devices, all streams originate from a single instance. Once all streams are playing, any change
-    made to an existing stream is treated as a new change. Hence, ensure that all sessions are closed one by one before starting the next set of multi
-    or single streaming.
-
-Dual Sensor Support
-*******************
-
-SL1680 supports dual sensor configuration with the OV5647 sensor module. Dual sensor support required enabling the ``dolphin-bothcsi-without-expander.dtbo``
-overlay. (See :doc:`../subject/updating_isp_sensor_configuration`). Once the two sensors are connected and the overlay is enabled, ``v4l2-ctl`` will display a total of eight
-``vvcam-video`` devices. Three NV12 / RGB devices plus one Bayer RGB device per sensor.
-
-.. figure:: media/dual-sensor-isp-path-devices.png
+.. figure:: media/sl2619-isp-device-capabilities.png
     :scale: 75%
 
-    ``v4l2-ctl --list-devices`` output with the dual sensor ISP Path devices highlighted
+    ISP device capabilities
 
-Similar to multi stream support, multiple Gstreamer pipelines can be used with both sensors simultaniously.
+Configuring Exposure Settings for OV5647
+****************************************
 
-For example, these commands will display video from the main path of the sensor connected to CSI0 and video from the main path of the sensor connected to CSI1.
+To set the exposure and gain settings, first find the corresponding V4L2 Sub Device using the ``media-ctl -p`` command.
 
-::
+.. figure:: media/sl2619-media.png
 
-    gst-launch-1.0 v4l2src device=/dev/video3 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)30/1' ! waylandsink
+    Output of ``media-ctl -p``.
 
-    gst-launch-1.0 v4l2src device=/dev/video7 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)30/1' ! waylandsink
-
-.. note::
-
-    IMX258 and IMX415 sensors are not supported with the dual sensor configuration on Astra Machina boards. Both sensors
-    require a GPIO expander whereas CSI1 is incompatible with the GPIO expander.
-
-Dewarp Support
-**************
-
-SL1680 supports Dewarp lens distortion correction on the IMX258 and IMX415 sensors. Dewarp required enabling the ``dolphin-csi0-with-expander-dewarp-imx258.dtb``
-or ``dolphin-csi0-with-expander-dewarp-imx415.dtb`` overlays. (See :ref:`enable_dewarp_dtbo`). Once the dewarp overlay is enabled, check for the existence of the
-file ``/proc/syna-dewarp/dewarp_subdev0``. This file contains the path top the dewarp look up table (LUT).
+Use the output to determine the sub device needed to set the gain and exposure values.
 
 ::
 
-    cat /proc/syna-dewarp/dewarp_subdev0
+    v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl auto_exposure=1
+    v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl gain_automatic=0
+    v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl analogue_gain=128
+    v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl exposure=1011
 
-Output::
+Use the ``v4l2-ctl`` command with the ``list-ctrls`` option to view what controls are accessible.
 
-    lut       :/lib/firmware/isp/DEWARP_LUT.isp
+.. figure:: media/sl2619-list-ctrls.png
 
-This is default LUT and it is used for IMX285.
+    Output of ``v4l2-ctl -d /dev/v4l-subdev2  --list-ctrls``.
 
-For IMX415, set the LUT to ``isp/DEWARP_LUT_IMX415.isp``
+Gstreamer Commands with Wayland Sink
+************************************
 
-::
++------------------+------------------------------------------------------------------------------------------------------+------------------------------------------------------+
+| Format           | Command                                                                                              | Comments                                             |
++==================+======================================================================================================+======================================================+
+| YUV420           | gst-launch-1.0 v4l2src device=/dev/video0 io-mode=2 ! 'video/x-raw, format=(string)NV12, \           |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  | width=(int)1920, height=(int)1080, framerate=(fraction)30/1' ! waylandsink async=false               |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  +------------------------------------------------------------------------------------------------------+------------------------------------------------------+
+|                  | gst-launch-1.0 v4l2src device=/dev/video0 io-mode=2 ! 'video/x-raw, format=(string)NV12, \           |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  | width=(int)1296, height=(int)972, framerate=(fraction)30/1' ! waylandsink  async=false               |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  +------------------------------------------------------------------------------------------------------+------------------------------------------------------+
+|                  | gst-launch-1.0 v4l2src device=/dev/video0 io-mode=2 ! 'video/x-raw, format=(string)NV12, \           |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  | width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink  async=false                |                                                      |
+|                  |                                                                                                      |                                                      |
++------------------+------------------------------------------------------------------------------------------------------+------------------------------------------------------+
+| RGB888           | gst-launch-1.0 v4l2src device=/dev/video0 io-mode=2 ! 'video/x-raw, format=(string)RGB, \            |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  | width=(int)1920, height=(int)1080, framerate=(fraction)30/1' ! videoconvert ! waylandsink async=false|                                                      |
+|                  |                                                                                                      |                                                      |
+|                  +------------------------------------------------------------------------------------------------------+------------------------------------------------------+
+|                  | gst-launch-1.0 v4l2src io-mode=2 ! 'video/x-raw,format=(string)RGB, width=(int)1920, \               | For reference only this will lead to                 |
+|                  |                                                                                                      |                                                      |
+|                  | height=(int)1080, framerate=(fraction)30/1' ! glupload ! glcolorconvert ! glimagesink                | frame drop since videoconvert is running in CPU      |
+|                  |                                                                                                      |                                                      |
+|                  |                                                                                                      | and glconvert has memory copy.                       |
+|                  |                                                                                                      |                                                      |
+|                  |                                                                                                      | For RGB check always filesink.                       |
+|                  |                                                                                                      |                                                      |
++------------------+------------------------------------------------------------------------------------------------------+------------------------------------------------------+
 
-    echo "lut=isp/DEWARP_LUT_IMX415.isp" > /proc/syna-dewarp/dewarp_subdev0
+Gstreamer Commands with File Sink
+*********************************
 
-Use the following Gstreamer pipeline to apply dewarp distortion correction to the image.
-
-::
-
-    gst-launch-1.0 v4l2src device=/dev/videoX extra-controls="c,dewarp_enable=1" ! \
-        'video/x-raw, format=(string)NV12 , width=(int)3840, height=(int)2160, framerate=(fraction)30/1' \
-        ! waylandsink fullscreen=true
-
-Setting ``dewarp_enable`` to ``1`` enables correction. Setting it to ``0`` disables it.
-
-.. note::
-
-    Dewarp is only supported on ``SP1`` using 4K resolution.
-
-MMU Support
-***********
-
-Currently V4l2 ISP supports MMU for NV12 formats in MP and SP2 path only. For RGB888 and Bayer RGB format, MMU support is not enabled yet.
-SP1 path doesn't have MMU support due to HW limitation. By default, MMU support is enabled for NV12 format for MP / SP2 paths, otherwise
-the MMU is automatically disabled if it is not supported. Users are not required to add any extra control commands for the MMU for the
-default behavior.
-
-The below table provides the default behavior whether MMU enable or disable depending upon the Camera Path and selected output format.
-
-=========  ==============   ===============      ==================
-Path       Format (NV12)    Format (BGB888)      Format (Bayer RGB)
-=========  ==============   ===============      ==================
-MP         Enabled          Disabled             Disabled
-SP1        Disabled         Disabled             Disabled
-SP2        Enabled          Disabled             Disabled
-=========  ==============   ===============      ==================
-
-To explicitly disable MMU support while using NV12 format, add the extra-controls option to the Gstreamer pipeline.
-
-::
-
-    gst-launch-1.0 v4l2src device=/dev/video2  extra-controls="c,mmu_enable=0" ! 'video/x-raw, \
-        format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink
-
-.. note::
-
-    When using ``filesink``, the user needs to disable the MMU for paths where the MMU is enabled by default. MMU mode
-    requires the stride value be correctlt aligned. Unfortunately, Gstreamers filesink element ignores this value. The only
-    workaround is for the user to disable MMU for paths where the MMU is enabled by default.
++------------------+------------------------------------------------------------------------------------------------------+------------------------------------------------------+
+| Format           | Command                                                                                              | Comments                                             |
++==================+======================================================================================================+======================================================+
+| YUV420           | gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)NV12, width=(int)1920, \    |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  | height=(int)1080, framerate=(fraction)30/1' ! filesink location=/tmp/1.yuv                           |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  +------------------------------------------------------------------------------------------------------+------------------------------------------------------+
+|                  | gst-launch-1.0 v4l2src device=/dev/video0  ! 'video/x-raw, format=(string)NV12, width=(int)1296, \   |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  | height=(int)972, framerate=(fraction)30/1' ! filesink location=/tmp/1.yuv                            |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  +------------------------------------------------------------------------------------------------------+------------------------------------------------------+
+|                  | gst-launch-1.0 v4l2src device=/dev/video0  ! 'video/x-raw, format=(string)NV12, width=(int)640, \    |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  | height=(int)480, framerate=(fraction)60/1' ! filesink location=/tmp/1.yuv                            |                                                      |
+|                  |                                                                                                      |                                                      |
++------------------+------------------------------------------------------------------------------------------------------+------------------------------------------------------+
+| RGB888           | gst-launch-1.0 v4l2src device=/dev/video0  ! 'video/x-raw, format=(string)RGB, width=(int)1920, \    |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  | height=(int)1080, framerate=(fraction)30/1' ! filesink location=/tmp/1.rgb                           |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  +------------------------------------------------------------------------------------------------------+------------------------------------------------------+
+|                  | gst-launch-1.0 v4l2src device=/dev/video0  ! 'video/x-raw, format=(string)RGB, width=(int)1296, \    |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  | height=(int)972, framerate=(fraction)30/1' ! filesink location=/tmp/1.rgb                            |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  +------------------------------------------------------------------------------------------------------+------------------------------------------------------+
+|                  | gst-launch-1.0 v4l2src device=/dev/video0  ! 'video/x-raw, format=(string)RGB, width=(int)640, \     |                                                      |
+|                  |                                                                                                      |                                                      |
+|                  | height=(int)480, framerate=(fraction)60/1' ! filesink location=/tmp/1.rgb                            |                                                      |
+|                  |                                                                                                      |                                                      |
++------------------+------------------------------------------------------------------------------------------------------+------------------------------------------------------+
 
 RTSP Cameras
 """"""""""""
 
 Astra Machina supports RTSP cameras using the Gstreamer RTSP plugin. 
 
-This example will receive a H.264 encoded camera stream and display it on SL1640 and SL1680 using hardware decoding. The rtspsrc
+This example will receive a H.264 encoded camera stream and display it on SL2619 using software decoding. The rtspsrc
 element connects to the camera over the network and sets the latency to 2000 milliseconds. The latency parameter along with the rtpjitterbuffer element will buffer the stream
 to minimize network jitter. The rtph264depay element will depayload the H.264 stream. It's wait-for-keyframe option will wait for a keyframe before outputing
-the stream to ensure synchoronization. Then the H.264 stream is parsed and decoded using the h264parse and v4l2h264dec elements. The decoded video is then
+the stream to ensure synchoronization. Then the H.264 stream is parsed and decoded using the h264parse and avdec_h264 elements. The decoded video is then
 displayed on the screen using the wayland sink::
 
     gst-launch-1.0 rtspsrc location="rtsp://<user>:<password>@<ip>/stream" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! \
-        video/x-h264, width=1920, height=1080 ! h264parse ! v4l2h264dec ! videoscale ! video/x-raw,width=1920,height=1080 ! waylandsink
-
-This example uses software decoding and works on SL1620, SL1640, and SL1680::
-
-    gst-launch-1.0 rtspsrc location="rtsp://<user>:<password>@<ip>/stream" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! \
         video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! videoscale ! video/x-raw,width=1920,height=1080 ! waylandsink
-
-Multiple RTSP streams can be displayed simultaneously. This example will decode and display 4 1080p RTSP streams using the glvideomixerelement element::
-
-    gst-launch-1.0 glvideomixerelement name=comp \
-        sink_0::alpha=1 sink_0::xpos=0 sink_0::ypos=0 sink_0::width=960 sink_0::height=540 \
-        sink_1::alpha=1 sink_1::xpos=960 sink_1::ypos=0 sink_1::width=960 sink_1::height=540 \
-        sink_2::alpha=1 sink_2::xpos=0 sink_2::ypos=540 sink_2::width=960 sink_2::height=540 \
-        sink_3::alpha=1 sink_3::xpos=960 sink_3::ypos=540 sink_3::width=960 sink_3::height=540 \
-        ! video/x-raw\(memory:GLMemory\),width=1920,height=1080 ! glcolorconvert ! video/x-raw\(memory:GLMemory\),format=BGRA ! gldownload ! waylandsink \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream1" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 \
-        ! h264parse ! v4l2h264dec ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGBA ! comp.sink_0 \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream2" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 \
-        ! h264parse ! v4l2h264dec ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGBA ! comp.sink_1 \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream3" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 \
-        ! h264parse ! v4l2h264dec ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGBA ! comp.sink_2 \
-        rtspsrc location="rtsp://<user>:<password>@<ip>/stream4" latency=2000  ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! video/x-h264, width=1920, height=1080 \
-        ! h264parse ! v4l2h264dec ! glupload ! glcolorconvert ! video/x-raw\(memory:GLMemory\), format=RGBA ! comp.sink_3
-
-HDMI-RX
-^^^^^^^
-
-SL1680 supports HDMI input streams from external devices (HDMI-RX) using the micro HDMI port on core module. Gstreamer can use the V4L2 interface to process and display
-the video and audio streams received from the external HDMI device.
-
-.. figure:: media/sl1680-hdmi-rx.png
-
-    SL1680 with the HDMI-RX micro HDMI port outlined in red.
-
-HDMI-RX supports the following video formats typical of PC video sources and V4L2 video sources.
-
-Supported Formats
-"""""""""""""""""
-
-Typical PC Video Formats
-************************
-
-======   ================    ==========
-Format   Bits per Channel    Resolution
-======   ================    ==========
-RGB      8, 10, 12 bits      4K60
-YUV422   8, 10, 12 bits      4K60
-YUV444   8, 10, 12 bits      4K60
-======   ================    ==========
-
-V4L2 Video Formats
-******************
-
-======   ==========
-Format   Resolution
-======   ==========
-NV12     4K60
-UYVY     4K60
-======   ==========
-
-Audio Formats
-*************
-
-======== =========== =========
-Channels Sample Rate Bit Depth
-======== =========== =========
-2        48kHz       32 bit
-======== =========== =========
-
-The V4L2 device file number may vary depending on your configuration. You can use the ``v4l2-ctl`` command to find which device files are associated the HDMI-RX device.
-
-.. figure:: media/hdmi-rx-device.png
-    :scale: 75%
-
-    V4L2 HDMI-RX video device file
-
-Use the ``arecord`` command to determine which ALSA capture device is associated with HDMI-RX.
-
-.. figure:: media/hdmi-rx-audio-capture-device.png
-
-    ALSA HDMI-RX audio capture device
-
-Use the ``aplay`` command to determine which ALSA playback device to use to play the captured audio. The following examples will use the speakers associated with the HDMI sink.
-
-.. figure:: media/sl1680-hdmi-output-device.png
-
-    HDMI audio output device
-
-This example displays a 2K30 stream from an external HDMI device using ``waylandsink``::
-
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=1920,height=1080,framerate=30/1,format=NV12 ! waylandsink fullscreen=true
-
-This example displays a 4K30 stream from an external HDMI device using ``waylandsink``::
-
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,framerate=30/1,format=NV12 ! waylandsink fullscreen=true
-
-This example displays a 4K30 stream with text overylay using ``waylandsink``::
-
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=3840,height=2160,framerate=30/1,format=NV12 ! textoverlay text="Sample Text" ! clockoverlay ! waylandsink fullscreen=true
-
-This example starts a 2K30 stream using ``waylandsink``, then creates a 48K, S32_LE, 2 Channel audio pipeline. The audio will be played on the speakers of the HDMI sink device::
-
-    gst-launch-1.0 v4l2src device=/dev/video6 ! video/x-raw,width=1920,height=1080,framerate=30/1,format=NV12 ! waylandsink fullscreen=true &
-    gst-launch-1.0 alsasrc device=hw:0,8 ! queue ! audio/x-raw,format=S32LE,rate=48000,channels=2 ! alsasink device=hw:0,7 sync=false
-
-.. note::
-
-    Frame rate is set by the source device and should be configured on the source before starting the pipeline.
 
 Gstreamer Playbin Plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -769,217 +580,6 @@ audio sinks will be used instead::
 Using playbin the example in :ref:`audio_sinks` can be reduced to::
 
     gst-launch-1.0 playbin uri=file:///path/to/file video-sink="waylandsink fullscreen=true" audio-sink="alsasink device=hw:0,7"
-
-GStreamer SyNAP Plugin
-^^^^^^^^^^^^^^^^^^^^^^
-
-Astra Machina provides the Synaptics Gstreamer Plugins for AI (gstsynap) which allow adding ML processing to Gstreamer pipelines.
-These plugins use the SyNAP framework to interface with the hardware accelerators to improve the performance
-of ML processing. For information on SyNAP see :ref:`synap` below.
-
-The Synaptics Gstreamer Plugins for AI consist of two plugins. The gstsynapinfer plugin, which uses SyNAP to handle AI inferencing
-and the gstsynapoverlay plugin which outputs the results from gstsynapinfer and overlays then on top of the source data.
-
-The gstsynapinfer plugin can operate it two modes. The first mode outputs structured data which is then used by gstsynapoverlay. This
-supports common use cases such as drawing bounding boxes or overlaying text without having to write additional code. Here are several
-examples using gstsynapinfer to do the inferencing and gstsynapoverlay overlaying the results. These examples show inferencing running on
-a local file and an external USB camera.
-
-Example of Object Detection with YOLOv8 (USB Camera Source)::
-
-    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! synavideoconvertscale ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json \
-        ! synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! video/x-raw,width=640,height=384,format=RGB  ! \
-        synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 \
-        ! overlay.inference_sink
-
-Example of Object Detection with YOLOv8 (Video)::
-
-    gst-launch-1.0 filesrc location=video_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! avdec_h264 ! synavideoconvertscale ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json ! \
-        synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! video/x-raw,width=640,height=384,format=RGB  ! \
-        synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 \
-        ! overlay.inference_sink
-
-Example of Object Detection with YOLOv8 (RTSP Stream)::
-
-    gst-launch-1.0 rtspsrc location="rtsp://<user>:<password>@<ip>/stream" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! \
-        video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! synavideoconvertscale ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay label=/usr/share/synap/models/object_detection/coco/info.json ! \
-        synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! video/x-raw,width=640,height=384,format=RGB  ! \
-        synapinfer model=/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap mode=detector frameinterval=3 \
-        ! overlay.inference_sink
-
-Example of Face Detection with YOLOv5 (USB Camera Source)::
-
-    gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! synavideoconvertscale ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! \
-        video/x-raw,width=480,height=352,format=RGB  ! \
-        synapinfer model=/usr/share/synap/models/object_detection/face/model/yolov5s_face_640x480_onnx_mq/model.synap mode=detector \
-        frameinterval=3 ! overlay.inference_sink
-
-Example of Face Detection with YOLOv5 (RTSP Stream)::
-
-    gst-launch-1.0 rtspsrc location="rtsp://<user>:<password>@<ip>/stream" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! \
-        video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! synavideoconvertscale ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale ! \
-        video/x-raw,width=480,height=352,format=RGB  ! \
-        synapinfer model=/usr/share/synap/models/object_detection/face/model/yolov5s_face_640x480_onnx_mq/model.synap mode=detector \
-        frameinterval=3 ! overlay.inference_sink
-
-Example of Pose Estimation with YOLOv8 (USB Camera Source)::
-
-     gst-launch-1.0 v4l2src device=/dev/videoX ! video/x-raw,framerate=30/1,format=YUY2,width=640,height=480 ! synavideoconvertscale !  \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale \
-        ! video/x-raw,width=640,height=352,format=RGB  ! synapinfer model=/usr/share/synap/models/object_detection/body_pose/model/yolov8s-pose/model.synap \
-        mode=detector frameinterval=3 ! overlay.inference_sink
-
-Example of Pose Estimation with YOLOv8 (Video)::
-
-    gst-launch-1.0 filesrc location=fitness.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! avdec_h264 ! synavideoconvertscale ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale \
-        ! video/x-raw,width=640,height=352,format=RGB  ! synapinfer model=/usr/share/synap/models/object_detection/body_pose/model/yolov8s-pose/model.synap \
-        mode=detector frameinterval=3 ! overlay.inference_sink
-
-Example of Pose Estimation with YOLOv8 (RTSP Stream)::
-
-    gst-launch-1.0 rtspsrc location="rtsp://<user>:<password>@<ip>/stream" latency=2000 ! rtpjitterbuffer ! rtph264depay wait-for-keyframe=true ! \
-        video/x-h264, width=1920, height=1080 ! h264parse ! avdec_h264 ! synavideoconvertscale ! \
-        tee name=t_data t_data. ! queue ! synapoverlay name=overlay ! synavideoconvertscale ! waylandsink t_data. ! queue ! synavideoconvertscale \
-        ! video/x-raw,width=640,height=352,format=RGB  ! synapinfer model=/usr/share/synap/models/object_detection/body_pose/model/yolov8s-pose/model.synap \
-        mode=detector frameinterval=3 ! overlay.inference_sink
-
-.. note::
-
-    Replace /dev/videoX with the device file associated with your external USB camera.
-
-.. note::
-
-    The above examples use software decoding to decode video files and RTSP streams. SL1640 and SL1680 also support
-    hardware decoding which can be enabled by changing the avdec_h264 element to v4l2h264dec.
-
-In gstsynapinfer's second mode, inference results are output as a JSON string. This allows an application to handle the overlay directly
-or do additional processing on the results.
-
-We provide a `sample application <https://github.com/synaptics-astra/application-gstreamer-plugins-syna/tree/#release#/tests/examples/gst-ai>`__
-which makes use of gstsynapinfer's second mode. The app plays a video while simultaneously performing image classification on the video frames,
-and then overlaying labels of the results onto the video. A prebuilt version of the application is included in the Astra system image.
-
-Run the example application using the following command::
-
-    gst-ai --appmode=IC --input=test_file.mp4 --output=screen --paramfile=/usr/share/gst-ai/ic.json
-
-The gst-ai program uses a JSON parameter file to set additional configuration options. These options include decode mode, model, model meta-data,
-count, confidence threshold, and post processing mode. The Astra Machina image provides a default JSON file for image classification at
-/usr/share/gst-ai/ic.json. The supported decode modes (decmode) are ``ffmpeg`` and ``v4l2``. When set to ``ffmpeg`` the gst-ai program will use the
-`ffmpeg library <https://ffmpeg.org/>`__ to perform decoding of the video stream in software. When ``v4l2`` is set then gst-ai will use the V4L2 APIs
-to perform decoding of the video stream using hardware acceleration.
-
-In release v1.6 image classification can also be run using the following command::
-
-    gst-launch-1.0 filesrc location=Animals.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! v4l2h264dec ! tee name=t_data t_data. ! queue \
-        ! synavideoconvertscale ! video/x-raw,width=224,height=224,format=RGB ! \
-        synapinfer model=/usr/share/synap/models/image_classification/imagenet/model/mobilenet_v2_1.0_224_quant/model.synap mode=classifier frameinterval=3 \
-        ! overlay.inference_sink t_data. ! queue ! synavideoconvertscale ! video/x-raw,format=BGRA ! \
-        synapoverlay name=overlay label=/usr/share/synap/models/image_classification/imagenet/info.json ! waylandsink
-
-.. note::
-
-    SL1620 requires decmode to be set to ffmpeg since it does not support V4L2 decoding.
-
-Super Resolution
-""""""""""""""""
-
-Astra Machina SL1680 provides several Super Resolution models can be used to upscale video. SL1680 has models based on QDEO and FAST.
-The models are located in ``/usr/share/synap/models/image_processing/super_resolution/model``.
-
-+--------------+---------------------------------+
-| QDEO         | sr_qdeo_y_uv_640x360_1920x1080  |
-|              +---------------------------------+
-|              | sr_qdeo_y_uv_960x540_3840x2160  |
-|              +---------------------------------+
-|              | sr_qdeo_y_uv_1280x720_3840x2160 |
-|              +---------------------------------+
-|              | sr_qdeo_y_uv_1920x1080_3840x2160|
-+--------------+---------------------------------+
-| FAST         | sr_fast_y_uv_960x540_3840x2160  |
-|              +---------------------------------+
-|              | sr_fast_y_uv_1280x720_3840x2160 |
-|              +---------------------------------+
-|              | sr_fast_y_uv_1920x1080_3840x2160|
-+--------------+---------------------------------+
-
-The following examples show how to upscale video using gstreamer and the Super Resolution models.
-
-QDEO
-****
-
-sr_qdeo_y_uv_640x360_1920x1080 (NV12)::
-
-    gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=640,height=360 !\
-        synapimageproc model=sr_qdeo_y_uv_640x360_1920x1080/model.synap ! waylandsink
-
-sr_qdeo_y_uv_640x360_1920x1080 (I420)::
-
-    gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=640,height=360 !\
-        jpegdec  ! synapimageproc model=sr_qdeo_y_uv_640x360_1920x1080/model.synap ! waylandsink
-
-sr_qdeo_y_uv_1280x720_3840x2160 (NV12)::
-
-    gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1280,height=720 !\
-        synapimageproc model=sr_qdeo_y_uv_1280x720_3840x2160/model.synap ! waylandsink
-
-sr_qdeo_y_uv_1280x720_3840x2160 (I420)::
-
-    gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=1280,height=720 !\
-        jpegdec ! synapimageproc model=sr_qdeo_y_uv_1280x720_3840x2160/model.synap ! waylandsink
-
-sr_qdeo_y_uv_1920x1080_3840x2160 (NV12)::
-
-    gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1920,height=1080 !\
-        synapimageproc model=sr_qdeo_y_uv_1920x1080_3840x2160/model.synap ! waylandsink
-
-sr_qdeo_y_uv_1920x1080_3840x2160 (I420)::
-
-    gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=1920,height=1080 !\
-        jpegdec ! synapimageproc model=sr_qdeo_y_uv_1920x1080_3840x2160/model.synap ! waylandsink
-
-FAST
-****
-
-sr_fast_y_uv_1280x720_3840x2160 (NV12)::
-
-    gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1280,height=720 !\
-        synapimageproc model=sr_fast_y_uv_1280x720_3840x2160/model.synap ! waylandsink
-
-sr_fast_y_uv_1280x720_3840x2160 (I420)::
-
-    gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=1280,height=720 !\
-        jpegdec ! synapimageproc model=sr_fast_y_uv_1280x720_3840x2160/model.synap ! waylandsink
-
-sr_fast_y_uv_1920x1080_3840x2160 (NV12)::
-
-    gst-launch-1.0 v4l2src device=/dev/video8 ! video/x-raw,framerate=30/1,format=NV12,width=1920,height=1080 !\
-        synapimageproc model=sr_fast_y_uv_1920x1080_3840x2160/model.synap !  waylandsink
-
-sr_fast_y_uv_1920x1080_3840x2160 (I420)::
-
-     gst-launch-1.0 v4l2src device=/dev/video8 ! image/jpeg,framerate=30/1,format=MJPEG,width=1920,height=1080 !\
-        jpegdec ! synapimageproc model=sr_fast_y_uv_1920x1080_3840x2160/model.synap !  waylandsink
-
-.. note::
-
-    When using an ISP camera, be sure to add ``extra-controls="c,mmu_enable=0"`` to disable MMU. ::
-
-        gst-launch-1.0 v4l2src device=/dev/video0 extra-controls="c,mmu_enable=0" ! 'video/x-raw, format=(string)NV12, \
-            width=(int)1920, height=(int)1080, framerate=(fraction)30/1' ! \
-            synapimageproc model=sr_fast_y_uv_1920x1080_3840x2160/model.synap ! waylandsink
-
-.. note::
-
-    By default, the UI is 2K. When upscaling 4K content to 4K you will need to set the UI to be 4K. Move the file
-    ``/etc/modprobe.d/syna_drm.conf`` out of ``/etc/modprobe.d`` to prevent it from setting the UI resolution.
-
 
 Multimedia Demo Applications
 ----------------------------
@@ -1016,54 +616,11 @@ videos in a grid.
 
 Run the Syna Video Player::
 
-    root@sl1680:~# syna-video-player --mach sl1680 --mode ffmpeg
+    root@sl2619:~# syna-video-player --mach sl2619 --mode ffmpeg
 
 The Syna Video Player expects two paramaters, the machine type and the mode. The machine type is the version of Astra Machina which the application is running on.
-The valid options are ``sl1620``, ``sl1640`` and ``sl1680``. The mode specifies which mode of decoding should be used. The options are ``ffmpeg`` and ``v4l2``.
-When set to ``ffmpeg`` the Syna Video Player application will use the `ffmpeg library <https://ffmpeg.org/>`__ to perform decoding of the video stream in software.
-When ``v4l2`` is set then Syna Video Player will use the V4L2 APIs to perform decoding of the video stream using hardware acceleration.
-
-.. note::
-
-    SL1620 requires mode to be set to ffmpeg since it does not support V4L2 decoding.
-
-The information on the video files is defined in the QML files in /home/root/demos/qmls/. Please update the video names and path in these files so that Syna Video Player
-can locate the videos installed on your system. The video information is set in the file ``<mach>-<mode>.qml``. For example, to update the video files on SL1680 in ffmpeg mode,
-modify ``/home/root/demos/qmls/sl1680-ffmpeg.qml``.
-
-Syna AI Player
-^^^^^^^^^^^^^^
-
-The Syna AI Player application uses the above gstreamer pipelines to show object detection, face detection, and pose estimation. It also supports Multi AI view which
-does object detection, face detection, and pose estimation simultaniously while playing a video.
-
-.. figure:: media/syna-ai-player.jpg
-
-    The main screen of Syna AI Player
-
-Run the Syna AI Player::
-
-    root@sl1680:~# syna-ai-player --mach sl1680
-
-The Syna AI Player expects the machine type parameter. The machine type is the version of Astra Machina which the app is running on.
-The valid options are ``sl1620``, ``sl1640`` and ``sl1680``.
-
-.. note::
-
-    Multi AI mode by default, requires 3 seperate cameras. One of which needs to be a USB 3.0 device.
-
-.. note::
-
-    Only SL1680 support Multiview.
-
-.. _synap:
-
-Machine Learning with SyNAP
-===========================
-
-Astra Machina uses the SyNAP framework for execution of neural networks using the platform's hardware accelerators.
-This framework allows users to run programs which take advantage of the Neural Processing Unit (NPU)
-and Graphics Processing Unit (GPU) to accelerate the execution of neural networks. (see the `SyNAP documentation <https://synaptics-synap.github.io/doc/v/latest/>`__ for more details.)
+The valid options are ``sl2619``. The mode specifies which mode of decoding should be used. The supported option for ``sl2619`` is ``ffmpeg``. When set to ``ffmpeg``
+the Syna Video Player application will use the `ffmpeg library <https://ffmpeg.org/>`__ to perform decoding of the video stream in software.
 
 Connectivity
 ============
@@ -1077,22 +634,13 @@ SL Processor Wireless Device Physical Interface    Software Information
                                                   
                              (M.2 PCIe / M.2 SDIO)
 ============ =============== ===================== ========================================================
-SL1620       SYNA 43711      M.2 SDIO              - wpa_supplicant v2.11
-                                                   - WIFI driver version: v101.10.478
-SL1640       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.11
-                                                   - WIFI driver version: v101.10.478
-SL1680       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.11
+SL2619       SYNA 4612       M.2 SDIO              - wpa_supplicant v2.11
                                                    - WIFI driver version: v101.10.478
 ============ =============== ===================== ========================================================
 
-The Synaptics Astra Linux BSP contains all of the drivers and firmware required to use the 43xxx modules with both PCIe and SDIO interfaces.
+The Synaptics Astra Linux BSP contains all of the drivers and firmware required to use the 46xxx modules with SDIO interfaces.
 Wireless network management is handled by the WPA Supplicant daemon which key negotiation with a WPA Authenticator. It supports WEP, WPA, WPA2, and WPA3
 authentication standards. ( See `wpa_supplicant <https://wiki.archlinux.org/title/wpa_supplicant>`__ for more details)
-
-.. note::
-
-    SL1640 and SL1680 can be configured to use the SYNA 43711 module with SDIO.
-    See :doc:`../subject/enable_sdio_wifi`
 
 Setting up Wifi with WPA Supplicant
 ------------------------------------
@@ -1104,7 +652,7 @@ Generating a pre-shared key from a passphrase avoids having to store the passphr
 
 From the shell, use the wpa_passphrase command line tool to generate a WPA pre-shared key from a passphrase::
 
-    root@sl1680:^# wpa_passphrase network_name 12345678
+    root@sl2619:^# wpa_passphrase network_name 12345678
     network={
         ssid="network_name"
         psk=5ba83b0673ea069dafe5d5f1af8216771c13be6ad6f11dac9dc0e90b0c604981
@@ -1614,67 +1162,6 @@ tree source files are in the Linux Kernel source tree under that path
 This directory also includes device tree overlays which can be used to
 modify the device tree without having to recompile the entire devicetree.
 
-.. _devicetree_overlays:
-
-Devicetree Overlays
-"""""""""""""""""""
-
-Setting the devicetree overlay requires booting into U-Boot and setting
-the ``dtbo`` variable to the required devicetree overlay. See :ref:`uboot_prompt` for instructions on getting to the
-U-Boot prompt.
-
-Once at the U-Boot prompt run the following commands to enable the Devicetree Overlay.
-
-Set the ``dtbo`` variables::
-
-    => setenv dtbo dolphin-haier-panel-overlay.dtbo
-
-
-The ``dtbo`` variable also supports setting multiple overlays using a comma seperated list::
-
-    => setenv dtbo dolphin-bothcsi-without-expander.dtbo, dolphin-haier-panel-overlay.dtbo
-
-
-Save the environment to the eMMC so that the new variable will persist across reboots.
-
-::
-
-    => saveenv
-    Saving Environment to MMC... Writing to redundant MMC(0)... OK
-
-Optionally, confirm that the variable was correctly set.
-
-::
-
-    => printenv
-    altbootcmd=if test ${boot_slot}  = 1; then bootslot set b; bootcount reset;bootcount reset; run bootcmd; else bootslot set a; bootcount reset; bootcount reset; run bootcmd;  fi
-    autoload=n
-    baudrate=115200
-    bootcmd=bootmmc
-    bootcount=1
-    bootdelay=0
-    bootlimit=3
-    dtbo=dolphin-haier-panel-overlay.dtbo
-    fdtcontroladdr=2172e190
-    preboot=show_logo;
-    upgrade_available=0
-    ver=U-Boot 2019.10 (Nov 21 2024 - 14:01:42 +0000)
-    Environment size: 407/65531 bytesboo
-
-Finally, boot with the new overlay applied.
-
-::
-
-    => boot
-
-.. note::
-
-    Support for devicetree overlays was added in release v1.5.
-
-.. note::
-
-    Support for multiple devicetree overlays was added in release v1.7.
-
 Root File System
 ^^^^^^^^^^^^^^^^
 
@@ -1698,18 +1185,12 @@ flash or recover a device.
 image type  image usage
 =========== ===========================================================
 SPI SU-Boot burn eMMC image via TFTP server or USB drive
-USB SU-Boot burn eMMC image via TFTP server of USB host
 SU-Boot     burn eMMC image via TFTP server or USB drive, Booting Linux
 =========== ===========================================================
 
 USB SU-Boot and SPI SU-Boot are used to boot a device which does not have
 an image written to the eMMC or to do a update which overwrites all of
 the contents of the eMMC.
-
-USB SU-Boot allows the board to receive a copy of the USB version of
-SU-Boot over the USB interface. The host system runs the usb_boot tool
-to transfer the USB SU-Boot image to the board and execute it. Once USB SU-Boot
-is running on the board it can be used to write an image to the eMMC.
 
 SPI SU-Boot is similar to USB SU-Boot except that SU-Boot runs from
 SPI flash. The SPI flash may be located on the main board of Astra Machina or
@@ -1722,10 +1203,14 @@ Once SPI U-Boot is running on the board it can be used to write an image to the 
 
     Release v1.6 and later use Synaptics U-Boot for eMMC, SPI, and USB versions of U-Boot.
 
+.. note::
+
+    SL2619 does not currently support USB U-Boot.
+
 .. _spi_sd_boot:
 
-Booting from SPI and SD Cards
------------------------------
+Booting from SPI
+----------------
 
 Astra Machina's I/O board has a jumper labeled ``SD_BOOT``. This jumper controls
 whether the device boots from the eMMC or the internal SPI flash. If the jumper
@@ -1740,57 +1225,6 @@ Astra Machina's internal SPI flash comes preprogrammed with SPI U-Boot. When the
 SD_BOOT-Boot jumper is connected the device will boot from the SD card inserted in the SD card slot.
 If no SD card is inserted the SPI U-Boot will boot to the U-Boot prompt "=>". The U-Boot prompt
 can be used to set variables, or flash the eMMC and internal SPI flash.
-
-.. note::
-
-    Booting from SD cards is not supported on SL1620
-
-Generating Bootable SD Card Images
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Creating a bootable SD card requires converting an existing image into a format suitable for writing
-to the SD card. You can convert either prebuilt release images or an image you built yourself.
-Run the ``gen_sd.sh`` script from within the image directory. You can find the ``gen_sd.sh`` script
-on `GitHub <https://github.com/synaptics-astra/build/blob/#release#/tools/bin/gen_sd.sh>`__.
-Click the "Download Raw File" to download the script. The script runs in a Linux environment with the
-``mkfs.ext4``, ``gzip``, ``gdisk``, and ``sgdisk`` utilties installed.
-
-.. figure:: media/download_gen_sd.png
-
-    Downloading gen_sd.sh from GitHub
-
-.. figure:: media/start_gen_sd.png
-
-    Running gen_sd.sh from within the prebuilt V1.0.0 eMMCimg directory
-
-During the conversion ``gen_sd.sh`` will create the new file ``SD.img``. This is the new image file which
-will be written to the SD card.
-
-.. figure:: media/end_gen_sd.png
-
-    After gen_sd.sh completed
-
-Writing Bootable Images to the SD Card
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The ``SD.img`` file is written to the SD card using the `Balena Etcher <https://etcher.balena.io/>`__ tool.
-Begin by downloading and installing the tool. Then run the tool and follow the steps in the UI to select the image and target device.
-Finally, click the flash button to begin the process.
-
-..  figure:: media/balena_etcher.png
-
-    The start screen of Balena Etcher
-
-.. figure:: media/balena_etcher_flash.png
-
-    Balena Etcher after selecting the image file and target device
-
-After the flashing process completes, the SD card will now be ready to boot Astra Machina.
-
-.. figure:: media/balena_etcher_complete.png
-
-    Balena Etcher after successfully flashinge image to the SD card
-
 
 .. _uboot_prompt:
 
@@ -1851,166 +1285,6 @@ misc               Boot control settings, required                              
 home               Mounted in /home, can be customized                                 No                 Linux user space
 ================== =================================================================== ================== ===========================
 
-.. _firmware_update_usb:
-
-Updating Software Images using USB
-----------------------------------
-
-Astra Machina supports updating software images using USB.
-
-.. _usb_boot_setup:
-
-Setting up the USB Boot Environment
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Booting from USB requires the ``astra-update`` software tool to be the installed on
-a host system. Windows, Mac, and Linux hosts are supported. Windows systems
-also require the Synaptics WinUSB Driver. Mac and Linux systems do not require
-any additional drivers. This section covers how to configure the host system
-and prepare for USB booting.
-
-Hardware Setup
-""""""""""""""
-
-To run usb_boot you will also need to connect a USB cable from the host
-system to the USB Type-C USB 2.0 port on Astra Machina (next to the ethernet port).
-
-.. figure:: media/usb-c.png
-
-    Astra Machina Component Diagram with USB Type-C USB 2.0 port highlighted
-
-Installing the WinUSB Driver (Windows Only)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Windows requires a special USB kernel driver to communicate with
-Astra Machina over USB. Please download the driver from
-`GitHub <https://github.com/synaptics-astra/usb-tool>`__. Linux and Mac hosts
-can access the Astra board from user space and do not need any additional
-kernel drivers.
-
-After downloading and decompressing the USB Boot software package, right
-click on the ``SYNA_WinUSB.inf`` file in the ``Synaptics_WinUSB_Driver``
-directory. Select "Install" from the drop down menu.
-
-.. note::
-
-    Installing the Windows driver requires an account with administative privileges. Please contact
-    your System Administrator if you do not have sufficient privileges. Or update using U-Boot :ref:`update_with_uboot`
-
-.. figure:: media/install_driver_win.png
-
-    Install the driver
-
-After installing the driver, the Astra Machina will show up in
-the Windows Device Manager as the "Synaptics IoT: Tools package USB
-Driver for Synaptics Processors" when operating in USB Boot mode.
-
-.. figure:: media/devices_win.png
-
-    Devices listed by the operating system after installing the driver
-
-.. note::
-
-    Astra Machina will not show up in the Window's Device Manager or be seen by the tool until putting the
-    device into USB Boot Mode. Hold down the USB_BOOT and press the RESET button as described below.
-
-Running Astra Update
-^^^^^^^^^^^^^^^^^^^^
-
-Astra Update can be downloaded from `GitHub <https://github.com/synaptics-astra/usb-tool>`__.
-The tool is included in the same repository as the WinUSB driver.
-
-Before running the tool, copy the image to the ``usb-tool`` directory.
-    * Pre-built eMMC images are available from the `Astra SDK Releases <https://github.com/synaptics-astra/sdk/releases>`__ page.
-    * SPI images can be downloaded from the `SPI U-Boot Releases <https://github.com/synaptics-astra/spi-u-boot/releases>`__ page.
-
-To update the eMMC:
-    1. Place the eMMC image in the ``usb-tool`` directory (named ``eMMCimg`` for pre-built or ``SYNAIMG`` for custom builds).
-    2. Run the ``update_emmc`` script to begin the update.
-
-To update internal SPI Flash:
-    1. Place the SPI image in the ``usb-tool`` directory (named ``sl1620`` / ``sl1640`` / ``sl1680`` depending on the device).
-    2. Run the ``update_spi`` script to begin the update.
-
-.. note::
-
-    Please check the release notes to confirm that you have a compatible version of ``astra-update``.
-    :doc:`../release_notes/#release#`
-
-.. figure:: media/usb-tool-win.png
-
-    usb-tool directory on Windows
-
-After running ``update_emmc.bat``, a window will open showing the status of the flash process.
-
-.. figure:: media/astra-update-emmc.png
-
-    Output of the ``astra-update`` tool on Windows
-
-.. figure:: media/astra-update-spi-start.png
-
-    Output of the ``astra-update`` tool preparing to update SPI Flash
-
-Once the ``astra-update`` tool is running on the host system, Astra Machina will need to be placed into USB
-Boot mode. To do this, press and hold the "USB_BOOT" button on the I/O board. Then press and release the
-"RESET" button. Be sure to hold the "USB_BOOT" button long enough so that the board can reset and detect
-that the "USB_BOOT" button is pressed. After booting into USB Boot mode, U-Boot will automatically flash
-the eMMC image from the host onto Astra Machina. The board will automatically reboot when the update is complete.
-
-.. figure:: media/usb-boot-and-reset.png
-
-    Astra Machina Component Diagram with USB_BOOT and RESET buttons highlighted
-
-.. figure:: media/astra-update-emmc-complete.png
-
-    Output of the ``astra-update`` tool after a successful update
-
-.. note::
-
-    Make sure that the ``SD_BOOT`` jumper is not attached when booting from eMMC. Otherwise,
-    the device will boot from internal SPI flash or an SD Card. See :ref:`spi_sd_boot`.
-
-Running Astra Update on Mac OS and Linux
-""""""""""""""""""""""""""""""""""""""""
-
-On Mac OS, right click on the usb-tool directory. From the drop down select ``Services -> New Terminal at Folder``.
-
-.. figure:: media/mac-open-terminal.png
-
-    Opening a Terminal for ``astra-update`` on Mac
-
-This will open a terminal inside of the selected usb_boot directory. From there run the ``update_emmc.sh`` script to
-run the tool. You may be prompted for your password since the script internally calls sudo. The tool
-requires additional permissions to interface with USB devices and access system resources.
-
-.. figure:: media/mac-run-astra-update.png
-
-    Output of ``astra-update`` on Mac
-
-.. note::
-
-    Some versions of Mac OS may be configured to block apps from "unverified developers". If you encounter
-    this error please go to System Preference -> Security & Privacy -> General to enable executing apps from
-    unverified developers.
-
-On Linux, right click on the usb-tool directory. From the drop down select  ``Open in Terminal``.
-
-.. figure:: media/linux-open-terminal.png
-
-    Opening a Terminal for ``astra-update`` on Linux
-
-This will open a terminal inside of the usb-tool directory. From there run the ``update_emmc.sh`` script to
-run the tool. You may be prompted for your password since the script internally calls sudo. The tool
-requires additional permissions to interface with USB devices and access system resources.
-
-.. figure:: media/linux-run-astra-update.png
-
-    Output of ``astra-update`` on Linux
-
-.. note::
-
-    Astra Update no longer requires a USB-TTL board or cable to run commands at the U-Boot prompt.
-
 .. _update_with_uboot:
 
 Updating Images from U-Boot
@@ -2019,8 +1293,7 @@ Updating Images from U-Boot
 In addition to updating Astra Machina using the USB interface, you can also update directly from U-Boot. Astra
 Machina contains a version of U-Boot written to the eMMC and to an internal SPI flash chip located on the core
 module. Both instances of U-Boot allows doing image updates without using a USB host system. However, they do
-require a USB-TTL cable to access the serial console. Images can be loaded using an external USB drive or
-downloaded from a TFTP server on a local network.
+require a USB-TTL cable to access the serial console. Images can be loaded using an external USB drive.
 
 .. note::
 
@@ -2081,37 +1354,6 @@ Write the image to eMMC using the command::
 
 The parameter eMMCimg is the name of the image directory on the USB drive.
 
-Flashing Images from a TFTP Server
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To flash an Astra system image from a TFTP server you will first need to
-connect Astra Machina to a local network using the ethernet port. Copy the
-Astra image to the TFTP server so that it can be accessed by the device
-over the network. Once the device is connected to the network, boot to
-the U-Boot prompt.
-
-Initialize networking and request an IP address from a DHCP server on the local network::
-
-    => net_init; dhcp;
-    => setenv serverip 10.10.10.10;
-    
-Write the image to eMMC from the TFTP server using the command::
-
-    => tftp2emmc eMMCimg
-
-The parameter eMMCimg is the name of the image directory on the TFTP server.
-
-.. note::
-
-    SPI U-Boot initializes the network and requests an IP automatically.
-    The ``net_init`` and ``dhcp`` commands not needed when using SPI U-Boot.
-
-.. note::
-
-    In the examples above the TFTP server's address is
-    10.10.10.10. Please replace this IP with the IP address of the server
-    hosting TFTP.
-
 .. _flash_internal_spi:
 
 Updating Internal SPI Flash Images using U-Boot
@@ -2128,40 +1370,8 @@ The USB drive will need a partition with a Fat32 formatted file system.
 
 Write the image to SPI flash using the following commands::
 
-    => usb start; fatload usb 0 0x10000000 u-boot-astra-v1.1.1.sl1680.rdk.spi.bin;
-    => spinit;
-    => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
-
-An optional backup copy of the SPI flash image can be installed using the command::
-
-    => erase f0200000 f03fffff; cp.b 0x10000000 0xf0200000 0x200000;
-
-Flashing Image from TFTP Server
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To update the internal SPI flash image by downloading it from a TFTP server, simply copy the image to
-the TFTP server.
-
-Write the SPI image to the SPI flash from the TFTP server using the command::
-
-    => net_init; dhcp;
-    => setenv serverip 10.10.10.10;
-    => tftpboot 0x10000000 u-boot-astra-v1.1.1.sl1680.rdk.spi.bin;
-    => spinit;
-    => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
-
-An optional backup copy of the SPI flash image can be installed using the command::
-
-    => erase f0200000 f03fffff; cp.b 0x10000000 0xf0200000 0x200000;
-
-.. note::
-
-    SPI U-Boot initializes the network and requests an IP automatically.
-    The ``net_init`` and ``dhcp`` commands not needed when using SPI U-Boot.
-
-.. note::
-
-    In the examples above the TFTP server's address is
-    10.10.10.10. Please replace this IP with the IP address of the server
-    hosting TFTP.
+    => usb start; fatload usb 0 0x10000000 sl2610_rdk_spi_uboot_XXXX.bin;
+    => sf probe
+    => sf erase 0 0x200000
+    => sf write 0x10000000 0x0 0x200000
 

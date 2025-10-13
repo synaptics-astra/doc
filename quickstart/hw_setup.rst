@@ -7,7 +7,7 @@ embedded Linux and Android processors. A modular
 design incorporates swappable core compute modules, a common I/O board,
 and daughter cards for connectivity, debug, and flexible I/O options.
 This page lists the simple steps to power on and boot up the system
-and applies to all SL-Series core modules: SL1680, SL1640, and SL1620.
+and applies to all SL-Series core modules: SL2619.
 
 .. figure:: ./media/connections.png
     :width: 6.5in
@@ -90,9 +90,6 @@ packaging box. You can find detailed information on the following:
 
 -  :doc:`/linux/index`  for details on the board support package
    (BSP), image flashing and upgrades, Wireless setup, and so on.
-
--  :doc:`/hw/index` for hardware specification, features, and
-   interfaces.
 
 -  :doc:`/yocto` for building SDK image from source code packages.
 

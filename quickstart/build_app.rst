@@ -13,13 +13,12 @@ To build an application follows these steps:
 
 1. Download a pre-built toolchain package from the `release page <https://github.com/synaptics-astra/sdk/releases>`__.
 
-2. Unpack the toolchain package, the ``CPUTYPE`` for ``sl1680`` is ``cortexa73``, for ``sl1620`` and ``sl1640`` is
-   ``cortexa55``::
+2. Unpack the toolchain package, the ``CPUTYPE`` for ``sl2619`` is ``cortexa55``::
 
-    $ ./poky-glibc-x86_64-astra-media-${CPUTYPE}-${MACHINE}-toolchain-4.0.9.sh
-    Poky (Yocto Project Reference Distro) SDK installer version 4.0.9
+    $ ./poky-glibc-x86_64-astra-media-cortexa55-sl2619-toolchain-5.0.9.sh
+    Poky (Yocto Project Reference Distro) SDK installer version 5.0.9
     =================================================================
-    Enter target directory for SDK (default: /opt/poky/4.0.9): toolchain
+    Enter target directory for SDK (default: /opt/poky/5.0.9): toolchain
     You are about to install the SDK to "/home/user/toolchain". Proceed [Y/n]?
     Extracting SDK.................................................................................................................................................................................................................................................................................................................................done
     Setting it up...done

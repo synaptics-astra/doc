@@ -10,7 +10,6 @@ Synaptics ASTRA SDK
    yocto.rst
    subject/index.rst
    appnotes/index.rst
-   hw/index.rst
    release_notes.rst
 
 
@@ -45,10 +44,6 @@ For more in-depth information, the following documents are available:
 
   This section provided application notes on specific components or use cases.
 
-:doc:`hw/index`
-
-  This guide contains hardware specification, features, and interfaces.
-
 :doc:`release_notes`
 
   This guide contains a summary of new features, improvements, bug fixes, and known issues in the latest
@@ -56,10 +51,6 @@ For more in-depth information, the following documents are available:
 
 External Documentation
 ======================
-
-`SyNAP Documentation <https://synaptics-synap.github.io/doc/>`__
-
-   This guide explains in depth how to use the SyNAP toolkit and the SyNAP runtime API.
 
 `Yocto Project Documentation <https://docs.yoctoproject.org/4.0.17/>`__
 
