@@ -56,6 +56,7 @@ The Graphical Desktop
 Astra Machina's graphical desktop is enabled by default. It can be displayed on an external display connected
 to the HDMI port or a MIPI display. Input can be provided by connecting a standard HID USB keyboard and mouse.
 The Wayland / Weston display server is used by default. Scarthgap releases do not currently support X11.
+
 .. figure:: media/wayland-desktop.jpg
 
     The Wayland Desktop on Astra Machina
@@ -610,7 +611,7 @@ Syna Video Player
 The Syna Video Player application demonstrates Astra Machina's ability to play and decode videos. It supports playing a single video, or playing up to four
 videos in a grid.
 
-.. figure:: media/sl1680-syna-video-player.jpg
+.. figure:: ../quickstart/media/syna-video-player-main.jpg
 
     The main screen of Syna Video Player
 
@@ -1184,8 +1185,8 @@ flash or recover a device.
 =========== ===========================================================
 image type  image usage
 =========== ===========================================================
-SPI SU-Boot burn eMMC image via TFTP server or USB drive
-SU-Boot     burn eMMC image via TFTP server or USB drive, Booting Linux
+SPI SU-Boot burn eMMC image via USB drive
+SU-Boot     burn eMMC image via USB drive, Booting Linux
 =========== ===========================================================
 
 USB SU-Boot and SPI SU-Boot are used to boot a device which does not have
