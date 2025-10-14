@@ -59,8 +59,7 @@ Remove **--alsa-output-device=hw:0,1** from the following file section:
 
 ::
 
-[launcher]
-
+    [launcher]
     icon=/usr/share/syna-weston-desktop/browser.png
     path=XDG_RUNTIME_DIR=/var/run/user/0 WAYLAND_DISPLAY=wayland-1
     QT_QPA_PLATFORM=wayland CHROME_USER_DATA_DIR=/home/root/chromium_data/

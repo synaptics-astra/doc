@@ -348,39 +348,26 @@ Supported Camera Modules
 Known Issues and Limitations
 ============================
 
-.. note::
-
-    Versions of U-Boot included in the Astra SDK v0.9.0 release are not compatible with Astra SDK releases v1.0 or later.
-    Please ensure that you are using `USB Tool v1.0 <https://github.com/synaptics-astra/usb-tool/releases/>`__ or later
-    when flashing using USB. Or U-Boot `v1.0.0 <https://github.com/synaptics-astra/spi-u-boot/releases/>`__
-    or later when updating with internal SPI flash. See :ref:`flash_internal_spi` for instructions on updating the
-    internal SPI flash.
-
-.. note::
-
-    U-Boot version v1.1.0 improves emmc flash times significantly. We recommend updating to U-Boot v1.1.0 to benefit from these
-    improvements.
-
-.. note::
-
-    In Astra v1.5, the rootfs partition sizes increased to accommodate the extra packages in the OOBE images. This interferes with OTA since SWUpdate
-    expects the rootfs partition size to be the same. To perform OTA on a system with v1.4 installed, please build an image using `v1.4's partition
-    sizes <https://github.com/synaptics-astra/configs/blob/v1.4.0/product/sl1680_poky_aarch64_rdk/emmc.pt>`__. (See :doc:`../subject/emmc_layout_customization`)
-
-.. note::
-
-    Network Manager can be supported in Astra 1.7, but it's disabled by default as there are some stability issues found.
-    If needed, Network Manager can be enabled. Please, contact the Synaptics Astra support team for more information.
-
-.. note::
-
-    SyNAP AI features are NOT currently available in the Astra Scarthgap v2.0.0 Alpha release. SyNAP will be included in a future release.
-
 Known Issues
 ------------
 
 +---------+--------------------+---------------------------------------------------------------------------------------------------------------------+
 | SL2619  | Module             |  ID    | Summary                                                                                                    |
 +=========+====================+========+============================================================================================================+
-|         |                    |        |                                                                                                            |
-+---------+--------------------+---------------------------------------------------------------------------------------------------------------------+
+|    Y    | Display (OOBE)     | 36140  | The Youtube stream "galaxy timelaspse" playback is not smooth in the Chromium browser.                     |
++---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
+|    Y    | ISP                | 36138  | Colors in video stored in a file are more gray then the ouput displayed on screen when using OV5647.       |
++---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
+|    Y    | Fastlogo           | 36091  | No fastlogo displayed on HDMI during boot.                                                                 |
++---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
+|    Y    | Display            | 36092  | Output is only 1080p when connected to 4K display.                                                         |
++---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
+|    Y    | Linux Kernel       | 36098  | Ethernet will randomly not get an IP address when booting.                                                 |
++---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
+|    Y    | Bluetooth          | 36100  | System hangs when trying to connect to bluetoothd.                                                         |
++---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
+|    Y    | ISP                | 36136  | ISP shows noise in low light conditions.                                                                   |
++---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
+|    Y    | Display            | 36137  | Error reported when doing ``glmark2-es2-drm`` test.                                                        |
++---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
+
