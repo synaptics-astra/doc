@@ -41,8 +41,8 @@ This document covers the components which are used by the Linux OS. For
 instructions on setting up the build environment and creating a Yocto-based
 image for Astra Machina, please see the :doc:`/yocto`.
 
-Specific information about the Astra Machina hardware can be found on the :doc:`/hw/index` page
-and source code repositories can be found on the `Synaptics Astra GitHub page <https://github.com/synaptics-astra>`__.
+Specific information about the Astra Machina source code repositories can be
+found on the `Synaptics Astra GitHub page <https://github.com/synaptics-astra>`__.
 
 Interfacing with Astra Machina
 ==============================
