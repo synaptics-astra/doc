@@ -202,6 +202,23 @@ To build an image execute the following commands::
 
   pokyuser@xyz:/path/to/workspace/sdk $ . meta-synaptics/setup/setup-environment
 
+Select the MACHINE you want to build:
+
+::
+
+    1) conf/machine/sl1620.conf       3) conf/machine/sl1640.conf      5) conf/machine/sl1680.conf      7) conf/machine/sl1680usb.conf   9) conf/machine/sl1640spi.conf  11) conf/machine/sl2615.conf
+    2) conf/machine/sl1620usb.conf    4) conf/machine/sl1640usb.conf   6) conf/machine/sl1680spi.conf   8) conf/machine/sl1620spi.conf  10) conf/machine/sl2611.conf     12) conf/machine/sl2619.conf
+
+    You selection: 12
+
+.. note::
+
+    SL2619 is the only MACHINE type supported with Scarthgap_6.12_v2.0.1.
+
+Build the image
+
+::
+
   pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media
 
 The resulting image can be found in ``build-${MACHINE}/tmp/deploy/images/${MACHINE}/SYNAIMG/``.
