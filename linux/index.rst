@@ -1349,6 +1349,12 @@ To flash an Astra system image from an external USB drive simply copy the image
 directory to the USB drive. The USB drive will need a partition with a 
 Fat32 formatted file system and enough capacity to fit the Astra system image.
 
+.. note::
+
+    When flashing the eMMC for the first time, be sure to copy ``emmc_image_list_full`` to ``emmc_image_list`` in the
+    ``eMMCimg`` directory on the USB drive. This is required in order to format the ``/factory_setting`` partition.
+    Otherwise, the system will boot into maintenance mode after failing to mount the ``/factory_setting`` partition.
+
 Write the image to eMMC using the command::
 
     => usb2emmc eMMCimg
