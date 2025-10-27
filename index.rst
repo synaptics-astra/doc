@@ -10,6 +10,7 @@ Synaptics ASTRA SDK
    yocto.rst
    subject/index.rst
    appnotes/index.rst
+   hw/index.rst
    release_notes.rst
 
 
@@ -43,6 +44,10 @@ For more in-depth information, the following documents are available:
 :doc:`appnotes/index`
 
   This section provided application notes on specific components or use cases.
+
+:doc:`hw/index`
+
+  This guide contains hardware specification, features, and interfaces.
 
 :doc:`release_notes`
 
