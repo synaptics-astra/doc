@@ -7,6 +7,10 @@ Astra Yocto Linux User Guide
     Release v2.0.1 only supports SL2619. The latest feature complete release for SL1620, SL1640,
     and SL1680 is :doc:`../release_notes/scarthgap_6.12_v2.0.0`. Future releases will support all four platforms.
 
+.. note::
+
+    Early SL2619 boards may not include an image flashed to the eMMC. If your board fails to boot please follow the instructions: :ref:`update_with_uboot`.
+
 Overview
 ========
 
@@ -1323,6 +1327,11 @@ USB Type-C to USB Type-A adaptor).
 
     Astra Machina Component Diagram with USB and Ethernet ports highlighted
 
+.. note::
+
+    Some boards ship with early versions of U-Boot programmed to SPI flash. This version does not support the USB 3.0 controller
+    and requires the USB drive to be connected to the USB Type-C USB 2.0 port (may require USB Type-C to USB Type-A adaptor).
+
 Loading U-Boot from the eMMC
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1357,9 +1366,16 @@ Fat32 formatted file system and enough capacity to fit the Astra system image.
 
 Write the image to eMMC using the command::
 
+    => usb reset
     => usb2emmc eMMCimg
 
 The parameter eMMCimg is the name of the image directory on the USB drive.
+
+.. note::
+
+    If ``usb reset`` reports  ``0 Storage Device(s) found`` and only one USB controller was detected
+    then the USB drive needs to be connected to the USB Type-C USB 2.0 port
+    (may require USB Type-C to USB Type-A adaptor).
 
 .. _flash_internal_spi:
 
