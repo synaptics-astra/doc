@@ -1,12 +1,12 @@
 ===================================
-Release Notes Scarthgap 6.12 v2.0.1
+Release Notes Scarthgap 6.12 v2.0.2
 ===================================
 
 .. highlight:: console
 
 .. note::
 
-    Release v2.0.1 only supports SL2619. The latest feature complete release for SL1620, SL1640,
+    Release v2.0.2 only supports SL2619. The latest feature complete release for SL1620, SL1640,
     and SL1680 is :doc:`scarthgap_6.12_v2.0.0`. Future releases will support all four platforms.
 
 Introduction
@@ -68,7 +68,7 @@ Images and Toolchains
 SDK
 ^^^
 
-`<https://github.com/synaptics-astra/sdk/tree/scarthgap_6.12_v2.0.1>`__
+`<https://github.com/synaptics-astra/sdk/tree/scarthgap_6.12_v2.0.2>`__
 
 Documentation
 ^^^^^^^^^^^^^
@@ -90,8 +90,28 @@ SL2619 New Features
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
 | Feature                       | SoC                      | Description                                                        |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Support SL2619                | SL2619                   | Scarthgap 6.12 v2.0.1 adds support for SL2619.                     |
+| Gstreamer AI Color Conversion | SL2619                   | Add support for AI Color Conversion and Downscaling.               |
+| and Downscaling               |                          |                                                                    |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
+| Gstreamer AI Image            | SL2619                   | Add Gstreamer plugin for image classification.                     |
+| Classification                |                          |                                                                    |
++-------------------------------+--------------------------+--------------------------------------------------------------------+
+| KMS Sink                      | SL2619                   | Add Gstreamer support for KMS Sink.                                |
++-------------------------------+--------------------------+--------------------------------------------------------------------+
+| Vulkan                        | SL2619                   | Support the Vulkan API the GPU Software Stack.                     |
++-------------------------------+--------------------------+--------------------------------------------------------------------+
+| SynaExplorer Image            | SL2619                   | Add the Image Classification demo to SynaExplorer.                 |
+| Classification                |                          |                                                                    |
++-------------------------------+--------------------------+--------------------------------------------------------------------+
+| SynaExplorer Object Detection | SL2619                   | Add the Object Detection demo to SynaExplorer.                     |
++-------------------------------+--------------------------+--------------------------------------------------------------------+
+| Python                        | SL2619                   | Include Python 3.12.9.                                             |
++-------------------------------+--------------------------+--------------------------------------------------------------------+
+| xSPI Kernel Support           | SL2619                   | Enable support for xSPI in the Linux Kernel.                       |
++-------------------------------+--------------------------+--------------------------------------------------------------------+
+| Additional DDR Support        | SL2619                   | Add support for DDR3l and DDR4                                     |
++-------------------------------+--------------------------+--------------------------------------------------------------------+
+
 
 SoC Core Feature Summary
 ========================
@@ -334,20 +354,23 @@ Known Issues
 +---------+--------------------+---------------------------------------------------------------------------------------------------------------------+
 | SL2619  | Module             |  ID    | Summary                                                                                                    |
 +=========+====================+========+============================================================================================================+
-|    Y    | Syna Video Player  | 36165  | Noise displayed when displaying a camera source.                                                           |
+|    Y    | SynaExplorer Demo  | 36471  | Observed Freezing during SynaExplorer Image Classification Demo (CPU only).                                |
 +---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
-|    Y    | Audio              | 36166  | Always hear noise when playing audion with the 3.5mm jack.                                                 |
+|    Y    | ISP                | 36474  | Observed garbage output while testing the scaling factor using OV5647.                                     |
 +---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
-|    Y    | Display (OOBE)     | 36140  | The Youtube stream "galaxy timelaspse" playback is not smooth in the Chromium browser.                     |
+|    Y    | Web RTC demo       | 36477  | Web RTC demo website reports an error when viewed using teh QT Browser                                     |
++---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
+|    Y    | Linux Kernel       | 36069  | Failed to mount USB disc from USB2.0 port (Type-C port).                                                   |
 +---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
 |    Y    | Fastlogo           | 36091  | No fastlogo displayed on HDMI during boot.                                                                 |
 +---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
-|    Y    | Display            | 36092  | Output is only 1080p when connected to 4K display.                                                         |
+|    Y    | Power Management   | 36104  | Device fails to wake up after entering low power mode.                                                     |
 +---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
-|    Y    | Linux Kernel       | 36098  | Ethernet will randomly not get an IP address when booting.                                                 |
+|    Y    | Display            | 36137  | System reports the error "Error: Failed to restore original CRTC: -2" when running glmark2-es2-drm test.   |
 +---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
-|    Y    | Bluetooth          | 36100  | System hangs when trying to connect to bluetoothd.                                                         |
+|    Y    | Display (OOBE)     | 36140  | The Youtube stream "galaxy timelaspse" playback is not smooth in the Chromium browser.                     |
 +---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
-|    Y    | Display            | 36137  | Error reported when doing ``glmark2-es2-drm`` test.                                                        |
+|    Y    | Graphics           | 36326  | Observed screen tearing / glitch while playing glmark_drm test.                                            |
 +---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
-
+|    Y    | Linux Kernel       | 36358  | System performance is slow when dumping RGB sensor output to file.                                         |
++---------+--------------------+--------+------------------------------------------------------------------------------------------------------------+
