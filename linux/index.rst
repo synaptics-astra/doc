@@ -639,7 +639,7 @@ SL Processor Wireless Device Physical Interface    Software Information
                                                   
                              (M.2 PCIe / M.2 SDIO)
 ============ =============== ===================== ========================================================
-SL2619       SYNA 4612       M.2 SDIO              - wpa_supplicant v2.11
+SL2619       SYNA 43711      M.2 SDIO              - wpa_supplicant v2.11
                                                    - WIFI driver version: v101.10.478
 ============ =============== ===================== ========================================================
 

@@ -17,7 +17,7 @@ AI-native, multi-modal SoCs optimized for consumer, enterprise, and industrial I
 equipped with hardware accelerators for edge inferencing, security, graphics, vision, and audio, and offer
 out-of-the-box functionality with Synaptics' connectivity solutions.
 
-Astra (v2.0.1) GA Release is a unified software development kit supporting the SL-Series of MPUs.
+Astra (v2.0.2) GA Release is a unified software development kit supporting the SL-Series of MPUs.
 
 The high-level components included in this SDK are described below:
 
@@ -79,7 +79,8 @@ Documentation
 
 :doc:`../linux/index`
 
-For other collaterals please refer to the `Synaptics Customer Portal <https://cp.synaptics.com/>`__.
+For other collaterals please refer to the Documentation section for `SL2161x at Synaptics.com <https://www.synaptics.com/products/embedded-processors/sl2610-product-line#Documentation>`__
+and the `Synaptics Customer Portal <https://cp.synaptics.com/>`__.
 
 New Features
 ============
@@ -109,8 +110,6 @@ SL2619 New Features
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
 | xSPI Kernel Support           | SL2619                   | Enable support for xSPI in the Linux Kernel.                       |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Additional DDR Support        | SL2619                   | Add support for DDR3l and DDR4                                     |
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
 
 
 SoC Core Feature Summary
@@ -139,8 +138,6 @@ Specific Modules and Features
 | GST Audio Pipeline | GST Audio Pipeline                                  |    Y    |                                                                                                    |
 |                    +-----------------------------------------------------+---------+----------------------------------------------------------------------------------------------------+
 |                    | BT A2DP Audio                                       |    Y    |                                                                                                    |
-|                    +-----------------------------------------------------+---------+----------------------------------------------------------------------------------------------------+
-|                    | PDM MIC Support                                     |    Y    |                                                                                                    |
 |                    +-----------------------------------------------------+---------+----------------------------------------------------------------------------------------------------+
 |                    | SW Decoding Capability                              |    Y    | - Supported formats: AAC, MP2, MP3, Vobis, AC3, OPUS                                               |
 |                    +-----------------------------------------------------+---------+----------------------------------------------------------------------------------------------------+
@@ -186,15 +183,7 @@ Specific Modules and Features
 |                    +-----------------------------------------------------+---------+----------------------------------------------------------------------------------------------------+
 |                    | Boot mode:  from eMMC                               |    Y    | - Support eMMC HS400 mode                                                                          |
 |                    +-----------------------------------------------------+---------+----------------------------------------------------------------------------------------------------+
-|                    | Boot mode:  from SD-CARD                            |    Y    |                                                                                                    |
-|                    +-----------------------------------------------------+---------+----------------------------------------------------------------------------------------------------+
-|                    | Image Upgrade                                       |    Y    | - Supports eMMC image upgrade with USB U-Boot,                                                     |
-|                    |                                                     |         |                                                                                                    |
-|                    |                                                     |         |   SPI U-Boot and SU-Boot                                                                           |
-|                    |                                                     |         |                                                                                                    |
-|                    |                                                     |         | - Supports SD card image upgrade with SPI U-Boot and                                               |
-|                    |                                                     |         |                                                                                                    |
-|                    |                                                     |         |   SU-Boot                                                                                          |
+|                    | Image Upgrade                                       |    Y    | - Supports eMMC image upgrade with SPI U-Boot and SU-Boot                                         |
 |                    |                                                     |         |                                                                                                    |
 |                    |                                                     |         |  - SPI U-Boot: image via TFTP and USB Host                                                         |
 |                    |                                                     |         |                                                                                                    |
@@ -232,8 +221,6 @@ General Modules, Peripherals, and Interfaces Supported
 +--------------------------------+----------------------------------------------------------------------------+
 | U-Boot                         | SPI U-Boot version: v1.1.1                                                 |
 |                                |                                                                            |
-|                                | USB SU-Boot version: v1.7                                                  |
-|                                |                                                                            |
 |                                | \*Synaptics U-Boot based on U-Boot 2025.01                                 |
 |                                |                                                                            |
 +--------------------------------+----------------------------------------------------------------------------+
@@ -250,8 +237,6 @@ General Modules, Peripherals, and Interfaces Supported
 | Memory                                                                                                      |
 +================================+========+==========+========================================================+
 | Memory - DDR                   | SL2619 |   DDR4   | 2GB 1600 / 3200 Mbps                                   |
-|                                |        |          +--------------------------------------------------------+
-|                                |        |          | 4GB 3200 Mbps                                          |
 +--------------------------------+--------+----------+--------------------------------------------------------+
 | Memory - eMMC                  | up to 32GB                                                                 |
 +--------------------------------+----------------------------------------------------------------------------+
@@ -286,7 +271,7 @@ General Modules, Peripherals, and Interfaces Supported
 | Ethernet                       | SL2619: 10 / 100 / 1000 Mbps                                               |
 |                                |                                                                            |
 +--------------------------------+----------------------------------------------------------------------------+
-| Wireless Connectivity          | Supports  WIFI & BT                                                        |
+| Wireless Connectivity          | Supports  WIFI & BT (using SYN43711 M.2)                                   |
 +--------------------------------+----------------------------------------------------------------------------+
 
 +-------------------------------------------------------------------------------------------------------------+
@@ -307,9 +292,9 @@ General Modules, Peripherals, and Interfaces Supported
 |                                |                                                                            |
 | Display                        |                                                                            |
 +--------------------------------+----------------------------------------------------------------------------+
-| HDMI-TX                        | Supported on SL2619                                                        |
+| HDMI-TX                        | Supported on SL2619 (uing MIPI-DSI bridge)                                 |
 +--------------------------------+----------------------------------------------------------------------------+
-| MIPI-DSI                       |                                                                            |
+| MIPI-DSI                       | Supported on SL1619 (with Waveshare 13.3”, Waveshare 7”, Haier 8”  panels) |
 +--------------------------------+----------------------------------------------------------------------------+
 
 +-------------------------------------------------------------------------------------------------------------+
