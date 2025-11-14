@@ -1393,7 +1393,7 @@ The USB drive will need a partition with a Fat32 formatted file system.
 
 Write the image to SPI flash using the following commands::
 
-    => usb start; fatload usb 0 0x10000000 u-boot-astra-v1.0.0.sl261x.rdk.spi.bin;
+    => usb start; fatload usb 0 0x10000000 u-boot-astra-v1.0.1.sl2610.rdk.spi.bin;
     => sf probe
     => sf erase 0 0x200000
     => sf write 0x10000000 0x0 0x200000
