@@ -28,8 +28,9 @@ The following Reference Kits and platforms are covered by this guide:
 References
 ----------
 
--  `SyNAP User Guide <https://synaptics-synap.github.io/doc/v/latest/>`__
+- `Torq Compiler User Guide <https://synaptics-torq.github.io/torq-compiler/v/latest/user-manual/index.html>`__
 
+-  `SyNAP User Guide <https://synaptics-synap.github.io/doc/v/latest/>`__
 
 Introduction
 ============

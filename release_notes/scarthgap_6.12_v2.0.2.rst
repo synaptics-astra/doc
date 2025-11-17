@@ -82,6 +82,9 @@ Documentation
 For other collaterals please refer to the Documentation section for `SL2161x at Synaptics.com <https://www.synaptics.com/products/embedded-processors/sl2610-product-line#Documentation>`__
 and the `Synaptics Customer Portal <https://cp.synaptics.com/>`__.
 
+`Torq Compiler User Guide <https://synaptics-torq.github.io/torq-compiler/v/latest/user-manual/index.html>`__
+
+
 New Features
 ============
 
