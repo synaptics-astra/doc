@@ -371,7 +371,7 @@ displays the video using Wayland.
 
 An example of a H265 encoded video file on SL2619::
 
-    gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! avdec_h264 ! waylandsink fullscreen=true
+    gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! avdec_h265 ! waylandsink fullscreen=true
 
 Audio / Video File Playback
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -382,12 +382,12 @@ creating a pipeline which parses and decodes both streams::
     gst-launch-1.0 filesrc location=video_file ! demux.video ! queue ! parser ! decoder ! videosink \
         demux.audio ! queue ! parser ! decoder ! [ convert ] ! [ resample ] ! audiosink
 
-Play an MP4 file on SL2619 with a H26 encoded video stream and an AAC encoded
+Play an MP4 file on SL2619 with a H265 encoded video stream and an AAC encoded
 audio stream::
 
     gst-launch-1.0 filesrc location=little.mp4  ! qtdemux name=demux  \
-        demux.video_0 ! queue ! h264parse ! avdec_h264 ! queue ! waylandsink fullscreen=true \
-        demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,1
+        demux.video_0 ! queue ! h265parse ! avdec_h265 ! queue ! waylandsink fullscreen=true demux.audio_0 \
+        ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,0
 
 Recording
 ^^^^^^^^^
