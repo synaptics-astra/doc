@@ -1505,13 +1505,13 @@ SL2610 developer kit:
 
 1. Connect a Type-C power supply to J213 (PWR_IN).
 
-6. Connect TV to J12 (HDMI_Tx) with a HDMI cable.
+2. Connect TV to J12 (HDMI_Tx) with a HDMI cable.
 
-7. Connect Network to J2 (RJ45) with an Ethernet cable.
+3. Connect Network to J2 (RJ45) with an Ethernet cable.
 
-8. Insert USB2.0 flash disk to J216 /J210.
+4. Insert USB2.0 flash disk to J216 /J210.
 
-9. Insert USB2.0 flash disk to J215 over Type-C/Type-A dongle.
+5. Insert USB2.0 flash disk to J215 over Type-C/Type-A dongle.
 
 If there are no short issues, power up the system and check voltages as
 shown in Table 14, the LED status is shown in Table 1.
