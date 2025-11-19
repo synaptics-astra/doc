@@ -429,7 +429,7 @@ To enter SD-Boot mode, follow these steps:
 
 1. Short SD_Boot header by 2.54mm jumper-cap before power-up.
 
-5. Power-up system, then boot-up from SD_Card.
+2. Power-up system, then boot-up from SD_Card.
 
    :ref:`sl2600_jumper_location` shows the Header locations on the I/O board.
 
