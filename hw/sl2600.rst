@@ -67,7 +67,7 @@ The SL2610-based developer kit includes the following components:
 -  Synaptics SL2610 Dual-Core Arm\ :sup:`®` Cortex\ :sup:`®`-A55
    embedded IoT processor, up to 2.0 GHz
 
--  Storage: eMMC 5.1 (32 GB [1]_)
+-  Storage: eMMC 5.1 (32 GB \[1\]_)
 
 -  DRAM: up to x16 4GB system memory by 2pcs x8 16Gbit DDR4
 
@@ -111,7 +111,7 @@ The SL2610-based developer kit includes the following components:
    power device. Available power shall be 25.5W (Class 4) at 5V pins of
    40-pin header to I/O board.
 
--  Type-C power supply with 15V@1.8A.
+-  Type-C power supply with 15V @ 1.8A.
 
 SL2610 System Block Diagram
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -210,136 +210,103 @@ SM PinStrap and Boot-up Settings
 
 .. table:: SM pinstrap and boot-up settings on core module
 
-   +---------+--------------+-----+---------+---------------------------+
-   | Pin#    | Pin Mux Name | S   | R       | Description               |
-   |         |              | ett | esistor |                           |
-   |         |              | ing | S       | Rpu = OnChip Pull-up      |
-   |         |              | Va  | tuffing |                           |
-   |         |              | lue |         | Rpd = OnChip Pull-down    |
-   |         |              |     | +       |                           |
-   |         |              | Def | stuffed |                           |
-   |         |              | aul |         |                           |
-   |         |              | t\* | -       |                           |
-   |         |              |     | removed |                           |
-   +=========+==============+=====+=========+===========================+
-   | N30     | PLLBYPS      | —   | —       | Straps for cpuRstByps     |
-   +---------+--------------+-----+---------+---------------------------+
-   |         |              | 0\* | -R190   | 0: Enable reset logic     |
-   |         |              |     |         | inside cpu partition      |
-   +---------+--------------+-----+---------+---------------------------+
-   |         |              | 1   | +R190   | 1: Bypass reset logic     |
-   |         |              |     |         | inside cpu partition      |
-   +---------+--------------+-----+---------+---------------------------+
-   | B24     | dft_jtag_sel | —   | —       | Straps for JTAG_SEL       |
-   +---------+--------------+-----+---------+---------------------------+
-   |         |              | 0\* | -R31    | 0: ATE/RMA Mode - but     |
-   |         |              |     |         | Functional JTAG is        |
-   |         |              |     |         | selected                  |
-   +---------+--------------+-----+---------+---------------------------+
-   |         |              | 1   | +R31    | 1: ATE/RMA Mode - DFT     |
-   |         |              |     |         | JTAG is selected          |
-   +---------+--------------+-----+---------+---------------------------+
+   +------+----------------+--------------+------------------+------------------------------------------------------------+
+   | Pin# | Pin Mux Name   | Setting      | Resistor         | Description                                                |
+   |      |                | Value        | Stuffing         |                                                            |
+   |      |                | Default\*    |                  |                                                            |
+   |      |                |              | + stuffed        | Rpu = OnChip Pull-up                                       |
+   |      |                |              |                  |                                                            |
+   |      |                |              | - removed        | Rpd = OnChip Pull-down                                     |
+   |      |                |              |                  |                                                            |
+   +======+================+==============+==================+============================================================+
+   | N30  | PLLBYPS        | —            | —                | Straps for CPU reset bypass                                |
+   +------+----------------+--------------+------------------+------------------------------------------------------------+
+   |      |                | 0*           | -R190            | 0: Enable reset logic inside CPU partition                 |
+   +------+----------------+--------------+------------------+------------------------------------------------------------+
+   |      |                | 1            | +R190            | 1: Bypass reset logic inside CPU partition                 |
+   +------+----------------+--------------+------------------+------------------------------------------------------------+
+   | B24  | dft_jtag_sel   | —            | —                | Straps for JTAG_SEL                                        |
+   +------+----------------+--------------+------------------+------------------------------------------------------------+
+   |      |                | 0*           | -R31             | 0: ATE/RMA mode — Functional JTAG is selected              |
+   +------+----------------+--------------+------------------+------------------------------------------------------------+
+   |      |                | 1            | +R31             | 1: ATE/RMA mode — DFT JTAG is selected                     |
+   +------+----------------+--------------+------------------+------------------------------------------------------------+
+
 
 SoC PinStrap and Boot-up Settings
 ---------------------------------
 
 .. table:: SoC pinstrap and boot-up settings on core module
 
-   +---------+--------------+-----+---------+----------------------------+
-   | Pin#    | Pin Mux Name | S   | R       | Description                |
-   |         |              | ett | esistor |                            |
-   |         |              | ing | S       | Rpu = OnChip Pull-up       |
-   |         |              | Va  | tuffing |                            |
-   |         |              | lue |         | Rpd = OnChip Pull-down     |
-   |         |              |     | +       |                            |
-   |         |              | Def | stuffed |                            |
-   |         |              | aul |         |                            |
-   |         |              | t\* | -       |                            |
-   |         |              |     | removed |                            |
-   +=========+==============+=====+=========+============================+
-   | C5      | CPURSTBYPS   | —   | —       | Straps for CPURSTBYPS      |
-   +---------+--------------+-----+---------+----------------------------+
-   |         |              | 0\* | —       | 0: Enable reset logic      |
-   |         |              |     |         | inside CPU partition       |
-   +---------+--------------+-----+---------+----------------------------+
-   |         |              | 1   | —       | 1: Bypass reset logic      |
-   |         |              |     |         | inside CPU partition       |
-   +---------+--------------+-----+---------+----------------------------+
-   | B13     | SOFTW        | —   | —       | Straps for software usage  |
-   |         | ARE_STRAP[0] |     |         | (Rpu)                      |
-   +---------+--------------+-----+---------+----------------------------+
-   |         |              | 0   | -R34    | —                          |
-   +---------+--------------+-----+---------+----------------------------+
-   |         |              | 1\* | +R34    | —                          |
-   +---------+--------------+-----+---------+----------------------------+
-   | AF27    | SOFTW        | —   | —       | Straps for software usage  |
-   |         | ARE_STRAP[1] |     |         | (Rpd)                      |
-   +---------+--------------+-----+---------+----------------------------+
-   |         |              | 0\* | -R35    | —                          |
-   +---------+--------------+-----+---------+----------------------------+
-   |         |              | 1   | +R35    | —                          |
-   +---------+--------------+-----+---------+----------------------------+
-   | C8      | SOFTW        | —   | —       | Straps for software usage  |
-   |         | ARE_STRAP[2] |     |         | (Rpd)                      |
-   +---------+--------------+-----+---------+----------------------------+
-   |         |              | 0\* | -R36    | —                          |
-   +---------+--------------+-----+---------+----------------------------+
-   |         |              | 1   | +R36    | —                          |
-   +---------+--------------+-----+---------+----------------------------+
-   | B9      | SOFTW        | —   | —       | Straps for software usage  |
-   |         | ARE_STRAP[3] |     |         | (Rpd)                      |
-   +---------+--------------+-----+---------+----------------------------+
-   |         |              | 0\* | -R37    | —                          |
-   +---------+--------------+-----+---------+----------------------------+
-   |         |              | 1   | +R37    | —                          |
-   +---------+--------------+-----+---------+----------------------------+
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   | Pin# | Pin Mux Name        | Setting   | Resistor      | Description                                                |
+   |      |                     | Value     | Stuffing      |                                                            |
+   |      |                     | Default\* |               |                                                            |
+   |      |                     |           | + stuffed     | Rpu = OnChip Pull-up                                       |
+   |      |                     |           |               |                                                            |
+   |      |                     |           | - removed     | Rpd = OnChip Pull-down                                     |
+   |      |                     |           |               |                                                            |
+   +======+=====================+===========+===============+============================================================+
+   | C5   | CPURSTBYPS          | —         | —             | Straps for CPU reset bypass                                |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   |      |                     | 0*        | —             | 0: Enable reset logic inside CPU partition                 |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   |      |                     | 1         | —             | 1: Bypass reset logic inside CPU partition                 |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   | B13  | SOFTWARE_STRAP[0]   | —         | —             | Straps for software usage (Rpu)                            |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   |      |                     | 0         | +R34          | Version control for Core-Module Rev B                      |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   |      |                     | 1*        | -R34          | Version control for Core-Module Rev A                      |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   | AF27 | SOFTWARE_STRAP[1]   | —         | —             | Straps for software usage (Rpd)                            |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   |      |                     | 0*        | -R35          | Default setting                                            |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   |      |                     | 1         | +R35          | Alternate setting                                          |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   | C8   | SOFTWARE_STRAP[2]   | —         | —             | Straps for software usage (Rpd)                            |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   |      |                     | 0*        | -R36          | Default setting                                            |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   |      |                     | 1         | +R36          | Alternate setting                                          |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   | B9   | SOFTWARE_STRAP[3]   | —         | —             | Straps for software usage (Rpd)                            |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   |      |                     | 0*        | -R37          | Default setting                                            |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
+   |      |                     | 1         | +R37          | Alternate setting                                          |
+   +------+---------------------+-----------+---------------+------------------------------------------------------------+
 
 .. table:: Boot-up settings on I/O board
 
-   +------------------+------+-------+--------+-------------------------+
-   | Net Name         | S    | Se    | Re     | Description             |
-   |                  | trap | tting | sistor |                         |
-   |                  | Name | Value | St     | Rpu = OnChip Pull-up    |
-   |                  |      |       | uffing |                         |
-   |                  |      | Defa  |        | Rpd = OnChip Pull-down  |
-   |                  |      | ult\* | +      |                         |
-   |                  |      |       | s      |                         |
-   |                  |      |       | tuffed |                         |
-   |                  |      |       |        |                         |
-   |                  |      |       | -      |                         |
-   |                  |      |       | r      |                         |
-   |                  |      |       | emoved |                         |
-   +==================+======+=======+========+=========================+
-   | USB_BOOTn        | USB- | —     | —      | ROM code uses this      |
-   |                  | Boot |       |        | strap to determine if   |
-   |                  |      |       |        | booting from USB or not |
-   |                  |      |       |        | (Rpu)                   |
-   +------------------+------+-------+--------+-------------------------+
-   |                  |      | 0     | —      | 0: Boot from USB when   |
-   |                  |      |       |        | USB-BOOT button is      |
-   |                  |      |       |        | pressed while system    |
-   |                  |      |       |        | reset de-assertion.     |
-   +------------------+------+-------+--------+-------------------------+
-   |                  |      | 1\*   | —      | 1: Boot from the device |
-   |                  |      |       |        | select by boot_src[1]   |
-   +------------------+------+-------+--------+-------------------------+
-   | CONN-SPI.VD      | SD-  | —     | —      | ROM code uses this      |
-   | DIO1P8.BOOT_SRC1 | Boot |       |        | strap to determine if   |
-   |                  |      |       |        | booting from SD_Card or |
-   |                  |      |       |        | not (Rpu)               |
-   +------------------+------+-------+--------+-------------------------+
-   |                  |      | 0     | —      | 0: Boot from SD_Card    |
-   |                  |      |       |        | when SD_Boot header is  |
-   |                  |      |       |        | on while system reset   |
-   |                  |      |       |        | de-assertion.           |
-   +------------------+------+-------+--------+-------------------------+
-   |                  |      | 1\*   | —      | 1: Boot from the device |
-   |                  |      |       |        | select by boot_src[1]   |
-   |                  |      |       |        | when SD_Boot Header is  |
-   |                  |      |       |        | off.                    |
-   +------------------+------+-------+--------+-------------------------+
+   +-------------------+----------------+-----------+---------------+------------------------------------------------------------+
+   | Net Name          | Strap Name     | Setting   | Resistor      | Description                                                |
+   |                   |                | Value     | Stuffing      |                                                            |
+   |                   |                | Default*  |               |                                                            |
+   |                   |                |           | + stuffed     | Rpu = On-Chip Pull-up                                      |
+   |                   |                |           |               |                                                            |
+   |                   |                |           | - removed     | Rpd = On-Chip Pull-down                                    |
+   |                   |                |           |               |                                                            |
+   +===================+================+===========+===============+============================================================+
+   | USB_BOOTn         | USB-Boot       | —         | —             | ROM code uses this strap to determine if booting from USB  |
+   |                   |                |           |               | or not (Rpu).                                              |
+   +-------------------+----------------+-----------+---------------+------------------------------------------------------------+
+   |                   |                | 0         | —             | 0: Boot from USB when the USB-BOOT button is pressed while |
+   |                   |                |           |               | system reset is de-asserted.                               |
+   +-------------------+----------------+-----------+---------------+------------------------------------------------------------+
+   |                   |                | 1*        | —             | 1: Boot from the device selected by boot_src[1].           |
+   +-------------------+----------------+-----------+---------------+------------------------------------------------------------+
+   | CONN-SPI.VDIO1P8. | SD-Boot        | —         | —             | ROM code uses this strap to determine if booting from      |
+   | BOOT_SRC1         |                |           |               | SD Card or not (Rpu).                                      |
+   +-------------------+----------------+-----------+---------------+------------------------------------------------------------+
+   |                   |                | 0         | —             | 0: Boot from SD Card when SD_Boot header is ON while       |
+   |                   |                |           |               | system reset is de-asserted.                               |
+   +-------------------+----------------+-----------+---------------+------------------------------------------------------------+
+   |                   |                | 1*        | —             | 1: Boot from the device selected by boot_src[1] when       |
+   |                   |                |           |               | SD_Boot header is OFF.                                     |
+   +-------------------+----------------+-----------+---------------+------------------------------------------------------------+
 
-.. _hardware_manual_button_settings_sl2600:
 
 Hardware Manual Button Settings
 -------------------------------
@@ -436,8 +403,8 @@ To enter SD-Boot mode, follow these steps:
 .. _sl2600_jumper_location:
 
 .. figure:: media/sl2600/image12.png
-      :width: 5.7013in
-      :height: 4.60358in
+   :width: 5.7013in
+   :height: 4.60358in
 
    Locations of jumper on I/O board
 
@@ -457,8 +424,7 @@ Locations of core module connectors on bottom side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. figure:: media/sl2600/image14.png
-   :alt: A circuit board with symbols AI-generated content may be
-   incorrect.
+   :alt: A circuit board with symbols AI-generated content may be incorrect.
    :width: 6.5in
    :height: 4.44931in
 
@@ -499,7 +465,7 @@ Locations of I/O board connectors on top side
 Locations of I/O board connectors on bottom side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. figure:: media/sl2600/image16.emf
+.. figure:: media/sl2600/image16.png
    :width: 6.5in
    :height: 5.21458in
 
@@ -726,7 +692,7 @@ the I/O board. Table 9 shows the assignment for the 260-Pins.
    +--------------------------+----+-------+----+------------------------+
    | URT4_RXD                 | 86 |       | 85 | N/A                    |
    +--------------------------+----+-------+----+------------------------+
-   | SM_URT0_RXD              | 88 |       | 87 | N/A                    |
+   | PDM_DI1                  | 88 |       | 87 | N/A                    |
    +--------------------------+----+-------+----+------------------------+
    | GPIO_11                  | 90 |       | 89 | GND                    |
    +--------------------------+----+-------+----+------------------------+
@@ -771,7 +737,7 @@ the I/O board. Table 9 shows the assignment for the 260-Pins.
    | SM_URT0_TXD              | 1  |       | 1  | GND                    |
    |                          | 20 |       | 19 |                        |
    +--------------------------+----+-------+----+------------------------+
-   | SM_GPIO16                | 1  |       | 1  | MIPI_DSI_TD1n          |
+   | SM_URT0_RXD              | 1  |       | 1  | MIPI_DSI_TD1n          |
    |                          | 22 |       | 21 |                        |
    +--------------------------+----+-------+----+------------------------+
    | SPI1_SDI                 | 1  |       | 1  | MIPI_DSI_TD1p          |
@@ -801,10 +767,10 @@ the I/O board. Table 9 shows the assignment for the 260-Pins.
    | SM_TW0_SCL               | 1  |       | 1  | MIPI_DSI_TD2p          |
    |                          | 40 |       | 39 |                        |
    +--------------------------+----+-------+----+------------------------+
-   | SM_AUDIO_MUTE@PD         | 1  |       | 1  | MIPI_DSI_TD2n          |
+   | SM_AUDIO_MUTE\@PD        | 1  |       | 1  | MIPI_DSI_TD2n          |
    |                          | 42 |       | 41 |                        |
    +--------------------------+----+-------+----+------------------------+
-   | CAMERA_MUTE@PD           | 1  |       | 1  | GND                    |
+   | CAMERA_MUTE\@PD          | 1  |       | 1  | GND                    |
    |                          | 44 |       | 43 |                        |
    +--------------------------+----+-------+----+------------------------+
    | N/A                      | 1  |       | 1  | GND                    |
@@ -834,7 +800,7 @@ the I/O board. Table 9 shows the assignment for the 260-Pins.
    | LT9611-CEC               | 1  |       | 1  | HDMI_TX_TD1p           |
    |                          | 62 |       | 61 |                        |
    +--------------------------+----+-------+----+------------------------+
-   | SM_RSTIn@PU              | 1  |       | 1  | GND                    |
+   | SM_RSTIn\@PU             | 1  |       | 1  | GND                    |
    |                          | 64 |       | 63 |                        |
    +--------------------------+----+-------+----+------------------------+
    | JTAG_TDO                 | 1  |       | 1  | HDMI_TX_TD2n           |
@@ -992,9 +958,9 @@ information, please refer to the *SL2610 Datasheet*.
 
 .. note::
 
-   Pin16/Pin18 are ADCI[0]/[1], the full-scale voltage is 1.8V@max.
+   Pin16/Pin18 are ADCI[0]/[1], the full-scale voltage is 1.8V @ max.
 
-.. figure:: media/sl2600/image18.png
+.. figure:: media/sl2600/image20.png
    :width: 6.49583in
    :height: 6.79097in
 
@@ -1038,11 +1004,11 @@ For System on Chip (SoC), see :ref:`sl2600_soc_pindemux`.
    +----------+-----------+---------------+-------------------------------+
    | SM_GPIO6 | OPT2      | SM_SPI1_SS3n  | SM_SPI1_SS3n to 40-PIN        |
    +----------+-----------+---------------+-------------------------------+
-   | SM_GPIO7 | OPT7      | SM_URT1_RXD   | SM_UART1_RXD to WIFI/BT       |
-   |          |           |               | Module                        |
+   | SM_GPIO7 | OPT2      | SM_URT0_RXD   | SM_URT0_TXD to 40-PIN         |
+   |          |           |               |                               |
    +----------+-----------+---------------+-------------------------------+
-   | SM_GPIO8 | OPT7      | SM_URT1_TXD   | SM_UART1_TXD to WIFI/BT       |
-   |          |           |               | Module                        |
+   | SM_GPIO8 | OPT2      | SM_URT0_TXD   | SM_URT0_TXD to 40-PIN         |
+   |          |           |               |                               |
    +----------+-----------+---------------+-------------------------------+
    | SM_GPIO9 | OPT3      | SM_SPI1S_SDO  | SM_SPI1_SDO to 40-PIN         |
    +----------+-----------+---------------+-------------------------------+
@@ -1064,11 +1030,11 @@ For System on Chip (SoC), see :ref:`sl2600_soc_pindemux`.
    | S        | OPT7      | SM_URT1_RTSn  | SM_UART1 to WIFI/BT Module    |
    | M_GPIO15 |           |               |                               |
    +----------+-----------+---------------+-------------------------------+
-   | S        | OPT1      | SM_GPIO16     | SM_GPIO16 to 40-PIN           |
-   | M_GPIO16 |           |               |                               |
+   | S        | OPT2      | SM_URT1_RXD   | SM_UART1_RXD to WIFI/BT       |
+   | M_GPIO16 |           |               | Module                        |
    +----------+-----------+---------------+-------------------------------+
-   | S        | OPT7      | SM_URT0_TXD   | SM_URT0_TXD to 40-PIN         |
-   | M_GPIO17 |           |               |                               |
+   | S        | OPT2      | SM_URT1_TXD   | SM_UART1_TXD to WIFI/BT       |
+   | M_GPIO17 |           |               | Module                        |
    +----------+-----------+---------------+-------------------------------+
    | S        | OPT2      | SM_XSPI_CS0n  | XSPI 4BIT BOOT for DIAG/UBOOT |
    | M_GPIO18 |           |               |                               |
