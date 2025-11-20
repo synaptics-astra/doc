@@ -1007,7 +1007,7 @@ For System on Chip (SoC), see :ref:`sl2600_soc_pindemux`.
    +----------+-----------+---------------+-------------------------------+
    | SM_GPIO6 | OPT2      | SM_SPI1_SS3n  | SM_SPI1_SS3n to 40-PIN        |
    +----------+-----------+---------------+-------------------------------+
-   | SM_GPIO7 | OPT2      | SM_URT0_RXD   | SM_URT0_TXD to 40-PIN         |
+   | SM_GPIO7 | OPT2      | SM_URT0_RXD   | SM_URT0_RXD to 40-PIN         |
    |          |           |               |                               |
    +----------+-----------+---------------+-------------------------------+
    | SM_GPIO8 | OPT2      | SM_URT0_TXD   | SM_URT0_TXD to 40-PIN         |
