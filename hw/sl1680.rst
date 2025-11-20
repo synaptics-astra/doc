@@ -655,6 +655,7 @@ in software with a variety of alternative functions. For more
 information, please refer to the *SL1680 Datasheet*.
 
 .. note::
+
     Pin16/Pin18 are ADCI[0]/[1], the full-scale voltage is 1.2V @ max.
 
 .. figure:: ./media/sl1680/image19.png
