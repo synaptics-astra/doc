@@ -161,11 +161,11 @@ select a boot interface before powering up, as follows:
 -  **eMMC boot:** Default boot interface.
 
 -  **SD boot:** Short SD_Boot header by 2.54mm jumper-cap before
-   power-up, see SD_Boot header in Figure 9. Ensure SD-Card with
-   firmware is plugged into SD-slot on core module in Figure 11.
+   power-up, see SD_Boot header in :ref:`sl2600_jumper_location`. Ensure SD-Card with
+   firmware is plugged into SD-slot on core module in :ref:`core_module_connectors`.
 
 -  **USB boot:** Connect USB-C USB2.0 port to the host PC, then follow
-   the procedure in section 2.44.
+   the procedure in :ref:`hardware_manual_button_settings`.
 
 LEDs
 ----
@@ -307,6 +307,7 @@ SoC PinStrap and Boot-up Settings
    |                   |                |           |               | SD_Boot header is OFF.                                     |
    +-------------------+----------------+-----------+---------------+------------------------------------------------------------+
 
+.. _hardware_manual_button_settings:
 
 Hardware Manual Button Settings
 -------------------------------
@@ -422,6 +423,8 @@ Locations of core module connectors on top side
 
 Locations of core module connectors on bottom side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. _core_module_connectors:
 
 .. figure:: media/sl2600/image14.png
    :alt: A circuit board with symbols AI-generated content may be incorrect.
