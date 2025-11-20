@@ -186,7 +186,7 @@ Specific Modules and Features
 |                    +-----------------------------------------------------+---------+----------------------------------------------------------------------------------------------------+
 |                    | Boot mode:  from eMMC                               |    Y    | - Support eMMC HS400 mode                                                                          |
 |                    +-----------------------------------------------------+---------+----------------------------------------------------------------------------------------------------+
-|                    | Image Upgrade                                       |    Y    | - Supports eMMC image upgrade with SPI U-Boot and SU-Boot                                         |
+|                    | Image Upgrade                                       |    Y    | - Supports eMMC image upgrade with SPI U-Boot and SU-Boot                                          |
 |                    |                                                     |         |                                                                                                    |
 |                    |                                                     |         |  - SPI U-Boot: image via TFTP and USB Host                                                         |
 |                    |                                                     |         |                                                                                                    |
