@@ -30,11 +30,23 @@ for the following machines, distributions and images:
     +------------+--------------+-------------------------------------------------+
     | sl1680     | poky         | astra-media, astra-media-oobe, astra-core       |
     +------------+--------------+-------------------------------------------------+
+    | sl2611     | poky         | astra-media                                     |
+    +------------+--------------+-------------------------------------------------+
+    | sl2615     | poky         | astra-media, astra-media-oobe                   |
+    +------------+--------------+-------------------------------------------------+
+    | sl2619     | poky         | astra-media, astra-media-oobe                   |
+    +------------+--------------+-------------------------------------------------+
     | sl1620usb  | poky         | astra-media                                     |
     +------------+--------------+-------------------------------------------------+
     | sl1640usb  | poky         | astra-media                                     |
     +------------+--------------+-------------------------------------------------+
     | sl1680usb  | poky         | astra-media                                     |
+    +------------+--------------+-------------------------------------------------+
+    | sl1620spi  | poky         | astra-tiny                                      |
+    +------------+--------------+-------------------------------------------------+
+    | sl1640spi  | poky         | astra-tiny                                      |
+    +------------+--------------+-------------------------------------------------+
+    | sl1680spi  | poky         | astra-tiny                                      |
     +------------+--------------+-------------------------------------------------+
 
 .. _yocto_prerequisites:
@@ -212,6 +224,18 @@ To build an image execute the following commands::
 
   pokyuser@xyz:/path/to/workspace/sdk $ . meta-synaptics/setup/setup-environment
 
+Select the MACHINE you want to build:
+
+::
+
+  1) conf/machine/sl1620.conf       4) conf/machine/sl1640usb.conf   7) conf/machine/sl1680usb.conf  10) conf/machine/sl2611.conf
+  2) conf/machine/sl1620usb.conf    5) conf/machine/sl1680.conf      8) conf/machine/sl1620spi.conf  11) conf/machine/sl2615.conf
+  3) conf/machine/sl1640.conf       6) conf/machine/sl1680spi.conf   9) conf/machine/sl1640spi.conf  12) conf/machine/sl2619.conf
+
+Build the image
+
+::
+
   pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media
 
 The resulting image can be found in ``build-${MACHINE}/tmp/deploy/images/${MACHINE}/SYNAIMG/``.
@@ -263,11 +287,11 @@ a wide range of environments.
 
 To setup the toolchain you first uncompress it as follows::
 
-  $ chmod 755 poky-glibc-x86_64-astra-media-cortexa73-sl1680-toolchain-4.0.17.sh
-  $ ./poky-glibc-x86_64-astra-media-cortexa73-sl1680-toolchain-4.0.17.sh
-  Poky (Yocto Project Reference Distro) SDK installer version 4.0.17
+  $ chmod 755 poky-glibc-x86_64-astra-media-cortexa73-sl1680-toolchain-5.0.9.sh
+  $ ./poky-glibc-x86_64-astra-media-cortexa73-sl1680-toolchain-5.0.9.sh
+  Poky (Yocto Project Reference Distro) SDK installer version 5.0.9
   ==================================================================
-  Enter target directory for SDK (default: /opt/poky/4.0.17): toolchain
+  Enter target directory for SDK (default: /opt/poky/5.0.9): toolchain
   You are about to install the SDK to "/home/user/toolchain". Proceed [Y/n]?
   Extracting SDK.................................................................................................................................................................................................................................................................................................................................done
   Setting it up...done
@@ -277,8 +301,8 @@ To setup the toolchain you first uncompress it as follows::
 
 .. note::
 
-  The exact names of the toolchain environment files depend on the target board: ``CPUTYPE`` for ``sl1680`` is
-  ``cortexa73``, for ``sl1620`` and ``sl1640`` is ``cortexa55``
+  The exact names of the toolchain environment files depend on the target board: ``CPUTYPE``. The ``CPUTYPE`` for ``sl1680`` is
+  ``cortexa73``. For ``sl1620``, ``sl1640`` and ``sl261x`` the ``CPUTYPE`` is ``cortexa55``.
 
 Then to configure the build environment you need to source a configuration script as follows::
 
@@ -324,34 +348,37 @@ This BSP is compatible with these layers:
   * ``meta-swupdate`` (optional - for OTA support)
   * ``meta-browser``  (optional - for Chromium support)
   * ``meta-clang`` (optional - for Chromium support)
-  * ``meta-ros`` (optional - for the Robot Operating System support)
   * ``meta-virtualization`` (optional - for container support)
+  * ``meta-selinux`` (optional - for selinux support)
+  * ``meta-lts-mixins`` (optional - for mixin layers used with LTS releases)
 
 .. _astra_machines:
 
 Astra Machine Types
 ===================
 
-The Astra Yocto release defines three machine types per chip. ``sl1620``, ``sl1640``, and ``sl1680`` are the default machine types which are
-use for building images which boot from the internal eMMC. This is the most common machine type.
+The Astra Yocto release defines three machine types per chip. ``sl1620``, ``sl1640``, ``sl1680``, and ``sl261x`` are the default machine types which are
+used for building images which boot from the internal eMMC. This is the most common machine type.
 
 The ``usb`` machine types are used to build images which boot using the USB interface. Typically, this machine type is used to build images
 used to update the eMMC image, but this image can also be used to boot a full linux environment. This machine type is used to build custom
 images for customer specific hardware.
-
-.. note::
-
-    The ``spi`` machine types are not currently supported with Scarthgap releases.
 
 ====================  ===================================================================================================  ==================
 Image                 Description                                                                                          Version Added
 ====================  ===================================================================================================  ==================
 sl1620                Default machine type for SL1620                                                                      v0.9
 sl1620usb             Machine type for booting SL1620 from USB                                                             v1.6
+sl1620spi             Machine type for booting SL1620 from SPI                                                             v1.7
 sl1640                Default machine type for SL1640                                                                      v0.9
 sl1640usb             Machine type for booting SL1640 from USB                                                             v1.6
+sl1640spi             Machine type for booting SL1640 from SPI                                                             v1.7
 sl1680                Default machine type for SL1680                                                                      v0.9
 sl1680usb             Machine type for booting SL1680 from USB                                                             v1.6
+sl1680spi             Machine type for booting SL1680 from SPI                                                             v1.7
+sl2611                Default machine type for SL2611                                                                      v2.1
+sl2615                Default machine type for SL2615                                                                      v2.1
+sl2619                Default machine type for SL2619                                                                      v2.0.1
 ====================  ===================================================================================================  ==================
 
 .. _astra_images:
@@ -364,6 +391,7 @@ The Astra Yocto release contains several images which provide different levels o
 ====================  ===================================================================================================  ==================
 Image                 Description                                                                                          Version Added
 ====================  ===================================================================================================  ==================
+astra-tiny            Minimal packages used to build image suitable for booting from 32MB SPI NOR Flash.                   v1.5
 astra-core            Core system packages Intended for power management testing.                                          v1.2
 astra-media           Default image which contains core packages along with full packages supporting full multimedia       v0.9
                       capabilities.
@@ -376,7 +404,7 @@ to create a fully functional system. While ``astra-media-oobe`` contains additio
 Machina.
 
 The ``astra-media`` images, based on the ``poky`` distribution, provides a basic graphical
-system with ``weston`` and it is suitable to test ``sl1620``, ``sl1640`` and ``sl1680`` features.
+system with ``weston`` and it is suitable to test ``sl1620``, ``sl1640``, ``sl1680``, and ``sl261x`` features.
 
 The image requires some specific configurations in ``conf/local.conf`` to work correctly. The
 ``meta-synaptics/setup/setup-environment`` script can be used to correctly setup an image to build automatically.
