@@ -16,10 +16,10 @@ To build an application follows these steps:
 2. Unpack the toolchain package, the ``CPUTYPE`` for ``sl1680`` is ``cortexa73``, for ``sl1620`` and ``sl1640`` is
    ``cortexa55``::
 
-    $ ./poky-glibc-x86_64-astra-media-${CPUTYPE}-${MACHINE}-toolchain-4.0.9.sh
-    Poky (Yocto Project Reference Distro) SDK installer version 4.0.9
+    $ ./poky-glibc-x86_64-astra-media-${CPUTYPE}-${MACHINE}-toolchain-5.0.9.sh
+    Poky (Yocto Project Reference Distro) SDK installer version 5.0.9
     =================================================================
-    Enter target directory for SDK (default: /opt/poky/4.0.9): toolchain
+    Enter target directory for SDK (default: /opt/poky/5.0.9): toolchain
     You are about to install the SDK to "/home/user/toolchain". Proceed [Y/n]?
     Extracting SDK.................................................................................................................................................................................................................................................................................................................................done
     Setting it up...done
