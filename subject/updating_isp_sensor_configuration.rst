@@ -1,6 +1,6 @@
-=====================================
-Updating the ISP Sensor Configuration
-=====================================
+===============================================
+Updating the ISP Sensor Configuration on SL1680
+===============================================
 
 SL1680 supports multiple camera sensors. By default, SL1680 is configured to use the OV5647 module with port CSI0. But, the software can be configured to use any of the
 supported sensor modules. Some configurations require setting a device tree overlay to function correctly.
