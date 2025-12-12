@@ -659,10 +659,9 @@ To explicitly disable MMU support while using NV12 format, add the extra-control
 Image Sensor Cameras with SL2619
 """"""""""""""""""""""""""""""""
 
-The SL2619 platform supports a mini ISP which provides basic image processing capabilities such as debayering, color conversion, downscaling, cropping, and white balance.
-
-Currently, there is no support for 3A functions — Auto Exposure (AE), Auto White Balance (AWB), or Auto Focus (AF). Users must manually configure exposure settings for each
-sensor based on the testing environment. Without proper exposure configuration, the output image may appear dark.
+The SL2619 platform supports a mini ISP which supports two parallel data streams, from a single sensor, each with identical
+processing blocks. Each pipeline contain these functional blocks: Demosaic and Colour Space Conversion (CSC), DNS, Resizer
+and White Balance. Both pipelines can output RGB888, YUV420, and Bayer RAW format.
 
 The default white balance parameters are tuned for typical indoor (room) lighting conditions and may need adjustment depending on the current test environment.
 These ISP settings are applicable only for specific supported sensors.
@@ -685,6 +684,35 @@ The device name will be ``camera-video``. If an additional USB camera is connect
 
     ISP device capabilities
 
+Supported Sensor Modules
+************************
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 35 25 15
+
+   * - Sensor
+     - Module
+     - Supported Resolutions / FPS
+     - Scaling Factor
+
+   * - OV5647
+     - `Arducam 5MP OV5647 Camera Module <https://www.arducam.com/product/arducam-ov5647-standard-raspberry-pi-camera-b0033/>`__
+     - 640x480 @ 60fps
+     - 2x, 4x
+
+   * -
+     -
+     - 1920x1080 @ 30fps
+     - 2x, 3x, 4x, 6x
+
+   * -
+     -
+     - 1280x720 @ 30fps
+     - 2x, 4x, 5x, 8x
+
+See :ref:`sensor_sl2610` for supporting more sensor modules.
+
 Configuring Exposure Settings for OV5647
 ****************************************
 
@@ -696,12 +724,23 @@ To set the exposure and gain settings, first find the corresponding V4L2 Sub Dev
 
 Use the output to determine the sub device needed to set the gain and exposure values.
 
-::
+Enable manual exposure and automatic gain::
 
     v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl auto_exposure=1
     v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl gain_automatic=0
-    v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl analogue_gain=128
-    v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl exposure=1011
+
+Similarly, Adjust analogue gain and exposure time based on lighting::
+
+    v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl analogue_gain=200
+    v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl exposure=310
+
+If the sensor supports automatic white balance (AWB), enable it with::
+
+    v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl white_balance_automatic=1
+
+WB parameters inside the ISP can be changed in the Device Tree. To completely disable ISP's WB::
+
+    v4l2-ctl -d 0 -c wb_enable=0
 
 Use the ``v4l2-ctl`` command with the ``list-ctrls`` option to view what controls are accessible.
 
@@ -712,38 +751,46 @@ Use the ``v4l2-ctl`` command with the ``list-ctrls`` option to view what control
 Gstreamer Commands with Wayland Sink
 ************************************
 
-+------------------+------------------------------------------------------------------------------------------------------+------------------------------------------------------+
-| Format           | Command                                                                                              | Comments                                             |
-+==================+======================================================================================================+======================================================+
-| YUV420           | gst-launch-1.0 v4l2src device=/dev/video0 io-mode=2 ! 'video/x-raw, format=(string)NV12, \           |                                                      |
-|                  |                                                                                                      |                                                      |
-|                  | width=(int)1920, height=(int)1080, framerate=(fraction)30/1' ! waylandsink async=false               |                                                      |
-|                  |                                                                                                      |                                                      |
-|                  +------------------------------------------------------------------------------------------------------+------------------------------------------------------+
-|                  | gst-launch-1.0 v4l2src device=/dev/video0 io-mode=2 ! 'video/x-raw, format=(string)NV12, \           |                                                      |
-|                  |                                                                                                      |                                                      |
-|                  | width=(int)1296, height=(int)972, framerate=(fraction)30/1' ! waylandsink  async=false               |                                                      |
-|                  |                                                                                                      |                                                      |
-|                  +------------------------------------------------------------------------------------------------------+------------------------------------------------------+
-|                  | gst-launch-1.0 v4l2src device=/dev/video0 io-mode=2 ! 'video/x-raw, format=(string)NV12, \           |                                                      |
-|                  |                                                                                                      |                                                      |
-|                  | width=(int)640, height=(int)480, framerate=(fraction)60/1' ! waylandsink  async=false                |                                                      |
-|                  |                                                                                                      |                                                      |
-+------------------+------------------------------------------------------------------------------------------------------+------------------------------------------------------+
-| RGB888           | gst-launch-1.0 v4l2src device=/dev/video0 io-mode=2 ! 'video/x-raw, format=(string)RGB, \            |                                                      |
-|                  |                                                                                                      |                                                      |
-|                  | width=(int)1920, height=(int)1080, framerate=(fraction)30/1' ! videoconvert ! waylandsink async=false|                                                      |
-|                  |                                                                                                      |                                                      |
-|                  +------------------------------------------------------------------------------------------------------+------------------------------------------------------+
-|                  | gst-launch-1.0 v4l2src io-mode=2 ! 'video/x-raw,format=(string)RGB, width=(int)1920, \               | For reference only this will lead to                 |
-|                  |                                                                                                      |                                                      |
-|                  | height=(int)1080, framerate=(fraction)30/1' ! glupload ! glcolorconvert ! glimagesink                | frame drop since videoconvert is running in CPU      |
-|                  |                                                                                                      |                                                      |
-|                  |                                                                                                      | and glconvert has memory copy.                       |
-|                  |                                                                                                      |                                                      |
-|                  |                                                                                                      | For RGB check always filesink.                       |
-|                  |                                                                                                      |                                                      |
-+------------------+------------------------------------------------------------------------------------------------------+------------------------------------------------------+
+Using Gstreamer commands, ISP output can be captured to a file or it can be played on the display using ``waylandsink`` gstreamer element. Example commands for both are shown below.
+
++-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Format    | Command                                                                                                                                                                                          |
++===========+==================================================================================================================================================================================================+
+| YUV420    | ``gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)NV12, width=(int)1920, height=(int)1080, framerate=(fraction)30/1' ! waylandsink async=false``                        |
++           +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|           | ``gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! filesink location=/tmp/1.yuv``                     |
++-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| RGB888    | ``gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)RGB, width=(int)1920, height=(int)1080, framerate=(fraction)30/1' ! videoconvert ! waylandsink async=false``          |
++           +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|           | ``gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)RGB, width=(int)1920, height=(int)1080, framerate=(fraction)30/1' ! glupload ! glcolorconvert ! glimagesink``         |
++           +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|           | ``gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)RGB, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! filesink location=/tmp/1.rgb``                      |
++-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+To use the second pipeline, simply switch the device to ``/dev/video1`` . Note that, it’s possible to run two pipelines simultaneously.
+
+ISP Video Test Application
+**************************
+
+``isp_video_test`` is a V4L2 test application that  can be used to test for capture or playback.
+
+Usage
+*****
+
+::
+
+    isp_video_test  -w 1920 -h 1080 -f NM12 -m 0 -t 3 -d 0
+
+*Options*
+    * -w Image width
+    * -h Image height
+    * -f Image format NM12, RGB24
+    * -t Display type:
+        * 0: DRM-KMS
+        * 2: File
+        * 3: Wayland
+    * -d Video device ID
+    * -p Path to store the output file. If not specified, current folder will be used.
 
 RTSP Cameras
 """"""""""""
