@@ -60,7 +60,7 @@ of the atomic security provisioning group.
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
 | 113   | OTP_REE_SECURITY_ENABLE       | Read / Write            | 0x00000001 | YES        | 1 = Enable REE security                     |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
-| 114   | OTP_BOOT_SECURITY_ENABLE      | Read / Write            | 0x00000001 | YES        | 1 = Enable Secure Boot                      |
+| 114   | OTP_BOOT_SECURITY_ENABLE      | Read / Write            | 0x00000001 | NO         | 1 = Enable Secure Boot                      |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
 | 115   | OTP_MP_PROVISION_DONE         | Read / Write            | 0x00000001 | NO         | 1 = Factory provisioning complete           |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
@@ -76,37 +76,47 @@ of the atomic security provisioning group.
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
 | 203   | OTP_OEM_AUDIO_CUSTOMER_ID     | Write Only              | 0xFFFFFFFF | NO         | 32-bit OEM Audio Customer ID                |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
-| 204   | OTP_PRODUCTION_CHIP_FLAG      | Read / Write            | 0x00000007 | YES        | 3-bit 0:Development chip 7: Production Chip |
+| 204   | OTP_PRODUCTION_CHIP_FLAG      | Read / Write            | 0x00000007 | NO         | 3-bit 0:Development chip 7: Production Chip |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
-| 205   | OTP_FIELD_MAX                 | N/A                     | N/A        | N/A        | Enum boundary only                          |
+| 205   | OTP_USB_BOOT_DISABLE          | Read / Write            | 0x00000001 | NO         | 1 = Disable USB boot                        |
++-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
+| 206   | OTP_FIELD_MAX                 | N/A                     | N/A        | N/A        | Enum boundary only                          |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
 
 Notes:
 
-  1. OTP_MP_PROVISION_DONE:
-      Set this field to 1 means all the MP provision are completed. There's no restriction for otpread/otpwrite 
-      to distinguish this field to do anything different. But it would be a good indicator for 
-      provision are all complete if set OTP_MP_PROVISION_DONE = 1.  It's up to user to use this field 
+  1. OTP_USER_DATA_0 ~ 31:
+      This field is provided for user data storage. It supports per-bit masking programming.
+
+  2. OTP_MP_PROVISION_DONE:
+      Set this field to 1 means all the MP provision are completed. There's no restriction for otpread/otpwrite
+      to distinguish this field to do anything different. But it would be a good indicator for
+      provision are all complete if set OTP_MP_PROVISION_DONE = 1.  It's up to user to use this field
       if using otpread/otpwrite to do fusing stuff.
-  2. OTP_SCS_AREA_SIZE_SEL:
+
+  3. OTP_SCS_AREA_SIZE_SEL:
       - 0x0 : 385K (default)
-  3. OTP_REE_JTAG_PROTECTION_POLICY:
+
+  4. OTP_REE_JTAG_PROTECTION_POLICY:
       - 0x0 : JTAG always enabled
       - 0x1 : JTAG password protected
       - 0x2 : JTAG always disabled
       - 0x3 : JTAG always disabled
-  4. OTP_PRODUCTION_CHIP_FLAG:
+
+  5. OTP_PRODUCTION_CHIP_FLAG:
       - 0x0 : Development chip. Both development and production image can run on this chip.
       - 0x7 : Production chip. Only production image can run on this chip.
 
       Notes:
-      Basically, only production chips are shipped to customers. This field can be used to 
+      Basically, only production chips are shipped to customers. This field can be used to
       prevent development images from running on production chips.
 
-  5. OTP_OEM_AUDIO_CUSTOMER_ID:
-      This field is used to store a 32-bit customer ID for Dolby Audio feature customization.      
-  6. OTP_USER_DATA_0 ~ 31:
-      This field is provided for user data storage. It supports per-bit masking programming.
+  6. OTP_OEM_AUDIO_CUSTOMER_ID:
+      This field is used to store a 32-bit customer ID for Dolby Audio feature customization.
+
+  7. OTP_BOOT_SECURITY_ENABLE:
+      This field by default is enabled in Astra chips before shipping to customers.
+
 
 U-BOOT OTP Commands
 ====================================================================
@@ -183,7 +193,7 @@ Usage:
     factory_util 6 otpread    0
     factory_util 6 otpread    1
 
-    
+
 
 Return Codes:
    ::
@@ -237,8 +247,8 @@ Examples:
 
 .. note::
 
-  By default, the factory utilities are installed in astra-media images. If 
-  not present, can add the package by adding below line to conf/local.conf 
+  By default, the factory utilities are installed in astra-media images. If
+  not present, can add the package by adding below line to conf/local.conf
   and build image.
 
     IMAGE_INSTALL_append = " synasdk-factory-ta synasdk-drm-factory-ca-program"
@@ -255,7 +265,7 @@ Common OTP Index List
   =====  ============================
    0        OTP_USER_DATA_0
    1        OTP_USER_DATA_1
-   :         :  
+   :         :
    31       OTP_USER_DATA_31
    100      OTP_K0_OEM_HASH_0
    101      OTP_K0_OEM_HASH_1
@@ -280,7 +290,8 @@ Common OTP Index List
    202      OTP_DOLBY_AUDIO_DISABLE
    203      OTP_OEM_AUDIO_CUSTOMER_ID
    204      OTP_PRODUCTION_CHIP_FLAG
-   205      OTP_FIELD_MAX
+   205      OTP_USB_BOOT_DISABLE
+   206      OTP_FIELD_MAX
 
   =====  ============================
 
@@ -288,7 +299,8 @@ Common OTP Index List
 Important Programming Rules
 ====================================================================
 
-Except for OTP_USER_DATA_0-31 which supports per-bits fusing access, for other fields, please follow below mask guideline:
+Except for OTP_USER_DATA_0-31 which supports per-bits fusing access, for other fields, please follow
+below mask guideline:
 
 1. 1-bit fields must use mask = 0x00000001
 2. 2-bit fields must use mask = 0x00000003
@@ -311,7 +323,7 @@ Returned Mask:
     VALID. Mask would reflect whether the OTP field is programmed.
     0x0 = not programmed; 0xFFFFFFFF = fully programmed.
 
-Exmaples:
+Examples:
    ::
 
       root@sl1640:~# factory_util 6 otpread 100
@@ -324,17 +336,38 @@ If the mask=0xFFFFFFFF, which means all the 32-bits of the field are all program
 OTP_USER_DATA_0~31 Mask Usage
 ====================================================================
 
-Supports:
-    - Per-bit masking
-    - Per-n-bit masking
-    - Full 32-bit masking
+    - Write of OTP_USER_DATA_0~31 would only program bits set in the mask. Bits not set
+      in the mask would remain unchanged.
+    - If the mask specifies bits already programmed, those bits would be ignored
+      and not cause error.
+    - Supports:
+       - Per-bit masking
+       - Per-n-bit masking
+       - Full 32-bit masking
 
 Examples:
    ::
-   
+
+      # Per-bit masking examples
       => otpwrite 0 0x00000001 0x00000001
       => otpwrite 0 0x000000F0 0x000000F0
       => otpwrite 0 0xA5A5A5A5 0xFFFFFFFF
+
+      # Bit masking examples
+      # Preexisting otp[5] = 0x0000000a,     mask=0x0000000f
+      # Write       otp[5]   0x000000a7      mask=0x000000ff
+      # Final       otp[5] = 0x000000aa,     mask=0x000000ff
+      => otpwrite 5 0xA 0xF
+      otp operation succeed
+      => otpread 5
+      otp operation succeed
+      read otp[5] data=0x0000000a, mask=0x0000000f
+      => otpwrite 5 0xa7 0xff
+      otp operation succeed
+      => otpread 5
+      otp operation succeed
+      read otp[5] data=0x000000aa, mask=0x000000ff
+
 
 .. _Atomic_Programming_Rules:
 
@@ -347,12 +380,11 @@ Atomic group includes:
     - OTP_AESK0_0 ~ OTP_AESK0_3
     - OTP_REE_SEGID
     - OTP_REE_SECURITY_ENABLE
-    - OTP_BOOT_SECURITY_ENABLE
-    - OTP_PRODUCTION_CHIP_FLAG
 
 Rules:
 
-  1. ALL atomic items must be programmed in ONE SESSION. Once reboot or power loss, it would mean enter a new SESSION.
+  1. ALL atomic items must be programmed in ONE SESSION. Once reboot or power loss, it would mean
+     enter a new SESSION.
   2. NO reboot or power loss is allowed before completion.
   3. It is FORBIDDEN to program HASH/AESK0 and set OTP_REE_SECURITY_ENABLE = 0.
   4. Any violation may result in PERMANENT BRICK.
@@ -366,8 +398,8 @@ Notes:
 Tools to generate OTP commands
 ====================================================================
 
-It is strongly recommended to use the helper script gen_otp_command.py to generate OTP programming commands instead 
-of writing them by hand.
+It is strongly recommended to use the helper script gen_otp_command.py to generate OTP programming
+commands instead of writing them by hand.
 
 The tool can be found under `Factory repository <https://github.com/synaptics-astra/factory/tree/#release#>`__ at
 ``factory/scripts/[platypus/dolphin/myna2/]/factory``. ``platypus``: SL1640, ``dolphin``: SL1680, ``myna2``: SL1620.
@@ -384,7 +416,7 @@ When the command completes, two files will be generated in the current directory
 
 The script performs the following:
 
-    - Reads OTP configuration from 
+    - Reads OTP configuration from
         - configs/oem_config.conf
         - keys/K0_REE_hash.bin
         - keys/AESK0.bin
@@ -396,7 +428,6 @@ The script performs the following:
          - OTP_AESK0_0 ~ 3
          - OTP_REE_SEGID
          - OTP_REE_SECURITY_ENABLE
-         - OTP_BOOT_SECURITY_ENABLE
 
     - Treats OTP_MP_PROVISION_DONE as a special case:
           - If its value is 0, the command is skipped and a
@@ -406,40 +437,83 @@ The script performs the following:
 
     - Tags atomic items in the debug output with [Atomic]
 
+A sample configs/oem_config.conf configuration file is shown below
+
+::
+
+        ### This file contains default settings for OTP programming during manufacturing.
+        ### Modify the parameters as needed for your specific OEM requirements.
+        ### Items commented out are optional and can be enabled if required.
+
+        [Segmentation ID]
+        ree_segid = 0x2E32000A
+
+        [Version]
+        ree_version = 0
+
+        [OTP_REE_SECURITY_ENABLE]
+        ree_security_enable = 1
+
+        [OTP_BOOT_SECURITY_ENABLE]
+        #boot_security_enable = 1
+
+        [OTP_MP_PROVISION_DONE]
+        mp_provision_done = 0
+
+        [OTP_SCS_AREA_SIZE_SEL]
+        scs_area_size_sel = 0
+
+        [OTP_REE_JTAG_PROTECTION_POLICY]
+        ree_jtag_protection_policy = 1
+
+        [OTP_EMMC_BOOT_DISABLE]
+        emmc_boot_disable = 0
+
+        [OTP_SPI_BOOT_DISABLE]
+        spi_boot_disable = 0
+
+        [OTP_USB_BOOT_DISABLE]
+        usb_boot_disable = 0
+
+        [OTP_OEM_AUDIO_CUSTOMER_ID]
+        #oem_audio_customer_id = 0x00000000
+
+        [OTP_PRODUCTION_CHIP_FLAG]
+        #production_chip_flag = 7
+
+
 Below is a sample execution log:
 
    ::
 
-
     $sdk/factory/scripts/platypus/factory$ ./gen_otp_command.py
     [SKIP] OTP_MP_PROVISION_DONE value is 0, command not generated
-    otpwrite 100 0x98bead63 0xffffffff [Atomic]
-    otpwrite 101 0x0732d206 0xffffffff [Atomic]
-    otpwrite 102 0x6162bc31 0xffffffff [Atomic]
-    otpwrite 103 0x3433e405 0xffffffff [Atomic]
-    otpwrite 104 0xe15933d7 0xffffffff [Atomic]
-    otpwrite 105 0x3e6e6562 0xffffffff [Atomic]
-    otpwrite 106 0x2c56fbaf 0xffffffff [Atomic]
-    otpwrite 107 0x49486fa9 0xffffffff [Atomic]
-    otpwrite 108 0x5a319519 0xffffffff [Atomic]
-    otpwrite 109 0xd2b79aab 0xffffffff [Atomic]
-    otpwrite 110 0x88edae3e 0xffffffff [Atomic]
-    otpwrite 111 0x0f6f2a3b 0xffffffff [Atomic]
-    otpwrite 112 0x2E32000A 0xffffffff [Atomic]
+    otpwrite 100 0xc4ddf49e 0xffffffff [Atomic]
+    otpwrite 101 0xe0593948 0xffffffff [Atomic]
+    otpwrite 102 0xde9b8638 0xffffffff [Atomic]
+    otpwrite 103 0x81ace868 0xffffffff [Atomic]
+    otpwrite 104 0x2a629998 0xffffffff [Atomic]
+    otpwrite 105 0xd105297d 0xffffffff [Atomic]
+    otpwrite 106 0x8559f683 0xffffffff [Atomic]
+    otpwrite 107 0xd92484ee 0xffffffff [Atomic]
+    otpwrite 108 0x60c500da 0xffffffff [Atomic]
+    otpwrite 109 0x08625e40 0xffffffff [Atomic]
+    otpwrite 110 0xf5c13936 0xffffffff [Atomic]
+    otpwrite 111 0x908e3b76 0xffffffff [Atomic]
+    otpwrite 112 0x00000000 0xffffffff [Atomic]
     otpwrite 113 0x00000001 0x00000001 [Atomic]
-    otpwrite 114 0x00000001 0x00000001 [Atomic]
     otpwrite 116 0x00000000 0x00000003
     otpwrite 117 0x00000001 0x00000003
     otpwrite 200 0x00000000 0x00000001
     otpwrite 201 0x00000000 0x00000001
-    otpwrite 203 0x00000000 0xffffffff
-    otpwrite 204 0x00000007 0x00000007 [Atomic]
-    [OK] Wrote 21 lines to otp_commands_uboot.txt
-    [OK] Wrote 21 lines to otp_commands_linux.txt
+    otpwrite 205 0x00000000 0x00000001
+    [OK] Wrote 19 lines to otp_commands_uboot.txt
+    [OK] Wrote 19 lines to otp_commands_linux.txt
 
 Notes:
 
-    - Lines tagged with [Atomic] belong to the atomic security group and MUST be programmed as part of one provisioning session without reboot or power loss.
+    - Lines tagged with [Atomic] belong to the atomic security group and MUST be programmed as part
+      of one provisioning session without reboot or power loss.
 
     - otp_commands_uboot.txt contains commands in the form to perform in u-boot:
           otpwrite <idx> <value> <mask>

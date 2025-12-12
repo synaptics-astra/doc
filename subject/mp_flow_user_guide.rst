@@ -9,7 +9,8 @@ Astra MP Flow User Guide
 Introduction
 ============
 
-This guide provides detailed instructions for configuring, generating, and flashing keys into the One-Time Programmable Memory (OTP) for Astra Machina in production environments.
+This guide provides detailed instructions for configuring, generating, and flashing keys into the One-Time
+Programmable Memory (OTP) for Astra Machina in production environments.
 
 System Requirements
 ===================
@@ -21,11 +22,14 @@ System Requirements
 Definitions
 ===========
 
-- syna-release SDK: A software development kit from Synaptics used to build normal eMMC images and USB Boot Linux Image Packs.
+- syna-release SDK: A software development kit from Synaptics used to build normal eMMC images and USB Boot
+  Linux Image Packs.
 - normal_eMMCimg: It's an eMMC image built from the syna-release SDK.
-- production_eMMCimg: It's an eMMCimg, REE images have been to set the production_image_flag = 1. This image only can be run on the production boards (secure boot actived).
+- production_eMMCimg: It's an eMMCimg, REE images have been to set the production_image_flag = 1. This image
+  only can be run on the production boards (secure boot actived).
 - usb_tool: It's a toolset designed for use on a PC, enabling booting of the Astra board via USB.
-- factory_tool: It's post-processing tool in syna-release SDK that using to generate secure keys, OTP layouts, production eMMCimg and resign "USB Boot Linux Image Pack" REE images. 
+- factory_tool: It's post-processing tool in syna-release SDK that using to generate secure keys, OTP layouts,
+  production eMMCimg and resign "USB Boot Linux Image Pack" REE images.
 
 Tools can be found in the `Factory repository <https://github.com/synaptics-astra/factory/tree/#release#>`__ at
 ``factory/scripts/[platypus/dolphin/myna2/]/factory``. Where ``platypus``: SL1640, ``dolphin``: SL1680, ``myna2``: SL1620.
@@ -36,45 +40,23 @@ Pre-MP Preparation
 1. Assign REE SegID in Configuration File
 ------------------------------------------------------------
 
-   The REE segmentation ID must align with the root key of REE (OEM) images, ensuring that all images share the same segmentation ID.
-
-   REE segmentation ID are stored in ``factory/scripts/[platypus/dolphin/myna2/]/factory/config/oem_config.conf``, and must be set to the expected values before running key generation tool.
+   The REE segmentation ID must align with the root key of REE (OEM) images, ensuring that all images share the
+   same segmentation ID. The REE segmentation ID are stored in
+   ``factory/scripts/[platypus/dolphin/myna2/]/factory/config/oem_config.conf``,
+   and must be set to the expected values before running key generation tool.
    For example, adjust the ree_segid = 0x2E32000A in the configuration file as below:
 
 ::
-   
+
        [Segmentation ID]
        ree_segid = 0x2E32000A
 
        [Version]
        ree_version = 0x00000000
 
-       [OTP_REE_SECURITY_ENABLE]
-       ree_security_enable = 1
-
-       [OTP_BOOT_SECURITY_ENABLE]
-       boot_security_enable = 1
-
-       [OTP_MP_PROVISION_DONE]
-       mp_provision_done = 0
-
-       [OTP_SCS_AREA_SIZE_SEL]
-       scs_area_size_sel = 0
-
-       [OTP_REE_JTAG_PROTECTION_POLICY]
-       ree_jtag_protection_policy = 1
-
-       [OTP_EMMC_BOOT_DISABLE]
-       emmc_boot_disable = 0
-
-       [OTP_SPI_BOOT_DISABLE]
-       spi_boot_disable = 0
-
-       [OTP_OEM_AUDIO_CUSTOMER_ID]
-       oem_audio_customer_id = 0x00000000
-
-       [OTP_PRODUCTION_CHIP_FLAG]
-       production_chip_flag = 0x00000007
+            :
+            :
+            :
 
 
 2. Generate REE RSA Keys and AESK0 Keys
@@ -114,7 +96,7 @@ After running the script, the following keys are generated:
    c) Execute the following script to resign REE images from Normal eMMCimg directory.
 
 ::
-   
+
       $ ./gen_production_image.py [normal_eMMCimg] -o [production_eMMCimg]
 
 eMMC flash content changes:
@@ -137,7 +119,7 @@ eMMC flash content changes:
 +---------------------------------+--------------------------------------------+----------------------------------------------------------------------------------------------------+
 | fastlogo.subimg                 | Clear, authentication is bypassed          | Signed by K1_REE_A                                                                                 |
 +---------------------------------+--------------------------------------------+----------------------------------------------------------------------------------------------------+
-      
+
 4. Resign "USB Boot Linux Image Pack" images
 ------------------------------------------------------------
 
@@ -148,7 +130,7 @@ eMMC flash content changes:
 ::
 
       $ ./resign_usb_boot_image.py [usb_tool/image_dir] -o [output_image_dir]
-     
+
 USB Boot tool content changes:
 
 
@@ -174,47 +156,58 @@ The tool can be found under `Factory repository <https://github.com/synaptics-as
 ``factory/scripts/[platypus/dolphin/myna2/]/factory``. Where
 ``platypus``: SL1640, ``dolphin``: SL1680, ``myna2``: SL1620.
 
-Update the ``factory/scripts/[platypus/dolphin/myna2/]/factory/config/oem_config.conf`` settings as needed. Remember don't
-change ree_segid = 0x2E32000A as it should be updated in step 1.
+Update the ``factory/scripts/[platypus/dolphin/myna2/]/factory/config/oem_config.conf`` settings as needed.
+For OTP fields, please refer to :ref:`OTP_Field_Definitions_Table` for details.
 
-Adjust the configuration file as below if necessary. For OTP fields, please refer to 
-:ref:`OTP_Field_Definitions_Table` for details.
+.. warning::
+    Remember **don't change ree_segid = 0x2E32000A (as example) in this step as it should be updated in step 1**.
+    As keystores generated in step 2 are derived from the ree_segid(segmentation ID). Also production
+    images generated in step 3 and resigned USB boot images in step 4 depend on ree_segid value. Therefore,
+    changing ree_segid here will lead to a mismatch between OTP settings and images, causing boot failures.
+
+A sample configuration file is shown below
 
 ::
-   
-       [Segmentation ID]
-       ree_segid = 0x2E32000A
 
-       [Version]
-       ree_version = 0x00000000
+        ### This file contains default settings for OTP programming during manufacturing.
+        ### Modify the parameters as needed for your specific OEM requirements.
+        ### Items commented out are optional and can be enabled if required.
 
-       [OTP_REE_SECURITY_ENABLE]
-       ree_security_enable = 1
+        [Segmentation ID]
+        ree_segid = 0x2E32000A
 
-       [OTP_BOOT_SECURITY_ENABLE]
-       boot_security_enable = 1
+        [Version]
+        ree_version = 0
 
-       [OTP_MP_PROVISION_DONE]
-       mp_provision_done = 0
+        [OTP_REE_SECURITY_ENABLE]
+        ree_security_enable = 1
 
-       [OTP_SCS_AREA_SIZE_SEL]
-       scs_area_size_sel = 0
+        [OTP_BOOT_SECURITY_ENABLE]
+        #boot_security_enable = 1
 
-       [OTP_REE_JTAG_PROTECTION_POLICY]
-       ree_jtag_protection_policy = 1
+        [OTP_MP_PROVISION_DONE]
+        mp_provision_done = 0
 
-       [OTP_EMMC_BOOT_DISABLE]
-       emmc_boot_disable = 0
+        [OTP_SCS_AREA_SIZE_SEL]
+        scs_area_size_sel = 0
 
-       [OTP_SPI_BOOT_DISABLE]
-       spi_boot_disable = 0
+        [OTP_REE_JTAG_PROTECTION_POLICY]
+        ree_jtag_protection_policy = 1
 
-       [OTP_OEM_AUDIO_CUSTOMER_ID]
-       oem_audio_customer_id = 0x00000000
+        [OTP_EMMC_BOOT_DISABLE]
+        emmc_boot_disable = 0
 
-       [OTP_PRODUCTION_CHIP_FLAG]
-       production_chip_flag = 0x00000007
+        [OTP_SPI_BOOT_DISABLE]
+        spi_boot_disable = 0
 
+        [OTP_USB_BOOT_DISABLE]
+        usb_boot_disable = 0
+
+        [OTP_OEM_AUDIO_CUSTOMER_ID]
+        #oem_audio_customer_id = 0x00000000
+
+        [OTP_PRODUCTION_CHIP_FLAG]
+        #production_chip_flag = 7
 
 Examples: (Platypus: SL1640)
    ::
@@ -226,30 +219,6 @@ When the command completes, two files will be generated in the current directory
     - otp_commands_uboot.txt:  U-Boot otpwrite commands
     - otp_commands_linux.txt:  Linux factory_util 6 otpwrite commands
 
-The script performs the following:
-
-    - Reads OTP configuration and keys from 
-        - configs/oem_config.conf
-        - keys/K0_REE_hash.bin
-        - keys/AESK0.bin
-
-    - Applies the mask rules described in this document
-
-    - Enforces atomic programming rules for:
-         - OTP_K0_OEM_HASH_0 ~ 7
-         - OTP_AESK0_0 ~ 3
-         - OTP_REE_SEGID
-         - OTP_REE_SECURITY_ENABLE
-         - OTP_BOOT_SECURITY_ENABLE
-         - OTP_PRODUCTION_CHIP_FLAG
-
-    - Treats OTP_MP_PROVISION_DONE as a special case:
-          - If its value is 0, the command is skipped and a
-            [SKIP] message is printed
-          - User can perform the OTP_MP_PROVISION_DONE = 1 command when
-            ALL the OTP fields are done in the LAST production SESSION.
-
-    - Tags atomic items in the debug output with [Atomic]
 
 Below is a sample execution log:
 
@@ -258,42 +227,41 @@ Below is a sample execution log:
 
     $sdk/factory/scripts/platypus/factory$ ./gen_otp_command.py
     [SKIP] OTP_MP_PROVISION_DONE value is 0, command not generated
-    otpwrite 100 0x98bead63 0xffffffff [Atomic]
-    otpwrite 101 0x0732d206 0xffffffff [Atomic]
-    otpwrite 102 0x6162bc31 0xffffffff [Atomic]
-    otpwrite 103 0x3433e405 0xffffffff [Atomic]
-    otpwrite 104 0xe15933d7 0xffffffff [Atomic]
-    otpwrite 105 0x3e6e6562 0xffffffff [Atomic]
-    otpwrite 106 0x2c56fbaf 0xffffffff [Atomic]
-    otpwrite 107 0x49486fa9 0xffffffff [Atomic]
-    otpwrite 108 0x5a319519 0xffffffff [Atomic]
-    otpwrite 109 0xd2b79aab 0xffffffff [Atomic]
-    otpwrite 110 0x88edae3e 0xffffffff [Atomic]
-    otpwrite 111 0x0f6f2a3b 0xffffffff [Atomic]
-    otpwrite 112 0x2E32000A 0xffffffff [Atomic]
+    otpwrite 100 0xc4ddf49e 0xffffffff [Atomic]
+    otpwrite 101 0xe0593948 0xffffffff [Atomic]
+    otpwrite 102 0xde9b8638 0xffffffff [Atomic]
+    otpwrite 103 0x81ace868 0xffffffff [Atomic]
+    otpwrite 104 0x2a629998 0xffffffff [Atomic]
+    otpwrite 105 0xd105297d 0xffffffff [Atomic]
+    otpwrite 106 0x8559f683 0xffffffff [Atomic]
+    otpwrite 107 0xd92484ee 0xffffffff [Atomic]
+    otpwrite 108 0x60c500da 0xffffffff [Atomic]
+    otpwrite 109 0x08625e40 0xffffffff [Atomic]
+    otpwrite 110 0xf5c13936 0xffffffff [Atomic]
+    otpwrite 111 0x908e3b76 0xffffffff [Atomic]
+    otpwrite 112 0x00000000 0xffffffff [Atomic]
     otpwrite 113 0x00000001 0x00000001 [Atomic]
-    otpwrite 114 0x00000001 0x00000001 [Atomic]
     otpwrite 116 0x00000000 0x00000003
     otpwrite 117 0x00000001 0x00000003
     otpwrite 200 0x00000000 0x00000001
     otpwrite 201 0x00000000 0x00000001
-    otpwrite 203 0x00000000 0xffffffff
-    otpwrite 204 0x00000007 0x00000007 [Atomic]
-    [OK] Wrote 21 lines to otp_commands_uboot.txt
-    [OK] Wrote 21 lines to otp_commands_linux.txt
+    otpwrite 205 0x00000000 0x00000001
+    [OK] Wrote 19 lines to otp_commands_uboot.txt
+    [OK] Wrote 19 lines to otp_commands_linux.txt
 
 Notes:
 
     - Refer to :ref:`Atomic_Programming_Rules` for details on atomic programming rules.
 
-    - Lines tagged with [Atomic] belong to the atomic security group and MUST be programmed as part of one provisioning session without reboot or power loss.
+    - Lines tagged with [Atomic] belong to the atomic security group and MUST be programmed as part of
+      one provisioning session without reboot or power loss.
 
     - otp_commands_uboot.txt contains commands in the form to perform in u-boot:
           otpwrite <idx> <value> <mask>
 
     - otp_commands_linux.txt contains commands in the form to perform in Linux:
           factory_util 6 otpwrite <idx> <value> <mask>
-   
+
 
 Go Through MP flow
 ===================================================================
@@ -304,14 +272,14 @@ Go Through MP flow
    a) Copy the Production eMMCimg to an external USB drive or usb_boot tool directory.
    b) Boot into USB U-Boot.
    c) Execute the following U-Boot command to flash eMMCimg ``production_eMMCimg`` from external USB drive.
-   
+
    ::
 
          => usb2emmc <production_eMMCimg>
-      
+
 
    Execute the following U-Boot command to flash eMMCimg ``production_eMMCimg`` from usb_boot tool directory.
-   
+
    ::
 
         => l2emmc <production_eMMCimg>
@@ -321,10 +289,10 @@ Go Through MP flow
 ------------------------------
 
 Assume fuse the OTP in u-boot environment. The otp_commands_uboot.txt contains commands in the form to perform in u-boot.
-Either copy and paste the commands (i.e., otp_commands_uboot.txt) one by one or create a script image (.scr) to execute all 
+Either copy and paste the commands (i.e., otp_commands_uboot.txt) one by one or create a script image (.scr) to execute all
 commands automatically in u-boot. Below is the instruction to create a script image (.scr) from otp_commands_uboot.txt.
 
-  
+
    ::
 
       $ mkimage -A arm -O linux -T script -C none -n "OTP script" -d otp_commands_uboot.txt otp_commands_uboot.scr
@@ -348,33 +316,32 @@ commands automatically in u-boot. Below is the instruction to create a script im
       /usr/bin/mkimage: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=5971adb62d81976b9c7c36b1f5b6d974495e8de6, for GNU/Linux 3.2.0, stripped
 
 
-   
    Copy the otp_commands_uboot.scr to an external USB drive or usb_boot tool directory.
-   
+
    a) Execute the following U-Boot commands to load otp_commands_uboot.scr from usb_boot tool directory and program OTP
-   
+
    ::
 
       => usbload otp_commands_uboot.scr <addr>
       => source <addr>
 
    example:
-   
+
    ::
-   
+
       => usbload otp_commands_uboot.scr 0x7000000
       => source 0x7000000
-     
+
    b) Execute the following U-Boot commands to load otp_commands_uboot.scr from external USB Drive and program OTP
-   
+
    ::
 
       => usb start
-      => fatload <interface> [<dev[:part]> <fileaddr> <otp_layout_path> 
+      => fatload <interface> [<dev[:part]> <fileaddr> <otp_layout_path>
       => otp write <fileaddr> <filesize>
-    
+
    example:
-   
+
    ::
 
       => usb start
