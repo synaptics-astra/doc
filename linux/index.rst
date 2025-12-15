@@ -20,8 +20,16 @@ The following Reference Kits and platforms are covered by this guide:
 
 -  Astra Machina (Foundation) SL1680
 
+-  Astra Machina (Foundation) SL2611
+
+-  Astra Machina (Foundation) SL2615
+
+-  Astra Machina (Foundation) SL2619
+
 References
 ----------
+
+- `Torq Compiler User Guide <https://synaptics-torq.github.io/torq-compiler/v/latest/user-manual/index.html>`__
 
 -  `SyNAP User Guide <https://synaptics-synap.github.io/doc/v/latest/>`__
 
@@ -139,12 +147,30 @@ The serial console on Astra Machina can be accessed by connecting a USB-TTL adap
 the RX, TX, and GND pins of the 40 pin GPIO connector. USB-TTL adaptors can either be a board
 with jumper wires or an integrated USB cable with separated pins. 
 
+SL1620, SL1640, SL1680, SL2610 Rev B
+""""""""""""""""""""""""""""""""""""
+
 =======    =============
 USB TTL    Astra Machina
 =======    =============
 GND        GND (Pin 6)
 RXD        TX  (Pin 8)
 TXD        RX  (Pin 10)
+=======    =============
+
+SL2610 Rev A
+""""""""""""
+
+.. note::
+
+    SL2610 Rev A Core Modules use Pin 28 for TX. All other revisions use Pin 10.
+
+=======    =============
+USB TTL    Astra Machina
+=======    =============
+GND        GND (Pin 6)
+RXD        TX  (Pin 8)
+TXD        RX  (Pin 28)
 =======    =============
 
 .. note::
@@ -160,7 +186,7 @@ The following USB-TTL adaptors are officially approved to work with Astra Machin
     +================+===============+=====================================+====================================+
     | 5V-Out         | Red           | NC                                  | NC                                 |
     +----------------+---------------+-------------------------------------+------------------------------------+
-    | TX-Out         | Green         | Pin-10                              | UART0_Rx-In                        |
+    | TX-Out         | Green         | Pin-10 (Pin-28 SL2610 Rev A)        | UART0_Rx-In                        |
     +----------------+---------------+-------------------------------------+------------------------------------+
     | RX-In          | White         | Pin-8                               | UART0_Tx-Out                       |
     +----------------+---------------+-------------------------------------+------------------------------------+
@@ -175,7 +201,7 @@ The following USB-TTL adaptors are officially approved to work with Astra Machin
     +================+===============+=====================================+====================================+
     | 5V-Out         | Red           | NC                                  | NC                                 |
     +----------------+---------------+-------------------------------------+------------------------------------+
-    | TX-Out         | Green         | Pin-10                              | UART0_Rx-In                        |
+    | TX-Out         | Green         | Pin-10 (Pin-28 SL2610 Rev A)        | UART0_Rx-In                        |
     +----------------+---------------+-------------------------------------+------------------------------------+
     | RX-In          | White         | Pin-8                               | UART0_Tx-Out                       |
     +----------------+---------------+-------------------------------------+------------------------------------+
@@ -252,7 +278,7 @@ the codecs supported by the Astra Machina.
 Video Codecs
 ^^^^^^^^^^^^
 
-**SL1620**
+**SL1620 / SL261x**
 
 ========= ================= ================== ==================
 Codec     Parser Plugin     Decoder Plugin     Encoder Plugin
@@ -355,7 +381,7 @@ the wayland protocol and compositor to display the video output.
 
 .. note::
 
-    ``kmssink`` and ``xvimagesink`` are not currently support on Scarthgap releases.
+    ``xvimagesink`` are not currently support on Scarthgap releases.
 
 Wayland Sink
 ************
@@ -410,7 +436,7 @@ An example of a H265 encoded video file on SL1640 / SL1680::
 
     gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! v4l2h265dec ! waylandsink fullscreen=true
 
-An example of a H265 encoded video file on SL1620::
+An example of a H265 encoded video file on SL162 / SL261x::
 
     gst-launch-1.0 filesrc location=test_file.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h265parse ! avdec_h265 ! waylandsink fullscreen=true
 
@@ -434,7 +460,7 @@ audio stream::
         demux.video_0 ! queue ! h265parse ! v4l2h265dec ! queue ! waylandsink fullscreen=true \
         demux.audio_0 ! queue ! aacparse ! fdkaacdec ! audioconvert ! alsasink device=hw:0,7
 
-Play an MP4 file on SL1620 with a H265 encoded video stream and an AAC encoded
+Play an MP4 file on SL1620 / SL261x with a H265 encoded video stream and an AAC encoded
 audio stream::
 
     gst-launch-1.0 filesrc location=little.mp4  ! qtdemux name=demux  \
@@ -485,8 +511,8 @@ output to the wayland sink::
 
     gst-launch-1.0 v4l2src device=/dev/video2 ! "video/x-raw,framerate=30/1,format=YUY2,width=640,height=480" ! waylandsink fullscreen=true
 
-Image Sensor Cameras
-""""""""""""""""""""
+Image Sensor Cameras with SL1680
+""""""""""""""""""""""""""""""""
 
 SL1680 includes an integrated ISP and supports connecting image sensor camera modules using the MIPI-CSI connectors. Gstreamer can use these
 cameras using the V4L2 interface. The ISP supports 3 output paths, the main path supports outputing 4K resolution (if the sensor supports 4K), and the Secondary Paths
@@ -629,6 +655,142 @@ To explicitly disable MMU support while using NV12 format, add the extra-control
     When using ``filesink``, the user needs to disable the MMU for paths where the MMU is enabled by default. MMU mode
     requires the stride value be correctlt aligned. Unfortunately, Gstreamers filesink element ignores this value. The only
     workaround is for the user to disable MMU for paths where the MMU is enabled by default.
+
+Image Sensor Cameras with SL2619
+""""""""""""""""""""""""""""""""
+
+The SL2619 platform supports a mini ISP which supports two parallel data streams, from a single sensor, each with identical
+processing blocks. Each pipeline contain these functional blocks: Demosaic and Colour Space Conversion (CSC), DNS, Resizer
+and White Balance. Both pipelines can output RGB888, YUV420, and Bayer RAW format.
+
+The default white balance parameters are tuned for typical indoor (room) lighting conditions and may need adjustment depending on the current test environment.
+These ISP settings are applicable only for specific supported sensors.
+
+The mini ISP on SL261x is primarily designed to support AI use cases such as object detection and face detection. Therefore, the display output quality will not be
+identical to the SL1680's full-featured ISP, which offers full image enhancement capabilities.
+
+The device file number may vary depending on your configuration. You can use the ``v4l2-ctl`` command to find which device files are associated with each of the
+ISP paths.
+
+.. figure:: media/sl2619-isp-path-devices.png
+    :scale: 75%
+
+    ``v4l2-ctl --list-devices`` output with the ISP Path devices highlighted
+
+The device name will be ``camera-video``. If an additional USB camera is connected, the device indices may change; otherwise, they default to ``video0`` and ``video1``.
+
+.. figure:: media/sl2619-isp-device-capabilities.png
+    :scale: 75%
+
+    ISP device capabilities
+
+Supported Sensor Modules
+************************
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 35 25 15
+
+   * - Sensor
+     - Module
+     - Supported Resolutions / FPS
+     - Scaling Factor
+
+   * - OV5647
+     - `Arducam 5MP OV5647 Camera Module <https://www.arducam.com/product/arducam-ov5647-standard-raspberry-pi-camera-b0033/>`__
+     - 640x480 @ 60fps
+     - 2x, 4x
+
+   * -
+     -
+     - 1920x1080 @ 30fps
+     - 2x, 3x, 4x, 6x
+
+   * -
+     -
+     - 1280x720 @ 30fps
+     - 2x, 4x, 5x, 8x
+
+See :ref:`sensor_sl2610` for supporting more sensor modules.
+
+Configuring Exposure Settings for OV5647
+****************************************
+
+To set the exposure and gain settings, first find the corresponding V4L2 Sub Device using the ``media-ctl -p`` command.
+
+.. figure:: media/sl2619-media.png
+
+    Output of ``media-ctl -p``.
+
+Use the output to determine the sub device needed to set the gain and exposure values.
+
+Enable manual exposure and automatic gain::
+
+    v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl auto_exposure=1
+    v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl gain_automatic=0
+
+Similarly, Adjust analogue gain and exposure time based on lighting::
+
+    v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl analogue_gain=200
+    v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl exposure=310
+
+If the sensor supports automatic white balance (AWB), enable it with::
+
+    v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl white_balance_automatic=1
+
+WB parameters inside the ISP can be changed in the Device Tree. To completely disable ISP's WB::
+
+    v4l2-ctl -d 0 -c wb_enable=0
+
+Use the ``v4l2-ctl`` command with the ``list-ctrls`` option to view what controls are accessible.
+
+.. figure:: media/sl2619-list-ctrls.png
+
+    Output of ``v4l2-ctl -d /dev/v4l-subdev2  --list-ctrls``.
+
+Gstreamer Commands with Wayland Sink
+************************************
+
+Using Gstreamer commands, ISP output can be captured to a file or it can be played on the display using ``waylandsink`` gstreamer element. Example commands for both are shown below.
+
++-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Format    | Command                                                                                                                                                                                          |
++===========+==================================================================================================================================================================================================+
+| YUV420    | ``gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)NV12, width=(int)1920, height=(int)1080, framerate=(fraction)30/1' ! waylandsink async=false``                        |
++           +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|           | ``gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)NV12, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! filesink location=/tmp/1.yuv``                     |
++-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| RGB888    | ``gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)RGB, width=(int)1920, height=(int)1080, framerate=(fraction)30/1' ! videoconvert ! waylandsink async=false``          |
++           +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|           | ``gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)RGB, width=(int)1920, height=(int)1080, framerate=(fraction)30/1' ! glupload ! glcolorconvert ! glimagesink``         |
++           +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|           | ``gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-raw, format=(string)RGB, width=(int)640, height=(int)480, framerate=(fraction)60/1' ! filesink location=/tmp/1.rgb``                      |
++-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+To use the second pipeline, simply switch the device to ``/dev/video1`` . Note that, it’s possible to run two pipelines simultaneously.
+
+ISP Video Test Application
+**************************
+
+``isp_video_test`` is a V4L2 test application that  can be used to test for capture or playback.
+
+Usage
+*****
+
+::
+
+    isp_video_test  -w 1920 -h 1080 -f NM12 -m 0 -t 3 -d 0
+
+*Options*
+    * -w Image width
+    * -h Image height
+    * -f Image format NM12, RGB24
+    * -t Display type:
+        * 0: DRM-KMS
+        * 2: File
+        * 3: Wayland
+    * -d Video device ID
+    * -p Path to store the output file. If not specified, current folder will be used.
 
 RTSP Cameras
 """"""""""""
@@ -1019,13 +1181,13 @@ Run the Syna Video Player::
     root@sl1680:~# syna-video-player --mach sl1680 --mode ffmpeg
 
 The Syna Video Player expects two paramaters, the machine type and the mode. The machine type is the version of Astra Machina which the application is running on.
-The valid options are ``sl1620``, ``sl1640`` and ``sl1680``. The mode specifies which mode of decoding should be used. The options are ``ffmpeg`` and ``v4l2``.
+The valid options are ``sl1620``, ``sl1640``, ``sl1680``, and ``sl2619``. The mode specifies which mode of decoding should be used. The options are ``ffmpeg`` and ``v4l2``.
 When set to ``ffmpeg`` the Syna Video Player application will use the `ffmpeg library <https://ffmpeg.org/>`__ to perform decoding of the video stream in software.
 When ``v4l2`` is set then Syna Video Player will use the V4L2 APIs to perform decoding of the video stream using hardware acceleration.
 
 .. note::
 
-    SL1620 requires mode to be set to ffmpeg since it does not support V4L2 decoding.
+    SL1620 and SL2619 requires the mode to be set to ffmpeg since it does not support V4L2 decoding.
 
 The information on the video files is defined in the QML files in /home/root/demos/qmls/. Please update the video names and path in these files so that Syna Video Player
 can locate the videos installed on your system. The video information is set in the file ``<mach>-<mode>.qml``. For example, to update the video files on SL1680 in ffmpeg mode,
@@ -1056,6 +1218,30 @@ The valid options are ``sl1620``, ``sl1640`` and ``sl1680``.
 
     Only SL1680 support Multiview.
 
+.. note::
+
+    Syna AI Player is not supported on SL261x. Torq Demo is used instead.
+
+Torq Demo
+^^^^^^^^^
+
+Torq is the new framework for the Coral NPU integrated into SL261x platforms. The Torq Demo application showcases AI use cases  using Torq.
+Currently, it demonstrated Image Classification and Object Detection.
+
+The Torq Demo supports using both the CPU or the NPU.
+
+.. figure:: media/sl2619-torq-demo.png
+
+    The main screen of Torq Demo
+
+.. figure:: media/sl2619-torq-image-classification.png
+
+    The Image Classification screen of Torq Demo
+
+.. figure:: media/sl2619-torq-opbject-detection.png
+
+    The Object Detection screen of Torq Demo
+
 .. _synap:
 
 Machine Learning with SyNAP
@@ -1082,6 +1268,8 @@ SL1620       SYNA 43711      M.2 SDIO              - wpa_supplicant v2.11
 SL1640       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.11
                                                    - WIFI driver version: v101.10.478
 SL1680       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.11
+                                                   - WIFI driver version: v101.10.478
+SL2610       SYNA 43711S     M.2 SDIO              - wpa_supplicant v2.11
                                                    - WIFI driver version: v101.10.478
 ============ =============== ===================== ========================================================
 
@@ -1856,6 +2044,10 @@ home               Mounted in /home, can be customized                          
 Updating Software Images using USB
 ----------------------------------
 
+.. note::
+
+    USB Boot is not supported with SL261x. Use :ref:`update_with_uboot` instead.
+
 Astra Machina supports updating software images using USB.
 
 .. _usb_boot_setup:
@@ -2075,11 +2267,24 @@ To flash an Astra system image from an external USB drive simply copy the image
 directory to the USB drive. The USB drive will need a partition with a 
 Fat32 formatted file system and enough capacity to fit the Astra system image.
 
+.. note::
+
+    When flashing the eMMC for the first time, be sure to copy ``emmc_image_list_full`` to ``emmc_image_list`` in the
+    ``eMMCimg`` directory on the USB drive. This is required in order to format the ``/factory_setting`` partition.
+    Otherwise, the system will boot into maintenance mode after failing to mount the ``/factory_setting`` partition.
+
 Write the image to eMMC using the command::
 
+    => usb reset
     => usb2emmc eMMCimg
 
 The parameter eMMCimg is the name of the image directory on the USB drive.
+
+.. note::
+
+    If ``usb reset`` reports  ``0 Storage Device(s) found`` and only one USB controller was detected
+    then the USB drive needs to be connected to the USB Type-C USB 2.0 port
+    (may require USB Type-C to USB Type-A adaptor).
 
 Flashing Images from a TFTP Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2120,8 +2325,13 @@ Updating Internal SPI Flash Images using U-Boot
 The internal SPI flash on Astra Machina can also be updated using the methods described above.
 You can find the latest versions of the SPI images on `GitHub <https://github.com/synaptics-astra/spi-u-boot>`__.
 
-Flashing Image from an External USB Drive
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. note::
+
+    SL261x and SL16x0 use different commands to update the internal SPI flash. Please follow the guide specific to
+    the device you are using.
+
+Flashing Image from an External USB Drive on SL16x0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To update the internal SPI flash image using an external USB drive, simply copy the image to the drive.
 The USB drive will need a partition with a Fat32 formatted file system.
@@ -2136,8 +2346,8 @@ An optional backup copy of the SPI flash image can be installed using the comman
 
     => erase f0200000 f03fffff; cp.b 0x10000000 0xf0200000 0x200000;
 
-Flashing Image from TFTP Server
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Flashing Image from TFTP Server on SL16x0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To update the internal SPI flash image by downloading it from a TFTP server, simply copy the image to
 the TFTP server.
@@ -2165,3 +2375,41 @@ An optional backup copy of the SPI flash image can be installed using the comman
     10.10.10.10. Please replace this IP with the IP address of the server
     hosting TFTP.
 
+Flashing Image from an External USB Drive on SL261x
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To update the internal SPI flash image using an external USB drive, simply copy the image to the drive.
+The USB drive will need a partition with a Fat32 formatted file system.
+
+Write the image to SPI flash using the following commands::
+
+    => usb start; fatload usb 0 0x10000000 u-boot-astra-v1.0.2.sl2610.rdk.spi.bin;
+    => sf probe
+    => sf erase 0 0x200000
+    => sf write 0x10000000 0x0 0x200000
+
+Flashing Image from TFTP Server on SL261x
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To update the internal SPI flash image by downloading it from a TFTP server, simply copy the image to
+the TFTP server.
+
+Write the SPI image to the SPI flash from the TFTP server using the command::
+
+    => net_init; dhcp;
+    => setenv serverip 10.10.10.10;
+    => tftpboot 0x10000000 u-boot-astra-v1.0.2.sl2610.rdk.spi.bin;
+    => sf probe
+    => sf erase 0 0x200000
+    => sf write 0x10000000 0x0 0x200000
+
+.. note::
+
+    SPI U-Boot initializes the network and requests an IP automatically.
+    The ``net_init`` and ``dhcp`` commands not needed when using SPI U-Boot.
+
+.. note::
+
+    In the examples above the TFTP server's address is
+    10.10.10.10. Please replace this IP with the IP address of the server
+    hosting TFTP.

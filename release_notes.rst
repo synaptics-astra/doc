@@ -5,6 +5,9 @@ SDK Release Notes
 .. toctree::
     :hidden:
 
+    release_notes/scarthgap_6.12_v2.1.0
+    release_notes/scarthgap_6.12_v2.0.2
+    release_notes/scarthgap_6.12_v2.0.1
     release_notes/scarthgap_6.12_v2.0.0
     release_notes/scarthgap_6.12_v2.0.0_alpha
     release_notes/kirkstone_5.15_v1.8.0
@@ -22,6 +25,12 @@ SDK Release Notes
 
 Scarthgap Releases
 ==================
+
+:doc:`release_notes/scarthgap_6.12_v2.1.0`
+
+:doc:`release_notes/scarthgap_6.12_v2.0.2`
+
+:doc:`release_notes/scarthgap_6.12_v2.0.1`
 
 :doc:`release_notes/scarthgap_6.12_v2.0.0`
 

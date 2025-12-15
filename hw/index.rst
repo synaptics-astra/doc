@@ -7,9 +7,11 @@ Astra Machina Eval Platform
    sl1680.rst
    sl1640.rst
    sl1620.rst
+   sl2600.rst
 
 In this section you can find the hardware user guides for the Astra Machina boards:
 
 - :doc:`sl1680`
 - :doc:`sl1640`
 - :doc:`sl1620`
+- :doc:`sl2600`

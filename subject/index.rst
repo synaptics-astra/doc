@@ -15,6 +15,7 @@ Subject Specific User Guides
    isp_sensor_integration
    updating_isp_sensor_configuration
    gpios
+   otp_guide
    mp_flow_user_guide
    fastlogo_image_generation
    uboot_fastlogo_configuration
@@ -54,6 +55,8 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`updating_isp_sensor_configuration`
 
 - :doc:`gpios`
+
+- :doc:`otp_guide`
 
 - :doc:`mp_flow_user_guide`
 

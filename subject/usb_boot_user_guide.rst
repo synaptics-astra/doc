@@ -9,6 +9,10 @@ USB Booting uses the ``astra-boot`` tool to load the boot images. The ``astra-bo
 `Astra Update <https://github.com/synaptics-astra/astra-update>`__ tool used for software update. Both tools are based on the ``astraupdate``
 library, but ``astra-boot`` removes the update logic to only support booting.
 
+.. note::
+
+    USB Boot is not supported on SL261x.
+
 Setting Up USB Boot
 ===================
 

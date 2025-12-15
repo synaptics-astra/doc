@@ -61,7 +61,7 @@ External Documentation
 
    This guide explains in depth how to use the SyNAP toolkit and the SyNAP runtime API.
 
-`Yocto Project Documentation <https://docs.yoctoproject.org/4.0.17/>`__
+`Yocto Project Documentation <https://docs.yoctoproject.org/5.0.9/>`__
 
    Official documentation of the Yocto project.
 
