@@ -32,9 +32,9 @@ The Waveshare panel can be enabled by setting the ``dtbo`` variable, in U-Boot, 
 +-----------------+-----------------------------------+--------------------------------------+-------------------------------------+------------------------------------+
 |                 | SL1620                            | SL1640                               | SL1680                              | SL2619                             |
 +=================+===================================+======================================+=====================================+====================================+
-| 7" Panel        | myna2-ws-panel-overlay.dtbo       | platypus-ws-panel-overlay.dtbo       | dolphin-ws-panel-overlay.dtbo       | sl2619-ws-panel-overlay.dtbo       |
+| 7" Panel        | myna2-ws-panel-overlay.dtbo       | platypus-ws-panel-overlay.dtbo       | dolphin-ws-panel-overlay.dtbo       | sl261x-ws-panel-overlay.dtbo       |
 +-----------------+-----------------------------------+--------------------------------------+-------------------------------------+------------------------------------+
-| 13.3" Panel     | myna2-ws-1080p-panel-overlay.dtbo | platypus-ws-1080p-panel-overlay.dtbo | dolphin-ws-1080p-panel-overlay.dtbo | sl2619-ws-1080p-panel-overlay.dtbo |
+| 13.3" Panel     | myna2-ws-1080p-panel-overlay.dtbo | platypus-ws-1080p-panel-overlay.dtbo | dolphin-ws-1080p-panel-overlay.dtbo | sl261x-ws-1080p-panel-overlay.dtbo |
 +-----------------+-----------------------------------+--------------------------------------+-------------------------------------+------------------------------------+
 
 See :ref:`devicetree_overlays` for details on how to enable the devicetree overlays.
