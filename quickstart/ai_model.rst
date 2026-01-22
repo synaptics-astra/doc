@@ -51,12 +51,12 @@ To convert your own AI model and run it on an evaluation kit use the following s
 
 7. Find the ip address of the board with the following command on the target::
 
-    # ifconfig eth0 | grep "/inet addr/"
+    # ifconfig eth0 | grep "inet addr"
               inet addr:192.168.1.110  Bcast:192.168.1.255  Mask:255.255.255.0
 
 8. Upload the converted model to the board by running the following command on the host::
 
-    $  scp converted-model/model.synap root@192.168.1.110:/tmp
+    $  scp converted/model.synap root@192.168.1.110:/tmp
 
 9. Connect to the board and issue the following command::
 
