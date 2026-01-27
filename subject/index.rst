@@ -31,6 +31,7 @@ Subject Specific User Guides
    usb_boot_user_guide
    rescue_mode_user_guide
    pmic_based_pvcomp
+   encoder_motion_vector
 
 
 The following guides provide additional details on a specific subject or module.
@@ -88,3 +89,5 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`rescue_mode_user_guide`
 
 - :doc:`pmic_based_pvcomp`
+
+- :doc:`encoder_motion_vector`
