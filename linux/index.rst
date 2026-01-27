@@ -1574,8 +1574,8 @@ Server side::
 
     ``iperf`` server running on SL1620 with custom options
 
-Using the Bluetooth A2DP source role
-------------------------------------
+Using Bluetooth
+---------------
 
 Searching and connecting to the headset
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1719,8 +1719,8 @@ We can now get the information about the device::
             RSSI: -69
             TxPower: 4
 
-Playing music to the headset
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Playing music to the Headset Using A2DP Source Role
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In order to test playback you need to upload a sound file (in ``.wav`` format)  to the board for instance using ``scp``.
 
@@ -1756,6 +1756,141 @@ headeset (in the example below ``0A:73:76:09:55:C0``) and the name of wave file 
       silence_size : 0
       boundary     : 6755399441055744000
 
+
+Using Bluetooth SCO
+^^^^^^^^^^^^^^^^^^^
+
+SCO deliberately only supports 8KHz and S16_LE with 1 channel prioritizing low latency over the quality,
+so need to configure the PCM accordingly as below.
+
+::
+
+    vi ~/.asoundrc
+    pcm.sco_playback {
+        type plug
+        slave {
+            pcm "hw:0,1"  # Replace with your actual device
+            format S16_LE
+            rate 8000
+            channels 1
+            period_size 256
+            buffer_size 1024
+        }
+    }
+    pcm.sco_capture {
+        type plug
+        slave {
+            pcm "hw:0,4"  # Replace with your actual device
+            format S16_LE
+            rate 8000
+            channels 1
+            period_size 512
+            buffer_size 1024
+        }
+    }
+    ctl.sco_capture {
+        type hw
+        card 0
+    }
+    ctl.sco_playback {
+        type hw
+        card 0
+    }
+
+Modify the alsa config for SCO:
+
+::
+
+    root@sl1680:~# diff /usr/share/alsa/alsa.conf /usr/share/alsa/alsa.conf
+    --- /usr/share/alsa/alsa_og.conf
+    +++ /usr/share/alsa/alsa.conf
+    @@ -118,9 +118,9 @@
+    defaults.pcm.dmix.rate 48000
+    defaults.pcm.dmix.format unchanged
+    defaults.pcm.dmix.card defaults.pcm.card
+    -defaults.pcm.dmix.device defaults.pcm.device
+    +defaults.pcm.dmix.device 1
+    defaults.pcm.dsnoop.card defaults.pcm.card
+    -defaults.pcm.dsnoop.device defaults.pcm.device
+    +defaults.pcm.dsnoop.device 4
+    defaults.pcm.front.card defaults.pcm.card
+    defaults.pcm.front.device defaults.pcm.device
+    defaults.pcm.rear.card defaults.pcm.card
+
+::
+
+    root@sl1680:~# diff /usr/share/alsa/pcm/default.conf /usr/share/alsa/pcm/default.conf
+    --- /usr/share/alsa/pcm/default.conf
+    +++ /usr/share/alsa/pcm/default.conf
+    @@ -40,7 +40,6 @@
+                                    type hw
+                                    card $CARD
+                            }
+    -                       hint.device 0
+                    }
+            }
+            hint {
+
+Ensure that the SCO profile is detected in BlueALSA:
+
+::
+
+    root@sl1620:~# bluealsa-aplay -l
+    **** List of PLAYBACK Bluetooth Devices ****
+    hci0: 90:7A:58:CA:AB:28 [WI-C200], trusted audio-headset
+    SCO (CVSD): S16_LE 1 channel 8000 Hz
+    A2DP (SBC): S16_LE 2 channels 48000 Hz
+    **** List of CAPTURE Bluetooth Devices ****
+    hci0: 90:7A:58:CA:AB:28 [WI-C200], trusted audio-headset
+    SCO (CVSD): S16_LE 1 channel 8000 Hz
+
+    root@sl1620:~# bluealsa-aplay -L
+    bluealsa:SRV=org.bluealsa,DEV=90:7A:58:CA:AB:28,PROFILE=sco
+        WI-C200, trusted audio-headset, playback
+        SCO (CVSD): S16_LE 1 channel 8000 Hz
+    bluealsa:SRV=org.bluealsa,DEV=90:7A:58:CA:AB:28,PROFILE=sco
+        WI-C200, trusted audio-headset, capture
+        SCO (CVSD): S16_LE 1 channel 8000 Hz
+    bluealsa:SRV=org.bluealsa,DEV=90:7A:58:CA:AB:28,PROFILE=a2dp
+        WI-C200, trusted audio-headset, playback
+        A2DP (SBC): S16_LE 2 channels 48000 Hz
+
+Set the SCO Profile:
+
+::
+
+    hcitool -i hci0 cmd 0x01 0x03d \
+        0b 00 40 1f 00 00 40 1f 00 00 02 00 \
+        00 00 00 02 00 00 00 00 3c 00 3c 00 \
+        80 3e 00 00 80 3e 00 00 04 00 00 00 \
+        00 04 00 00 00 00 10 00 10 00 02 02 \
+        00 00 04 04 10 10 0a 00 80 03 01
+
+Using ``aplay`` and ``arecord``:
+
+::
+
+    arecord -D "sco_capture" -f S16_LE /home/root/rec_bt_sco_audo.wav &
+    aplay -D "sco_playback" --dump-hw-params /home/root/rec_bt_sco_audo.wav &
+
+Using SCO with Chromium:
+
+::
+
+    export XDG_RUNTIME_DIR=/run/user/0
+    export WAYLAND_DISPLAY=wayland-1
+
+    chromium --no-sandbox --alsa-output-device='sco_playback' --alsa-input-device='sco_capture' \
+    --alsa-output-buffer-size=1024 --alsa-output-period-size=512
+
+.. note::
+
+    In case of facing any failure in internet connection due to date and time advancing or mismatch in chromium,
+    please set it manually with below command::
+
+        timedatectl set-ntp false
+        timedatectl set-time "DATE TIME"
+        Example: timedatectl set-time "2025-01-15 15:00:00"
 
 The Linux Boot Process
 ======================
