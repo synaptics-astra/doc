@@ -1258,20 +1258,26 @@ Bluetooth and Wi-Fi are supported on Astra Machina through on-board chip
 solutions and external hardware. The following table lists the various
 on-board chips and external solutions:
 
-============ =============== ===================== ========================================================
-SL Processor Wireless Device Physical Interface    Software Information
-                                                  
-                             (M.2 PCIe / M.2 SDIO)
-============ =============== ===================== ========================================================
-SL1620       SYNA 43711      M.2 SDIO              - wpa_supplicant v2.11
-                                                   - WIFI driver version: v101.10.478
-SL1640       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.11
-                                                   - WIFI driver version: v101.10.478
-SL1680       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.11
-                                                   - WIFI driver version: v101.10.478
-SL2610       SYNA 43711S     M.2 SDIO              - wpa_supplicant v2.11
-                                                   - WIFI driver version: v101.10.478
-============ =============== ===================== ========================================================
++--------------+-----------------+-------------------------+--------------------------------------------------------+
+| SL Processor | Wireless Device | Physical Interface      | Software Information                                   |
+|              |                 |                         |                                                        |
+|              |                 |  (M.2 PCIe / M.2 SDIO)  |                                                        |
++==============+=================+=========================+========================================================+
+| SL1620       | SYNA 43711      | M.2 SDIO                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
++--------------+-----------------+-------------------------+--------------------------------------------------------+
+| SL1640       | SYNA 43752      | M.2 PCIe                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
++--------------+-----------------+-------------------------+--------------------------------------------------------+
+| SL1680       | SYNA 43752      | M.2 PCIe                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
++--------------+-----------------+-------------------------+--------------------------------------------------------+
+| SL2610       | SYNA 43711S     | M.2 SDIO                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
+|              +-----------------+-------------------------+--------------------------------------------------------+
+|              | SYNA 4612       | M.2 SDIO                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.591                     |
++--------------+-----------------+-------------------------+--------------------------------------------------------+
 
 The Synaptics Astra Linux BSP contains all of the drivers and firmware required to use the 43xxx modules with both PCIe and SDIO interfaces.
 Wireless network management is handled by the WPA Supplicant daemon which key negotiation with a WPA Authenticator. It supports WEP, WPA, WPA2, and WPA3
