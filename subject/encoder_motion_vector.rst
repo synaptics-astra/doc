@@ -15,12 +15,12 @@ This example sets the V4L2 Control ID and Value::
     dbg("setting (%d): %u", id, ctrl.value);
     ret = ::ioctl(mFd, VIDIOC_S_CTRL, &ctrl);
 
-Motion Vector Data can be access from the video buffer::
+Motion Vector Data can be accessed from the capture buffer::
 
     v4l2_buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     ret = ::ioctrl(mFd, VIDIOC_DQBUF, &v4l2_buf);
-    v4l2_buf plane[0]:  encoded ES buffer
-    v4l2_buf plane[1]:  motion vector buffer
+    v4l2_buf plane[0]:  encoded ES data
+    v4l2_buf plane[1]:  motion vector data
 
 This example prints the Motion Vector data to a file::
 
