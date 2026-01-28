@@ -2027,6 +2027,8 @@ The active slot is selected at boot based on metadata about slots is stored in t
 partition. The ``misc`` partition is initialized when an image is flashed (eMMC) or by SU-Boot
 on first boot (SPI).
 
+See :ref:`ab_boot` for more information on A/B Booting.
+
 .. note::
 
     When ``misc`` is initialized to will default to Slot A.
@@ -2089,6 +2091,7 @@ can be used to set variables, or flash the eMMC and internal SPI flash.
 .. note::
 
     When booting from SPI to SD Card, the misc parition on the SD card is used instead of the partition on SPI.
+    See :ref:`sd_card_boot_flow`
 
 Generating Bootable SD Card Images
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

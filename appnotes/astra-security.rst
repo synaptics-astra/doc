@@ -257,6 +257,8 @@ Generic Boot Flow
 
    Astra Generic Boot Flow
 
+.. _ab_boot:
+
 A/B Boot Flow (boot failover)
 -----------------------------
 
@@ -383,6 +385,8 @@ result, NAND boot can only be done on vendor HW device.
    :height: 6.46549in
 
    Astra NAND Boot Flow
+
+.. _sd_card_boot_flow:
 
 SD Card Boot
 ------------
