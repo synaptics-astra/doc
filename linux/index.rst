@@ -2497,7 +2497,7 @@ You can find the latest versions of the SPI images on `GitHub <https://github.co
 .. note::
 
     If only Slot A has been programmed and an boot issues occurs. The board can be recovered by erasing
-    teh misc partition and letting SU-Boot reinitialize it.
+    the misc partition and letting SU-Boot reinitialize it.
 
 Flashing Image from an External USB Drive on SL16x0
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
