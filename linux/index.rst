@@ -2015,6 +2015,22 @@ found in the :doc:`/yocto`.
 
 .. _uboot:
 
+A/B Booting
+^^^^^^^^^^^
+
+Astra supports A/B booting. A/B booting uses two two independent bootable slots. Only
+one slot is active at a time. This supports fail-safe updates and fail-over recovery
+if one slot becomes corrupted. Key paritions such as the bootloader, rootfs, and others
+have a and b versions. See :ref:`example_parition_table`.
+
+The active slot is selected at boot based on metadata about slots is stored in the ``misc``
+partition. The ``misc`` partition is initialized when an image is flashed (eMMC) or by SU-Boot
+on first boot (SPI).
+
+.. note::
+
+    When ``misc`` is initialized to will default to Slot A.
+
 U-Boot
 ------
 
@@ -2072,7 +2088,7 @@ can be used to set variables, or flash the eMMC and internal SPI flash.
 
 .. note::
 
-    Booting from SD cards is not supported on SL1620
+    When booting from SPI to SD Card, the misc parition on the SD card is used instead of the partition on SPI.
 
 Generating Bootable SD Card Images
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2154,6 +2170,8 @@ files and emmc_part_list, emmc_image_list, and emmc_image_list_full. The
 emmc_part_list describes the GUID Partition Table (GPT) which will be
 used for the eMMC. The emmc_image_list\* files specify which sub image
 files should be written to which partition on the eMMC.
+
+.. _example_parition_table:
 
 Example SL1640 Partition Table:
 
@@ -2470,6 +2488,16 @@ You can find the latest versions of the SPI images on `GitHub <https://github.co
 
     SL261x and SL16x0 use different commands to update the internal SPI flash. Please follow the guide specific to
     the device you are using.
+
+.. note::
+
+    The memory offset of the ``misc`` partition must be cleared before boot from SPI. Otherwise, SU-Boot will not
+    properly initialize the ``misc`` partition.
+
+.. note::
+
+    If only Slot A has been programmed and an boot issues occurs. The board can be recovered by erasing
+    teh misc partition and letting SU-Boot reinitialize it.
 
 Flashing Image from an External USB Drive on SL16x0
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
