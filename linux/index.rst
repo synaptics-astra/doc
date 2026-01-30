@@ -1244,12 +1244,17 @@ The Torq Demo supports using both the CPU or the NPU.
 
 .. _synap:
 
-Machine Learning with SyNAP
+Machine Learning with Astra
 ===========================
 
-Astra Machina uses the SyNAP framework for execution of neural networks using the platform's hardware accelerators.
-This framework allows users to run programs which take advantage of the Neural Processing Unit (NPU)
-and Graphics Processing Unit (GPU) to accelerate the execution of neural networks. (see the `SyNAP documentation <https://synaptics-synap.github.io/doc/v/latest/>`__ for more details.)
+With the introduction of the SL261x product line, Astra Machina now supports two machine learning frameworks depending on the product line.
+The SyNAP framwork is supported on SL16x0 SoCs and the Torq framework is supported on SL261x SoCs with the Coral NPU. Both frameworks
+allows users to run programs which take advantage of the Neural Processing Unit (NPU) and Graphics Processing Unit (GPU) to accelerate the
+execution of neural networks.
+
+For details on using the SyNAP framework, see the `SyNAP documentation <https://synaptics-synap.github.io/doc/v/latest/>`__.
+
+For details on using the Torq framework, see the `Torq documentation <https://synaptics-torq.github.io/torq-compiler/v/latest/>__`.
 
 Connectivity
 ============
