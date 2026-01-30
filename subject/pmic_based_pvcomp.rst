@@ -7,6 +7,11 @@ and Leakage ID. PVComp will adjust the voltages on VCORE and VCPU accordingly. P
 for all PMICs supported by our QVL list. The PMIC must be set in the Astra SDK config when building custom boards. This
 guide covers configuring the PMIC and validating the PVComp functionality.
 
+
+.. note::
+
+    PVComp based on PMIC is supported on SL16x0 platforms.
+
 Validating PVComp from Serial Console Logs
 ==========================================
 
