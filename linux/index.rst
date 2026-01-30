@@ -2101,7 +2101,7 @@ SPI flash. The SPI flash may be located on the main board of Astra Machina or
 it may be a located on a SPI daughter card which is plugged into the device.
 Once SPI U-Boot is running on the board it can be used to write an image to the eMMC.
 
-`Synaptics U-Boot Source Code <https://github.com/synaptics-astra/boot-u-boot_2019_10/tree/#release#>`__
+`Synaptics U-Boot Source Code <https://github.com/synaptics-astra/boot-u-boot/tree/#release#>`__
 
 .. note::
 
@@ -2244,11 +2244,12 @@ home               Mounted in /home, can be customized                          
 Updating Software Images using USB
 ----------------------------------
 
+Astra Machina supports updating software images using USB.
+
 .. note::
 
-    USB Boot is not supported with SL261x. Use :ref:`update_with_uboot` instead.
-
-Astra Machina supports updating software images using USB.
+    SL261x uses a different USB protocol then SL16x0. After completing the Hardware Setup section,
+    proceed to :ref:`usb_boot_sl261x`.
 
 .. _usb_boot_setup:
 
@@ -2273,6 +2274,11 @@ system to the USB Type-C USB 2.0 port on Astra Machina (next to the ethernet por
 
 Installing the WinUSB Driver (Windows Only)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note::
+
+    The driver is not required for SL261x devices. Please proceeed to :ref:`usb_boot_sl261x`
+    when using SL262x SoCs.
 
 Windows requires a special USB kernel driver to communicate with
 Astra Machina over USB. Please download the driver from
@@ -2308,6 +2314,11 @@ Driver for Synaptics Processors" when operating in USB Boot mode.
 
 Running Astra Update
 ^^^^^^^^^^^^^^^^^^^^
+
+.. note::
+
+    ``astra-update`` currently does not support SL261x boards. Please proceeed to :ref:`usb_boot_sl261x`
+    when using SL262x SoCs.
 
 Astra Update can be downloaded from `GitHub <https://github.com/synaptics-astra/usb-tool>`__.
 The tool is included in the same repository as the WinUSB driver.
@@ -2403,6 +2414,46 @@ requires additional permissions to interface with USB devices and access system 
 
     Astra Update no longer requires a USB-TTL board or cable to run commands at the U-Boot prompt.
 
+.. _usb_boot_sl261x:
+
+USB Boot with SL261x
+^^^^^^^^^^^^^^^^^^^^
+
+The scarthgap_6.12_v2.2.0 release supports loading SU-Boot over the USB interface. Once SU-Boot is loaded
+the emmc and SPI images can be updated using a USB drive (see :ref:`flashing_from_usb_drive`) or TFTP server
+(see :ref:`flashing_from_tftp_server`).
+
+SL261x uses a USB-CDC interface to communicate with the host. This type of device has built-in drivers on all
+supported OSes so no additional drivers need to be installed. The ``usb_boot_tool.py`` script is used to download
+images from the host PC onto the device. The tool can be found in the ``SL261x`` branch of the
+`usb-tool <https://github.com/synaptics-astra/usb-tool/tree/sl261x>`__ repository.
+
+The ``usb-boot-tool.py`` requires Python 3.13 or later and the ``pyserial`` Python module. Once Python is installed
+you can install the ``pyserial`` module using ``pip``::
+
+    pip install pyserial
+
+Run the following command to download SU-Boot and have it run on the board::
+
+    python usb_boot_tool.py --op run-acore --sm sysmgr.subimg --bl bl.subimg --tzk tzk.subimg
+
+Once the ``usb-boot-tool.py`` tool is running on the host system, Astra Machina will need to be placed into USB
+Boot mode. To do this, press and hold the "USB_BOOT" button on the I/O board. Then press and release the
+"RESET" button. Be sure to hold the "USB_BOOT" button long enough so that the board can reset and detect
+that the "USB_BOOT" button is pressed. The tool will then detect that the device has entered into USB Boot mode and
+begin sending images to the board. Once the images are sent you will see the U-Boot prompt on teh serial console.
+
+.. figure:: media/sl261x-usb-boot-tool.png
+
+    Output of ``usb-boot-tool.py`` after booting to SU-Boot.
+
+.. figure:: media/sl261x-usb-boot-tool-u-boot.png
+
+    U-Boot prompt on the serial console after booting U-Boot using ``usb-boot-tool.py``.
+
+After booting U-Boot proceed to :ref:`update_with_uboot`. Additional instructions on using the ``usb-boot-tool.py``
+can be found in tool's `README file <https://github.com/synaptics-astra/usb-tool/blob/sl261x/README.md>`__.
+
 .. _update_with_uboot:
 
 Updating Images from U-Boot
@@ -2485,6 +2536,8 @@ The parameter eMMCimg is the name of the image directory on the USB drive.
     If ``usb reset`` reports  ``0 Storage Device(s) found`` and only one USB controller was detected
     then the USB drive needs to be connected to the USB Type-C USB 2.0 port
     (may require USB Type-C to USB Type-A adaptor).
+
+.. _flashing_from_tftp_server:
 
 Flashing Images from a TFTP Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
