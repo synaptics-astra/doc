@@ -5,6 +5,11 @@ Converting and running a custom neural network
 
 .. note::
 
+    SL261x uses the Torq framework instead of SyNAP. See the `Torq User Manual <https://synaptics-torq.github.io/torq-compiler/v/latest/user-manual/index.html>__`
+    for information on converting and running models with Torq.
+
+.. note::
+
    In addition to the :ref:`prerequisites for flashing <prepare_to_boot>` you also need a host with
    docker installed, an ethernet cable and a local network with DHCP.
 

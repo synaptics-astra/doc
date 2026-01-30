@@ -3,6 +3,11 @@ Running a pre-converted neural network
 
 .. highlight:: console
 
+.. note::
+
+    SL261x uses the Torq framework instead of SyNAP. See the `Torq User Manual <https://synaptics-torq.github.io/torq-compiler/v/latest/user-manual/index.html>__`
+    for information on converting and running models with Torq.
+
 To run a image classification neural network on a random image using an evaluation kit:
 
 1. Install a pre-built image and connect to the board as described :doc:`here <flash_image>`
