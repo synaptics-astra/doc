@@ -1244,12 +1244,17 @@ The Torq Demo supports using both the CPU or the NPU.
 
 .. _synap:
 
-Machine Learning with SyNAP
+Machine Learning with Astra
 ===========================
 
-Astra Machina uses the SyNAP framework for execution of neural networks using the platform's hardware accelerators.
-This framework allows users to run programs which take advantage of the Neural Processing Unit (NPU)
-and Graphics Processing Unit (GPU) to accelerate the execution of neural networks. (see the `SyNAP documentation <https://synaptics-synap.github.io/doc/v/latest/>`__ for more details.)
+With the introduction of the SL261x product line, Astra Machina now supports two machine learning frameworks depending on the product line.
+The SyNAP framwork is supported on SL16x0 SoCs and the Torq framework is supported on SL261x SoCs with the Coral NPU. Both frameworks
+allows users to run programs which take advantage of the Neural Processing Unit (NPU) and Graphics Processing Unit (GPU) to accelerate the
+execution of neural networks.
+
+For details on using the SyNAP framework, see the `SyNAP documentation <https://synaptics-synap.github.io/doc/v/latest/>`__.
+
+For details on using the Torq framework, see the `Torq documentation <https://synaptics-torq.github.io/torq-compiler/v/latest/>__`.
 
 Connectivity
 ============
@@ -1258,20 +1263,59 @@ Bluetooth and Wi-Fi are supported on Astra Machina through on-board chip
 solutions and external hardware. The following table lists the various
 on-board chips and external solutions:
 
-============ =============== ===================== ========================================================
-SL Processor Wireless Device Physical Interface    Software Information
-                                                  
-                             (M.2 PCIe / M.2 SDIO)
-============ =============== ===================== ========================================================
-SL1620       SYNA 43711      M.2 SDIO              - wpa_supplicant v2.11
-                                                   - WIFI driver version: v101.10.478
-SL1640       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.11
-                                                   - WIFI driver version: v101.10.478
-SL1680       SYNA 43752      M.2 PCIe              - wpa_supplicant v2.11
-                                                   - WIFI driver version: v101.10.478
-SL2610       SYNA 43711S     M.2 SDIO              - wpa_supplicant v2.11
-                                                   - WIFI driver version: v101.10.478
-============ =============== ===================== ========================================================
++--------------+-----------------+-------------------------+--------------------------------------------------------+
+| SL Processor | Wireless Device | Physical Interface      | Software Information                                   |
+|              |                 |                         |                                                        |
+|              |                 |  (M.2 PCIe / M.2 SDIO)  |                                                        |
++==============+=================+=========================+========================================================+
+| SL1620       | SYNA 43711      | M.2 SDIO                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
+|              +-----------------+-------------------------+--------------------------------------------------------+
+|              | SYNA 4612       | M.2 SDIO                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.591                     |
+|              +-----------------+-------------------------+--------------------------------------------------------+
+|              | SYNA 4381       | M.2 SDIO                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
+|              +-----------------+-------------------------+--------------------------------------------------------+
+|              | SYNA 4384       | M.2 SDIO                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.591                     |
++--------------+-----------------+-------------------------+--------------------------------------------------------+
+| SL1640       | SYNA 43752      | M.2 PCIe                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
+|              +-----------------+-------------------------+--------------------------------------------------------+
+|              | SYNA 43756      | M.2 PCIe                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
+|              +-----------------+-------------------------+--------------------------------------------------------+
+|              | SYNA 4381       | M.2 SDIO                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
+|              +-----------------+-------------------------+--------------------------------------------------------+
+|              | SYNA 4382       | M.2 SDIO                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
+|              +-----------------+-------------------------+--------------------------------------------------------+
+|              | SYNA 4384       | M.2 PCIe                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.591                     |
++--------------+-----------------+-------------------------+--------------------------------------------------------+
+| SL1680       | SYNA 43752      | M.2 PCIe                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
+|              +-----------------+-------------------------+--------------------------------------------------------+
+|              | SYNA 43756      | M.2 PCIe                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
+|              +-----------------+-------------------------+--------------------------------------------------------+
+|              | SYNA 4381       | M.2 SDIO                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
+|              +-----------------+-------------------------+--------------------------------------------------------+
+|              | SYNA 4382       | M.2 SDIO                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
+|              +-----------------+-------------------------+--------------------------------------------------------+
+|              | SYNA 4384       | M.2 PCIe                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.591                     |
++--------------+-----------------+-------------------------+--------------------------------------------------------+
+| SL2610       | SYNA 43711S     | M.2 SDIO                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.478                     |
+|              +-----------------+-------------------------+--------------------------------------------------------+
+|              | SYNA 4612       | M.2 SDIO                | - wpa_supplicant v2.11                                 |
+|              |                 |                         | - WIFI driver version: v101.10.591                     |
++--------------+-----------------+-------------------------+--------------------------------------------------------+
 
 The Synaptics Astra Linux BSP contains all of the drivers and firmware required to use the 43xxx modules with both PCIe and SDIO interfaces.
 Wireless network management is handled by the WPA Supplicant daemon which key negotiation with a WPA Authenticator. It supports WEP, WPA, WPA2, and WPA3
@@ -1568,8 +1612,8 @@ Server side::
 
     ``iperf`` server running on SL1620 with custom options
 
-Using the Bluetooth A2DP source role
-------------------------------------
+Using Bluetooth
+---------------
 
 Searching and connecting to the headset
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1713,8 +1757,8 @@ We can now get the information about the device::
             RSSI: -69
             TxPower: 4
 
-Playing music to the headset
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Playing music to the Headset Using A2DP Source Role
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In order to test playback you need to upload a sound file (in ``.wav`` format)  to the board for instance using ``scp``.
 
@@ -1750,6 +1794,141 @@ headeset (in the example below ``0A:73:76:09:55:C0``) and the name of wave file 
       silence_size : 0
       boundary     : 6755399441055744000
 
+
+Using Bluetooth SCO
+^^^^^^^^^^^^^^^^^^^
+
+SCO deliberately only supports 8KHz and S16_LE with 1 channel prioritizing low latency over the quality,
+so need to configure the PCM accordingly as below.
+
+::
+
+    vi ~/.asoundrc
+    pcm.sco_playback {
+        type plug
+        slave {
+            pcm "hw:0,1"  # Replace with your actual device
+            format S16_LE
+            rate 8000
+            channels 1
+            period_size 256
+            buffer_size 1024
+        }
+    }
+    pcm.sco_capture {
+        type plug
+        slave {
+            pcm "hw:0,4"  # Replace with your actual device
+            format S16_LE
+            rate 8000
+            channels 1
+            period_size 512
+            buffer_size 1024
+        }
+    }
+    ctl.sco_capture {
+        type hw
+        card 0
+    }
+    ctl.sco_playback {
+        type hw
+        card 0
+    }
+
+Modify the alsa config for SCO:
+
+::
+
+    root@sl1680:~# diff /usr/share/alsa/alsa.conf /usr/share/alsa/alsa.conf
+    --- /usr/share/alsa/alsa_og.conf
+    +++ /usr/share/alsa/alsa.conf
+    @@ -118,9 +118,9 @@
+    defaults.pcm.dmix.rate 48000
+    defaults.pcm.dmix.format unchanged
+    defaults.pcm.dmix.card defaults.pcm.card
+    -defaults.pcm.dmix.device defaults.pcm.device
+    +defaults.pcm.dmix.device 1
+    defaults.pcm.dsnoop.card defaults.pcm.card
+    -defaults.pcm.dsnoop.device defaults.pcm.device
+    +defaults.pcm.dsnoop.device 4
+    defaults.pcm.front.card defaults.pcm.card
+    defaults.pcm.front.device defaults.pcm.device
+    defaults.pcm.rear.card defaults.pcm.card
+
+::
+
+    root@sl1680:~# diff /usr/share/alsa/pcm/default.conf /usr/share/alsa/pcm/default.conf
+    --- /usr/share/alsa/pcm/default.conf
+    +++ /usr/share/alsa/pcm/default.conf
+    @@ -40,7 +40,6 @@
+                                    type hw
+                                    card $CARD
+                            }
+    -                       hint.device 0
+                    }
+            }
+            hint {
+
+Ensure that the SCO profile is detected in BlueALSA:
+
+::
+
+    root@sl1620:~# bluealsa-aplay -l
+    **** List of PLAYBACK Bluetooth Devices ****
+    hci0: 90:7A:58:CA:AB:28 [WI-C200], trusted audio-headset
+    SCO (CVSD): S16_LE 1 channel 8000 Hz
+    A2DP (SBC): S16_LE 2 channels 48000 Hz
+    **** List of CAPTURE Bluetooth Devices ****
+    hci0: 90:7A:58:CA:AB:28 [WI-C200], trusted audio-headset
+    SCO (CVSD): S16_LE 1 channel 8000 Hz
+
+    root@sl1620:~# bluealsa-aplay -L
+    bluealsa:SRV=org.bluealsa,DEV=90:7A:58:CA:AB:28,PROFILE=sco
+        WI-C200, trusted audio-headset, playback
+        SCO (CVSD): S16_LE 1 channel 8000 Hz
+    bluealsa:SRV=org.bluealsa,DEV=90:7A:58:CA:AB:28,PROFILE=sco
+        WI-C200, trusted audio-headset, capture
+        SCO (CVSD): S16_LE 1 channel 8000 Hz
+    bluealsa:SRV=org.bluealsa,DEV=90:7A:58:CA:AB:28,PROFILE=a2dp
+        WI-C200, trusted audio-headset, playback
+        A2DP (SBC): S16_LE 2 channels 48000 Hz
+
+Set the SCO Profile:
+
+::
+
+    hcitool -i hci0 cmd 0x01 0x03d \
+        0b 00 40 1f 00 00 40 1f 00 00 02 00 \
+        00 00 00 02 00 00 00 00 3c 00 3c 00 \
+        80 3e 00 00 80 3e 00 00 04 00 00 00 \
+        00 04 00 00 00 00 10 00 10 00 02 02 \
+        00 00 04 04 10 10 0a 00 80 03 01
+
+Using ``aplay`` and ``arecord``:
+
+::
+
+    arecord -D "sco_capture" -f S16_LE /home/root/rec_bt_sco_audo.wav &
+    aplay -D "sco_playback" --dump-hw-params /home/root/rec_bt_sco_audo.wav &
+
+Using SCO with Chromium:
+
+::
+
+    export XDG_RUNTIME_DIR=/run/user/0
+    export WAYLAND_DISPLAY=wayland-1
+
+    chromium --no-sandbox --alsa-output-device='sco_playback' --alsa-input-device='sco_capture' \
+    --alsa-output-buffer-size=1024 --alsa-output-period-size=512
+
+.. note::
+
+    In case of facing any failure in internet connection due to date and time advancing or mismatch in chromium,
+    please set it manually with below command::
+
+        timedatectl set-ntp false
+        timedatectl set-time "DATE TIME"
+        Example: timedatectl set-time "2025-01-15 15:00:00"
 
 The Linux Boot Process
 ======================
@@ -1874,6 +2053,24 @@ found in the :doc:`/yocto`.
 
 .. _uboot:
 
+A/B Booting
+^^^^^^^^^^^
+
+Astra supports A/B booting. A/B booting uses two two independent bootable slots. Only
+one slot is active at a time. This supports fail-safe updates and fail-over recovery
+if one slot becomes corrupted. Key paritions such as the bootloader, rootfs, and others
+have a and b versions. See :ref:`example_parition_table`.
+
+The active slot is selected at boot based on metadata about slots is stored in the ``misc``
+partition. The ``misc`` partition is initialized when an image is flashed (eMMC) or by SU-Boot
+on first boot (SPI).
+
+See :ref:`ab_boot` for more information on A/B Booting.
+
+.. note::
+
+    When ``misc`` is initialized to will default to Slot A.
+
 U-Boot
 ------
 
@@ -1904,7 +2101,7 @@ SPI flash. The SPI flash may be located on the main board of Astra Machina or
 it may be a located on a SPI daughter card which is plugged into the device.
 Once SPI U-Boot is running on the board it can be used to write an image to the eMMC.
 
-`Synaptics U-Boot Source Code <https://github.com/synaptics-astra/boot-u-boot_2019_10/tree/#release#>`__
+`Synaptics U-Boot Source Code <https://github.com/synaptics-astra/boot-u-boot/tree/#release#>`__
 
 .. note::
 
@@ -1931,7 +2128,8 @@ can be used to set variables, or flash the eMMC and internal SPI flash.
 
 .. note::
 
-    Booting from SD cards is not supported on SL1620
+    When booting from SPI to SD Card, the misc parition on the SD card is used instead of the partition on SPI.
+    See :ref:`sd_card_boot_flow`
 
 Generating Bootable SD Card Images
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2014,6 +2212,8 @@ emmc_part_list describes the GUID Partition Table (GPT) which will be
 used for the eMMC. The emmc_image_list\* files specify which sub image
 files should be written to which partition on the eMMC.
 
+.. _example_parition_table:
+
 Example SL1640 Partition Table:
 
 ================== =================================================================== ================== ===========================
@@ -2044,11 +2244,12 @@ home               Mounted in /home, can be customized                          
 Updating Software Images using USB
 ----------------------------------
 
+Astra Machina supports updating software images using USB.
+
 .. note::
 
-    USB Boot is not supported with SL261x. Use :ref:`update_with_uboot` instead.
-
-Astra Machina supports updating software images using USB.
+    SL261x uses a different USB protocol then SL16x0. After completing the Hardware Setup section,
+    proceed to :ref:`usb_boot_sl261x`.
 
 .. _usb_boot_setup:
 
@@ -2073,6 +2274,11 @@ system to the USB Type-C USB 2.0 port on Astra Machina (next to the ethernet por
 
 Installing the WinUSB Driver (Windows Only)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note::
+
+    The driver is not required for SL261x devices. Please proceeed to :ref:`usb_boot_sl261x`
+    when using SL262x SoCs.
 
 Windows requires a special USB kernel driver to communicate with
 Astra Machina over USB. Please download the driver from
@@ -2108,6 +2314,11 @@ Driver for Synaptics Processors" when operating in USB Boot mode.
 
 Running Astra Update
 ^^^^^^^^^^^^^^^^^^^^
+
+.. note::
+
+    ``astra-update`` currently does not support SL261x boards. Please proceeed to :ref:`usb_boot_sl261x`
+    when using SL262x SoCs.
 
 Astra Update can be downloaded from `GitHub <https://github.com/synaptics-astra/usb-tool>`__.
 The tool is included in the same repository as the WinUSB driver.
@@ -2203,6 +2414,46 @@ requires additional permissions to interface with USB devices and access system 
 
     Astra Update no longer requires a USB-TTL board or cable to run commands at the U-Boot prompt.
 
+.. _usb_boot_sl261x:
+
+USB Boot with SL261x
+^^^^^^^^^^^^^^^^^^^^
+
+The scarthgap_6.12_v2.2.0 release supports loading SU-Boot over the USB interface. Once SU-Boot is loaded
+the emmc and SPI images can be updated using a USB drive (see :ref:`flashing_from_usb_drive`) or TFTP server
+(see :ref:`flashing_from_tftp_server`).
+
+SL261x uses a USB-CDC interface to communicate with the host. This type of device has built-in drivers on all
+supported OSes so no additional drivers need to be installed. The ``usb_boot_tool.py`` script is used to download
+images from the host PC onto the device. The tool can be found in the ``SL261x`` branch of the
+`usb-tool <https://github.com/synaptics-astra/usb-tool/tree/sl261x>`__ repository.
+
+The ``usb-boot-tool.py`` requires Python 3.13 or later and the ``pyserial`` Python module. Once Python is installed
+you can install the ``pyserial`` module using ``pip``::
+
+    pip install pyserial
+
+Run the following command to download SU-Boot and have it run on the board::
+
+    python usb_boot_tool.py --op run-acore --sm sysmgr.subimg --bl bl.subimg --tzk tzk.subimg
+
+Once the ``usb-boot-tool.py`` tool is running on the host system, Astra Machina will need to be placed into USB
+Boot mode. To do this, press and hold the "USB_BOOT" button on the I/O board. Then press and release the
+"RESET" button. Be sure to hold the "USB_BOOT" button long enough so that the board can reset and detect
+that the "USB_BOOT" button is pressed. The tool will then detect that the device has entered into USB Boot mode and
+begin sending images to the board. Once the images are sent you will see the U-Boot prompt on the serial console.
+
+.. figure:: media/sl261x-usb-boot-tool.png
+
+    Output of ``usb-boot-tool.py`` after booting to SU-Boot.
+
+.. figure:: media/sl261x-usb-boot-tool-u-boot.png
+
+    U-Boot prompt on the serial console after booting U-Boot using ``usb-boot-tool.py``.
+
+After booting U-Boot proceed to :ref:`update_with_uboot`. Additional instructions on using the ``usb-boot-tool.py``
+can be found in tool's `README file <https://github.com/synaptics-astra/usb-tool/blob/sl261x/README.md>`__.
+
 .. _update_with_uboot:
 
 Updating Images from U-Boot
@@ -2286,6 +2537,8 @@ The parameter eMMCimg is the name of the image directory on the USB drive.
     then the USB drive needs to be connected to the USB Type-C USB 2.0 port
     (may require USB Type-C to USB Type-A adaptor).
 
+.. _flashing_from_tftp_server:
+
 Flashing Images from a TFTP Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2329,6 +2582,16 @@ You can find the latest versions of the SPI images on `GitHub <https://github.co
 
     SL261x and SL16x0 use different commands to update the internal SPI flash. Please follow the guide specific to
     the device you are using.
+
+.. note::
+
+    The memory offset of the ``misc`` partition must be cleared before boot from SPI. Otherwise, SU-Boot will not
+    properly initialize the ``misc`` partition.
+
+.. note::
+
+    If only Slot A has been programmed and an boot issues occurs. The board can be recovered by erasing
+    the misc partition and letting SU-Boot reinitialize it.
 
 Flashing Image from an External USB Drive on SL16x0
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

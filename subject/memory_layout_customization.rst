@@ -21,6 +21,7 @@ Chip     Default Memory Supported Memory
 SL1620   2GB            1GB / 2GB / 4GB
 SL1640   2GB            2GB / 3GB / 4GB
 SL1680   4GB            2GB / 4GB
+SL261x   2GB            2GB / 4GB
 ======== ============== ================
 
 Below are the memory layouts for all available DDR sizes.
@@ -110,6 +111,29 @@ SL1680 Memory Layout
 |                   | Secure                 | 16MB                       |
 +-------------------+------------------------+----------------------------+
 
+SL261x Memory Layout
+^^^^^^^^^^^^^^^^^^^^
+
++-------------------+------------------------+----------------------------+
+| Memory Size       | Memory Section         | Size                       |
++-------------------+------------------------+----------------------------+
+| 2 GB DDR          | NonSecure (CMA)        | 260MB                      |
+|                   +------------------------+----------------------------+
+|                   | System                 | 1.948GB                    |
+|                   +------------------------+----------------------------+
+|                   | NonSecure (Non-cached) | 8MB                        |
+|                   +------------------------+----------------------------+
+|                   | Secure                 | 16MB                       |
++-------------------+------------------------+----------------------------+
+| 4 GB DDR          | NonSecure (CMA)        | 500MB                      |
+|                   +------------------------+----------------------------+
+|                   | System                 | 3.482GB                    |
+|                   +------------------------+----------------------------+
+|                   | NonSecure (Non-cached) | 8MB                        |
+|                   +------------------------+----------------------------+
+|                   | Secure                 | 16MB                       |
++-------------------+------------------------+----------------------------+
+
 .. note::
 
     NonSecure (CMA) memory sections can be used as system memory when CMA is not needed. System
@@ -167,11 +191,13 @@ For SL1640 ``sl1640_poky_aarch64_rdk/sl1640_poky_aarch64_rdk_defconfig`` and SL1
 
 .. figure:: media/sl1680-preboot-ddr-type.png
 
-`Supported DDR types for SL1620 <https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/#release#/myna2/A0/generic/hwinit>`__
+`Supported DDR types for SL1620 <https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/#release#/bcm_ree/myna2/A0/generic/hwinit>`__
 
-`Supported DDR types for SL1640 <https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/#release#/platypus/A0/generic/hwinit>`__
+`Supported DDR types for SL1640 <https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/#release#/bcm_ree/platypus/A0/generic/hwinit>`__
 
-`Supported DDR types for SL1680 <https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/#release#/dolphin/A0/generic/hwinit>`__
+`Supported DDR types for SL1680 <https://github.com/synaptics-astra/boot-preboot-prebuilts/tree/#release#/bcm_ree/dolphin/A0/generic/hwinit>`__
+
+`Supported DDR types for SL261x <https://github.com/syna-astra-stage/boot/tree/#release#/mcu/cm52/image/chip/klamath/klamath_rdk>`__
 
 Finally, build an image with the modified memory layout::
 

@@ -166,8 +166,12 @@ environment. These demos are `Textures <https://doc.qt.io/qt-5/qtopengl-textures
 
 .. _SynaAI-label:
 
-Syna AI
-^^^^^^^
+Syna AI on SL16x0
+^^^^^^^^^^^^^^^^^
+
+.. note::
+
+    SL261x uses Torq for AI inferencing. See :ref:`sl261x_ai` for details on the Torq Demo Application.
 
 The fourth button on the left is the "AI" button, which opens the "AI" pane. This pane contains a button to launch the "AI Player" app, which includes two sets of usecases. Video Usecases and Audio Usecases
 
@@ -376,6 +380,28 @@ Audio Usecases button opens Audio Classification application. Audio classificati
 .. figure:: media/syna-ai-player-audio-classification.jpg
 
     Audio Classification pane on SL1680
+
+.. _sl261x_ai:
+
+Syna AI on SL261x
+^^^^^^^^^^^^^^^^^
+
+Torq is the new framework for the Coral NPU integrated into SL261x platforms. The Torq Demo application showcases AI use cases using Torq.
+Currently, it demonstrated Image Classification and Object Detection.
+
+The Torq Demo supports using both the CPU or the NPU.
+
+.. figure:: ../linux/media/sl2619-torq-demo.png
+
+    The main screen of Torq Demo
+
+.. figure:: ../linux/media/sl2619-torq-image-classification.png
+
+    The Image Classification screen of Torq Demo
+
+.. figure:: ../linux/media/sl2619-torq-opbject-detection.png
+
+    The Object Detection screen of Torq Demo
 
 Capability Demo
 ^^^^^^^^^^^^^^^

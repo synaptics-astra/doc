@@ -466,12 +466,15 @@ Partition tables
 ----------------
 
 Partition tables are configured in the file ``emmc.pt`` found in the directory
-``product/${SYNA_SDK_CONFIG_NAME}/emmc.pt`` found at http://github.com/synaptics-astra/configs .
+``product/${SYNA_SDK_CONFIG_NAME}``. This is part of the `config repo <http://github.com/synaptics-astra/configs>`__.
 The ``SYNA_SDK_CONFIG_NAME`` depends on the ``MACHINE`` and ``DISTRO_CONFIG`` variables.
+
+SPI images have partition tables configured in the file ``spi.pt`` found in the directory
+``product/${SYNA_SDK_CONFIG_NAME}``. This applies to ``*spi`` ``MACHINE`` types.
 
 To customize this file you can override the recipe ``syna-config-native``.
 
-Some partitions are used by the early boot components stored in eMMC boot partition. These
+Some partitions are used by the early boot components stored in eMMC or SPI boot partition. These
 partitions cannot be removed but can be moved. The early boot components locate these partitions
 using the GPT found in the UDA. Loading from other hardware partitions is not supported.
 

@@ -40,7 +40,7 @@ The Haier panel can be enabled by setting the ``dtbo`` variable, in U-Boot, to t
 +-----------------+--------------------------------+-----------------------------------+----------------------------------+----------------------------------+
 |                 | SL1620                         | SL1640                            | SL1680                           | SL2619                           |
 +=================+================================+===================================+==================================+==================================+
-| DTS Overlay     | myna2-haier-panel-overlay.dtbo | platypus-haier-panel-overlay.dtbo | dolphin-haier-panel-overlay.dtbo | sl2619-haier-panel-overlay.dtbo  |
+| DTS Overlay     | myna2-haier-panel-overlay.dtbo | platypus-haier-panel-overlay.dtbo | dolphin-haier-panel-overlay.dtbo | sl261x-haier-panel-overlay.dtbo  |
 +-----------------+--------------------------------+-----------------------------------+----------------------------------+----------------------------------+
 
 See :ref:`devicetree_overlays` for details on how to enable the devicetree overlays.
