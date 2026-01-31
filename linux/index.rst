@@ -2441,7 +2441,7 @@ Once the ``usb-boot-tool.py`` tool is running on the host system, Astra Machina 
 Boot mode. To do this, press and hold the "USB_BOOT" button on the I/O board. Then press and release the
 "RESET" button. Be sure to hold the "USB_BOOT" button long enough so that the board can reset and detect
 that the "USB_BOOT" button is pressed. The tool will then detect that the device has entered into USB Boot mode and
-begin sending images to the board. Once the images are sent you will see the U-Boot prompt on teh serial console.
+begin sending images to the board. Once the images are sent you will see the U-Boot prompt on the serial console.
 
 .. figure:: media/sl261x-usb-boot-tool.png
 
