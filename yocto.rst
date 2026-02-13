@@ -36,6 +36,8 @@ for the following machines, distributions and images:
     +------------+--------------+-------------------------------------------------+
     | sl2619     | poky         | astra-media, astra-media-oobe                   |
     +------------+--------------+-------------------------------------------------+
+    | sl2619nand | poky         | astra-media                                     |
+    +------------+--------------+-------------------------------------------------+
     | sl1620usb  | poky         | astra-media                                     |
     +------------+--------------+-------------------------------------------------+
     | sl1640usb  | poky         | astra-media                                     |
@@ -378,7 +380,8 @@ sl1680usb             Machine type for booting SL1680 from USB                  
 sl1680spi             Machine type for booting SL1680 from SPI                                                             v1.7
 sl2611                Default machine type for SL2611                                                                      v2.1
 sl2615                Default machine type for SL2615                                                                      v2.1
-sl2619                Default machine type for SL2619                                                                      v2.0.1
+sl2619                Default machine type for SL2619
+sl2619nand            Machine type for booting SL2619 from NAND flash                                                      v2.2.1
 ====================  ===================================================================================================  ==================
 
 .. _astra_images:
