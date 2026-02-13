@@ -449,6 +449,8 @@ General Modules, Peripherals, and Interfaces Supported
 +--------------------------------+--------+----------+--------------------------------------------------------+
 | Memory - eMMC                  | up to 32GB                                                                 |
 +--------------------------------+----------------------------------------------------------------------------+
+| Memory - NAND                  | 256MB                                                                      |
++--------------------------------+----------------------------------------------------------------------------+
 
 +-------------------------------------------------------------------------------------------------------------+
 | General Peripherals                                                                                         |
@@ -635,6 +637,12 @@ Known Issues and Limitations
 
     Network Manager can be supported in Astra 1.7, but it's disabled by default as there are some stability issues found.
     If needed, Network Manager can be enabled. Please, contact the Synaptics Astra support team for more information.
+
+.. note::
+
+    On SL2619 NAND is limited to 256MB. The NAND image contains minimal packages to accomidate the small storage.
+    Please see the `sl2619nand machine definition <https://github.com/synaptics-astra/meta-synaptics/blob/scarthgap_6.12_v2.2.1/conf/machine/sl2619nand.conf>`__
+    for information on what packages are included and what has been removed.
 
 Known Issues
 ------------
