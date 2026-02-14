@@ -2511,10 +2511,10 @@ To load U-Boot from the internal SPI flash, insert the the SD_BOOT jumper as des
 
 .. _flashing_from_usb_drive:
 
-Flashing Images from a USB Drive
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Flashing eMMC Images from a USB Drive
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To flash an Astra system image from an external USB drive simply copy the image
+To flash an Astra eMMC system image from an external USB drive simply copy the image
 directory to the USB drive. The USB drive will need a partition with a 
 Fat32 formatted file system and enough capacity to fit the Astra system image.
 
@@ -2539,10 +2539,10 @@ The parameter eMMCimg is the name of the image directory on the USB drive.
 
 .. _flashing_from_tftp_server:
 
-Flashing Images from a TFTP Server
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Flashing eMMC Images from a TFTP Server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To flash an Astra system image from a TFTP server you will first need to
+To flash an Astra eMMC system image from a TFTP server you will first need to
 connect Astra Machina to a local network using the ethernet port. Copy the
 Astra image to the TFTP server so that it can be accessed by the device
 over the network. Once the device is connected to the network, boot to
@@ -2558,6 +2558,56 @@ Write the image to eMMC from the TFTP server using the command::
     => tftp2emmc eMMCimg
 
 The parameter eMMCimg is the name of the image directory on the TFTP server.
+
+.. note::
+
+    SPI U-Boot initializes the network and requests an IP automatically.
+    The ``net_init`` and ``dhcp`` commands not needed when using SPI U-Boot.
+
+.. note::
+
+    In the examples above the TFTP server's address is
+    10.10.10.10. Please replace this IP with the IP address of the server
+    hosting TFTP.
+
+Flashing NAND Images from a USB Drive
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To flash an Astra NAND system image from an external USB drive simply copy the image
+file to the USB drive. The USB drive will need a partition with a
+Fat32 formatted file system and enough capacity to fit the Astra system image.
+
+Write the image to eMMC using the command::
+
+    => usb reset
+    => usb2nand uNAND_full.img
+
+The parameter uNAND_full.img is the name of the image file on the USB drive.
+
+.. note::
+
+    If ``usb reset`` reports  ``0 Storage Device(s) found`` and only one USB controller was detected
+    then the USB drive needs to be connected to the USB Type-C USB 2.0 port
+    (may require USB Type-C to USB Type-A adaptor).
+
+Flashing NAND Images from a TFTP Server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To flash an Astra NAND system image from a TFTP server you will first need to
+connect Astra Machina to a local network using the ethernet port. Copy the
+Astra image to the TFTP server so that it can be accessed by the device
+over the network. Once the device is connected to the network, boot to
+the U-Boot prompt.
+
+Initialize networking and request an IP address from a DHCP server on the local network::
+
+    => net_init; dhcp;
+
+Write the image to eMMC from the TFTP server using the command::
+
+    => tftp2nand 10.10.10.10:uNAND_full.img
+
+The parameter uNAND_full.img is the name of the image file on the TFTP server.
 
 .. note::
 
