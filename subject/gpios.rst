@@ -51,11 +51,11 @@ the device tree entries in the Linux Kernel. This requires modifying the ``linux
 
 Modify the platform dts file located in ``build-sl1680/workspace/sources/linux-syna/arch/arm64/boot/dts/synaptics``.
 
-+-----------------+---------------+------------------+-----------------+
-|                 | SL1620        | SL1640           | SL1680          |
-+-----------------+---------------+------------------+-----------------+
-| DTS             | myna2-rdk.dts | platypus-rdk.dts | dolphin-rdk.dts |
-+-----------------+---------------+------------------+-----------------+
++-----------------+---------------+------------------+-----------------+-----------------+
+|                 | SL1620        | SL1640           | SL1680          | SL261x          |
++-----------------+---------------+------------------+-----------------+-----------------+
+| DTS             | myna2-rdk.dts | platypus-rdk.dts | dolphin-rdk.dts | sl261*-rdk.dts  |
++-----------------+---------------+------------------+-----------------+-----------------+
 
 First, identify where the GPIOs are currently configured in the dts file and disable them. Then reassign them to function as GPIOs.
 
@@ -147,6 +147,20 @@ gpio\@2400          f7e82400   0 to 31
 gpio\@0800          f7e80800   32 to 63
 gpio\@0c00          f7e80c00   64 to 95
 =================   ========   ========
+
+SL261x
+------
+
+=================   ========   ========
+GPIO Port           Address    GPIOs
+=================   ========   ========
+gpio\@7000          f7f07000   0 to 31
+gpio\@e000          f7f0e000   32 to 63
+gpio\@8000          e5038000   64 to 79
+gpio\@9000          e5039000   80 to 87
+gpio\@a000          e503a000   88 to 95
+=================   ========   ========
+
 
 .. note::
 
