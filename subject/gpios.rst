@@ -15,31 +15,47 @@ Specific details on GPIOs can be found in the :doc:`../hw/index`.
 Accessing GPIOs from Userspace
 ==============================
 
-GPIOs can be accessed and configured using the GPIO sysfs interface ``/sys/class/gpio``. GPIOs can be exported to userspace and their
-direction and value can be viewed or set. 
+GPIOs can be accessed and configured using the ``libgpiod`` tools. These tools interface with the kernel's character device interface ``/dev/gpiochipN``
+instead of the deprecated sysfs interface.
 
-For example, to export GPIO[36] on SL1680 run the command::
+To identify available GPIO chips and lines, use:
 
-    root@sl1680:~# echo 484 > /sys/class/gpio/export
+::
 
-GPIO[36] is located on the 40 pin connectors on SL1640 and SL1680. GPIO[36] maps to GPIO number 484 based on the instruction in :ref:`gpio_mapping`.
+    root@sl1680:~# gpiodetect
+    root@sl1680:~# gpioinfo
 
-Once the GPIO has been exported, the value and direction can be viewed and set::
+GPIOs are accessed by chip and line offset, rather than the legacy global GPIO number.
 
-    root@sl1680:~# cd /sys/class/gpio/
-    root@sl1680:/sys/class/gpio/gpio484# cat direction
-    in
-    root@sl1680:/sys/class/gpio/gpio484# cat value
-    0
+For example, GPIO[36] on the SL1680 corresponds to line offset 4 on its GPIO controller (see :ref:`gpio_mapping`).
 
-By default, GPIO[36] is set to input with the value 0. To changes these value, write to the corresponding sysfs file::
+To read the value of GPIO[36]:
 
-    root@sl1680:/sys/class/gpio/gpio484# echo "out" > direction
-    root@sl1680:/sys/class/gpio/gpio484# cat direction
-    out
-    root@sl1680:/sys/class/gpio/gpio484# echo 1 > value
-    root@sl1680:/sys/class/gpio/gpio484# cat value
-    1
+::
+
+    root@sl1680:~# gpioget -c gpiochip1 4
+    "4"=active
+
+To configure GPIO[36] as an output and set it high. The command will hold the line high until it exits.
+
+::
+
+    root@sl1680:~# gpioset -c gpiochip1 4=1
+
+To set GPIO[36] low. The command will hold the line low until it exits.
+
+::
+
+    root@sl1680:~# gpioset -c gpiochip1 4=0
+
+The ``libgpiod`` tools support input and output. The ``gpioget`` program requests the line as an input whereas
+``gpioset`` requests the line as an output. The line is released automatically when the command exits.
+
+.. note::
+
+    Unlike the legacy sysfs interface, the GPIO value is only driven while the
+    process holds the line. When ``gpioset`` exits, the line is released and its
+    state is no longer guaranteed.
 
 Changing the Function of GPIOs
 ==============================
