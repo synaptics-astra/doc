@@ -114,10 +114,10 @@ GPIOs 64 - 95:
     \text{GPIO ID} = \text{gpiochip#} + (\text{GPIO#} - 64)
 
 To do this calculation start by identifying the gpiochip number for the controller on which the GPIO is attached. The address will match
-the GPIO ports in the tables below. Find which gpiochip is associated with which GPIO port by running ``ls -l /sys/class/gpio``. The symlink
+the GPIO ports in the tables below. Find which gpiochip is associated with which GPIO port by running ``gpiodetect``. The output
 will contain the GPIO port address of the port associated with the gpiochip.
 
-.. figure:: media/sl1680-gpiochip.png
+.. figure:: media/sl1680-gpiochip-gpiodetect.png
 
     gpiochip numbers on SL1680
 
