@@ -32,21 +32,21 @@ of the atomic security provisioning group.
 +=======+===============================+=========================+============+============+=============================================+
 | 0-31  | OTP_USER_DATA_0 ~ 31          | Read / Write            | 0xFFFFFFFF | NO         | User Data                                   |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
-| 100   | OTP_K0_OEM_HASH_0             | Write Only              | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 0 (256-bit)   |
+| 100   | OTP_K0_OEM_HASH_0             | Read / Write            | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 0 (256-bit)   |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
-| 101   | OTP_K0_OEM_HASH_1             | Write Only              | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 1             |
+| 101   | OTP_K0_OEM_HASH_1             | Read / Write            | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 1             |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
-| 102   | OTP_K0_OEM_HASH_2             | Write Only              | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 2             |
+| 102   | OTP_K0_OEM_HASH_2             | Read / Write            | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 2             |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
-| 103   | OTP_K0_OEM_HASH_3             | Write Only              | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 3             |
+| 103   | OTP_K0_OEM_HASH_3             | Read / Write            | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 3             |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
-| 104   | OTP_K0_OEM_HASH_4             | Write Only              | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 4             |
+| 104   | OTP_K0_OEM_HASH_4             | Read / Write            | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 4             |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
-| 105   | OTP_K0_OEM_HASH_5             | Write Only              | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 5             |
+| 105   | OTP_K0_OEM_HASH_5             | Read / Write            | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 5             |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
-| 106   | OTP_K0_OEM_HASH_6             | Write Only              | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 6             |
+| 106   | OTP_K0_OEM_HASH_6             | Read / Write            | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 6             |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
-| 107   | OTP_K0_OEM_HASH_7             | Write Only              | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 7             |
+| 107   | OTP_K0_OEM_HASH_7             | Read / Write            | 0xFFFFFFFF | YES        | OEM Root Public Key Hash word 7             |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
 | 108   | OTP_AESK0_0                   | Write Only              | 0xFFFFFFFF | YES        | AES Root Key K0 word 0 (0-3 total 128-bit)  |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
@@ -68,6 +68,12 @@ of the atomic security provisioning group.
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
 | 117   | OTP_REE_JTAG_PROTECTION_POLICY| Read / Write            | 0x00000003 | NO         | 2-bit JTAG access policy                    |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
+| 118   | OTP_REE_VERSION               | Read / Write            | 0x0000003F | NO         | 6-bit REE version                           |
++-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
+| 119   | OTP_RKEK_ID_0                 | Read / Write            | 0xFFFFFFFF | NO         | Word 0 (32-bit) of 64-bit RKEK_ID           |
++-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
+| 120   | OTP_RKEK_ID_1                 | Read / Write            | 0xFFFFFFFF | NO         | Word 1 (32-bit) of 64-bit RKEK_ID           |
++-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
 | 200   | OTP_EMMC_BOOT_DISABLE         | Read / Write            | 0x00000001 | NO         | 1 = Disable eMMC boot                       |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
 | 201   | OTP_SPI_BOOT_DISABLE          | Read / Write            | 0x00000001 | NO         | 1 = Disable SPI boot                        |
@@ -80,7 +86,13 @@ of the atomic security provisioning group.
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
 | 205   | OTP_USB_BOOT_DISABLE          | Read / Write            | 0x00000001 | NO         | 1 = Disable USB boot                        |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
-| 206   | OTP_FIELD_MAX                 | N/A                     | N/A        | N/A        | Enum boundary only                          |
+| 206   | OTP_BOOT_VERSION              | Read / Write            | 0x0000003F | NO         | 6-bit BOOT version                          |
++-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
+| 207   | OTP_SOC_UID_0                 | Read Only               | 0xFFFFFFFF | NO         | Word 0 (32-bit) of 64-bit SOC_UID           |
++-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
+| 208   | OTP_SOC_UID_1                 | Read Only               | 0xFFFFFFFF | NO         | Word 1 (32-bit) of 64-bit SOC_UID           |
++-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
+| 209   | OTP_FIELD_MAX                 | N/A                     | N/A        | N/A        | Enum boundary only                          |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
 
 Notes:
@@ -116,6 +128,28 @@ Notes:
 
   7. OTP_BOOT_SECURITY_ENABLE:
       This field by default is enabled in Astra chips before shipping to customers.
+
+  8. OTP_RKEK_ID_0 and OTP_RKEK_ID_1:
+      These two fields are used to store a 64-bit RKEK ID. The RKEK ID is an optional field that
+      can be used to associate the RKEK. It does not affect the functionality of the RKEK itself.
+      Please program the OTP_RKEK_ID_0 and OTP_RKEK_ID_1 in the same session as it's a 64-bit value
+      spanning across two 32-bit fields.
+
+  9. OTP_REE_VERSION:
+      This field is used to store a version number for the K0_REE derived images (i.e., tzk, bl, firmware, boot, fastlogo)
+      to implement anti-rollback mechanisms. Supported REE version range is 0~31. Default value is 0. User can choose to
+      increase the version number when there's a need to prevent older REE image from booting.
+
+  10. OTP_BOOT_VERSION:
+       This field is used to store a version number for K0_SYNA_ROOT_KEY derived images to implement anti-rollback mechanisms.
+       Supported boot version range is 0~31. The affected images are signed and owned by Synaptics. Any update of these
+       image would require a new preboot image release from Synaptics. Please keep the boot version unchanged (default 0)
+       except for getting confirmation from Synaptics.
+
+  11. OTP_SOC_UID_0 and OTP_SOC_UID_1:
+       These two fields are used to store a 64-bit SOC_UID. The field is programmed by Synaptics during manufacturing
+       and cannot be modified by users. This SOC_UID is a read-only field that is unique for each chip and can be used
+       for chip identification purposes.
 
 
 U-BOOT OTP Commands
@@ -251,7 +285,7 @@ Examples:
   not present, can add the package by adding below line to conf/local.conf
   and build image.
 
-    IMAGE_INSTALL_append = " synasdk-factory-ta synasdk-drm-factory-ca-program"
+    IMAGE_INSTALL:append = " synasdk-factory-ta synasdk-drm-factory-ca-program"
 
   Once package is installed, should find below ta and factory utilities in the target device:
     - /usr/lib/optee_armtz/1316a183-894d-43fe-9893-bb946ae10420.ta
@@ -285,13 +319,17 @@ Common OTP Index List
    115      OTP_MP_PROVISION_DONE
    116      OTP_SCS_AREA_SIZE_SEL
    117      OTP_REE_JTAG_PROTECTION_POLICY
+   118      OTP_REE_VERSION
+   119      OTP_RKEK_ID_0
+   120      OTP_RKEK_ID_1
    200      OTP_EMMC_BOOT_DISABLE
    201      OTP_SPI_BOOT_DISABLE
    202      OTP_DOLBY_AUDIO_DISABLE
    203      OTP_OEM_AUDIO_CUSTOMER_ID
    204      OTP_PRODUCTION_CHIP_FLAG
    205      OTP_USB_BOOT_DISABLE
-   206      OTP_FIELD_MAX
+   206      OTP_BOOT_VERSION
+   207      OTP_FIELD_MAX
 
   =====  ============================
 
@@ -480,6 +518,15 @@ A sample configs/oem_config.conf configuration file is shown below
 
         [OTP_PRODUCTION_CHIP_FLAG]
         #production_chip_flag = 7
+
+        [OTP_BOOT_VERSION]
+        #boot_version = 0
+
+        [OTP_RKEK_ID_0]
+        #rkek_id_0 = 0x1640abcd
+
+        [OTP_RKEK_ID_1]
+        #rkek_id_1 = 0x10001234
 
 
 Below is a sample execution log:
