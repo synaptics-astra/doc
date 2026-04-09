@@ -123,13 +123,7 @@ New Features
 Common New Features
 -------------------
 
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Feature                       | SoC                      | Description                                                        |
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Upgrade ADB Version           | All                      | Upgrade ADB version from the Android SDK.                          |
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Berlin PWM Support            | All                      | Solve limitation in SYNA PWN driver.                               |
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
+*No common features were added in this release.*
 
 SL1620 New Features
 -------------------
@@ -137,11 +131,7 @@ SL1620 New Features
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
 | Feature                       | SoC                      | Description                                                        |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Support SYN4612               | SL1620                   | Add support for the SYN4612 WiFi / BT chip.                        |
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
-| PMIC-based VPComp             | SL1620, SL1640, SL1680   | Add support for PMIC-based Power Voltage Compensation.             |
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
-| MIPI-DSI Power Clock Gating   | SL1620                   | Add support for Power Clock Gating with MIPI-DSI.                  |
+| SWUpdate Rescue Mode Fix      | SL1620, SL1640, SL1680   | Fixed Rescue Mode with Scarthgap                                   |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
 
 SL1640 New Features
@@ -150,12 +140,11 @@ SL1640 New Features
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
 | Feature                       | SoC                      | Description                                                        |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Motion Vector Data            | SL1640, SL1680           | Adds support for accessing Motion Vector data from the H.264       |
-|                               |                          | encoder.                                                           |
+| TRNG in U-Boot and Linux      | SL1640                   | Adds support for accessing the True Random Number Generator        |
+|                               |                          | in U-Boot.                                                         |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| PMIC-based VPComp             | SL1620, SL1640, SL1680   | Add support for PMIC-based Power Voltage Compensation.             |
+| SWUpdate Rescue Mode Fix      | SL1620, SL1640, SL1680   | Fixed Rescue Mode with Scarthgap                                   |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-
 
 
 SL1680 New Features
@@ -164,12 +153,7 @@ SL1680 New Features
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
 | Feature                       | SoC                      | Description                                                        |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Motion Vector Data            | SL1640, SL1680           | Adds support for accessing Motion Vector data from the H.264       |
-|                               |                          | encoder.                                                           |
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Face Recognition with RTSP    | SL1680                   | Support using RTSP with the Face Recognition demo.                 |
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
-| PMIC-based VPComp             | SL1620, SL1640, SL1680   | Add support for PMIC-based Power Voltage Compensation.             |
+| SWUpdate Rescue Mode Fix      | SL1620, SL1640, SL1680   | Fixed Rescue Mode with Scarthgap                                   |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
 
 SL261x New Features
@@ -178,39 +162,27 @@ SL261x New Features
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
 | Feature                       | SoC                      | Description                                                        |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| DMIC Recording                | SL2611, SL2615, SL2619   | Add pinmux changed needed to record with the DMIC.                 |
+| Support DDR4 1x16bit (2GB)    | SL2611, SL2615, SL2619   | Enable new DDR4 1x16bit (2GB) memory configuration                 |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| SL2611 Gstreamer Support      | SL2611                   | Enable Gstreamer on SL2611                                         |
+| Support DDR4 1x16bit (1GB)    | SL2611, SL2615, SL2619   | Enable new DDR4 1x16bit (1GB) memory configuration                 |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| I2S Support                   | SL2611                   | Enable the I2S audio interface on SL2611.                          |
+| Support DDR4 1x16bit (512MB)  | SL2611, SL2615, SL2619   | Enable new DDR4 1x16bit (512MB) memory configuration               |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| New Torq Version              | SL2615, SL2619           | Update to new Torq version to sync with upstream AI repo.          |
+| Support DDR3L 2x8bit (1GB)    | SL2611, SL2615, SL2619   | Enable new DDR3L 2x8bit (1GB) memory configuration                 |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Touchscreen for 7" display    | SL2615, SL2619           | Enable touchscreen for Waveshare 7" display                        |
+| Support LPDDR4 1x16bit (2GB)  | SL2611, SL2615, SL2619   | Enable new LPDDR4 1x16bit (2GB) memory configuration               |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Bluetooth Settings            | SL2615, SL2619           | Add Bluetooth Settings to OOBE images.                             |
+| Update USB Boot Support       | SL2611, SL2615, SL2619   | Support flashing sparse emmc images with USB Boot Python Tool.     |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Display Settings              | SL2615, SL2619           | Add Display Settings to OOBE images.                               |
+| Add USB Boot Profile          | SL2611, SL2615, SL2619   | Support building the USB Boot profile.                             |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| QT Camera Application         | SL2619                   | Add QT Camera Application for testing ISP Cameras.                 |
+| Update OPP Table              | SL2611, SL2615, SL2619   | Support DVFS with updated OPP Table.                               |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Support ISP Cropping          | SL2619                   | Support Cropping on SL2619 ISP.                                    |
+| External Ethernet Adapter     | SL2619                   | Support an external ethernet adapter for a second ethernet port.   |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Bluetooth SCO                 | SL2611, SL2615, SL2619   | Add support for Bluetooth SCO.                                     |
+| Low Power Measurement         | SL2611, SL2615, SL2619   | Support power measurement when MPU is suspended or off.            |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| WiFi Auto Channel Selection   | SL2611, SL2615, SL2619   | Add support for WiFi AP mode with Auto Channel Selection.          |
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Support SYN4612               | SL2611, SL2615, SL2619   | Add support for the SYN4612 WiFi / BT chip.                        |
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
-| TCPWM Peripherals             | SL2611, SL2615, SL2619   | Add support for TCPWM peripherals.                                 |
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
-| IPC Mailbox                   | SL2615, SL2619           | Support IPC Mailboxes with the M52.                                |
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Support Suspend and Resume    | SL2611, SL2615, SL2619   | Add support for suspend and resume.                                |
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
-| DDR3L Support                 | SL2611, SL2615, SL2619   | Support DDR3L on SL261x.                                           | 
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
-| USB Boot Support              | SL2611, SL2615, SL2619   | Support loading and booting U-Boot using the USB interface.        |
+| Update Torq                   | SL2615, SL2619           | Update to latest version of Torq.                                  |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
 
 SoC Core Feature Summary
@@ -373,6 +345,8 @@ Specific Modules and Features
 |                    | Boot mode:  from eMMC                               |    Y    |    Y    |    Y    |    Y    |    Y    |    Y    | - Support eMMC HS400 mode                                                                     |
 |                    +-----------------------------------------------------+---------+---------+---------+---------+---------+---------+-----------------------------------------------------------------------------------------------+
 |                    | Boot mode:  from SD-CARD                            |    Y    |    Y    |    Y    |   N/A   |   N/A   |   N/A   |                                                                                               |
+|                    +-----------------------------------------------------+---------+---------+---------+---------+---------+---------+-----------------------------------------------------------------------------------------------+
+|                    | Boot mode:  from NAND                               |   N/A   |   N/A   |   N/A   |   N/A   |   N/A   |    Y    |                                                                                               |
 |                    +-----------------------------------------------------+---------+---------+---------+---------+---------+---------+-----------------------------------------------------------------------------------------------+
 |                    | Image Upgrade                                       |    Y    |    Y    |    Y    |    Y    |    Y    |    Y    | - Supports eMMC image upgrade with USB U-Boot,                                                |
 |                    |                                                     |         |         |         |         |         |         |                                                                                               |
@@ -691,12 +665,18 @@ Known Issues and Limitations
     Network Manager can be supported in Astra 1.7, but it's disabled by default as there are some stability issues found.
     If needed, Network Manager can be enabled. Please, contact the Synaptics Astra support team for more information.
 
+.. note::
+
+    On SL2619 NAND is limited to 256MB. The NAND image contains minimal packages to accomidate the small storage.
+    Please see the `sl2619nand machine definition <https://github.com/synaptics-astra/meta-synaptics/blob/scarthgap_6.12_v2.2.1/conf/machine/sl2619nand.conf>`__
+    for information on what packages are included and what has been removed.
+
 Known Issues
 ------------
 
 +---------+----------+----------+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 | SL1620  |  SL1640  |  SL1680  | SL2611  |  SL2615  |  SL2619  |  Module             |  ID    | Summary                                                                             |
 +=========+==========+==========+=========+==========+==========+=====================+========+=====================================================================================+
-|    Y    |   N/A    |   N/A    |   N/A   |   N/A    |   N/A    | Power Management    | 35192  | HDMI display shows garbage when doing Suspend / Resume.                             |
+|         |          |          |         |          |          |                     |        |                                                                                     |
 +---------+----------+----------+---------+----------+----------+---------------------+--------+-------------------------------------------------------------------------------------+
 
