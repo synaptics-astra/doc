@@ -15,31 +15,48 @@ Specific details on GPIOs can be found in the :doc:`../hw/index`.
 Accessing GPIOs from Userspace
 ==============================
 
-GPIOs can be accessed and configured using the GPIO sysfs interface ``/sys/class/gpio``. GPIOs can be exported to userspace and their
-direction and value can be viewed or set. 
+GPIOs can be accessed and configured using the ``libgpiod`` tools. These tools interface with the kernel's character device interface ``/dev/gpiochipN``
+instead of the deprecated sysfs interface.
 
-For example, to export GPIO[36] on SL1680 run the command::
+To identify available GPIO chips and lines, use:
 
-    root@sl1680:~# echo 484 > /sys/class/gpio/export
+::
 
-GPIO[36] is located on the 40 pin connectors on SL1640 and SL1680. GPIO[36] maps to GPIO number 484 based on the instruction in :ref:`gpio_mapping`.
+    root@sl1680:~# gpiodetect
+    root@sl1680:~# gpioinfo
 
-Once the GPIO has been exported, the value and direction can be viewed and set::
+GPIOs are accessed by chip and line offset, rather than the legacy global GPIO number.
 
-    root@sl1680:~# cd /sys/class/gpio/
-    root@sl1680:/sys/class/gpio/gpio484# cat direction
-    in
-    root@sl1680:/sys/class/gpio/gpio484# cat value
-    0
+For example, GPIO[36] on the SL1680 corresponds to line offset 4 on its GPIO controller (see :ref:`gpio_mapping`).
 
-By default, GPIO[36] is set to input with the value 0. To changes these value, write to the corresponding sysfs file::
+To read the value of GPIO[36]:
 
-    root@sl1680:/sys/class/gpio/gpio484# echo "out" > direction
-    root@sl1680:/sys/class/gpio/gpio484# cat direction
-    out
-    root@sl1680:/sys/class/gpio/gpio484# echo 1 > value
-    root@sl1680:/sys/class/gpio/gpio484# cat value
-    1
+::
+
+    root@sl1680:~# gpioget -c gpiochip1 4
+    "4"=active
+
+To configure GPIO[36] as an output and set it high. The command will hold the line high until it exits.
+
+::
+
+    root@sl1680:~# gpioset -c gpiochip1 4=1
+
+To set GPIO[36] low. The command will hold the line low until it exits.
+
+::
+
+    root@sl1680:~# gpioset -c gpiochip1 4=0
+
+The ``libgpiod`` tools support input and output. The ``gpioget`` program requests the line as an input whereas
+``gpioset`` requests the line as an output. The line is released automatically when the command exits.
+
+.. note::
+
+    Unlike the legacy sysfs interface, the GPIO value is only driven while the
+    process holds the line. When ``gpioset`` exits, the line is released and its
+    state is no longer guaranteed. Run gpioset in the background to hold the line
+    while working with gpios.
 
 Changing the Function of GPIOs
 ==============================
@@ -51,11 +68,11 @@ the device tree entries in the Linux Kernel. This requires modifying the ``linux
 
 Modify the platform dts file located in ``build-sl1680/workspace/sources/linux-syna/arch/arm64/boot/dts/synaptics``.
 
-+-----------------+---------------+------------------+-----------------+
-|                 | SL1620        | SL1640           | SL1680          |
-+-----------------+---------------+------------------+-----------------+
-| DTS             | myna2-rdk.dts | platypus-rdk.dts | dolphin-rdk.dts |
-+-----------------+---------------+------------------+-----------------+
++-----------------+---------------+------------------+-----------------+-----------------+
+|                 | SL1620        | SL1640           | SL1680          | SL261x          |
++-----------------+---------------+------------------+-----------------+-----------------+
+| DTS             | myna2-rdk.dts | platypus-rdk.dts | dolphin-rdk.dts | sl261*-rdk.dts  |
++-----------------+---------------+------------------+-----------------+-----------------+
 
 First, identify where the GPIOs are currently configured in the dts file and disable them. Then reassign them to function as GPIOs.
 
@@ -98,10 +115,10 @@ GPIOs 64 - 95:
     \text{GPIO ID} = \text{gpiochip#} + (\text{GPIO#} - 64)
 
 To do this calculation start by identifying the gpiochip number for the controller on which the GPIO is attached. The address will match
-the GPIO ports in the tables below. Find which gpiochip is associated with which GPIO port by running ``ls -l /sys/class/gpio``. The symlink
+the GPIO ports in the tables below. Find which gpiochip is associated with which GPIO port by running ``gpiodetect``. The output
 will contain the GPIO port address of the port associated with the gpiochip.
 
-.. figure:: media/sl1680-gpiochip.png
+.. figure:: media/sl1680-gpiochip-gpiodetect.png
 
     gpiochip numbers on SL1680
 
@@ -147,6 +164,20 @@ gpio\@2400          f7e82400   0 to 31
 gpio\@0800          f7e80800   32 to 63
 gpio\@0c00          f7e80c00   64 to 95
 =================   ========   ========
+
+SL261x
+------
+
+=================   ========   ========
+GPIO Port           Address    GPIOs
+=================   ========   ========
+gpio\@7000          f7f07000   0 to 31
+gpio\@e000          f7f0e000   32 to 63
+gpio\@8000          e5038000   64 to 79
+gpio\@9000          e5039000   80 to 87
+gpio\@a000          e503a000   88 to 95
+=================   ========   ========
+
 
 .. note::
 
