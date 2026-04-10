@@ -55,7 +55,8 @@ The ``libgpiod`` tools support input and output. The ``gpioget`` program request
 
     Unlike the legacy sysfs interface, the GPIO value is only driven while the
     process holds the line. When ``gpioset`` exits, the line is released and its
-    state is no longer guaranteed.
+    state is no longer guaranteed. Run gpioset in the background to hold the line
+    while working with gpios.
 
 Changing the Function of GPIOs
 ==============================
