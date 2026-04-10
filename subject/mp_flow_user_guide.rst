@@ -209,6 +209,18 @@ A sample configuration file is shown below
         [OTP_PRODUCTION_CHIP_FLAG]
         #production_chip_flag = 7
 
+        [OTP_PRODUCTION_CHIP_FLAG]
+        #production_chip_flag = 7
+
+        [OTP_BOOT_VERSION]
+        #boot_version = 0
+
+        [OTP_RKEK_ID_0]
+        #rkek_id_0 = 0x1640abcd
+
+        [OTP_RKEK_ID_1]
+        #rkek_id_1 = 0x10001234
+
 Examples: (Platypus: SL1640)
    ::
 

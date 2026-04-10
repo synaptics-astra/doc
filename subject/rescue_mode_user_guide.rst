@@ -28,6 +28,15 @@ Enabling Rescue Mode in the Yocto
    ``build-<machine>/conf/`` directory. (By default, this value is set to
    "0").
 
+- Update kernel config to build the following drivers as modules. Run ``bitbake -c menuconfig linux-syna``
+  and use the menu to configure the drivers as modules.
+
+::
+
+   CONFIG_STMMAC_ETH=m
+   CONFIG_STMMAC_PLATFORM=m
+   CONFIG_DWMAC_GENERIC=m
+
 -  Now, build the image using the following BitBake command (This is the
    same procedure used to build the standard Astra SDK)
 
