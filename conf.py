@@ -4,7 +4,7 @@ copyright = '2023 - 2026, Synaptics'
 author = 'Synaptics'
 
 # version of the software being documented
-release = 'scarthgap_6.12_v2.3'
+release = 'scarthgap_6.12_v2.3.0'
 
 extensions = [ 'synaptics_sphinx_theme' ]
 
