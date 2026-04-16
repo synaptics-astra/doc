@@ -176,8 +176,6 @@ SL261x New Features
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
 | Add USB Boot Profile          | SL2611, SL2615, SL2619   | Support building the USB Boot profile.                             |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
-| Update OPP Table              | SL2611, SL2615, SL2619   | Support DVFS with updated OPP Table.                               |
-+-------------------------------+--------------------------+--------------------------------------------------------------------+
 | External Ethernet Adapter     | SL2619                   | Support an external ethernet adapter for a second ethernet port.   |
 +-------------------------------+--------------------------+--------------------------------------------------------------------+
 | Low Power Measurement         | SL2611, SL2615, SL2619   | Support power measurement when MPU is suspended or off.            |
