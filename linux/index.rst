@@ -2433,8 +2433,8 @@ you can install the ``pyserial`` module using ``pip``::
 
     pip install pyserial
 
-Updating the eMMCimg
-""""""""""""""""""""
+Updating the eMMC
+"""""""""""""""""
 
 The scarthgap_6.12_v2.3.0 release adds support for flashing eMMC images using the USB interface. Run the following command
 to flash the eMMCimg image:
