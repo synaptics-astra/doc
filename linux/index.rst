@@ -2433,6 +2433,27 @@ you can install the ``pyserial`` module using ``pip``::
 
     pip install pyserial
 
+Updating the eMMCimg
+""""""""""""""""""""
+
+The scarthgap_6.12_v2.3.0 release adds support for flashing eMMC images using the USB interface. Run the following command
+to flash the eMMCimg image:
+
+::
+
+    python usb_boot_tool.py --op emmc --img-dir eMMCimg
+
+.. figure:: media/sl261x-usb-boot-tool-emmc.png
+
+    Output of ``usb-boot-tool.py`` after booting to SU-Boot.
+
+.. figure:: media/sl261x-usb-boot-tool-emmc-uart.png
+
+    U-Boot prompt on the serial console after booting U-Boot using ``usb-boot-tool.py``.
+
+Booting U-Boot
+""""""""""""""
+
 Run the following command to download SU-Boot and have it run on the board::
 
     python usb_boot_tool.py --op run-acore --sm sysmgr.subimg --bl bl.subimg --tzk tzk.subimg
@@ -2445,11 +2466,11 @@ begin sending images to the board. Once the images are sent you will see the U-B
 
 .. figure:: media/sl261x-usb-boot-tool.png
 
-    Output of ``usb-boot-tool.py`` after booting to SU-Boot.
+    Output of ``usb-boot-tool.py`` while flashing eMMCimg.
 
 .. figure:: media/sl261x-usb-boot-tool-u-boot.png
 
-    U-Boot prompt on the serial console after booting U-Boot using ``usb-boot-tool.py``.
+    The serial console while flashing the eMMCimg using ``usb-boot-tool.py``.
 
 After booting U-Boot proceed to :ref:`update_with_uboot`. Additional instructions on using the ``usb-boot-tool.py``
 can be found in tool's `README file <https://github.com/synaptics-astra/usb-tool/blob/sl261x/README.md>`__.
