@@ -2445,11 +2445,11 @@ to flash the eMMCimg image:
 
 .. figure:: media/sl261x-usb-boot-tool-emmc.png
 
-    Output of ``usb-boot-tool.py`` after booting to SU-Boot.
+    Output of ``usb-boot-tool.py`` while flashing eMMCimg.
 
 .. figure:: media/sl261x-usb-boot-tool-emmc-uart.png
 
-    U-Boot prompt on the serial console after booting U-Boot using ``usb-boot-tool.py``.
+    The serial console while flashing the eMMCimg using ``usb-boot-tool.py``.
 
 Booting U-Boot
 """"""""""""""
@@ -2466,11 +2466,11 @@ begin sending images to the board. Once the images are sent you will see the U-B
 
 .. figure:: media/sl261x-usb-boot-tool.png
 
-    Output of ``usb-boot-tool.py`` while flashing eMMCimg.
+    Output of ``usb-boot-tool.py`` after booting to SU-Boot.
 
 .. figure:: media/sl261x-usb-boot-tool-u-boot.png
 
-    The serial console while flashing the eMMCimg using ``usb-boot-tool.py``.
+    U-Boot prompt on the serial console after booting U-Boot using ``usb-boot-tool.py``.
 
 After booting U-Boot proceed to :ref:`update_with_uboot`. Additional instructions on using the ``usb-boot-tool.py``
 can be found in tool's `README file <https://github.com/synaptics-astra/usb-tool/blob/sl261x/README.md>`__.
