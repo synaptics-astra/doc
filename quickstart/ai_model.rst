@@ -5,7 +5,7 @@ Converting and running a custom neural network
 
 .. note::
 
-    SL261x uses the Torq framework instead of SyNAP. See the `Torq User Manual <https://synaptics-torq.github.io/torq-compiler/v/latest/user-manual/index.html>__`
+    SL261x uses the Torq framework instead of SyNAP. See the `Torq User Manual <https://synaptics-torq.github.io/torq-compiler/v/latest/user-manual/index.html>`_
     for information on converting and running models with Torq.
 
 .. note::
