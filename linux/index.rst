@@ -2433,6 +2433,27 @@ you can install the ``pyserial`` module using ``pip``::
 
     pip install pyserial
 
+Updating the eMMC
+"""""""""""""""""
+
+The scarthgap_6.12_v2.3.0 release adds support for flashing eMMC images using the USB interface. Run the following command
+to flash the eMMCimg image:
+
+::
+
+    python usb_boot_tool.py --op emmc --img-dir eMMCimg
+
+.. figure:: media/sl261x-usb-boot-tool-emmc.png
+
+    Output of ``usb-boot-tool.py`` while flashing eMMCimg.
+
+.. figure:: media/sl261x-usb-boot-tool-emmc-uart.png
+
+    The serial console while flashing the eMMCimg using ``usb-boot-tool.py``.
+
+Booting U-Boot
+""""""""""""""
+
 Run the following command to download SU-Boot and have it run on the board::
 
     python usb_boot_tool.py --op run-acore --sm sysmgr.subimg --bl bl.subimg --tzk tzk.subimg
