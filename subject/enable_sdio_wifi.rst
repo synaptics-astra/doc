@@ -1,6 +1,6 @@
-======================================
-Enabling SDIO WiFi for SL640 and SL680
-======================================
+========================================
+Enabling SDIO WiFi for SL1640 and SL1680
+========================================
 
 By default, SL1640 and SL1680 are configured to use PCIe based WiFi modules. But, SDIO support with the 43711S WiFi module
 can be enabled by updating the Linux Kernel's DTS and config.
