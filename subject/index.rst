@@ -11,6 +11,7 @@ Subject Specific User Guides
    emmc_layout_customization
    dvfs_user_guide
    power_measurement
+   power_modes
    weston_default_display
    isp_sensor_integration
    updating_isp_sensor_configuration
@@ -49,6 +50,8 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`dvfs_user_guide`
 
 - :doc:`power_measurement`
+
+- :doc:`power_modes`
 
 - :doc:`weston_default_display`
 
