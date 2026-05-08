@@ -1,5 +1,5 @@
 Power Mode User Guide
-================
+=====================
 
 Overview
 --------
