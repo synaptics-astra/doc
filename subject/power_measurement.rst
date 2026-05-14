@@ -90,4 +90,5 @@ SoC      Core Module       I/O Board
 SL1620   Rev D or later    Rev D or later
 SL1640   Rev B or later    Rev D or later
 SL1680   Rev C or later    Rev D or later
+SL2619   Rev A or later    Rev D or later
 =======  ==============    ==============
