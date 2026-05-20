@@ -76,7 +76,7 @@ The SL1640-based evaluation system includes the following components:
 
 -  Storage: eMMC 5.1 (16 GB)
 
--  DRAM: Up to x32 4GB system memory by 1pcs x32 16 Gbit LPDDR4x-3733
+-  DRAM: 4GB system memory — 1pcs of 4GB LPDDR4x-3733, x32 devices
 
 -  PMIC: two support DVFS in Vcore and Vcpu supply rails
 

@@ -69,7 +69,7 @@ The SL2610-based developer kit includes the following components:
 
 -  Storage: eMMC 5.1 (32 GB \[1\]_)
 
--  DRAM: up to x16 4GB system memory by 2pcs x8 16Gbit DDR4
+-  DRAM: 2GB system memory — 2pcs of 1GB DDR4-3200, x8 devices
 
 -  PMIC: support DVFS in Vcore supply rail
 
