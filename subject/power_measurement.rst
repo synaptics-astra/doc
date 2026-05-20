@@ -18,44 +18,44 @@ Here is an example of reading Current (mA) channels on SL1640:
 
 ::
 
-    cat /sys/class/hwmon/hwmon0/curr1_input （ina322）
+    cat /sys/class/hwmon/hwmon0/curr1_input (ina322)
     856
 
-    cat /sys/class/hwmon/hwmon0/curr2_input （ina322）
+    cat /sys/class/hwmon/hwmon0/curr2_input (ina322)
     32
 
-    cat /sys/class/hwmon/hwmon0/curr3_input （ina322）
+    cat /sys/class/hwmon/hwmon0/curr3_input (ina322)
     60
 
-    cat /sys/class/hwmon/hwmon1/curr1_input （ina2xx）
+    cat /sys/class/hwmon/hwmon1/curr1_input (ina2xx)
     7
 
-    cat /sys/class/hwmon/hwmon2/curr1_input （ina2xx）
+    cat /sys/class/hwmon/hwmon2/curr1_input (ina2xx)
     67
 
-    cat /sys/class/hwmon/hwmon3/curr1_input（ina2xx）
+    cat /sys/class/hwmon/hwmon3/curr1_input (ina2xx)
     63
 
 Here is an example of reading Bus voltage (mV) channels on SL1640:
 
 ::
 
-    cat /sys/class/hwmon/hwmon0/in1_input （ina322）
+    cat /sys/class/hwmon/hwmon0/in1_input (ina322)
     800
 
-    cat /sys/class/hwmon/hwmon0/in2_input （ina322）
+    cat /sys/class/hwmon/hwmon0/in2_input (ina322)
     840
 
-    cat /sys/class/hwmon/hwmon0/in3_input （ina322）
+    cat /sys/class/hwmon/hwmon0/in3_input (ina322)
     1104
 
-    cat /sys/class/hwmon/hwmon1/in1_input （ina2xx）
+    cat /sys/class/hwmon/hwmon1/in1_input (ina2xx)
     624
 
-    cat /sys/class/hwmon/hwmon2/in1_input （ina2xx）
+    cat /sys/class/hwmon/hwmon2/in1_input (ina2xx)
     3384
 
-    cat /sys/class/hwmon/hwmon3/in1_input （ina2xx）
+    cat /sys/class/hwmon/hwmon3/in1_input (ina2xx)
     1860
 
 Here is an example of reading Power (uW) channels on SL1640:
@@ -90,4 +90,5 @@ SoC      Core Module       I/O Board
 SL1620   Rev D or later    Rev D or later
 SL1640   Rev B or later    Rev D or later
 SL1680   Rev C or later    Rev D or later
+SL2619   Rev A or later    Rev D or later
 =======  ==============    ==============
