@@ -32,6 +32,8 @@ Subject Specific User Guides
    rescue_mode_user_guide
    pmic_based_pvcomp
    encoder_motion_vector
+   brightness_control
+   gamma_control
 
 
 The following guides provide additional details on a specific subject or module.
@@ -91,3 +93,7 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`pmic_based_pvcomp`
 
 - :doc:`encoder_motion_vector`
+
+- :doc:`brightness_control`
+
+- :doc:`gamma_control`
