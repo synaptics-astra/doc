@@ -1,6 +1,11 @@
 Power Mode User Guide
 =====================
 
+.. note::
+
+   SL2610 Power Modes are implemented in the M52 firmware and are currently released as a binary.
+   This guide applies to SL1620, SL1640, and SL1680.
+
 Overview
 --------
 
@@ -366,7 +371,22 @@ SL1640/SL1680
 
 3. | GPIO
    | Geth, WIFI/BT wake up are all implemented through GPIO.
+   | Set GPIO mode in the Linux Kernel ``dolphin-rdk.dts`` in the ``linux-syna`` package.
+   | https://github.com/synaptics-astra/linux_6_12-main/blob/#release#/arch/arm64/boot/dts/synaptics/dolphin-rdk.dts
+
+   ::
+
+      eth_phy_pmux: eth_phy-pmux {
+         groups = "SM_TDI";
+         function = "gpio";
+      };
+
    | An example of SL1680.
+
+   The configuration can be added to the ``platform_customization.c`` in the ``synasdk-sm`` package.
+   https://github.com/synaptics-astra/boot/blob/#release#/bootloader/sm_cm3/syna/customization/dolphin/dolphin-rdk/platform_customization.c
+
+   This example is for dolphin (SL1680). Use platypus for SL1640.
 
    ::
 
@@ -393,6 +413,3 @@ SL1640/SL1680
 
       /* geth */  
       DECLARE_GPIO_WAKEUP(geth, SM_GPIO_PORT_GEPHY, BTKEY_NETFLIX_GAP_MAX, DEFAULT_THOLD, MV_SM_WAKEUP_SOURCE_WOL, 0, 0);
-
-SL261x (To be added)
-^^^^^^^^^^^^^^^^^^^^
