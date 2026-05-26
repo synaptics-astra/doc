@@ -35,6 +35,8 @@ Subject Specific User Guides
    encoder_motion_vector
    brightness_control
    gamma_control
+   hdmi_tx_resolution_handling
+   qt5_compilation_guide
 
 
 The following guides provide additional details on a specific subject or module.
@@ -100,3 +102,7 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`brightness_control`
 
 - :doc:`gamma_control`
+
+- :doc:`hdmi_tx_resolution_handling`
+
+- :doc:`qt5_compilation_guide`

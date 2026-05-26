@@ -12,6 +12,7 @@ Getting Started
    ai_demo
    ai_model
    build_image
+   opencv_od_app_guide
 
 To get started with the Synaptics Astra SDK, you can do the following things:
 
@@ -23,3 +24,4 @@ To get started with the Synaptics Astra SDK, you can do the following things:
 - :doc:`ai_demo`
 - :doc:`ai_model`
 - :doc:`build_image`
+- :doc:`opencv_od_app_guide`
