@@ -15,14 +15,14 @@ Memory Layouts
 Astra Machina supports predefined memory layouts for various DDR configurations. The default configuration
 can be changed based on the amount of DDR in the system.
 
-======== ============== ================
+======== ============== =======================
 Chip     Default Memory Supported Memory
-======== ============== ================
+======== ============== =======================
 SL1620   2GB            1GB / 2GB / 4GB
 SL1640   2GB            2GB / 3GB / 4GB
 SL1680   4GB            2GB / 4GB
-SL261x   2GB            2GB / 4GB
-======== ============== ================
+SL261x   2GB            512MB / 1GN / 2GB / 4GB
+======== ============== =======================
 
 Below are the memory layouts for all available DDR sizes.
 
