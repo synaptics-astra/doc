@@ -15,14 +15,14 @@ Memory Layouts
 Astra Machina supports predefined memory layouts for various DDR configurations. The default configuration
 can be changed based on the amount of DDR in the system.
 
-======== ============== ================
+======== ============== =======================
 Chip     Default Memory Supported Memory
-======== ============== ================
+======== ============== =======================
 SL1620   2GB            1GB / 2GB / 4GB
 SL1640   2GB            2GB / 3GB / 4GB
 SL1680   4GB            2GB / 4GB
-SL261x   2GB            2GB / 4GB
-======== ============== ================
+SL261x   2GB            512MB / 1GN / 2GB / 4GB
+======== ============== =======================
 
 Below are the memory layouts for all available DDR sizes.
 
@@ -117,6 +117,22 @@ SL261x Memory Layout
 +-------------------+------------------------+----------------------------+
 | Memory Size       | Memory Section         | Size                       |
 +-------------------+------------------------+----------------------------+
+| 512 MB DDR        | NonSecure (CMA)        | 64MB                       |
+|                   +------------------------+----------------------------+
+|                   | System                 | 491MB                      |
+|                   +------------------------+----------------------------+
+|                   | NonSecure (Non-cached) | 8MB                        |
+|                   +------------------------+----------------------------+
+|                   | Secure                 | 0MB                        |
++-------------------+------------------------+----------------------------+
+| 1 GB DDR          | NonSecure (CMA)        | 236MB                      |
+|                   +------------------------+----------------------------+
+|                   | System                 | 1003MB                     |
+|                   +------------------------+----------------------------+
+|                   | NonSecure (Non-cached) | 8MB                        |
+|                   +------------------------+----------------------------+
+|                   | Secure                 | 0MB                        |
++-------------------+------------------------+----------------------------+
 | 2 GB DDR          | NonSecure (CMA)        | 260MB                      |
 |                   +------------------------+----------------------------+
 |                   | System                 | 1.948GB                    |
@@ -207,7 +223,7 @@ Finally, build an image with the modified memory layout::
 Modifying U-Boot
 ^^^^^^^^^^^^^^^^
 
-By default, U-Boot uses a default memory layout of 2GB. Using the 1GB memory layout on SL1620 requires modifying U-Boot. Since SL1640 and SL1680
+By default, U-Boot uses a default memory layout of 2GB. Using the 512MB or 1GB memory layout on SL2610 and SL1620 requires modifying U-Boot. Since SL1640 and SL1680
 do not support a 1GB memory layout, no modification is required on these platforms.
 
 Use the ``devtool`` utility to checkout the U-Boot source code. However, the syna-u-boot recipe is not fully compatible with ``devtool``. As a
@@ -237,7 +253,10 @@ apply the patch which was removed from the recipe::
     cd build-sl1620/workspace/sources/syna-u-boot
     git apply ../../../../meta-synaptics/recipes-bsp/syna-bootloader/syna-u-boot/0001-Force-gcc-as-HOSTCC.patch
 
-Change the memory size to 1GB in ``build-sl1620/workspace/sources/syna-u-boot/boot/u-boot_2019_10/arch/arm/dts/myna2-rdk.dts``::
+For SL1620
+""""""""""
+
+Change the memory size to 1GB in ``build-sl1620/workspace/sources/syna-u-boot/boot/u-boot/arch/arm/dts/myna2-rdk.dts``::
 
     diff --git a/arch/arm/dts/myna2-rdk.dts b/arch/arm/dts/myna2-rdk.dts
     index d6a160450e..36464c9202 100644
@@ -253,7 +272,7 @@ Change the memory size to 1GB in ``build-sl1620/workspace/sources/syna-u-boot/bo
 
         chosen {
 
-Set the malloc length in ``build-sl1620/workspace/sources/syna-u-boot/boot/u-boot_2019_10/include/configs/myna2.h`` to 500MB. 500MB is the recommended
+Set the malloc length in ``build-sl1620/workspace/sources/syna-u-boot/boot/u-boot/include/configs/myna2.h`` to 500MB. 500MB is the recommended
 value for the 1GB profile.::
 
     diff --git a/include/configs/myna2.h b/include/configs/myna2.h
@@ -268,6 +287,27 @@ value for the 1GB profile.::
     +#define CONFIG_SYS_MALLOC_LEN		(500 << 20)
 
     //#define CONFIG_SYS_MALLOC_F_LEN		(4 << 20) /* Serial is required before relocation */
+
+For SL2610
+""""""""""
+
+Change the malloc length in ``build-sl2619/workspace/sources/syna-u-boot/boot/u-boot/configs/klamath_suboot_defconfig``.
+
+::
+
+    diff --git a/configs/klamath_suboot_defconfig b/configs/klamath_suboot_defconfig
+    index 7abc58efa38..326ad333e7c 100644
+    --- a/configs/klamath_suboot_defconfig
+    +++ b/configs/klamath_suboot_defconfig
+    @@ -2,7 +2,7 @@ CONFIG_ARM=y
+    CONFIG_POSITION_INDEPENDENT=y
+    # CONFIG_ARM64_SUPPORT_AARCH32 is not set
+    CONFIG_ARCH_SYNAPTICS=y
+    -CONFIG_SYS_MALLOC_LEN=0x5aa00000
+    +CONFIG_SYS_MALLOC_LEN=0x1aa00000
+    CONFIG_ENV_SIZE=0x10000
+    CONFIG_ENV_OFFSET=0x3ff0000
+    CONFIG_DM_GPIO=y
 
 Build the modified ``syna-u-boot`` package using ``bitbake``::
 
