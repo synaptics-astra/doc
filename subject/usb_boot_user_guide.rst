@@ -11,7 +11,7 @@ library, but ``astra-boot`` removes the update logic to only support booting.
 
 .. note::
 
-    USB Boot is not supported on SL261x.
+    USB Boot supported was added to SL261x in v2.4.
 
 Setting Up USB Boot
 ===================
@@ -84,5 +84,97 @@ Here, is an example ``uEnv.txt`` which can boot the prebuilt ``sl1640_usb_boot``
     setkernel=setenv kernel_comp_addr_r 0x7c00000; setenv kernel_comp_size $filesize;
     bootcmd=run setparam;run loadimage; run setkernel; run setkernel;run loadramdisk; booti 0x10000000 0x8c00000:$filesize 0x17c00000
 
+Here, is an example ``uEnv.txt`` which can boot the prebuilt ``sl2619_usb_boot`` image on SL2619.
+
+::
+
+    #SL2610 Boot Linux profile
+    skip_fdt_update=6
+    fdt_high=FFFFFFFFFFFFFFFF
+
+    #Yocto image
+    bootargs=shell earlycon console=ttyS0,115200 rootwait rootfstype=ext4
+    loadramdisk=usbload ramdisk.cpio.gz 0xec00000;
+
+    loadimage=usbload sl2619-rdk.dtb 0x17c00000; usbload Image.gz 0x10000000;
+    setparam=setenv bootm_low 0x0;setenv bootm_size 0x10000000;
+    setkernel=setenv kernel_comp_addr_r 0x7c00000; setenv kernel_comp_size $filesize;
+
+    #Boot Linux
+    bootcmd=run setparam;run loadimage; run setkernel; run loadramdisk; booti 0x10000000 0xec00000:$filesize 0x17c00000
+
+    #Stop at U-Boot
+    #bootcmd=printenv
+
 Astra Machina will now boot using the provided Linux kernel and rootfs. A linux prompt ``#`` will appear on the serial console when booting
 is complete.
+
+Building Custom USB Boot Images
+===============================
+
+Astra supports building custom USB boot images. Common examples are for devices which user different memory
+layouts or DDR types. Another example is to add NAND support. 
+
+General instructions on building images and setting up the environment can be found in the :doc:`../yocto`.
+
+To build USB U-Boot images use the ``*usb`` machine type.
+
+::
+
+    pokyuser@xyz:/path/to/workspace/sdk $ MACHINE=sl2619usb . meta-synaptics/setup/setup-environment
+
+Next modify the packages in order to apply changes.
+
+::
+
+    pokyuser@xyz:/path/to/workspace/sdk $ devtool modify synasdk-config-native
+
+Build the updated USB boot images.
+
+::
+
+    pokyuser@xyz:/path/to/workspace/sdk $ devtool build-image astra-media
+
+Building for Different DDR Types
+--------------------------------
+
+Instructions for changing the DDR type are the same as those listed in :doc:`memory_layout_customization`. Just use the
+``*usb`` machine type when setting up the environment.
+
+Building with NAND Support
+--------------------------
+
+The prebuilt versions of the USB U-Boot images do not contain support for NAND. NAND support can be added by rebuilding the USB
+Boot images with the following config applied.
+
+::
+
+    pokyuser@xyz:/path/to/workspace/sdk $ devtool modify synasdk-config-native
+
+Store the following patch to the file ``sl2610_usb_nand_support.patch`` and apply it to the ``synasdk-config-native`` source.
+This can be done outside of the docker container with your preferred text editor.
+
+::
+
+    diff --git a/product/sl2610_usb_linux_rdk/sl2610_usb_linux_rdk_defconfig b/product/sl2610_usb_linux_rdk/sl2610_usb_linux_rdk_defconfig
+    index d1ce0213..43341ac6 100644
+    --- a/product/sl2610_usb_linux_rdk/sl2610_usb_linux_rdk_defconfig
+    +++ b/product/sl2610_usb_linux_rdk/sl2610_usb_linux_rdk_defconfig
+    @@ -161,8 +161,8 @@ CONFIG_UBOOT=y
+    CONFIG_UBOOT_SRC_PATH="u-boot"
+    # CONFIG_UBOOT_SPISUBOOT is not set
+    CONFIG_UBOOT_ARCH="arm"
+    -CONFIG_UBOOT_DEFCONFIG="klamath_usb_suboot_defconfig"
+    -CONFIG_UBOOT_DTS="klamath-rdk"
+    +CONFIG_UBOOT_DEFCONFIG="klamath_usb_nand_suboot_defconfig"
+    +CONFIG_UBOOT_DTS="klamath-rdk-nand"
+    CONFIG_UBOOT_REL_PATH="release/uboot"
+    # CONFIG_STD_ANDROID_IMAGE is not set
+    # end of Boot
+
+::
+
+    cd /path/to/workspace/sdk/build-sl2619usb/workspace/sources/synasdk-config-native/configs
+    git apply sl2610_usb_nand_support.patch
+
+Then rebuild as described above.

@@ -2246,11 +2246,6 @@ Updating Software Images using USB
 
 Astra Machina supports updating software images using USB.
 
-.. note::
-
-    SL261x uses a different USB protocol then SL16x0. After completing the Hardware Setup section,
-    proceed to :ref:`usb_boot_sl261x`.
-
 .. _usb_boot_setup:
 
 Setting up the USB Boot Environment
@@ -2258,8 +2253,8 @@ Setting up the USB Boot Environment
 
 Booting from USB requires the ``astra-update`` software tool to be the installed on
 a host system. Windows, Mac, and Linux hosts are supported. Windows systems
-also require the Synaptics WinUSB Driver. Mac and Linux systems do not require
-any additional drivers. This section covers how to configure the host system
+also require the Synaptics WinUSB Driver or Google USB Driver. Mac and Linux systems
+do not require any additional drivers. This section covers how to configure the host system
 and prepare for USB booting.
 
 Hardware Setup
@@ -2272,16 +2267,22 @@ system to the USB Type-C USB 2.0 port on Astra Machina (next to the ethernet por
 
     Astra Machina Component Diagram with USB Type-C USB 2.0 port highlighted
 
-Installing the WinUSB Driver (Windows Only)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Installing the Windows Drivers
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Windows requires special USB kernel drivers to communicate with
+Astra Machina over USB. SL16x0 requires the Synaptics WinUSB driver
+and SL2610 requires the Google USB Driver.
 
 .. note::
 
-    The driver is not required for SL261x devices. Please proceeed to :ref:`usb_boot_sl261x`
-    when using SL262x SoCs.
+    Starting in v2.4 SL2610 uses the Fastboot interface and requires the
+    Google USB Driver.
 
-Windows requires a special USB kernel driver to communicate with
-Astra Machina over USB. Please download the driver from
+Installing WinUSB for SL16x0 on Windows
+"""""""""""""""""""""""""""""""""""""""
+
+Please download the driver from
 `GitHub <https://github.com/synaptics-astra/usb-tool>`__. Linux and Mac hosts
 can access the Astra board from user space and do not need any additional
 kernel drivers.
@@ -2312,6 +2313,19 @@ Driver for Synaptics Processors" when operating in USB Boot mode.
     Astra Machina will not show up in the Window's Device Manager or be seen by the tool until putting the
     device into USB Boot Mode. Hold down the USB_BOOT and press the RESET button as described below.
 
+Installing the Google USB Driver for SL2610 on Windows
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Please download the `Google USB Driver <https://developer.android.com/studio/run/win-usb>`__.
+
+After downloading and decompressing the USB driver software package, right
+click on the ``android_winusb.inf`` file in the ``usb_driver``
+directory. Select "Install" from the drop down menu.
+
+.. figure:: media/google_usb_driver.png
+
+    Install the Google USB Driver
+
 Running Astra Update
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -2332,7 +2346,7 @@ To update the eMMC:
     2. Run the ``update_emmc`` script to begin the update.
 
 To update internal SPI Flash:
-    1. Place the SPI image in the ``usb-tool`` directory (named ``sl1620`` / ``sl1640`` / ``sl1680`` depending on the device).
+    1. Place the SPI image in the ``usb-tool`` directory (named ``sl1620`` / ``sl1640`` / ``sl1680`` / ``sl2610`` depending on the device).
     2. Run the ``update_spi`` script to begin the update.
 
 .. note::
@@ -2413,43 +2427,6 @@ requires additional permissions to interface with USB devices and access system 
 .. note::
 
     Astra Update no longer requires a USB-TTL board or cable to run commands at the U-Boot prompt.
-
-.. _usb_boot_sl261x:
-
-USB Boot with SL261x
-^^^^^^^^^^^^^^^^^^^^
-
-The scarthgap_6.12_v2.2.0 release supports loading SU-Boot over the USB interface. Once SU-Boot is loaded
-the emmc and SPI images can be updated using a USB drive (see :ref:`flashing_from_usb_drive`) or TFTP server
-(see :ref:`flashing_from_tftp_server`).
-
-SL261x uses a USB-CDC interface to communicate with the host. This type of device has built-in drivers on all
-supported OSes so no additional drivers need to be installed. The ``usb_boot_tool.py`` script is used to download
-images from the host PC onto the device. The tool can be found in the ``SL261x`` branch of the
-`usb-tool <https://github.com/synaptics-astra/usb-tool/tree/sl261x>`__ repository.
-
-The ``usb-boot-tool.py`` requires Python 3.13 or later and the ``pyserial`` Python module. Once Python is installed
-you can install the ``pyserial`` module using ``pip``::
-
-    pip install pyserial
-
-Updating the eMMC
-"""""""""""""""""
-
-The scarthgap_6.12_v2.3.0 release adds support for flashing eMMC images using the USB interface. Run the following command
-to flash the eMMCimg image:
-
-::
-
-    python usb_boot_tool.py --op emmc --img-dir eMMCimg
-
-.. figure:: media/sl261x-usb-boot-tool-emmc.png
-
-    Output of ``usb-boot-tool.py`` while flashing eMMCimg.
-
-.. figure:: media/sl261x-usb-boot-tool-emmc-uart.png
-
-    The serial console while flashing the eMMCimg using ``usb-boot-tool.py``.
 
 Booting U-Boot
 """"""""""""""
