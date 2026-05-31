@@ -5,6 +5,7 @@ SDK Release Notes
 .. toctree::
     :hidden:
 
+    release_notes/scarthgap_6.12_v2.4.0
     release_notes/scarthgap_6.12_v2.3.0
     release_notes/scarthgap_6.12_v2.2.1
     release_notes/scarthgap_6.12_v2.2.0
@@ -28,6 +29,8 @@ SDK Release Notes
 
 Scarthgap Releases
 ==================
+
+:doc:`release_notes/scarthgap_6.12_v2.4.0`
 
 :doc:`release_notes/scarthgap_6.12_v2.3.0`
 

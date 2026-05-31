@@ -16,40 +16,48 @@ with Yocto concepts. For introductory material about Yocto and general
 Yocto reference guides, please refer to the official
 `Yocto Documentation <https://docs.yoctoproject.org/>`_.
 
-This BSP works with the Yocto Kirkstone release and provides support
+This BSP works with the Yocto Scarthgap release and provides support
 for the following machines, distributions and images:
 
 .. table:: Supported machines, distributions and images
 
-    +------------+--------------+-------------------------------------------------+
-    | Machine    | Distribution | Images                                          |
-    +============+==============+=================================================+
-    | sl1620     | poky         | astra-media, astra-media-oobe, astra-core       |
-    +------------+--------------+-------------------------------------------------+
-    | sl1640     | poky         | astra-media, astra-media-oobe, astra-core       |
-    +------------+--------------+-------------------------------------------------+
-    | sl1680     | poky         | astra-media, astra-media-oobe, astra-core       |
-    +------------+--------------+-------------------------------------------------+
-    | sl2611     | poky         | astra-media                                     |
-    +------------+--------------+-------------------------------------------------+
-    | sl2615     | poky         | astra-media, astra-media-oobe                   |
-    +------------+--------------+-------------------------------------------------+
-    | sl2619     | poky         | astra-media, astra-media-oobe                   |
-    +------------+--------------+-------------------------------------------------+
-    | sl2619nand | poky         | astra-media                                     |
-    +------------+--------------+-------------------------------------------------+
-    | sl1620usb  | poky         | astra-media                                     |
-    +------------+--------------+-------------------------------------------------+
-    | sl1640usb  | poky         | astra-media                                     |
-    +------------+--------------+-------------------------------------------------+
-    | sl1680usb  | poky         | astra-media                                     |
-    +------------+--------------+-------------------------------------------------+
-    | sl1620spi  | poky         | astra-tiny                                      |
-    +------------+--------------+-------------------------------------------------+
-    | sl1640spi  | poky         | astra-tiny                                      |
-    +------------+--------------+-------------------------------------------------+
-    | sl1680spi  | poky         | astra-tiny                                      |
-    +------------+--------------+-------------------------------------------------+
+    +--------------------+--------------+-------------------------------------------------+
+    | Machine            | Distribution | Images                                          |
+    +====================+==============+=================================================+
+    | sl1620             | poky         | astra-media, astra-media-oobe, astra-core       |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl1640             | poky         | astra-media, astra-media-oobe, astra-core       |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl1680             | poky         | astra-media, astra-media-oobe, astra-core       |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl2611             | poky         | astra-media                                     |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl2611nand         | poky         | astra-media                                     |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl2615             | poky         | astra-media, astra-media-oobe                   |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl2619             | poky         | astra-media, astra-media-oobe                   |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl2619-coralboard  | poky         | astra-media, astra-media-oobe                   |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl2619nand         | poky         | astra-media                                     |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl1620usb          | poky         | astra-media                                     |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl1640usb          | poky         | astra-media                                     |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl1680usb          | poky         | astra-media                                     |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl2619usb          | poky         | astra-media                                     |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl1620spi          | poky         | astra-tiny                                      |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl1640spi          | poky         | astra-tiny                                      |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl1680spi          | poky         | astra-tiny                                      |
+    +--------------------+--------------+-------------------------------------------------+
+    | sl2619xspi         | poky         | astra-tiny                                      |
+    +--------------------+--------------+-------------------------------------------------+
 
 .. _yocto_prerequisites:
 
@@ -230,9 +238,10 @@ Select the MACHINE you want to build:
 
 ::
 
-  1) conf/machine/sl1620.conf       4) conf/machine/sl1640usb.conf   7) conf/machine/sl1680usb.conf  10) conf/machine/sl2611.conf
-  2) conf/machine/sl1620usb.conf    5) conf/machine/sl1680.conf      8) conf/machine/sl1620spi.conf  11) conf/machine/sl2615.conf
-  3) conf/machine/sl1640.conf       6) conf/machine/sl1680spi.conf   9) conf/machine/sl1640spi.conf  12) conf/machine/sl2619.conf
+1) conf/machine/sl1620.conf               5) conf/machine/sl1680.conf              9) conf/machine/sl1640spi.conf          13) conf/machine/sl2619nand.conf
+2) conf/machine/sl1620usb.conf            6) conf/machine/sl1680spi.conf          10) conf/machine/sl2611.conf             14) conf/machine/sl2619usb.conf
+3) conf/machine/sl1640.conf               7) conf/machine/sl1680usb.conf          11) conf/machine/sl2615.conf             15) conf/machine/sl2619-coralboard.conf
+4) conf/machine/sl1640usb.conf            8) conf/machine/sl1620spi.conf          12) conf/machine/sl2619.conf             16) conf/machine/sl2619xspi.conf
 
 Build the image
 
@@ -338,15 +347,17 @@ Compatible Layers
 
 This BSP is compatible with these layers:
 
-  * ``poky`` [branch: ``kirkstone``]
+  * ``poky`` [branch: ``scarthgap``]
 
-  * ``meta-openembedded`` [branch: ``kirkstone``]
+  * ``meta-openembedded`` [branch: ``scarthgap``]
 
     * ``meta-oe`` (required by ``meta-python`` below)
     * ``meta-python`` (required by ``meta-multimedia`` below)
     * ``meta-multimedia`` (optional - for gstreamer support)
 
-  * ``meta-qt5`` [branch ``qt/upstream/kirkstone`` ] (optional)
+  * ``meta-aws`` [branch ``scarthgap`` ] (optional)
+  * ``meta-qt6`` [branch ``qt/upstream/scarthgap`` ] (optional)
+  * ``meta-qt5`` [branch ``qt/upstream/scarthgap`` ] (optional)
   * ``meta-swupdate`` (optional - for OTA support)
   * ``meta-browser``  (optional - for Chromium support)
   * ``meta-clang`` (optional - for Chromium support)
@@ -379,9 +390,13 @@ sl1680                Default machine type for SL1680                           
 sl1680usb             Machine type for booting SL1680 from USB                                                             v1.6
 sl1680spi             Machine type for booting SL1680 from SPI                                                             v1.7
 sl2611                Default machine type for SL2611                                                                      v2.1
+sl2611nand            Machine type for booting SL2619 from NAND flash                                                      v2.3
 sl2615                Default machine type for SL2615                                                                      v2.1
 sl2619                Default machine type for SL2619
 sl2619nand            Machine type for booting SL2619 from NAND flash                                                      v2.2.1
+sl2619usb             Machine type for booting SL2619 from USB                                                             v2.4
+sl2619-coralboard     Default machine type for the SL2619-based CoralBoard                                                 v2.4
+sl2619xspi             Machine type for booting SL1680 from xSPI                                                           v2.4
 ====================  ===================================================================================================  ==================
 
 .. _astra_images:
