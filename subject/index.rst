@@ -30,6 +30,7 @@ Subject Specific User Guides
    wet_bridge
    setting_hdmi_resolution
    usb_boot_user_guide
+   spi_boot_user_guide
    rescue_mode_user_guide
    pmic_based_pvcomp
    encoder_motion_vector
@@ -92,6 +93,8 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`setting_hdmi_resolution`
 
 - :doc:`usb_boot_user_guide`
+
+- :doc:`spi_boot_user_guide`
 
 - :doc:`rescue_mode_user_guide`
 
