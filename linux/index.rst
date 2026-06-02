@@ -57,6 +57,10 @@ Interfacing with Astra Machina
 Several methods exist for interfacing with Astra Machina, including using a graphical desktop
 on an external display. Additionally, shell access is available through SSH, ADB, and the serial console.
 
+.. note::
+
+    Release v2.4 adds support for the Coralboard. See `Coralboard user guide <https://developers.google.com/coral/products/SL2610-user-guide>`_.
+
 The Graphical Desktop
 ---------------------
 
@@ -137,6 +141,11 @@ and OS messages to a terminal emulator running on the host system. These message
 useful for determining the status of Astra Machina early in the boot process
 or when a display is not connected. It can also provides useful information
 during operation. The serial console is also needed during the software update process.
+
+.. note::
+
+    See `Connecting to an external USB-to-serial adapter <https://developers.google.com/coral/products/SL2610-user-guide#connecting_to_an_external_usb-to-serial_adapter>`__
+    for details on setting up the serial console on the Coralboard.
 
 .. _setup_serial_console:
 
@@ -2387,6 +2396,15 @@ the eMMC image from the host onto Astra Machina. The board will automatically re
     Make sure that the ``SD_BOOT`` jumper is not attached when booting from eMMC. Otherwise,
     the device will boot from internal SPI flash or an SD Card. See :ref:`spi_sd_boot`.
 
+USB Boot with SL261x
+^^^^^^^^^^^^^^^^^^^^
+
+Astra Update is now used to update eMMC and SPI images on both SL16x0 and SL2610. Astra Update provides
+a consistent interface acrosss all SL series, preformance improvements, and additional features not provided
+by the previous ``usb_boot_tool.py`` script.
+
+However, instructions on how to use the ``usb_boot_tool.py`` are available in the `Scarthgap v2.3.0 User Guide <https://synaptics-astra.github.io/doc/v/scarthgap_6.12_v2.3.0/linux/index.html#usb-boot-with-sl261x>`__.
+
 Running Astra Update on Mac OS and Linux
 """"""""""""""""""""""""""""""""""""""""
 
@@ -2699,6 +2717,11 @@ Write the image to SPI flash using the following commands::
     => sf erase 0 0x200000
     => sf write 0x10000000 0x0 0x200000
 
+An optional backup copy of the SPI flash image can be installed using the command::
+
+    => sf erase 0x200000 0x200000
+    => sf write 0x10000000 0x0 0x200000
+
 Flashing Image from TFTP Server on SL261x
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2712,6 +2735,11 @@ Write the SPI image to the SPI flash from the TFTP server using the command::
     => tftpboot 0x10000000 u-boot-astra-v1.0.2.sl2610.rdk.spi.bin;
     => sf probe
     => sf erase 0 0x200000
+    => sf write 0x10000000 0x0 0x200000
+
+An optional backup copy of the SPI flash image can be installed using the command::
+
+    => sf erase 0x200000 0x200000
     => sf write 0x10000000 0x0 0x200000
 
 .. note::
