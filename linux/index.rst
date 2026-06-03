@@ -2338,11 +2338,6 @@ directory. Select "Install" from the drop down menu.
 Running Astra Update
 ^^^^^^^^^^^^^^^^^^^^
 
-.. note::
-
-    ``astra-update`` currently does not support SL261x boards. Please proceeed to :ref:`usb_boot_sl261x`
-    when using SL262x SoCs.
-
 Astra Update can be downloaded from `GitHub <https://github.com/synaptics-astra/usb-tool>`__.
 The tool is included in the same repository as the WinUSB driver.
 
