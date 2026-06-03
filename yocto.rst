@@ -238,10 +238,10 @@ Select the MACHINE you want to build:
 
 ::
 
-1) conf/machine/sl1620.conf               5) conf/machine/sl1680.conf              9) conf/machine/sl1640spi.conf          13) conf/machine/sl2619nand.conf
-2) conf/machine/sl1620usb.conf            6) conf/machine/sl1680spi.conf          10) conf/machine/sl2611.conf             14) conf/machine/sl2619usb.conf
-3) conf/machine/sl1640.conf               7) conf/machine/sl1680usb.conf          11) conf/machine/sl2615.conf             15) conf/machine/sl2619-coralboard.conf
-4) conf/machine/sl1640usb.conf            8) conf/machine/sl1620spi.conf          12) conf/machine/sl2619.conf             16) conf/machine/sl2619xspi.conf
+  1) conf/machine/sl1620.conf               5) conf/machine/sl1680.conf              9) conf/machine/sl1640spi.conf          13) conf/machine/sl2619nand.conf
+  2) conf/machine/sl1620usb.conf            6) conf/machine/sl1680spi.conf          10) conf/machine/sl2611.conf             14) conf/machine/sl2619usb.conf
+  3) conf/machine/sl1640.conf               7) conf/machine/sl1680usb.conf          11) conf/machine/sl2615.conf             15) conf/machine/sl2619-coralboard.conf
+  4) conf/machine/sl1640usb.conf            8) conf/machine/sl1620spi.conf          12) conf/machine/sl2619.conf             16) conf/machine/sl2619xspi.conf
 
 Build the image
 

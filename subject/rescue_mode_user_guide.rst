@@ -65,13 +65,7 @@ Adding Packages and Files to Rescue Initramfs Image (if required)
 
 ::
 
-   IMAGE_INSTALL += "kernel-module-stmmac \
-      kernel-module-stmmac-platform \
-      kernel-module-dwmac-generic \
-      kernel-module-libphy \
-      kernel-module-of-mdio \
-      kernel-module-phylink \
-      kernel-modules \
+   IMAGE_INSTALL += "kernel-modules \
       openssh \
       openssh-sshd \
       openssh-scp \
