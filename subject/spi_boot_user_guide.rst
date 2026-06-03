@@ -35,7 +35,7 @@ Flashing SPI Images with Astra Update
 -------------------------------------
 
 Astra Update can boot U-Boot over the USB interface and then flash the SPI images. Astra Update will need a ``manifest.yaml``
-file to know which files to flash and what addresses to program the images.
+file to know which files to flash and what addresses to program the images. Create this file inside of the spiBOOTimg directory.
 
 Example ``manifest.yaml`` file for flashing on SL2610:
 
