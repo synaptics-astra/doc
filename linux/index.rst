@@ -2325,7 +2325,8 @@ Driver for Synaptics Processors" when operating in USB Boot mode.
 Installing the Google USB Driver for SL2610 on Windows
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Please download the `Google USB Driver <https://developer.android.com/studio/run/win-usb>`__.
+Please download the `Google USB Driver <https://developer.android.com/studio/run/win-usb>`__ by clicking
+on "Download the Google USB Driver ZIP file (ZIP)".
 
 After downloading and decompressing the USB driver software package, right
 click on the ``android_winusb.inf`` file in the ``usb_driver``
