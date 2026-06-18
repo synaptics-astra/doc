@@ -37,6 +37,7 @@ Subject Specific User Guides
    gamma_control
    hdmi_tx_resolution_handling
    qt5_compilation_guide
+   remote_display
 
 
 The following guides provide additional details on a specific subject or module.
@@ -106,3 +107,5 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`hdmi_tx_resolution_handling`
 
 - :doc:`qt5_compilation_guide`
+
+- :doc:`remote_display`
