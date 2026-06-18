@@ -24,12 +24,42 @@ Comments on ``spi_suboot.bin``
 
 - The SPI boot image is named SPI SU-Boot to distinguish it from SPI U-Boot.
 
-- SPI SU-Boot layout is defined in the ``xspi.pt`` file under product configuration folder.
+- SPI SU-Boot layout is defined in the ``spi.pt`` (SL16x0) or ``xspi.pt`` (SL261x) file under product configuration folder.
 
 - SPI SU-Boot relies on the misc partition to choose A/B images, system will initialize this misc partition on the first boot.
 
 - If there is a boot issue when you only burn image A, please try to recovery your board by erasing misc partition.
   The system will re-initialization misc during the next boot.
+
+SPI Boot Image
+^^^^^^^^^^^^^^
+
+The ``spi_suboot.bin`` layout is based on the ``xspi.pt`` partition table (A/B layout):
+
+============ ================== ===============================
+Offset       Size               Name
+============ ================== ===============================
+0x000000     64K                bootinfo
+0x010000     256K               preboot_a
+0x050000     256K               sysmgr_a
+0x090000     576K               tzk_a
+0x120000     832K               bl_a
+0x1F0000     64K                \@misc
+0x200000     256K               preboot_b
+0x240000     256K               sysmgr_b
+0x280000     576K               tzk_b
+0x310000     832K               bl_b
+0x3E0000     64K                \@env
+0x3F0000     14M                boot_a
+0x11F0000    14M                boot_b
+============ ================== ===============================
+
+.. note::
+
+    A slot (bootinfo ~ \@misc) = 0x200000 (2MB). B slot (preboot_b ~ \@env) = 0x1F0000 (1984K).
+    Because the bootinfo partition (64K) only exists in the A slot, the B slot is 64K smaller than A.
+    Therefore, when burning B slot, the erase / write size must be 0x1F0000 instead of 0x200000,
+    otherwise it will overwrite the beginning of boot_a partition.
 
 Flashing SPI Images with Astra Update
 -------------------------------------
@@ -112,18 +142,18 @@ Flash the ``spi_suboot.bin`` to slots A and B.
 ::
 
     usb start; fatload usb 0 0x10000000 spi_suboot.bin
-    spinit;
-    erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 $filesize;
-    erase f0200000 f03fffff; cp.b 0x10000000 0xf0200000 $filesize;
+    sf probe;
+    sf erase 0 0x200000; sf write 0x10000000 0 $filesize;
+    sf erase 0x200000 0x200000;sf write 0x10000000 0x200000 $filesize;
 
 Flash the ``boot.subimg`` to slots A and B.
 
 ::
 
     usb start; fatload usb 0  0x10000000 boot.subimg
-    spinit;
-    erase f0400000 f11fffff; cp.b 0x10000000 f0400000 $filesize;
-    erase f1200000 f1ffffff; cp.b 0x10000000 f1200000 $filesize; //For 32MB SPI NOR onlyy
+    sf probe;
+    sf erase 0x400000 0xE00000;sf write 0x10000000 0x400000 $filesize;
+    sf erase 0x1200000 0xE00000;sf write 0x10000000 0x1200000 $filesize; //For 32MB SPI NOR only
 
 Flashing Image from an External USB Drive on SL2610
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -134,8 +164,8 @@ Flash the ``spi_suboot.bin`` to slots A and B.
 
     usb start; fatload usb 0 0x10000000 spi_suboot.bin
     sf probe;
-    sf erase 0 0x200000;sf write 0x10000000 0 $filesize;
-    sf erase 0x200000 0x200000;sf write 0x10010000 0x200000 $filesize;
+    sf erase 0 0x200000; sf write 0x10000000 0 0x200000;
+    sf erase 0x200000 0x1F0000; sf write 0x10010000 0x200000 0x200000;
 
 Flash the ``boot.subimg`` to slots A and B.
 
@@ -143,8 +173,8 @@ Flash the ``boot.subimg`` to slots A and B.
 
     usb start; fatload usb 0  0x10000000 boot.subimg
     sf probe;
-    sf erase 0x3f0000 0xE00000;sf write 0x10000000 0x3f0000 $filesize;
-    sf erase 0x11f0000 0xE00000;sf write 0x10000000 0x11f0000 $filesize; //For 32MB SPI NOR only
+    sf erase 0x3f0000 0xE00000; sf write 0x10000000 0x3f0000 $filesize;
+    sf erase 0x11f0000 0xE00000; sf write 0x10000000 0x11f0000 $filesize; //For 32MB SPI NOR only
 
 Flashing Image from TFTP Server on SL16x0
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -155,9 +185,9 @@ Flash the ``spi_suboot.bin`` to slots A and B.
 
     net_init; dhcp; setenv serverip 10.10.10.10
     tftpboot 0x10000000 spi_suboot.bin
-    spinit;
-    erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 $filesize;
-    erase f0200000 f03fffff; cp.b 0x10000000 0xf0200000 $filesize;
+    sf probe;
+    sf erase 0 0x200000; sf write 0x10000000 0 $filesize;
+    sf erase 0x200000 0x200000;sf write 0x10000000 0x200000 $filesize;
 
 Flash the ``boot.subimg`` to slots A and B.
 
@@ -165,9 +195,9 @@ Flash the ``boot.subimg`` to slots A and B.
 
     net_init; dhcp; setenv serverip 10.70.XX.XX
     tftpboot 0x10000000 boot.subimg
-    spinit;
-    erase f0400000 f11fffff; cp.b 0x10000000 f0400000 $filesize;
-    erase f1200000 f1ffffff; cp.b 0x10000000 f1200000 $filesize; //For 32MB SPI NOR only
+    sf probe;
+    sf erase 0x400000 0xE00000;sf write 0x10000000 0x400000 $filesize;
+    sf erase 0x1200000 0xE00000;sf write 0x10000000 0x1200000 $filesize; //For 32MB SPI NOR only
 
 Flashing Image from TFTP Server on SL2610
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -179,8 +209,8 @@ Flash the ``spi_suboot.bin`` to slots A and B.
     net_init; dhcp; setenv serverip 10.10.10.10
     tftpboot 0x10000000 spi_suboot.bin
     sf probe;
-    sf erase 0 0x200000;sf write 0x10000000 0 $filesize;
-    sf erase 0x200000 0x200000;sf write 0x10010000 0x200000 $filesize;
+    sf erase 0 0x200000; sf write 0x10000000 0 0x200000;
+    sf erase 0x200000 0x1F0000; sf write 0x10010000 0x200000 0x200000;
 
 Flash the ``boot.subimg`` to slots A and B.
 
