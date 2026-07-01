@@ -38,6 +38,7 @@ Subject Specific User Guides
    hdmi_tx_resolution_handling
    qt5_compilation_guide
    remote_display
+   astra_mcu_sdk_integration_guide
 
 
 The following guides provide additional details on a specific subject or module.
@@ -109,3 +110,5 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`qt5_compilation_guide`
 
 - :doc:`remote_display`
+
+- :doc:`astra_mcu_sdk_integration_guide`
