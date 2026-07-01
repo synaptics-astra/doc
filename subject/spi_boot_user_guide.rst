@@ -31,10 +31,10 @@ Comments on ``spi_suboot.bin``
 - If there is a boot issue when you only burn image A, please try to recovery your board by erasing misc partition.
   The system will re-initialization misc during the next boot.
 
-SPI Boot Image
-^^^^^^^^^^^^^^
+SL2610 SPI Boot Image
+^^^^^^^^^^^^^^^^^^^^^
 
-The ``spi_suboot.bin`` layout is based on the ``xspi.pt`` partition table (A/B layout):
+The SL2610 ``spi_suboot.bin`` layout is based on the ``xspi.pt`` partition table (A/B layout):
 
 ============ ================== ===============================
 Offset       Size               Name
@@ -137,6 +137,11 @@ Flashing SPI Images with U-Boot
 Flashing Image from an External USB Drive on SL16x0
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. note::
+
+    Astra SDK v1.x releases use U-Boot based on 2019. Please see the `SDK v1.8 User Guide <https://synaptics-astra.github.io/doc/v/kirkstone_5.15_v1.8.0/linux/index.html#updating-internal-spi-flash-images-using-u-boot>`__
+    for the commands to use for U-Boot 2019.
+
 Flash the ``spi_suboot.bin`` to slots A and B.
 
 ::
@@ -178,6 +183,11 @@ Flash the ``boot.subimg`` to slots A and B.
 
 Flashing Image from TFTP Server on SL16x0
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note::
+
+    Astra SDK v1.x releases use U-Boot based on 2019. Please see the `SDK v1.8 User Guide <https://synaptics-astra.github.io/doc/v/kirkstone_5.15_v1.8.0/linux/index.html#updating-internal-spi-flash-images-using-u-boot>`__
+    for the commands to use for U-Boot 2019.
 
 Flash the ``spi_suboot.bin`` to slots A and B.
 
