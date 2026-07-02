@@ -1,9 +1,9 @@
-# Astra MCU SDK Integration Guide
+# Astra MCU SDK Integration and DDR Customization Guide
 
 ## Overview
 
-This document provides guidance on setting up, building, and integrating
-the Astra MCU SDK for SL2610.
+This document provides guidance on setting up, building, and integrating the Astra MCU SDK for SL2610,
+including instructions for customizing the DDR configuration.
 
 For complete details, refer to: [Astra MCU SDK Developer Guide](https://synaptics-astra-mcu.github.io/doc/v/latest/developer_guide/index.html)
 and the [SL2610 Build and Flash with CLI](https://synaptics-astra-mcu.github.io/doc/v/latest/srsdk/docs/SL2610/SL2610_Build_and_Flash_with_CLI.html)
