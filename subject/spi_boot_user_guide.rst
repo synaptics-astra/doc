@@ -81,11 +81,11 @@ Example ``manifest.yaml`` file for flashing on SL2610:
             read_address: 0x10000000
             write_first_copy_address: 0
             write_second_copy_address: 0x200000
-            write_length: $filesize
+            write_length: 0x200000
             erase_first_start_address: 0
             erase_first_length: 0x200000
             erase_second_start_address: 0x200000
-            erase_second_length: 0x200000
+            erase_second_length: 0x1F0000
 
         boot.subimg:
             read_address: 0x10000000
@@ -170,7 +170,7 @@ Flash the ``spi_suboot.bin`` to slots A and B.
     usb start; fatload usb 0 0x10000000 spi_suboot.bin
     sf probe;
     sf erase 0 0x200000; sf write 0x10000000 0 0x200000;
-    sf erase 0x200000 0x1F0000; sf write 0x10010000 0x200000 0x200000;
+    sf erase 0x200000 0x1F0000; sf write 0x10000000 0x200000 0x1F0000;
 
 Flash the ``boot.subimg`` to slots A and B.
 
@@ -226,7 +226,7 @@ Flash the ``boot.subimg`` to slots A and B.
 
 ::
 
-    net_init; dhcp; setenv serverip 10.70.XX.XX
+    net_init; dhcp; setenv serverip 10.10.10.10
     tftpboot 0x10000000 boot.subimg
     sf probe;
     sf erase 0x3f0000 0xE00000;sf write 0x10000000 0x3f0000 $filesize;
