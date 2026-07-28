@@ -2664,12 +2664,12 @@ The USB drive will need a partition with a Fat32 formatted file system.
 Write the image to SPI flash using the following commands::
 
     => usb start; fatload usb 0 0x10000000 u-boot-astra-v1.1.1.sl1680.rdk.spi.bin;
-    => spinit;
-    => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
+    => sf probe;
+    => sf erase 0 0x200000; sf write 0x10000000 0 $filesize;
 
 An optional backup copy of the SPI flash image can be installed using the command::
 
-    => erase f0200000 f03fffff; cp.b 0x10000000 0xf0200000 0x200000;
+    => sf erase 0x200000 0x200000;sf write 0x10000000 0x200000 $filesize;
 
 Flashing Image from TFTP Server on SL16x0
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2682,12 +2682,12 @@ Write the SPI image to the SPI flash from the TFTP server using the command::
     => net_init; dhcp;
     => setenv serverip 10.10.10.10;
     => tftpboot 0x10000000 u-boot-astra-v1.1.1.sl1680.rdk.spi.bin;
-    => spinit;
-    => erase f0000000 f01fffff; cp.b 0x10000000 0xf0000000 0x200000;
+    => sf probe;
+    => sf erase 0 0x200000; sf write 0x10000000 0 $filesize;
 
 An optional backup copy of the SPI flash image can be installed using the command::
 
-    => erase f0200000 f03fffff; cp.b 0x10000000 0xf0200000 0x200000;
+    => sf erase 0x200000 0x200000;sf write 0x10000000 0x200000 $filesize;
 
 .. note::
 
@@ -2715,8 +2715,8 @@ Write the image to SPI flash using the following commands::
 
 An optional backup copy of the SPI flash image can be installed using the command::
 
-    => sf erase 0x200000 0x200000
-    => sf write 0x10000000 0x0 0x200000
+    => sf erase 0x200000 0x1F0000
+    => sf write 0x10000000 0x200000 0x1F0000
 
 Flashing Image from TFTP Server on SL261x
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2735,8 +2735,8 @@ Write the SPI image to the SPI flash from the TFTP server using the command::
 
 An optional backup copy of the SPI flash image can be installed using the command::
 
-    => sf erase 0x200000 0x200000
-    => sf write 0x10000000 0x0 0x200000
+    => sf erase 0x200000 0x1F0000
+    => sf write 0x10000000 0x200000 0x1F0000
 
 .. note::
 
