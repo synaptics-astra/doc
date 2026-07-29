@@ -92,8 +92,15 @@ of the atomic security provisioning group.
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
 | 208   | OTP_SOC_UID_1                 | Read Only               | 0xFFFFFFFF | NO         | Word 1 (32-bit) of 64-bit SOC_UID           |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
-| 209   | OTP_FIELD_MAX                 | N/A                     | N/A        | N/A        | Enum boundary only                          |
+| 209   | OTP_BOOT_SEGID                | Read / Write            | 0xFFFFFFFF | NO         | 32-bit BOOT segmentation ID                 |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
+| 210   | OTP_TEE_SEGID                 | Read / Write            | 0xFFFFFFFF | NO         | 32-bit TEE segmentation ID                  |
++-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
+| 211   | OTP_TEE_SECURITY_ENABLE       | Read / Write            | 0x00000001 | NO         | 1 = Enable TEE security                     |
++-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
+| 212   | OTP_FIELD_MAX                 | N/A                     | N/A        | N/A        | Enum boundary only                          |
++-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
+
 
 Notes:
 
@@ -151,6 +158,17 @@ Notes:
        and cannot be modified by users. This SOC_UID is a read-only field that is unique for each chip and can be used
        for chip identification purposes.
 
+  12. OTP_BOOT_SEGID and OTP_TEE_SEGID:
+       These fields are used to store 32-bit segmentation IDs for BOOT and TEE respectively. The segmentation ID is used
+       in the secure boot process to ensure that only authorized images with matching segmentation ID can be executed.
+       The images (in preboot.subimg) associate with OTP_BOOT_SEGID and OTP_TEE_SEGID are signed and owned by Synaptics.
+       In Astra chips before shipping, the OTP_BOOT_SEGID and OTP_TEE_SEGID are programmed by Synaptics with a default value.
+       Any update of these segmentation IDs would require a new preboot image release from Synaptics.
+
+  13. OTP_TEE_SECURITY_ENABLE:
+       This field is used to enable TEE security features. When set to 1, it indicates that the TEE security features are enabled.
+       In Astra chips before shipping, OTP_TEE_SECURITY_ENABLE is enabled by default. So the official release of Astra preboot images
+       are built with TEE security features enabled.
 
 U-BOOT OTP Commands
 ====================================================================
@@ -329,7 +347,12 @@ Common OTP Index List
    204      OTP_PRODUCTION_CHIP_FLAG
    205      OTP_USB_BOOT_DISABLE
    206      OTP_BOOT_VERSION
-   207      OTP_FIELD_MAX
+   207      OTP_SOC_UID_0
+   208      OTP_SOC_UID_1
+   209      OTP_BOOT_SEGID
+   210      OTP_TEE_SEGID
+   211      OTP_TEE_SECURITY_ENABLE
+   212      OTP_FIELD_MAX
 
   =====  ============================
 

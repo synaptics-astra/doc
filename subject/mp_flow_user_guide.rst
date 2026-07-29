@@ -15,9 +15,16 @@ Programmable Memory (OTP) for Astra Machina in production environments.
 System Requirements
 ===================
 
-- Ubuntu 16.04 x86_64 desktop edition
-- Python 2.7.1+
-- libssl1.0.0
+- Ubuntu 22.04 x86_64 desktop edition
+- Python 3.10+
+- openssl (system command-line tool; Ubuntu 22.04 ships OpenSSL 3.0)
+
+Install the ``openssl`` command-line tool (used by the key-generation scripts):
+
+::
+
+    sudo apt-get update
+    sudo apt-get install openssl
 
 Definitions
 ===========
