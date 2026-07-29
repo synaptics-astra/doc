@@ -2071,7 +2071,7 @@ if one slot becomes corrupted. Key paritions such as the bootloader, rootfs, and
 have a and b versions. See :ref:`example_parition_table`.
 
 The active slot is selected at boot based on metadata about slots is stored in the ``misc``
-partition. The ``misc`` partition is initialized when an image is flashed (eMMC) or by SU-Boot
+partition. The ``misc`` partition is initialized when an image is flashed (eMMC) or by U-Boot
 on first boot (SPI).
 
 See :ref:`ab_boot` for more information on A/B Booting.
@@ -2085,27 +2085,27 @@ U-Boot
 
 As mentioned above, Astra Machina uses U-Boot as its bootloader. There
 are three types of U-Boot which are used with Astra Machina. In addition
-to SU-Boot, there are SPI U-Boot and USB U-Boot variants which are used to
+to U-Boot, there are SPI U-Boot and USB U-Boot variants which are used to
 flash or recover a device.
 
 =========== ===========================================================
 image type  image usage
 =========== ===========================================================
-SPI SU-Boot burn eMMC image via TFTP server or USB drive
-USB SU-Boot burn eMMC image via TFTP server of USB host
-SU-Boot     burn eMMC image via TFTP server or USB drive, Booting Linux
+SPI U-Boot  burn eMMC image via TFTP server or USB drive
+USB U-Boot  burn eMMC image via TFTP server of USB host
+U-Boot      burn eMMC image via TFTP server or USB drive, Booting Linux
 =========== ===========================================================
 
-USB SU-Boot and SPI SU-Boot are used to boot a device which does not have
+USB U-Boot and SPI U-Boot are used to boot a device which does not have
 an image written to the eMMC or to do a update which overwrites all of
 the contents of the eMMC.
 
-USB SU-Boot allows the board to receive a copy of the USB version of
-SU-Boot over the USB interface. The host system runs the usb_boot tool
-to transfer the USB SU-Boot image to the board and execute it. Once USB SU-Boot
+USB U-Boot allows the board to receive a copy of the USB version of
+U-Boot over the USB interface. The host system runs the usb_boot tool
+to transfer the USB U-Boot image to the board and execute it. Once USB U-Boot
 is running on the board it can be used to write an image to the eMMC.
 
-SPI SU-Boot is similar to USB SU-Boot except that SU-Boot runs from
+SPI U-Boot is similar to USB U-Boot except that U-Boot runs from
 SPI flash. The SPI flash may be located on the main board of Astra Machina or
 it may be a located on a SPI daughter card which is plugged into the device.
 Once SPI U-Boot is running on the board it can be used to write an image to the eMMC.
@@ -2189,10 +2189,10 @@ After the flashing process completes, the SD card will now be ready to boot Astr
 
 .. _uboot_prompt:
 
-U-Boot Prompt with SU-Boot
---------------------------
+U-Boot Prompt
+-------------
 
-When booting from the internal eMMC or from an SD card, SU-Boot will automatically load the Linux kernel.
+When booting from the internal eMMC or from an SD card, U-Boot will automatically load the Linux kernel.
 However, this process can be interrupted by pressing any key in the serial console during the boot process.
 If U-Boot detects a keypress then it will stop at the U-Boot prompt "=>". The U-Boot prompt can be used to
 set variables, or flash the eMMC and internal SPI flash. By default the timeout in which U-Boot will wait
@@ -2445,7 +2445,7 @@ requires additional permissions to interface with USB devices and access system 
 Booting U-Boot
 """"""""""""""
 
-Run the following command to download SU-Boot and have it run on the board::
+Run the following command to download U-Boot and have it run on the board::
 
     python usb_boot_tool.py --op run-acore --sm sysmgr.subimg --bl bl.subimg --tzk tzk.subimg
 
@@ -2457,7 +2457,7 @@ begin sending images to the board. Once the images are sent you will see the U-B
 
 .. figure:: media/sl261x-usb-boot-tool.png
 
-    Output of ``usb-boot-tool.py`` after booting to SU-Boot.
+    Output of ``usb-boot-tool.py`` after booting to U-Boot.
 
 .. figure:: media/sl261x-usb-boot-tool-u-boot.png
 
@@ -2647,13 +2647,13 @@ You can find the latest versions of the SPI images on `GitHub <https://github.co
 
 .. note::
 
-    The memory offset of the ``misc`` partition must be cleared before boot from SPI. Otherwise, SU-Boot will not
+    The memory offset of the ``misc`` partition must be cleared before boot from SPI. Otherwise, U-Boot will not
     properly initialize the ``misc`` partition.
 
 .. note::
 
     If only Slot A has been programmed and an boot issues occurs. The board can be recovered by erasing
-    the misc partition and letting SU-Boot reinitialize it.
+    the misc partition and letting U-Boot reinitialize it.
 
 Flashing Image from an External USB Drive on SL16x0
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
