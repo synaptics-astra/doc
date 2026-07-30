@@ -281,19 +281,6 @@ UART
 UART wake up is enabled by default and the wake up keys are 'W', 'w' and
 space.
 
-CEC
-^^^
-
-CEC wake up is supported in Android case. Here lists the wake events.
-
-1. CEC_MSG_OPCODE_IMAGE_VIEW_ON
-2. CEC_MSG_OPCODE_TEXT_VIEW_ON
-3. CEC_MSG_OPCODE_USER_CONTROL_PRESSED
-4. CEC_MSG_OPCODE_ACTIVE_SOURCE
-5. CEC_MSG_OPCODE_SET_STREAM_PATH
-6. CEC_VEND_CMD_BUDDY_LAUNCH_SPECIFIC_APP
-7. CEC_MSG_OPCODE_DECK_CONTROL
-
 WOL
 ^^^
 
@@ -366,10 +353,7 @@ SL1640/SL1680
 1. | WOL (only available on SL1640)
    | Add "CFLAGS += -DWOLENABLE" in platform.mk.
 
-2. | CEC
-   | Set CONFIG_SM_CEC=y in the profile of a project.
-
-3. | GPIO
+2. | GPIO
    | Geth, WIFI/BT wake up are all implemented through GPIO.
    | Set GPIO mode in the Linux Kernel ``dolphin-rdk.dts`` in the ``linux-syna`` package.
    | https://github.com/synaptics-astra/linux_6_12-main/blob/#release#/arch/arm64/boot/dts/synaptics/dolphin-rdk.dts
