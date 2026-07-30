@@ -4,6 +4,10 @@ Astra Yocto Linux Developer Guide
 
 .. highlight:: console
 
+.. note::
+
+    Recent changes to developer.arm.com are impacting builds. Please see the workaround :ref:`arm_eula_workaround`.
+
 Overview
 =========
 
