@@ -36,6 +36,8 @@ for the following machines, distributions and images:
     +--------------------+--------------+-------------------------------------------------+
     | sl2615             | poky         | astra-media, astra-media-oobe                   |
     +--------------------+--------------+-------------------------------------------------+
+    | sl2615nand         | poky         | astra-media                                     |
+    +--------------------+--------------+-------------------------------------------------+
     | sl2619             | poky         | astra-media, astra-media-oobe                   |
     +--------------------+--------------+-------------------------------------------------+
     | sl2619-coralboard  | poky         | astra-media, astra-media-oobe                   |
@@ -392,7 +394,8 @@ sl1680spi             Machine type for booting SL1680 from SPI                  
 sl2611                Default machine type for SL2611                                                                      v2.1
 sl2611nand            Machine type for booting SL2619 from NAND flash                                                      v2.3
 sl2615                Default machine type for SL2615                                                                      v2.1
-sl2619                Default machine type for SL2619
+sl2615nand            Machine type for booting SL2615 from NAND flash                                                      v2.5
+sl2619                Default machine type for SL2619                                                                      v2.1
 sl2619nand            Machine type for booting SL2619 from NAND flash                                                      v2.2.1
 sl2619usb             Machine type for booting SL2619 from USB                                                             v2.4
 sl2619-coralboard     Default machine type for the SL2619-based CoralBoard                                                 v2.4
