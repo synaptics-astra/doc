@@ -6,18 +6,18 @@ Astra Machina supports Dynamic Voltage and Frequency Switching using the Linux K
 the system to adjust VCPU and VCORE clock frequencies and voltages based on system performance. VCPU is the power supplied to the
 CPU cores and VCORE is the power supplied to the GPU, DDR, NPU, and other modules.
 
-+-----------------+----------+----------+----------+
-|                 |  SL1620  |  SL1640  |  SL1680  |
-+-----------------+----------+----------+----------+
-| VCPU (CPUFreq)  |    Y     |    Y     |     Y    |
-+-----------------+----------+----------+----------+
-| VCORE (DevFreq) |    N     |    Y     |    N     |
-+-----------------+----------+----------+----------+
++-----------------+----------+----------+----------+---------+
+|                 |  SL1620  |  SL1640  |  SL1680  | SL2610  |
++-----------------+----------+----------+----------+---------+
+| VCPU (CPUFreq)  |    Y     |    Y     |     Y    |    Y    |
++-----------------+----------+----------+----------+---------+
+| VCORE (DevFreq) |    N     |    Y     |    N     |    Y    |
++-----------------+----------+----------+----------+---------+
 
 *DVFS Support Table*
 
 Clock frequencies and voltage configurations are defined in the Operating Performance Points (OPP) table in device tree. The ``opp_table0``
-is defined in ``dolphin.dtsi``, ``platypus.dtsi``, and ``myna2.dtsi`` for VCPU. The ``vcore_opp_table`` is defined in ``platypus.dtsi`` for VCORE.
+is defined in ``dolphin.dtsi``, ``platypus.dtsi``, ``myna2.dtsi``, ``sl2611.dtsi`` for VCPU. The ``vcore_opp_table`` is defined in ``platypus.dtsi`` for VCORE.
 
 .. figure:: media/sl1680-opp-table.png
 
