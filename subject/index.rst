@@ -10,6 +10,7 @@ Subject Specific User Guides
    memory_layout_customization
    emmc_layout_customization
    dvfs_user_guide
+   sl2610_devfreq_manual_test_guide
    power_measurement
    power_modes
    weston_default_display
@@ -55,6 +56,8 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`emmc_layout_customization`
 
 - :doc:`dvfs_user_guide`
+
+- :doc:`sl2610_devfreq_manual_test_guide`
 
 - :doc:`power_measurement`
 
