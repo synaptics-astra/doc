@@ -4,6 +4,10 @@ Release Notes Scarthgap 6.12 v2.5.0
 
 .. highlight:: console
 
+.. note::
+
+    Recent changes to developer.arm.com are impacting builds. Please see the workaround :ref:`arm_eula_workaround`.
+
 Introduction
 ============
 
@@ -719,6 +723,25 @@ Known Issues and Limitations
     On SL2619 NAND is limited to 256MB. The NAND image contains minimal packages to accomidate the small storage.
     Please see the `sl2619nand machine definition <https://github.com/synaptics-astra/meta-synaptics/blob/scarthgap_6.12_v2.2.1/conf/machine/sl2619nand.conf>`__
     for information on what packages are included and what has been removed.
+
+.. _arm_eula_workaround:
+
+ARM EULA Workaround
+-------------------
+
+.. note::
+
+    Recent changes to developer.arm.com is causing the GCC recipes to fail to build. Please update the ARM EULA URL in ``meta-synaptics`` to workaround this issue.
+    This change needs to be applied to ``meta-synaptics/recipes-devtools/arm-toolchain/gcc-arm-aarch64-linux-gnu-native_8.3-2019.03.bb`` and
+    ``meta-synaptics/recipes-devtools/arm-toolchain/ gcc-arm-arm-linux-gnueabihf-native_8.3-2019.03.bb``.
+
+    ::
+
+        -    https://developer.arm.com/GetEula?Id=c2de6e61-beb6-42ff-8b05-c21abdbe74f7;downloadfilename=EULA;name=eula \
+        +    https://github.com/synaptics-astra/sdk/releases/download/scarthgap_6.12_v2.4.0/EULA;downloadfilename=EULA;name=eula \
+
+    Reference patch can be found `here <https://github.com/aduggan-syna/meta-synaptics/commit/cf98f1c7d9d532686231d779cef70f856706e55a>`__.
+
 
 Known Issues
 ------------
