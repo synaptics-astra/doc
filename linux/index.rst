@@ -2389,6 +2389,12 @@ the eMMC image from the host onto Astra Machina. The board will automatically re
 
 .. note::
 
+    Wait for the device to reset automatically after the update. ``astra-update`` may report
+    success before flashing has fully completed. Manually resetting the device can lead to
+    invalid partitions, especially on SL2610.
+
+.. note::
+
     Make sure that the ``SD_BOOT`` jumper is not attached when booting from eMMC. Otherwise,
     the device will boot from internal SPI flash or an SD Card. See :ref:`spi_sd_boot`.
 
