@@ -740,7 +740,7 @@ ARM EULA Workaround
         -    https://developer.arm.com/GetEula?Id=c2de6e61-beb6-42ff-8b05-c21abdbe74f7;downloadfilename=EULA;name=eula \
         +    https://github.com/synaptics-astra/sdk/releases/download/scarthgap_6.12_v2.4.0/EULA;downloadfilename=EULA;name=eula \
 
-    Reference patch can be found `here <https://github.com/aduggan-syna/meta-synaptics/commit/cf98f1c7d9d532686231d779cef70f856706e55a>`__.
+    Reference patch can be found `here <https://github.com/synaptics-astra/meta-synaptics/commit/dff2ee3f04193b309000bef2640450d0b9a08bfd>`__.
 
 
 Known Issues
