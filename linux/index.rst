@@ -597,43 +597,6 @@ For example, these commands will display video from the main path of the sensor 
     IMX258 and IMX415 sensors are not supported with the dual sensor configuration on Astra Machina boards. Both sensors
     require a GPIO expander whereas CSI1 is incompatible with the GPIO expander.
 
-Dewarp Support
-**************
-
-SL1680 supports Dewarp lens distortion correction on the IMX258 and IMX415 sensors. Dewarp required enabling the ``dolphin-csi0-with-expander-dewarp-imx258.dtb``
-or ``dolphin-csi0-with-expander-dewarp-imx415.dtb`` overlays. (See :ref:`enable_dewarp_dtbo`). Once the dewarp overlay is enabled, check for the existence of the
-file ``/proc/syna-dewarp/dewarp_subdev0``. This file contains the path top the dewarp look up table (LUT).
-
-::
-
-    cat /proc/syna-dewarp/dewarp_subdev0
-
-Output::
-
-    lut       :/lib/firmware/isp/DEWARP_LUT.isp
-
-This is default LUT and it is used for IMX285.
-
-For IMX415, set the LUT to ``isp/DEWARP_LUT_IMX415.isp``
-
-::
-
-    echo "lut=isp/DEWARP_LUT_IMX415.isp" > /proc/syna-dewarp/dewarp_subdev0
-
-Use the following Gstreamer pipeline to apply dewarp distortion correction to the image.
-
-::
-
-    gst-launch-1.0 v4l2src device=/dev/videoX extra-controls="c,dewarp_enable=1" ! \
-        'video/x-raw, format=(string)NV12 , width=(int)3840, height=(int)2160, framerate=(fraction)30/1' \
-        ! waylandsink fullscreen=true
-
-Setting ``dewarp_enable`` to ``1`` enables correction. Setting it to ``0`` disables it.
-
-.. note::
-
-    Dewarp is only supported on ``SP1`` using 4K resolution.
-
 MMU Support
 ***********
 
