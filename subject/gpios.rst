@@ -299,22 +299,22 @@ SM_GPIO[0:15] (gpiochip2, base depends on system):
 
 .. math::
 
-    \text{SM\_GPIO ID} = \text{gpiochip2 base} + \text{SM\_GPIO\#}
+    \text{SM_GPIO ID} = \text{gpiochip2 base} + \text{SM_GPIO#}
 
 SM_GPIO[16:23] (gpiochip3):
 
 .. math::
 
-    \text{SM\_GPIO ID} = \text{gpiochip3 base} + (\text{SM\_GPIO\#} - 16)
+    \text{SM_GPIO ID} = \text{gpiochip3 base} + (\text{SM_GPIO#} - 16)
 
 SM_GPIO[24:31] (gpiochip4):
 
 .. math::
 
-    \text{SM\_GPIO ID} = \text{gpiochip4 base} + (\text{SM\_GPIO\#} - 24)
+    \text{SM_GPIO ID} = \text{gpiochip4 base} + (\text{SM_GPIO#} - 24)
 
 SM_GPIO[32:38] (gpiochip5):
 
 .. math::
 
-    \text{SM\_GPIO ID} = \text{gpiochip5 base} + (\text{SM\_GPIO\#} - 32)
+    \text{SM_GPIO ID} = \text{gpiochip5 base} + (\text{SM_GPIO#} - 32)
