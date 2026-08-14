@@ -25,45 +25,63 @@ for the following machines, distributions and images:
 
 .. table:: Supported machines, distributions and images
 
-    +--------------------+--------------+-------------------------------------------------+
-    | Machine            | Distribution | Images                                          |
-    +====================+==============+=================================================+
-    | sl1620             | poky         | astra-media, astra-media-oobe, astra-core       |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl1640             | poky         | astra-media, astra-media-oobe, astra-core       |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl1680             | poky         | astra-media, astra-media-oobe, astra-core       |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl2611             | poky         | astra-media                                     |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl2611nand         | poky         | astra-media                                     |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl2615             | poky         | astra-media, astra-media-oobe                   |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl2615nand         | poky         | astra-media                                     |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl2619             | poky         | astra-media, astra-media-oobe                   |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl2619-coralboard  | poky         | astra-media, astra-media-oobe                   |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl2619nand         | poky         | astra-media                                     |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl1620usb          | poky         | astra-media                                     |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl1640usb          | poky         | astra-media                                     |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl1680usb          | poky         | astra-media                                     |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl2619usb          | poky         | astra-media                                     |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl1620spi          | poky         | astra-tiny                                      |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl1640spi          | poky         | astra-tiny                                      |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl1680spi          | poky         | astra-tiny                                      |
-    +--------------------+--------------+-------------------------------------------------+
-    | sl2619xspi         | poky         | astra-tiny                                      |
-    +--------------------+--------------+-------------------------------------------------+
+    +--------------------+--------------+------------------------------------------------------+
+    | Machine            | Distribution | Images                                               |
+    +====================+==============+======================================================+
+    | sl1620             | poky         | astra-media, astra-media-oobe, astra-media-swupdate, |
+    |                    |              |                                                      |
+    |                    |              | astra-media-oobe-swupdate, astra-core                |
+    |                    |              |                                                      |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl1640             | poky         | astra-media, astra-media-oobe, astra-media-swupdate, |
+    |                    |              |                                                      |
+    |                    |              | astra-media-oobe-swupdate, astra-core                |
+    |                    |              |                                                      |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl1680             | poky         | astra-media, astra-media-oobe, astra-media-swupdate, |
+    |                    |              |                                                      |
+    |                    |              | astra-media-oobe-swupdate, astra-core                |
+    |                    |              |                                                      |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl2611             | poky         | astra-media                                          |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl2611nand         | poky         | astra-media                                          |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl2615             | poky         | astra-media, astra-media-oobe, astra-media-swupdate, |
+    |                    |              |                                                      |
+    |                    |              | astra-media-oobe-swupdate, astra-core                |
+    |                    |              |                                                      |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl2615nand         | poky         | astra-media                                          |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl2619             | poky         | astra-media, astra-media-oobe, astra-media-swupdate, |
+    |                    |              |                                                      |
+    |                    |              | astra-media-oobe-swupdate, astra-core                |
+    |                    |              |                                                      |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl2619-coralboard  | poky         | astra-media, astra-media-oobe, astra-media-swupdate, |
+    |                    |              |                                                      |
+    |                    |              | astra-media-oobe-swupdate, astra-core                |
+    |                    |              |                                                      |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl2619nand         | poky         | astra-media                                          |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl1620usb          | poky         | astra-media                                          |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl1640usb          | poky         | astra-media                                          |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl1680usb          | poky         | astra-media                                          |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl2619usb          | poky         | astra-media                                          |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl1620spi          | poky         | astra-tiny                                           |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl1640spi          | poky         | astra-tiny                                           |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl1680spi          | poky         | astra-tiny                                           |
+    +--------------------+--------------+------------------------------------------------------+
+    | sl2619xspi         | poky         | astra-tiny                                           |
+    +--------------------+--------------+------------------------------------------------------+
 
 .. _yocto_prerequisites:
 
@@ -262,13 +280,21 @@ The resulting image can be found in ``build-${MACHINE}/tmp/deploy/images/${MACHI
   This example builds the ``astra-media`` image. To build a different image replace ``astra-media`` with the image you want to build.
   See :ref:`astra_images` for details on other images supported by Astra Yocto.
 
-To build the ``astra-media-oobe`` image exectute the following commands::
+To build the ``astra-media-oobe`` image execute the following commands::
 
   pokyuser@xyz:/path/to/workspace $ cd sdk
 
   pokyuser@xyz:/path/to/workspace/sdk $ OOBE=enabled . meta-synaptics/setup/setup-environment
 
   pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media-oobe
+
+To build ``*-swupdate`` versions of images, execute the following commands::
+
+  pokyuser@xyz:/path/to/workspace $ cd sdk
+
+  pokyuser@xyz:/path/to/workspace/sdk $ OOBE=enabled . meta-synaptics/setup/setup-environment
+
+  pokyuser@xyz:/path/to/workspace/sdk/build-XYZ $ bitbake astra-media-oobe-swupdate
 
 The ``. meta-synaptics/setup/setup-environment`` will prompt the user to select a machine type. Information on machine
 types can be found in section :ref:`astra_machines`.
@@ -413,16 +439,18 @@ Astra Yocto Images
 
 The Astra Yocto release contains several images which provide different levels of functionality.
 
-====================  ===================================================================================================  ==================
-Image                 Description                                                                                          Version Added
-====================  ===================================================================================================  ==================
-astra-tiny            Minimal packages used to build image suitable for booting from 32MB SPI NOR Flash.                   v1.5
-astra-core            Core system packages Intended for power management testing.                                          v1.2
-astra-media           Default image which contains core packages along with full packages supporting full multimedia       v0.9
-                      capabilities.
-astra-media-oobe      Contains all packages in astra-media, plus Chromium, Docker, development tools, and additional demo  v1.5
-                      applications.
-====================  ===================================================================================================  ==================
+=========================   ===================================================================================================  ==================
+Image                       Description                                                                                          Version Added
+=========================   ===================================================================================================  ==================
+astra-tiny                  Minimal packages used to build image suitable for booting from 32MB SPI NOR Flash.                   v1.5
+astra-core                  Core system packages Intended for power management testing.                                          v1.2
+astra-media                 Default image which contains core packages along with full packages supporting full multimedia       v0.9
+                            capabilities.
+astra-media-swupdate        Generates SWUpdate .swu image file for astra-media images.                                           v2.5
+astra-media-oobe            Contains all packages in astra-media, plus Chromium, Docker, development tools, and additional demo  v1.5
+                            applications.
+astra-media-oobe-swupdate   Generates SWUpdate .swu image file for astra-media-oobe images.                                      v2.5
+=========================   ===================================================================================================  ==================
 
 The ``astra-media`` image can be used as a starting point when developing a custom distribution. It contains all of the packages needed
 to create a fully functional system. While ``astra-media-oobe`` contains additional packages used to showcase the capabilities of Astra
