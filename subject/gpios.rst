@@ -173,13 +173,148 @@ GPIO Port           Address    GPIOs
 =================   ========   ========
 gpio\@7000          f7f07000   0 to 31
 gpio\@e000          f7f0e000   32 to 63
-gpio\@8000          e5038000   64 to 79
-gpio\@9000          e5039000   80 to 87
-gpio\@a000          e503a000   88 to 95
 =================   ========   ========
-
 
 .. note::
 
     Mappings may change if based on modifications to devicetree. The tables above are for reference only
-    and my not be accurate for all configurations.
+    and may not be accurate for all configurations.
+
+.. _sm_gpio_mapping:
+
+SM GPIO Mappings
+================
+
+The System Manager (SM) has its own GPIO controller separate from the SOC GPIOs documented above.
+SM GPIOs are directly managed by the M52 core running the system manager firmware, but are also
+accessible from Linux via ``libgpiod``.
+
+.. note::
+
+    SM GPIO pin muxing is controlled by the SM firmware device tree (Zephyr or FreeRTOS side),
+    **not** the Linux device tree. Changing the function of SM GPIOs requires updating the system
+    manager firmware configuration.
+
+SL1620
+------
+
+The SM GPIO controller on SL1620 supports **12 SM_GPIOs**: SM_GPIO[0:11].
+
+=================   ===========   ===================
+Register Block      Address       SM GPIOs
+=================   ===========   ===================
+GPIO0               f7e80000      SM_GPIO[0:11]
+=================   ===========   ===================
+
+For SL1620, the SM_GPIO Linux GPIO group maps as follows:
+
+=========================   ==================
+SM GPIOs                    Linux GPIO Port
+=========================   ==================
+SM_GPIO0 ~ SM_GPIO11        portb 0 ~ 11
+=========================   ==================
+
+SL261x
+------
+
+The SM GPIO controller supports **39 SM_GPIOs**: SM_GPIO[0:38].
+
+In the register view, the SM GPIO block is split as:
+
+=================   ===========   ===================
+Register Block      Address       SM GPIOs
+=================   ===========   ===================
+GPIO0               e5038000      SM_GPIO[0:15]
+GPIO1               e5039000      SM_GPIO[16:23]
+GPIO2               e503a000      SM_GPIO[24:31]
+GPIO3               e503b000      SM_GPIO[32:38]
+=================   ===========   ===================
+
+For SL261x, the SM_GPIO Linux GPIO groups map as follows:
+
+=========================   ==================
+SM GPIOs                    Linux GPIO Port
+=========================   ==================
+SM_GPIO0 ~ SM_GPIO15        portc 0 ~ 15
+SM_GPIO16 ~ SM_GPIO23       portd 0 ~ 7
+SM_GPIO24 ~ SM_GPIO31       porte 0 ~ 7
+SM_GPIO32 ~ SM_GPIO38       portf 0 ~ 6
+=========================   ==================
+
+Accessing SM GPIOs from Linux
+-----------------------------
+
+Use ``gpiodetect`` to identify which gpiochip corresponds to each SM GPIO block:
+
+::
+
+    root@sl2619:~# gpiodetect
+    gpiochip0 [0-0043] (8 lines)
+    gpiochip1 [0-0044] (8 lines)
+    gpiochip2 [e5038000.gpio] (16 lines)
+    gpiochip3 [e5039000.gpio] (8 lines)
+    gpiochip4 [e503a000.gpio] (8 lines)
+    gpiochip5 [e503b000.gpio] (8 lines)
+    gpiochip6 [f7f07000.gpio] (32 lines)
+    gpiochip7 [f7f0e000.gpio] (32 lines)
+
+In this example:
+
+- SM_GPIO[0:15] is on **gpiochip2** (e5038000)
+- SM_GPIO[16:23] is on **gpiochip3** (e5039000)
+- SM_GPIO[24:31] is on **gpiochip4** (e503a000)
+- SM_GPIO[32:38] is on **gpiochip5** (e503b000)
+
+To read SM_GPIO5 (line 5 on gpiochip2):
+
+::
+
+    root@sl2619:~# gpioget -c gpiochip2 5
+
+To set SM_GPIO5 high:
+
+::
+
+    root@sl2619:~# gpioset -c gpiochip2 5=1
+
+To read SM_GPIO20 (SM_GPIO[16:23] block, line offset 4 on gpiochip3):
+
+::
+
+    root@sl2619:~# gpioget -c gpiochip3 4
+
+.. note::
+
+    The gpiochip numbers shown above are examples and may differ on your system depending on
+    device tree configuration. Always run ``gpiodetect`` to confirm the current chip-to-address
+    mapping before accessing SM GPIOs.
+
+SM GPIO ID Calculation
+----------------------
+
+SM GPIOs follow the same ID calculation as SOC GPIOs. Use the gpiochip base number for the
+SM GPIO controller block and add the line offset.
+
+SM_GPIO[0:15] (gpiochip2, base depends on system):
+
+.. math::
+
+    \text{SM_GPIO ID} = \text{gpiochip2 base} + \text{SM_GPIO#}
+
+SM_GPIO[16:23] (gpiochip3):
+
+.. math::
+
+    \text{SM_GPIO ID} = \text{gpiochip3 base} + (\text{SM_GPIO#} - 16)
+
+SM_GPIO[24:31] (gpiochip4):
+
+.. math::
+
+    \text{SM_GPIO ID} = \text{gpiochip4 base} + (\text{SM_GPIO#} - 24)
+
+SM_GPIO[32:38] (gpiochip5):
+
+.. math::
+
+    \text{SM_GPIO ID} = \text{gpiochip5 base} + (\text{SM_GPIO#} - 32)
