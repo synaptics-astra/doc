@@ -9,6 +9,7 @@ Subject Specific User Guides
    haier_panel_configuration
    memory_layout_customization
    emmc_layout_customization
+   nand_customization
    dvfs_user_guide
    sl2610_devfreq_manual_test_guide
    power_measurement
@@ -54,6 +55,8 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`memory_layout_customization`
 
 - :doc:`emmc_layout_customization`
+
+- :doc:`nand_customization`
 
 - :doc:`dvfs_user_guide`
 
