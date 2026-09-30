@@ -19,7 +19,7 @@ can be changed based on the amount of DDR in the system.
 Chip     Default Memory Supported Memory
 ======== ============== =======================
 SL1620   2GB            1GB / 2GB / 4GB
-SL1640   2GB            2GB / 3GB / 4GB
+SL1640   2GB            512MB / 2GB / 3GB / 4GB
 SL1680   4GB            2GB / 4GB
 SL261x   2GB            512MB / 1GN / 2GB / 4GB
 ======== ============== =======================
@@ -62,6 +62,14 @@ SL1640 Memory Layout
 
 +-------------------+------------------------+----------------------------+
 | Memory Size       | Memory Section         | Size                       |
++-------------------+------------------------+----------------------------+
+| 512 MB DDR        | NonSecure (CMA)        | TBD                        |
+|                   +------------------------+----------------------------+
+|                   | System                 | TBD                        |
+|                   +------------------------+----------------------------+
+|                   | NonSecure (Non-cached) | TBD                        |
+|                   +------------------------+----------------------------+
+|                   | Secure                 | TBD                        |
 +-------------------+------------------------+----------------------------+
 | 1 GB DDR          | NonSecure (CMA)        | 236MB                      |
 |                   +------------------------+----------------------------+
@@ -223,35 +231,14 @@ Finally, build an image with the modified memory layout::
 Modifying U-Boot
 ^^^^^^^^^^^^^^^^
 
-By default, U-Boot uses a default memory layout of 2GB. Using the 512MB or 1GB memory layout on SL2610 and SL1620 requires modifying U-Boot. Since SL1640 and SL1680
+By default, U-Boot uses a default memory layout of 2GB. Using the 512MB or 1GB memory layout on SL1620, SL1640, and SL2610 requires modifying U-Boot. Since SL1680
 do not support a 1GB memory layout, no modification is required on these platforms.
 
-Use the ``devtool`` utility to checkout the U-Boot source code. However, the syna-u-boot recipe is not fully compatible with ``devtool``. As a
-result, some changes to the recipe and build steps are required. First, remove the ``file://0001-Force-gcc-as-HOSTCC.patch`` patch from the ``SRC_URI``
-entry in ``meta-synaptics/recipes-bsp/syna-bootloader/syna-u-boot_git.bb``::
-
-    diff --git a/recipes-bsp/syna-bootloader/syna-u-boot_git.bb b/recipes-bsp/syna-bootloader/syna-u-boot_git.bb
-    index 6a0fe87..0521d1e 100644
-    --- a/recipes-bsp/syna-bootloader/syna-u-boot_git.bb
-    +++ b/recipes-bsp/syna-bootloader/syna-u-boot_git.bb
-    @@ -35,7 +35,6 @@ SRC_URI = " \
-        ${SYNA_SRC_BOOT} \
-        ${SYNA_SRC_UBOOT} \
-        ${SYNA_SRC_EXTERNAL} \
-    -    file://0001-Force-gcc-as-HOSTCC.patch \
-    "
-
-    SRCREV_uboot = "${SYNA_SRCREV_UBOOT}"
-
-Next, use the ``devtool`` utility to modify the source code.::
+Use the ``devtool`` utility to checkout the U-Boot source code. Use the ``devtool`` utility to modify the source code.::
 
     devtool modify syna-u-boot
 
-The U-Boot source code has now been checkout out under ``build-sl1620/workspace/sources/syna-u-boot``. Manually,
-apply the patch which was removed from the recipe::
-
-    cd build-sl1620/workspace/sources/syna-u-boot
-    git apply ../../../../meta-synaptics/recipes-bsp/syna-bootloader/syna-u-boot/0001-Force-gcc-as-HOSTCC.patch
+The U-Boot source code has now been checkout out under ``build-sl1620/workspace/sources/syna-u-boot``.
 
 For SL1620
 """"""""""
@@ -287,6 +274,34 @@ value for the 1GB profile.::
     +#define CONFIG_SYS_MALLOC_LEN		(500 << 20)
 
     //#define CONFIG_SYS_MALLOC_F_LEN		(4 << 20) /* Serial is required before relocation */
+
+For SL1640
+""""""""""
+
+Change the malloc length in ``build-sl1640/workspace/sources/syna-u-boot/boot/u-boot/configs/platypus_suboot_defconfig`` for 512MB memory layout.
+
+::
+
+    --- a/configs/platypus_suboot_defconfig
+    +++ b/configs/platypus_suboot_defconfig
+    @@ -2,7 +2,7 @@ CONFIG_ARM=y
+     CONFIG_POSITION_INDEPENDENT=y
+     # CONFIG_ARM64_SUPPORT_AARCH32 is not set
+     CONFIG_ARCH_SYNAPTICS=y
+    -CONFIG_SYS_MALLOC_LEN=0x5c800000
+    +CONFIG_SYS_MALLOC_LEN=0x18800000
+     CONFIG_ENV_SIZE=0x10000
+     CONFIG_ENV_OFFSET=0x3ff0000
+     CONFIG_DM_GPIO=y
+
+Build the modified ``syna-u-boot`` package using ``bitbake``::
+
+    bitbake -f syna-u-boot -c compile
+
+After rebuilding the modified package, build an image which contains the u-boot modifications using bitbake.::
+
+    bitbake -f astra-media -c compile
+    bitbake -f astra-media
 
 For SL2610
 """"""""""

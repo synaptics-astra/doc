@@ -18,7 +18,9 @@ Subject Specific User Guides
    updating_isp_sensor_configuration
    gpios
    otp_guide
+   otp_guide_klamath
    mp_flow_user_guide
+   mp_flow_user_guide_klamath
    ADAC_User_Guide_SL261x
    CCUK_SCUK_ID_Guide_SL261x
    fastlogo_image_generation
@@ -75,7 +77,11 @@ The following guides provide additional details on a specific subject or module.
 
 - :doc:`otp_guide`
 
+- :doc:`otp_guide_klamath`
+
 - :doc:`mp_flow_user_guide`
+
+- :doc:`mp_flow_user_guide_klamath`
 
 - :doc:`ADAC_User_Guide_SL261x`
 
