@@ -21,6 +21,8 @@ Subject Specific User Guides
    otp_guide_klamath
    mp_flow_user_guide
    mp_flow_user_guide_klamath
+   ADAC_User_Guide_SL261x
+   CCUK_SCUK_ID_Guide_SL261x
    fastlogo_image_generation
    uboot_fastlogo_configuration
    swupdate_user_guide
@@ -80,6 +82,10 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`mp_flow_user_guide`
 
 - :doc:`mp_flow_user_guide_klamath`
+
+- :doc:`ADAC_User_Guide_SL261x`
+
+- :doc:`CCUK_SCUK_ID_Guide_SL261x`
 
 - :doc:`fastlogo_image_generation`
 
