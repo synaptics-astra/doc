@@ -99,3 +99,57 @@ Finally, build an image with the modified NAND configuration::
     bitbake -f linux-syna -c compile
     bitbake -f astra-media -c compile
     bitbake -f astra-media
+
+The custom NAND image will be output to ``/path/to/workspace/sdk/build-sl2619nand/tmp/sl2619nand/deploy/images/sl2619nand/SYNAIMG/uNAND_full.img`` or something
+similar based on the name of the machine type.
+
+USB Boot with NAND support
+==========================
+
+You will also need to build a USB boot image with support for your NAND device in order to flash your
+custom NAND image over USB.
+
+Building a custom USB boot image with NAND support
+--------------------------------------------------
+
+Please follow the instructions in :ref:`building_custom_usb_boot_images` and
+apply the appropriate NAND configuration.
+
+The custom USB NAND image will be output to ``/path/to/workspace/sdk/build-sl2619usb/tmp/sl2619usb/deploy/images/sl2619usb/SYNAIMG`` or something
+similar based on the name of the machine type.
+
+Flashing the NAND image
+-----------------------
+
+Flashing the NAND image over USB uses the ``astra-boot`` tool which is part of the ``usb-tool`` / ``astra-update`` package. Information
+on downloading the tool can be found in the user guide at :ref:`firmware_update_usb`.
+
+Flashing the NAND image also requires a serial console to input commands at the U-Boot prompt. The user guide also has instructions
+for setting up the serial console at :ref:`setup_serial_console`.
+
+Unlike flashing eMMC or SPI images, flashing the NAND image requires booting over USB using the ``astra-boot`` tool.
+
+First copy the USB boot image generated in the previous section to the ``usb-tool`` directory.
+
+Second copy the ``uNAND_full.img`` to the USB boot ``SYNAIMG`` directory. ``astra-boot`` will load the image from this directory.
+
+Finally, boot the device using ``astra-boot``.
+
+::
+
+    ./bin/linux/astra-boot -k SYNAIMG
+
+
+::
+
+    .\bin\win\astra-boot.exe -k SYNAIMG
+
+The device will boot to the U-Boot prompt (``=>``). At the U-Boot prompt enter the following commands.
+
+::
+
+    usbload uNAND_full.img 0x10000000
+    m2nand 0x10000000
+
+This will load the ``uNAND_full.img`` image to address ``0x10000000`` and then program it to the NAND. U-Boot will
+return to the prompt when the operation is complete. Then you may reboot the device.

@@ -109,6 +109,8 @@ Here, is an example ``uEnv.txt`` which can boot the prebuilt ``sl2619_usb_boot``
 Astra Machina will now boot using the provided Linux kernel and rootfs. A linux prompt ``#`` will appear on the serial console when booting
 is complete.
 
+.. _building_custom_usb_boot_images:
+
 Building Custom USB Boot Images
 ===============================
 
@@ -178,3 +180,10 @@ This can be done outside of the docker container with your preferred text editor
     git apply sl2610_usb_nand_support.patch
 
 Then rebuild as described above.
+
+The USB boot image will be located in ``/path/to/workspace/sdk/build-sl2619usb/tmp/sl2619usb/deploy/images/sl2619usb/SYNAIMG``
+
+.. note::
+
+    Currently, the image build process does not correctly set the value of nand_support in the ``manifest.yaml``. If building
+    an image with NAND support, please manually set this value to ``true`` in the ``manifest.yaml``.
