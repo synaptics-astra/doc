@@ -1,0 +1,19 @@
+{
+  "_comment": "How [bracket] tags in Jira summaries are handled. Entries here are merged with the defaults built into gen_known_issues.py.",
+  "soc_aliases": {
+    "SL2610": ["SL2611", "SL2615", "SL2619"]
+  },
+  "profiles": {
+    "nand": "NAND profile",
+    "spi": "SPI profile",
+    "spi_boot": "SPI boot profile",
+    "usb_boot": "USB boot profile",
+    "oobe": ""
+  },
+  "boards": {
+    "rdk": ""
+  },
+  "ignore": ["fb", "firebird"],
+  "yocto_releases": ["dunfell", "kirkstone", "langdale", "mickledore", "nanbield",
+                     "scarthgap", "styhead", "walnascar", "whinlatter"]
+}

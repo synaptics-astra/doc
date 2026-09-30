@@ -1,0 +1,7 @@
+{
+  "_comment": "Jira component -> Module name in the release notes. Matching ignores case, spaces and punctuation. Overrides the built-in renames.",
+  "Gstream Pipeline": "Gstreamer Pipeline",
+  "HDMI TX": "HDMI-TX",
+  "HDMI RX": "HDMI-RX",
+  "Fastlogo": "Fast Logo"
+}
