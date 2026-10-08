@@ -46,6 +46,7 @@ Subject Specific User Guides
    qt5_compilation_guide
    remote_display
    astra_mcu_sdk_ddr_customization_guide
+   generating_sbom
 
 
 The following guides provide additional details on a specific subject or module.
@@ -133,3 +134,5 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`remote_display`
 
 - :doc:`astra_mcu_sdk_ddr_customization_guide`
+
+- :doc:`generating_sbom`
