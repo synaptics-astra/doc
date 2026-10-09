@@ -470,6 +470,29 @@ sample ``local.conf`` found in ``meta-synaptics/setup/conf/local.conf.sample``.
     Building the ``astra-media-oobe`` image includes building the Chromium browser can add several hours to the build time and requires
     additional storage.
 
+.. _building_sd_card_images:
+
+SD Card Images
+--------------
+
+SD card imges can be generated at build time using the ``wic.zip`` image type. Release **scarthgap_6.12_v2.6.0** adds support
+for generating SD card images using the OpenEmbedded Image Creator (wic) tool.
+
+Add ``wic.zip`` to ``IMAGE_FSTYPES``::
+
+  IMAGE_FSTYPES += " wic.zip"
+
+This will produce the file ``build-${MACHINE}/tmp/deploy/images/${MACHINE}/${IMAGE_NAME}-${MACHINE}.rootfs-${DATE}.wic.zip``. This image
+can be written to the SD card. See :ref:`writing_bootable_images_to_sd_card`.
+
+.. note::
+
+    The ``sl2619-coralboard`` machine type enables building ``wic.zip`` images by default.
+
+.. note::
+
+    SL1620 does not support SD Cards by default since the SDIO interface is used for WiFi.
+
 Distro Features
 ===============
 
