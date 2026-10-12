@@ -2107,10 +2107,12 @@ Generating Bootable SD Card Images
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Creating a bootable SD card requires converting an existing image into a format suitable for writing
-to the SD card. You can convert either prebuilt release images or an image you built yourself.
-Run the ``gen_sd.sh`` script from within the image directory. You can find the ``gen_sd.sh`` script
-on `GitHub <https://github.com/synaptics-astra/build/blob/#release#/tools/bin/gen_sd.sh>`__.
-Click the "Download Raw File" to download the script. The script runs in a Linux environment with the
+to the SD card. SD card images can be created at build time starting with release **scarthgap_6.12_v2.6.0**.
+See :ref:`building_sd_card_images` for instructions on how to generate a ``wic.zip`` image with Yocto.
+
+You can also convert prebuilt release images with the ``gen_sd.sh`` script from within the image directory.
+You can find the ``gen_sd.sh`` script on `GitHub <https://github.com/synaptics-astra/build/blob/#release#/tools/bin/gen_sd.sh>`__.
+Click the **Download Raw File** to download the script. The script runs in a Linux environment with the
 ``mkfs.ext4``, ``gzip``, ``gdisk``, and ``sgdisk`` utilties installed.
 
 .. figure:: media/download_gen_sd.png
@@ -2128,10 +2130,12 @@ will be written to the SD card.
 
     After gen_sd.sh completed
 
+.. _writing_bootable_images_to_sd_card:
+
 Writing Bootable Images to the SD Card
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The ``SD.img`` file is written to the SD card using the `Balena Etcher <https://etcher.balena.io/>`__ tool.
+The ``SD.img`` or ``wic.zip`` file is written to the SD card using the `Balena Etcher <https://etcher.balena.io/>`__ tool.
 Begin by downloading and installing the tool. Then run the tool and follow the steps in the UI to select the image and target device.
 Finally, click the flash button to begin the process.
 
@@ -2149,6 +2153,38 @@ After the flashing process completes, the SD card will now be ready to boot Astr
 
     Balena Etcher after successfully flashinge image to the SD card
 
+Supported SD Cards
+^^^^^^^^^^^^^^^^^^
+
+Bootable SD Cards have the following requirements.
+
+    * Capacity: 16 GB minimum
+    * Speed: 10 MB/s minimum sustained write, rated C10, U1, or V10, or better
+    * Application performance: A1 or better
+
+The following SD card configurations have been validated by Synaptics.
+
++---------+----------+----------+--------------------------------------------------+
+| Vendor  | Size (GB)| Grade    | Comments                                         |
++=========+==========+==========+==================================================+
+| Sandisk | 32       | U3V30A1  |                                                  |
++---------+----------+----------+--------------------------------------------------+
+| Sandisk | 16       | C10A1    |                                                  |
++---------+----------+----------+--------------------------------------------------+
+| Kingston| 32       | U1V10A1  |                                                  |
++---------+----------+----------+--------------------------------------------------+
+| Samsung | 64       | U1V10A1  |                                                  |
++---------+----------+----------+--------------------------------------------------+
+| Netac   | 16       | U1V10A1  | Need to update CONFIG_EMMC_TOTAL_SIZE=15550382080|
++---------+----------+----------+--------------------------------------------------+
+| Lexar   | 64       | U3V30A2  |                                                  |
++---------+----------+----------+--------------------------------------------------+
+
+.. note::
+
+    The SDK defines the total eMMC size as ``15552479232``. Some 16GB SD cards are slightly
+    smaller then this. The SDK can be configured to use a slightly smaller eMMC size to
+    accomidate these cards. See :doc:`../subject/emmc_layout_customization`.
 
 .. _uboot_prompt:
 
