@@ -6,8 +6,8 @@ Release Notes Scarthgap 6.12 v2.6.1
 
 .. note::
 
-    Release v2.6.1 adds support for the Synaptics Coralboard based on SL2619 and bug fixes for SL1640 and SL1680.
-    Release :doc:`scarthgap_6.12_v2.6.0 <scarthgap_6.12_v2.6.0>` is the latest for SL1620 and SL2619.
+    Release v2.6.1 adds support for the SL2619-based Synaptics Coralboard and includes bug fixes for SL1640 and SL1680.
+    For SL1620 and non-Coralboard SL2619 platforms, release :doc:`v2.6.0 <scarthgap_6.12_v2.6.0>` remains the latest.
 
 Introduction
 ============
