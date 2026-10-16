@@ -26,7 +26,7 @@ The NAND configuration is defined in the ``Image Generation Configuration`` of t
 
     Image Generation Configuration section of the defconfig
 
-Update the sizes for your specific NAND. For example, switching to a 512MB (4K) NAND wou
+Update the sizes for your specific NAND. For example, switching to a 512MB (4K) NAND requires updating the product config.
 
 .. figure:: media/update-nand-sizes.png
 
@@ -50,44 +50,6 @@ The Flash Type configuration is stored in ``flash_type.cfg`` file.
 .. figure:: media/update-nand-flash-type.png
 
     Updating the NAND Flash Type Configuration
-
-Changing the NAND Width
------------------------
-
-Updating the NAND Width in U-Boot
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The NAND width is configured in the Linux and U-Boot devicetree . The default width is ``2``
-for a Dual SPI Configuration. Update the dts file widths to ``4`` for Quad SPI Configuration.
-
-The NAND U-Boot devicetree is included in the ``syna-u-boot`` package. Use the ``devtool`` utility to
-modify the config file::
-
-    devtool modify syna-u-boot
-
-The ``devtool`` utility will create the ``build-sl2619nand/workspace/sources/syna-u-boot/boot/u-boot`` directory which will contain the source for
-
-Modify the ``spi-tx-bus-width`` and ``spi-rx-bus-width`` in ``arch/arm/dts/klamath-rdk-nand.dts``.
-
-.. figure:: media/devicetree-nand-width-u-boot.png
-
-    Updating the NAND Width in Device Tree
-
-Updating the NAND Width in Linux
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The NAND Linux devicetree is included in the ``linux-syna`` package. Use the ``devtool`` utility to
-modify the config file::
-
-    devtool modify linux-syna
-
-The ``devtool`` utility will create the ``build-sl2619nand/workspace/sources/linux-syna`` directory which will contain the source for
-
-Modify the ``spi-tx-bus-width`` and ``spi-rx-bus-width`` in ``arch/arm64/boot/dts/synaptics/sl2619-nand-rescue-rdk.dts``.
-
-.. figure:: media/devicetree-nand-width-linux.png
-
-    Updating the NAND Width in Device Tree
 
 Building the Updated Image
 ==========================
