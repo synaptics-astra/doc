@@ -26,7 +26,7 @@ The NAND configuration is defined in the ``Image Generation Configuration`` of t
 
     Image Generation Configuration section of the defconfig
 
-Update the sizes for your specific NAND. For example, switching to a 512MB (4K) NAND wou
+Update the sizes for your specific NAND. For example, switching to a 512MB (4K) NAND requires updating the product config.
 
 .. figure:: media/update-nand-sizes.png
 
