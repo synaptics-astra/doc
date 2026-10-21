@@ -9,6 +9,12 @@ Release Notes Scarthgap 6.12 v2.6.1
     Release v2.6.1 adds support for the SL2619-based Synaptics Coralboard and includes bug fixes for SL1640 and SL1680.
     For SL1620 and non-Coralboard SL2619 platforms, release :doc:`v2.6.0 <scarthgap_6.12_v2.6.0>` remains the latest.
 
+.. note::
+
+    The Synaptics Coralboard™ Google I/O Edition is not supported by v2.6.1. The Google I/O Edition was a limited
+    release given out at Google I/O 2026. The release :doc:`v2.5.0 <scarthgap_6.12_v2.5.0>` remains the latest version
+    to support the Google I/O Edition.
+
 Introduction
 ============
 
@@ -696,6 +702,12 @@ Known Issues and Limitations
     On SL2619 NAND is limited to 256MB. The NAND image contains minimal packages to accomidate the small storage.
     Please see the `sl2619nand machine definition <https://github.com/synaptics-astra/meta-synaptics/blob/scarthgap_6.12_v2.2.1/conf/machine/sl2619nand.conf>`__
     for information on what packages are included and what has been removed.
+
+.. note::
+
+    The Synaptics Coralboard™ Google I/O Edition requires the `astra-update-v2.0.3 <https://github.com/synaptics-astra/usb-tool/releases/tag/astra-update-v2.0.3>`__
+    version of the `usb-tool <https://github.com/synaptics-astra/usb-tool>`__ repository in order to boot. Newer versions of ``usb-tool`` only support the
+    Synaptics Coralboard SL currently available for purchase.
 
 .. _arm_eula_workaround:
 

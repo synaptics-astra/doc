@@ -83,6 +83,14 @@ for the following machines, distributions and images:
     | sl2619xspi         | poky         | astra-tiny                                           |
     +--------------------+--------------+------------------------------------------------------+
 
+.. note::
+
+    The machine type ``sl2619-coralboard`` supports the Synaptics Coralboard SL currently available
+    for purchase. The Synaptics Coralboard™ Google I/O Edition is not supported. The Google I/O Edition
+    was a limited release given out at Google I/O 2026. The release :doc:`v2.5.0 <release_notes/scarthgap_6.12_v2.5.0>`
+    remains the latest version to support the Google I/O Edition.
+
+
 .. _yocto_prerequisites:
 
 Build host requirements
@@ -431,6 +439,13 @@ sl2619usb             Machine type for booting SL2619 from USB                  
 sl2619-coralboard     Default machine type for the SL2619-based CoralBoard                                                 v2.4
 sl2619xspi             Machine type for booting SL1680 from xSPI                                                           v2.4
 ====================  ===================================================================================================  ==================
+
+.. note::
+
+    The machine type ``sl2619-coralboard`` supports the Synaptics Coralboard SL currently available
+    for purchase. The Synaptics Coralboard™ Google I/O Edition is not supported. The Google I/O Edition
+    was a limited release given out at Google I/O 2026. The release :doc:`v2.5.0 <release_notes/scarthgap_6.12_v2.5.0>`
+    remains the latest version to support the Google I/O Edition.
 
 .. _astra_images:
 
