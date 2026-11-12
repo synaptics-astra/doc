@@ -38,7 +38,7 @@ Changing Partition Sizes
 
 The NAND partition layout is set in the ``nand.pt`` file.
 
-.. figure:: media/update-nand-flash-type.png
+.. figure:: media/update-nand-partitions.png
 
     Updating the NAND Flash Type Configuration
 
