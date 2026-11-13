@@ -25,6 +25,10 @@ For more in-depth information, the following documents are available:
 
   This guide explains in a few words how to get started with the Synaptics Astra SDK
 
+`Coralboard SL <https://developer.synaptics.com/docs/developer-kits/coralboard>`__
+
+  The guide explains how to get started with the Synaptics Coralboard SL.
+
 :doc:`linux/index`
 
   This guide serves as an introductory manual for users, providing a high-level overview of software usage, system

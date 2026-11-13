@@ -116,6 +116,8 @@ Documentation
 
 :doc:`../linux/index`
 
+`Coralboard Documentation <https://developer.synaptics.com/docs/developer-kits/coralboard>`__
+
 `SL1620 Product Documentation <https://www.synaptics.com/assets/product-brief/astra-sl1620-embedded-iot-processor#Documentation>`__
 
 `SL1640 Product Documentation <https://www.synaptics.com/assets/product-brief/astra-sl1640-embedded-iot-processor#Documentation>`__
