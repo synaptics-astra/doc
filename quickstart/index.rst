@@ -16,6 +16,7 @@ Getting Started
 
 To get started with the Synaptics Astra SDK, you can do the following things:
 
+- `Getting Started with the Synaptics Coralboard SL <https://developer.synaptics.com/docs/developer-kits/coralboard>`__
 - :doc:`hw_setup`
 - :doc:`oobe`
 - :doc:`flash_image`

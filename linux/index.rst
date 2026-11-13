@@ -59,7 +59,7 @@ on an external display. Additionally, shell access is available through SSH, ADB
 
 .. note::
 
-    Release v2.4 adds support for the Coralboard. See `Coralboard user guide <https://developers.google.com/coral/products/SL2610-user-guide>`_.
+    Specifics on the Synaptics Coralboard SL can be found at `here <https://developer.synaptics.com/docs/developer-kits/coralboard>`__.
 
 The Graphical Desktop
 ---------------------
@@ -141,11 +141,6 @@ and OS messages to a terminal emulator running on the host system. These message
 useful for determining the status of Astra Machina early in the boot process
 or when a display is not connected. It can also provides useful information
 during operation. The serial console is also needed during the software update process.
-
-.. note::
-
-    See `Connecting to an external USB-to-serial adapter <https://developers.google.com/coral/products/SL2610-user-guide#connecting_to_an_external_usb-to-serial_adapter>`__
-    for details on setting up the serial console on the Coralboard.
 
 .. _setup_serial_console:
 
