@@ -11,6 +11,7 @@ Subject Specific User Guides
    emmc_layout_customization
    nand_customization
    dvfs_user_guide
+   enable_12_5mv_pmic
    sl2610_devfreq_manual_test_guide
    power_measurement
    power_modes
@@ -64,6 +65,8 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`nand_customization`
 
 - :doc:`dvfs_user_guide`
+
+- :doc:`enable_12_5mv_pmic`
 
 - :doc:`sl2610_devfreq_manual_test_guide`
 
