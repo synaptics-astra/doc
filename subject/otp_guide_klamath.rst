@@ -116,6 +116,8 @@ of the atomic security provisioning group.
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
 | 559   | OTP_SOC_UID_3                 | Read Only               | 0xFFFFFFFF | NO         | SoC Unique ID Word 3                        |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
+| 560   | OTP_PART_NUMBER               | Read Only               | 0xFFFFFFFF | NO         | Chip Part number                            |
++-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
 | 577   | OTP_MAC_ADDRESS_0             | Read / Write            | 0xFFFFFFFF | NO         | MAC address                                 |
 +-------+-------------------------------+-------------------------+------------+------------+---------------------------------------------+
 | 578   | OTP_MAC_ADDRESS_1             | Read / Write            | 0xFFFFFFFF | NO         | MAC address                                 |
@@ -323,7 +325,34 @@ Notes:
        After programming, the two OTP fields together represent the original
        48-bit Ethernet MAC address ``56:E5:F7:CB:FE:E3``.
 
+   8. OTP_PART_NUMBER:
+       ``OTP_PART_NUMBER`` is a read-only OTP field at index 560. It stores the
+       chip part number. Bits [27:24] identify the chip variant.
 
+       .. list-table::
+          :header-rows: 1
+
+          * - Bits [27:24]
+            - Chip variant
+          * - ``0x9``
+            - SL2619
+          * - ``0x5``
+            - SL2615
+          * - ``0x3``
+            - SL2613
+          * - ``0x1``
+            - SL2611
+
+       The following U-Boot example reads ``OTP_PART_NUMBER`` on an SL2619.
+
+       .. code-block:: text
+
+         => otpread 560
+         otp operation succeed
+         read otp[560] data=0x0980003f
+
+       Bits [27:24] of ``0x0980003f`` are ``0x9``, which identifies the chip
+       as an SL2619.
 
 U-BOOT OTP Commands
 ====================================================================
@@ -454,9 +483,6 @@ A sample configs/oem_config.conf configuration file is shown below
 
         [OTP_OEM_IMAGE_VERSION]
         oem_image_version = 0
-
-        [OTP_JTAG_ACCESS_CONTROL]
-        jtag_access_control = 0x00000000
 
 Below is a sample execution log:
 
