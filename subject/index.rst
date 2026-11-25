@@ -47,7 +47,7 @@ Subject Specific User Guides
    remote_display
    astra_mcu_sdk_ddr_customization_guide
    generating_sbom
-
+   switch_bt_stack
 
 The following guides provide additional details on a specific subject or module.
 
@@ -136,3 +136,5 @@ The following guides provide additional details on a specific subject or module.
 - :doc:`astra_mcu_sdk_ddr_customization_guide`
 
 - :doc:`generating_sbom`
+
+- :doc:`switch_bt_stack`
